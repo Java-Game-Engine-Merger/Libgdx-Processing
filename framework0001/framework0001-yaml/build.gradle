@@ -6,7 +6,7 @@ mainClassName = 'pama1234.util.yaml.MainTest'
 eclipse.project.name = appName + '-yaml'
 
 dependencies {
-  api project(':server-framework')
+  implementation project(':server-framework')
 
   api "org.yaml:snakeyaml:$snakeYamlVersion"
 

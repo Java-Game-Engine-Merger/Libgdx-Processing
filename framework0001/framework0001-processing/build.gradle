@@ -6,6 +6,7 @@ mainClassName = 'pama1234.util.yaml.MainTest'
 eclipse.project.name = appName + '-processing'
 
 dependencies {
+  implementation project(':server-framework')
   implementation project(':framework')
 
   api 'org.jogamp.jogl:jogl-all:2.4.0'

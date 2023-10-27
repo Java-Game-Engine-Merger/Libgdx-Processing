@@ -6,6 +6,7 @@ mainClassName = 'pama1234.util.yaml.MainTest'
 eclipse.project.name = appName + '-box2d'
 
 dependencies {
+  implementation project(':server-framework')
   implementation project(':framework')
 
   api "org.jbox2d:jbox2d-library:$jbox2dVersion"

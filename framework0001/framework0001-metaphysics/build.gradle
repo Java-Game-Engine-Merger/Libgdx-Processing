@@ -6,7 +6,7 @@ mainClassName = 'pama1234.metaphysics.test.MainTest'
 eclipse.project.name = appName + '-metaphysics'
 
 dependencies {
-  api project(':server-framework')
+  implementation project(':server-framework')
 
   // 编写食谱
   // import Rewrite's bill of materials.
