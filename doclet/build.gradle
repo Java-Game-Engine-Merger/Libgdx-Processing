@@ -1,0 +1,6 @@
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+eclipse.project.name = appName + '-doclet'
+
+dependencies {
+  api 'org.json:json:20230618'
+}
