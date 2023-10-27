@@ -8,9 +8,9 @@ eclipse.project.name = appName + '-yaml'
 dependencies {
   implementation project(':server-framework')
 
-  api "org.yaml:snakeyaml:$snakeYamlVersion"
+  implementation "org.yaml:snakeyaml:$snakeYamlVersion"
 
-  api "com.esotericsoftware:kryo:$kryoVersion"
+  implementation "com.esotericsoftware:kryo:$kryoVersion"
 }
 
 jar {

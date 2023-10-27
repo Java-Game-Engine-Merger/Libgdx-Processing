@@ -6,8 +6,8 @@ mainClassName = 'pama1234.util.lwjgl.test.TestLwjgl'
 eclipse.project.name = 'lwjgl-framework'
 
 dependencies {
-  api project(':framework')
-  api "$gdxModule:gdx-backend-lwjgl3:$gdxVersion"
+  implementation project(':framework')
+  implementation "$gdxModule:gdx-backend-lwjgl3:$gdxVersion"
 }
 
 jar {

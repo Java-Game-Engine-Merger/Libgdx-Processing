@@ -2,5 +2,5 @@
 eclipse.project.name = appName + '-doclet'
 
 dependencies {
-  api 'org.json:json:20230618'
+  implementation 'org.json:json:20230618'
 }
