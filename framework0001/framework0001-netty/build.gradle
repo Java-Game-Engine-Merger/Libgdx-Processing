@@ -6,7 +6,7 @@ mainClassName = 'pama1234.net.netty.test.MainTest'
 eclipse.project.name = appName + '-netty'
 
 dependencies {
-  api project(':server-framework')
+  implementation project(':server-framework')
 
   testImplementation 'junit:junit:4.13.1'
   testImplementation 'com.carrotsearch:junit-benchmarks:0.7.2'
