@@ -17,6 +17,12 @@ dependencies {
   // api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
   api "$gdxCustomModule:gdx-freetype:$gdxCustomVersion"
   api 'org.apache.logging.log4j:log4j-core:2.20.0'
+
+  implementation "javax.vecmath:vecmath:$vecmathVersion"
+  implementation "com.esotericsoftware:kryo:$kryoVersion"
+  implementation "org.yaml:snakeyaml:$snakeYamlVersion"
+
+  implementation "io.netty:netty-all:$nettyVersion"
 }
 
 publishing {

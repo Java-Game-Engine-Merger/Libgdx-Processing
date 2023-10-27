@@ -9,7 +9,7 @@ dependencies {
   implementation project(':server-framework')
   implementation project(':framework')
 
-  api "org.jbox2d:jbox2d-library:$jbox2dVersion"
+  implementation "org.jbox2d:jbox2d-library:$jbox2dVersion"
 }
 
 jar {

@@ -15,6 +15,12 @@ dependencies {
   implementation files('lib/jna-platform.jar')
   implementation files('lib/jna.jar')
   implementation files('lib/VideoExport.jar')
+
+  implementation "javax.vecmath:vecmath:$vecmathVersion"
+  implementation "com.esotericsoftware:kryo:$kryoVersion"
+  implementation "org.yaml:snakeyaml:$snakeYamlVersion"
+
+  implementation "io.netty:netty-all:$nettyVersion"
 }
 
 jar {
