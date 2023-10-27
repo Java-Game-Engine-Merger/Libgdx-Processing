@@ -14,10 +14,9 @@
 
 ### 创建新的草图
 
-1. 阅读[游戏合集](#游戏合集)
-2. 打开对应项目（例如game0001）的`pama1234.gdx.launcher.MainApp`
-3. 创建新的`Screen0xxx`
-4. 将你的`Screen0xxx`继承`ScreenCore2D`或`ScreenCore3D`
+1. 打开对应项目（例如game0001）的`pama1234.gdx.launcher.MainApp`
+2. 创建新的`Screen0xxx`
+3. 将你的`Screen0xxx`继承`ScreenCore2D`或`ScreenCore3D`
 
 ## 配置`settings.gradle`
 
@@ -69,25 +68,9 @@ implementation 'com.github.pama1234.just-some-other-libgdx-game:framework:bf0a35
  </dependency>
 ```
 
-## 游戏合集
+[中文](#空想世界框架) | [English](#game-with-java-framework)
 
-0001. 空想世界1
-0002. 粒子系统
-0003. 几何决斗【从FAL的学生作品移植过来，已火】
-0004. 高维塔防
-0005. 杂项
-0006. 中心IDE
-0007. 填满正方形
-0008. 粒子生命：升天（魔改版2D processing粒子系统）
-0009. 异星征途
-0010. 聊天室
-0011. 数值膨胀，以及矢量天空，以及TRPG系统
-
-[中文](#空想世界) | [English](#game-with-java)
-
-## 空想世界
-
-《空想世界》开源游戏项目系列的托管库
+## 空想世界框架
 
 QQ群：589219461
 
@@ -135,7 +118,7 @@ QQ群：589219461
 
 安卓版改native依赖项的时候记得手动删除`android\libs\`内的文件和文件夹
 
-## Game-With-Java
+## Game-With-Java Framework
 
 Please note that the English version README is outdated
 
