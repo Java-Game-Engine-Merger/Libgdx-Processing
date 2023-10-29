@@ -6,11 +6,11 @@ mainClassName = 'pama1234.gdx.game.app.server.ServerLauncher'
 eclipse.project.name = 'server-framework'
 
 dependencies {
-  implementation "javax.vecmath:vecmath:$vecmathVersion"
-  implementation "com.esotericsoftware:kryo:$kryoVersion"
-  implementation "org.yaml:snakeyaml:$snakeYamlVersion"
+  api "javax.vecmath:vecmath:$vecmathVersion"
+  api "com.esotericsoftware:kryo:$kryoVersion"
+  api "org.yaml:snakeyaml:$snakeYamlVersion"
 
-  implementation "io.netty:netty-all:$nettyVersion"
+  api "io.netty:netty-all:$nettyVersion"
 }
 
 jar {

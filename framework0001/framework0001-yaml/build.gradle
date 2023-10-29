@@ -6,11 +6,11 @@ mainClassName = 'pama1234.util.yaml.MainTest'
 eclipse.project.name = appName + '-yaml'
 
 dependencies {
-  implementation project(':server-framework')
+  api project(':server-framework')
 
-  implementation "org.yaml:snakeyaml:$snakeYamlVersion"
+  api "org.yaml:snakeyaml:$snakeYamlVersion"
 
-  implementation "com.esotericsoftware:kryo:$kryoVersion"
+  api "com.esotericsoftware:kryo:$kryoVersion"
 }
 
 jar {
