@@ -110,9 +110,6 @@ configure(subprojects.findAll {
 configure(subprojects.findAll {
   !(
       it.name == 'framework0001' ||
-      it.name == 'framework0002' ||
-      it.name == 'framework0003' ||
-      it.name == 'framework0004' ||
       it.name == 'game0001'
       )
 }) {

@@ -6,7 +6,7 @@ eclipse.project.name = 'framework'
 dependencies {
   api "$gdxCustomModule:gdx:$gdxCustomVersion"
 
-  implementation project(':server-framework')
+  api project(':server-framework')
 
   api ("com.github.lyze237:gdx-TinyVG:$gdxTinyVGVersion") {
     exclude group: "com.badlogicgames.gdx"
@@ -18,11 +18,11 @@ dependencies {
   api "$gdxCustomModule:gdx-freetype:$gdxCustomVersion"
   api 'org.apache.logging.log4j:log4j-core:2.20.0'
 
-  implementation "javax.vecmath:vecmath:$vecmathVersion"
-  implementation "com.esotericsoftware:kryo:$kryoVersion"
-  implementation "org.yaml:snakeyaml:$snakeYamlVersion"
+  // implementation "javax.vecmath:vecmath:$vecmathVersion"
+  // implementation "com.esotericsoftware:kryo:$kryoVersion"
+  // implementation "org.yaml:snakeyaml:$snakeYamlVersion"
 
-  implementation "io.netty:netty-all:$nettyVersion"
+  // implementation "io.netty:netty-all:$nettyVersion"
 }
 
 publishing {
