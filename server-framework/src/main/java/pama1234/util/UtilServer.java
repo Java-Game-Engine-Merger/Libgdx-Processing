@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -18,10 +19,9 @@ import pama1234.util.wrapper.ServerEntityCenter;
 
 public abstract class UtilServer implements Runnable{
   public ServerEntityCenter<ServerEntityListener> center=new ServerEntityCenter<ServerEntityListener>();
+  public boolean doDispose=true;
   public boolean stop;
 
-  // public float targetFrameRate=30,frameRate;
-  // public long frameRatePeriod=1000000000L/(long)targetFrameRate;
   public float frameRate;
   public float frameRateTarget;
   public long frameRatePeriod;
@@ -47,9 +47,18 @@ public abstract class UtilServer implements Runnable{
 
   {
     frameRate(60);
+    Runtime.getRuntime().addShutdownHook(new Thread(()-> {
+      outerDispose();
+    },"ShutdownHook"));
   }
   public abstract void init();
   public abstract void update();
+  public void outerDispose() {
+    if(doDispose) {
+      dispose();
+      doDispose=false;
+    }
+  }
   public abstract void dispose();
   @Override
   public void run() {
@@ -89,11 +98,14 @@ public abstract class UtilServer implements Runnable{
       frameCount++;
       beforeTime=System.nanoTime();
     }
-    dispose();
+    outerDispose();
   }
   public void frameRate(float fps) {
     frameRateTarget=fps;
     frameRatePeriod=(long)(1000000000.0/frameRateTarget);
+  }
+  public String loadString(String file) {
+    return loadString(Paths.get(file).toFile());
   }
   public static String loadString(File path) {
     try {
@@ -108,14 +120,20 @@ public abstract class UtilServer implements Runnable{
     }
     return null;
   }
+  public static void saveString(String path,String in) {
+    saveString(Paths.get(path).toFile(),in);
+  }
   public static void saveString(File path,String in) {
     try {
       OutputStream outputStream=new FileOutputStream(path);
-      outputStream.write(in.getBytes());
+      outputStream.write(in.getBytes(StandardCharsets.UTF_8));
       outputStream.close();
     }catch(IOException e) {
       e.printStackTrace();
     }
+  }
+  public static void exit() {
+    System.exit(0);
   }
   public static void main(String[] args) {
     new UtilServer() {
