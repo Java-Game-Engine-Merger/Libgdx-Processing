@@ -1,10 +1,10 @@
-# Libgdx游戏合集
+# 只是一个Libgdx游戏框架
 
 <!-- <p align="center"><img src="https://github.com/Libgdx-Processing-Plus/Libgdx-Processing-Plus/tree/public/doc/image/logo.png"></p> -->
 
 ![logo](doc/image/logo.png)
 
-[![jitpack-badge](https://jitpack.io/v/Java-Game-Engine-Merger/Libgdx-Processing-Plus.svg)](https://jitpack.io/#Java-Game-Engine-Merger/Libgdx-Processing-Plus)
+[![jitpack-badge](https://jitpack.io/v/Java-Game-Engine-Merger/Libgdx-Processing.svg)](https://jitpack.io/#Java-Game-Engine-Merger/Libgdx-Processing)
 
 ## 使用Protobuf
 
@@ -68,7 +68,7 @@ implementation 'com.github.pama1234.just-some-other-libgdx-game:framework:bf0a35
  </dependency>
 ```
 
-[中文](#空想世界框架) | [English](#game-with-java-framework)
+[中文](#空想世界框架) | [English](#just-some-other-libgdx-game-framework)
 
 ## 空想世界框架
 
@@ -87,7 +87,7 @@ QQ群：589219461
 
 项目代码帮助文档：`doc\codeHelp.txt`
 
-代码格式化请使用`doc\eclipse.formatter.xml`，如果不愿意使用此格式化方案，那么请勿提交四格缩进的代码，其他随意
+代码格式化请使用`doc\eclipse.formatter.xml`，如果不愿意使用此格式化方案，请在提交时运行`gradlew spotlessApply`
 
 局部变量的命名规则：
 
@@ -118,53 +118,116 @@ QQ群：589219461
 
 安卓版改native依赖项的时候记得手动删除`android\libs\`内的文件和文件夹
 
-## Game-With-Java Framework
+## Just Some Other Libgdx game framework
 
-Please note that the English version README is outdated
+![LOGO](DOC/Image/Logo.png)
 
-The git repo of the open-source game project series of Game-With-Java (the english name is to be determined)
+[![JITPACK-BADGE](https://jitpack.io/v/java-game-engine-meger/libgdx-processing.svg)]/Libgdx-part)
 
-Configure environment:
+## Use Protobuf
 
-1. Download and install `jdk-17` and configure javahome and path environment variables. This version is recommended→ <https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-22.1.0>
-2. Download and install `gradle-8`, configure gradle and gradle-javahome environment variables <https://gradle.org/releases>
-3. Download and install `Android studio Canary build` and configure the Android SDK environment variables (The preview version, or whatever that is on the right side of the page, whatever is new should be installed) <https://developer.android.com/studio/preview>
+You should first use <https://github.com/protocolbuffers/protobuf/releases/Latest> Download Protoc and add Path environment variables, otherwise Gradle will report an error when running BUILD and GenerateProto.
 
-Libraries used: libgdx, kryo, vecmath, aparapi
+## How to get started
 
-Main class location: pama1234.gdx.launcher.MainApp
+### Create a new sketch
 
-Code help doc: `doc\codeHelp.txt`
+1. Open the corresponding items (such as Game0001) `pama1234.gdx.launcher.mainapp`
+2. Create a new `screen0xxx`
+3. Inherit your `Screen0xxx`` ScreenCore2D` or `ScreenCore3D`
 
-Please use `doc\eclipse.formatter.xml` for code format. If you do not want to use this format scheme, please do not submit four-space indented code
+## configuration `settings.gradle`
 
-Naming rules of local variables:
+As we all know, Gradle is very slow. There are at least 40 sub -items in this hosting, which will produce more than 9,000 or more Tasks. Therefore, we will make some unused items in the `settings.gradle` file when we develop.If you need to use it, cancel the comment
 
-|Type|Total dimensions|Dimensions|English characters|
-|---|---|---|---|
-|Position|3|1|x|
-|Position|3|2|y|
-|Position|3|3|z|
-|Volume|3|1|w|
-|Volume|3|2|h|
-|Volume|3|3|l|
-|Integer|?|1|i|
-|Float|?|1|f|
-|Boolean|?|1|b|
-|Parent|?|1|p|
-|Translation package|?|1|bd,ld|
+## Create a new project
 
-example:
+If developers want to create a new project, they need to be in the root directory of the project's root directory (current).
 
-|Type|Example|
-|---|---|
-|Position|tx, tx1, tx_1, tx2, tx_2|
-|Parent|p, pc, pw, pg|
+`` `Gradle
+|| IT.Name == 'Project Name -android'
+`` `
 
-(tx is short for temp-x)
+Used to exclude this and other sub -items that and other Java Plugin that cannot be used in Gradle
 
-For to-do items, please view `/doc/todo.txt` file, when you finished a to-do item ,please move it to `/doc/solved.txt`. You can write to-do items freely with different languages , but you cannot change the language of existing to-do items.
+## tutorial and documentation
 
-Please use your own signature file to compile Android sub-project
+(Non-perfect, sorting) <<https://github.com/java-> Game-engine-Merger/libgdx-process-website>
 
-Please delete files and folders in `android\libs\` manually when changing native dependencies in Android sub-project
+## How to use our framework
+
+Our framework is packaged through JIT
+
+<<https://jitpack.io/#Pama1234/just-some-some-libgdx-> game/>
+
+Note that the problem of diamond -shaped dependence is not resolved, so when using Framework0001 and other contents in other items, a lot of EXCLUDE rules may be required. Especially when packaging Android, it is recommended to use only the following two basic frameworks.
+
+### Gradle-EN
+
+```gradle
+implementation "com.github.pama1234.just-some-other-libgdx-game:server-framework:$pama1234Version"
+implementation "com.github.pama1234.just-some-other-libgdx-game:framework:$pama1234Version"
+```
+
+Or directly indicate the version.
+
+```gradle
+implementation 'com.github.pama1234.just-some-other-libgdx-game:server-framework:bf0a359313'
+implementation 'com.github.pama1234.just-some-other-libgdx-game:framework:bf0a359313'
+```
+
+### Maven-EN
+
+```maven
+ <dependency>
+     <groupId>com.github.pama1234.just-some-other-libgdx-game</groupId>
+     <artifactId>framework</artifactId>
+     <version>bf0a359313</version>
+ </dependency>
+```
+
+QQ group: 589219461
+
+Configuration Environment:
+
+0. Make sure that the computer you use can directly access the following websites that need to be accessed, and recommend [this solution](<https://github.com/getlantern/lantern>)
+1. Download and install the `jdk-17`, configure Javahome and PATH environment variables, and recommend [Graalvm-22.1.0)](<https://github.com/graalvm/graalvm-> lineases/tags/tag/vm-22.1.0)
+2. Download and install `Gradle-8`, configure Gradle and Gradle-Javahome environment variables, [link](<https://gradle.org/releases>)
+3. Download and install `Android Studio Canary Build`, configure the Androidsdk environment variable (that is, internal test, on the right side of the page, any new one is installed and which one is installed) [link](<https://developper.android.COM/Studio/Preview>)
+
+Library used: libgdx, kryo, vecmath
+
+Main class Location: pama1234.gdx.launcher.mainapp
+
+Project code help document: `doc\codehelp.txt`
+
+Code formatting, please use the `doc\eclipse.formatter.xml`. If you do not want to use this format scheme, run 'gradlew spotlessApply' when committing your change.
+
+Naming rules for local variables:
+
+| Type | Total dimension | dimension number | English character |
+| --- | --- | --- | --- | |
+| Location | 3 | 1 | X |
+| Location | 3 | 2 | Y |
+| Location | 3 | 3 | Z |
+| Volume | 3 | 1 | W |
+| Volume | 3 | 2 | H |
+| Volume | 3 | 3 | L |
+| Integer | ? | 1 | i |
+| Floating point number | ? | 1 | f |
+| Boolean value | ? | 1 | b |
+| Father Example | ? | 1 | P |
+| Translation package | ? | 1 | BD, LD |
+
+Abbreviation example:
+
+| Type | Example |
+| --- | --- | |
+Location | TX, TX1, TX_1, TX2, TX_2 |
+| Father Example | P, PC, PW, PG |
+
+(TX is the abbreviation of TEMP-X)
+
+Please see the TODO.TXT of the doc file to do it. If you complete a certain item, please cut it and paste it to Solved.txt. Please use your own signature file to compile the Android project.Items, but cannot be modified
+
+When the Android version changes the Native dependency item, remember to manually delete the files and folders in the files in the man manually
