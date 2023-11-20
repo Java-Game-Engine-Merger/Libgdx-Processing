@@ -132,6 +132,10 @@ public abstract class UtilServer implements Runnable{
       e.printStackTrace();
     }
   }
+  public static void println(Object... in) {
+    for(var i:in) System.out.print(i+" ");
+    System.out.println();
+  }
   public static void exit() {
     System.exit(0);
   }
