@@ -65,8 +65,9 @@ spotless {
   }
 }
 
-allprojects{
-}
+allprojects{ }
+
+subprojects{ }
 
 // 所有的java性质项目
 configure(subprojects.findAll {
@@ -93,6 +94,11 @@ configure(subprojects.findAll {
   }
 
   dependencies {
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:latest.release")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:latest.release")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:latest.release")
+
     // This follows advice from https://blog.gradle.org/log4j-vulnerability
     constraints {
       implementation("org.apache.logging.log4j:log4j-core") {
