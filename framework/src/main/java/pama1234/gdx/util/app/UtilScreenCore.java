@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
-import hhs.gdx.hsgame.tools.LoopThread;
+import hhs.gdx.hslib.tools.LoopThread;
 import pama1234.gdx.game.ui.element.Button;
 import pama1234.gdx.game.ui.element.TextButton;
 import pama1234.gdx.util.cam.CameraController;

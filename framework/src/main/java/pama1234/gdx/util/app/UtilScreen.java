@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
-import hhs.gdx.hsgame.tools.LoopThread;
+import hhs.gdx.hslib.tools.LoopThread;
 import pama1234.gdx.game.ui.element.TextField;
 import pama1234.gdx.util.SharedResources;
 import pama1234.gdx.util.cam.CameraController;
