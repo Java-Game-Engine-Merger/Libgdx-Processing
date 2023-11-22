@@ -7,7 +7,7 @@ eclipse.project.name = 'lwjgl-framework'
 
 dependencies {
   api project(':framework')
-  api "$gdxModule:gdx-backend-lwjgl3:$gdxVersion"
+  implementation "$gdxModule:gdx-backend-lwjgl3:$gdxVersion"
 }
 
 jar {
