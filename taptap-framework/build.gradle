@@ -106,34 +106,22 @@ dependencies {
 
 eclipse.project.name = "taptap-framework"
 
+// tasks.shadowJar {
+//   archiveClassifier.set('jar')
+// }
+
 // Because the components are created only during the afterEvaluate phase, you must
 // configure your publications using the afterEvaluate() lifecycle method.
 afterEvaluate {
   publishing {
     publications {
-      // maven(MavenPublication) {
-      //   groupId = 'pama1234'
-      //   artifactId = 'taptap-framework'
-      //   version = "$pama1234PublishVersion"
-      //   pom {
-      //     name = 'pama1234-taptap-framework'
-      //     description = 'some taptap side framework'
-      //     url = 'https://github.com/pama1234/just-some-other-libgdx-game'
-      //     scm {
-      //       url = 'https://github.com/pama1234/just-some-other-libgdx-game'
-      //     }
-      //   }
-      // }
-      // Creates a Maven publication called "release".
-      release(MavenPublication) {
-
-        // You can then customize attributes of the publication as shown below.
+      maven(MavenPublication) {
         groupId = 'pama1234'
         artifactId = 'taptap-framework'
         version = "$pama1234PublishVersion"
-        // Applies the component for the release build variant.
         from components.release
 
+        artifact source: file("build/outputs/bundle/release/taptap-framework-release.aab"), extension: 'jar'
         pom {
           name = 'pama1234-taptap-framework'
           description = 'some taptap side framework'
@@ -143,6 +131,26 @@ afterEvaluate {
           }
         }
       }
+
+      // // Creates a Maven publication called "release".
+      // release(MavenPublication) {
+
+      //   // You can then customize attributes of the publication as shown below.
+      //   groupId = 'pama1234'
+      //   artifactId = 'taptap-framework'
+      //   version = "$pama1234PublishVersion"
+      //   // Applies the component for the release build variant.
+      //   from components.release
+
+      //   pom {
+      //     name = 'pama1234-taptap-framework'
+      //     description = 'some taptap side framework'
+      //     url = 'https://github.com/pama1234/just-some-other-libgdx-game'
+      //     scm {
+      //       url = 'https://github.com/pama1234/just-some-other-libgdx-game'
+      //     }
+      //   }
+      // }
 
       // // Creates a Maven publication called “debug”.
       // debug(MavenPublication) {
