@@ -121,6 +121,7 @@ afterEvaluate {
         version = "$pama1234PublishVersion"
         from components.release
 
+        // 前无古人后无来者的aab冒充jar操作
         artifact source: file("build/outputs/bundle/release/taptap-framework-release.aab"), extension: 'jar'
         pom {
           name = 'pama1234-taptap-framework'
