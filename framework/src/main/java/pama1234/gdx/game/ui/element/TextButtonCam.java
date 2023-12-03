@@ -22,6 +22,8 @@ public class TextButtonCam<T extends UtilScreen>extends TextButton<T>{
   }
   public TextButtonCam(T p) {
     super(p);
+    textOffset(textOffset)
+      .activeCondition(()->true);
   }
   public TextButtonCam(T p,TextButtonEvent<T> updateText) {
     this(p,updateText,()->true,true);
@@ -149,4 +151,10 @@ public class TextButtonCam<T extends UtilScreen>extends TextButton<T>{
     super.updateText();
     return this;
   }
+  //---------------------------------------------------------------------------
+  /**
+   * 提示：应当使用 {@link TextButtonCam#rectAuto}
+   */
+  @Deprecated
+  public void pos() {}
 }
