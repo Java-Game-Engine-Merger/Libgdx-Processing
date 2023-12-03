@@ -15,11 +15,10 @@ import pama1234.util.function.GetFloat;
  * TODO 将text成员变量和updateText方法移除
  */
 public abstract class Button<T extends UtilScreen>extends Entity<T>{
-  // public String text;//TODO
   public GetBoolean active;
   public TouchInfo touch;
   public GetFloat nx=()->touch.ox,ny=()->touch.oy;
-  public EventExecuter pressE,clickStartE,clickEndE;
+  public EventExecuter pressE=()-> {},clickStartE=()-> {},clickEndE=()-> {};
   public boolean mouseLimit=true;
   public Button(T p) {
     super(p);
