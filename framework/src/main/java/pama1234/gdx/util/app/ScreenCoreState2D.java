@@ -16,6 +16,9 @@ public abstract class ScreenCoreState2D<C extends StateCenter<?,?>,E extends Sta
       centerCam.remove.add(out.displayCam);
       out.to(in);
       out.pause();
+
+      // TODO in alpha
+      // refreshAllCenter();
     }
     auto.stateChangeEvent(out,in);
     if(in!=null) {
@@ -23,6 +26,9 @@ public abstract class ScreenCoreState2D<C extends StateCenter<?,?>,E extends Sta
       in.from(out);
       centerScreen.add.add(in);
       centerCam.add.add(in.displayCam);
+
+      // TODO in alpha
+      // refreshAllCenter();
     }
     return out;
   }
