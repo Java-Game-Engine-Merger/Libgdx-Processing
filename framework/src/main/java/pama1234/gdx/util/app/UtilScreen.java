@@ -274,4 +274,13 @@ public abstract class UtilScreen extends UtilScreenRender{
     }
     return p;
   }
+  //---------------------------------------------------------------------------
+  public void refreshAllCenter() {
+    center.refresh();
+    centerCam.refresh();
+    centerScreen.refresh();
+    serverCenter.refresh();
+
+    // centerSys.refresh();
+  }
 }
