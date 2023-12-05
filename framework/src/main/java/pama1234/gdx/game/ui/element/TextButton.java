@@ -149,7 +149,7 @@ public class TextButton<T extends UtilScreen>extends Button<T>{
     return this;
   }
   public TextButton<T> rectAutoWidth(float x,float y,float h) {
-    this.rect=new ButtonAutoWidthRect(x,y,createDefaultWidthSupplier(p),h);
+    this.rect=new ButtonRect(x,y,createDefaultWidthSupplier(p),h);
     return this;
   }
   public TextButton<T> rectAutoHeight(GetFloat x,GetFloat y,GetFloat w) {
@@ -169,11 +169,14 @@ public class TextButton<T extends UtilScreen>extends Button<T>{
   //   return this;
   // }
   //---------------------------------------------------------------------------
-  public static class ButtonAutoWidthRect implements RectI{
+  /**
+   * ButtonAutoWidthRect，适合用于带有单行文字的按钮
+   */
+  public static class ButtonRect implements RectI{
     public float x,y,h;
     public GetFloat w;
 
-    public ButtonAutoWidthRect(float x,float y,GetFloat wIn,float hIn) {
+    public ButtonRect(float x,float y,GetFloat wIn,float hIn) {
       this.x=x;
       this.y=y;
       this.w=wIn;
@@ -194,6 +197,15 @@ public class TextButton<T extends UtilScreen>extends Button<T>{
     @Override
     public float h() {
       return h;
+    }
+  }
+  /**
+   * use {@link ButtonRect}
+   */
+  @Deprecated
+  public static class ButtonAutoWidthRect extends ButtonRect{
+    public ButtonAutoWidthRect(float x,float y,GetFloat wIn,float hIn) {
+      super(x,y,wIn,hIn);
     }
   }
 }
