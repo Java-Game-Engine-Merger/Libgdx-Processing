@@ -7,7 +7,7 @@ public abstract class StateEntityBase<P extends UtilScreen,E extends StateEntity
   public int id;
   public StateEntityBase(P p) {
     super(p);
-    displayCam=new DisplayEntity(this::displayCam);
+    // displayCam=new DisplayEntity(this::displayCam);
   }
   public StateEntityBase(P p,int id) {
     this(p);

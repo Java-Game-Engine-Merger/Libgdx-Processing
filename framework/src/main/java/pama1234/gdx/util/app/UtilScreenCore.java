@@ -34,10 +34,13 @@ import pama1234.gdx.util.info.MouseInfo;
 import pama1234.gdx.util.info.TouchInfo;
 import pama1234.gdx.util.input.UtilInputProcesser;
 import pama1234.gdx.util.listener.EntityListener;
+import pama1234.gdx.util.listener.EntityNeoListener;
 import pama1234.gdx.util.listener.InputListener;
 import pama1234.gdx.util.listener.SystemListener;
 import pama1234.gdx.util.wrapper.AutoEntityManager;
+import pama1234.gdx.util.wrapper.DisplayEntity.DisplayWithCam;
 import pama1234.gdx.util.wrapper.EntityCenter;
+import pama1234.gdx.util.wrapper.EntityNeoCenter;
 import pama1234.util.listener.LifecycleListener;
 import pama1234.util.listener.ServerEntityListener;
 import pama1234.util.wrapper.Center;
@@ -110,6 +113,10 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
    * TODO 应当改为更高效的实现
    */
   public EntityCenter<UtilScreen,EntityListener> centerScreen;
+  /**
+   * {@link UtilScreenCore#centerScreen} 加上 {@link DisplayWithCam}
+   */
+  public EntityNeoCenter<UtilScreen,EntityNeoListener> centerNeo;
   /** 类似center但是存放的是ServerEntityListener */
   public ServerEntityCenter<ServerEntityListener> serverCenter;
   /** 自动注册和删除实体 */

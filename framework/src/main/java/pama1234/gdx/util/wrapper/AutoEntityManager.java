@@ -15,6 +15,7 @@ public class AutoEntityManager<T extends UtilScreen>extends LayeredEntityCenter<
   public static final int Center=0;
   public static final int CenterScreen=1;
   public static final int CenterCam=2;
+  public static final int CenterNeo=3;
 
   public EntityCenter<T,StateEntity<T,?>> stateEntityCenter;
   public EntityCenter<T,StateEntity<T,?>> stateEntityComplexCenter;
@@ -27,7 +28,7 @@ public class AutoEntityManager<T extends UtilScreen>extends LayeredEntityCenter<
     list[0]=stateEntityCenter=new EntityCenter<>(p);
     list[1]=stateEntityComplexCenter=new EntityCenter<>(p);
 
-    target=new EntityCenter[] {p.center,p.centerScreen,p.centerCam};
+    target=new EntityCenter[] {p.center,p.centerScreen,p.centerCam,p.centerNeo};
   }
 
   public <E extends EntityListener> void register(GetEntityWithStateChange<E> in,int eType,int[] data) {

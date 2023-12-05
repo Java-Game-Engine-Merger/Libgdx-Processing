@@ -39,6 +39,10 @@ public class Annotations{
   @Retention(RetentionPolicy.RUNTIME)
   @Target(value= {CONSTRUCTOR,FIELD,LOCAL_VARIABLE,METHOD,PACKAGE,MODULE,PARAMETER,TYPE})
   public static @interface MobileOnly{}
+  /**
+   * 用于假的多继承
+   */
+  @ZenithLang
   @Documented
   @Retention(RetentionPolicy.RUNTIME)
   @Target(value= {CONSTRUCTOR,FIELD,LOCAL_VARIABLE,METHOD,PACKAGE,MODULE,PARAMETER,TYPE})
@@ -49,4 +53,11 @@ public class Annotations{
   public static @interface ScreenDescription{
     String value();
   }
+  /**
+   * 天顶语将会实现对标记了这个东东的东东的自动化
+   */
+  @Documented
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(value= {CONSTRUCTOR,FIELD,LOCAL_VARIABLE,METHOD,PACKAGE,MODULE,PARAMETER,TYPE})
+  public static @interface ZenithLang{}
 }

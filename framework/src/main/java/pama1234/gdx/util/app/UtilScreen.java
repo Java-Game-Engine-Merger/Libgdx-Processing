@@ -25,6 +25,7 @@ import pama1234.gdx.util.info.MouseInfo;
 import pama1234.gdx.util.info.TouchInfo;
 import pama1234.gdx.util.input.UtilInputProcesser;
 import pama1234.gdx.util.listener.EntityListener;
+import pama1234.gdx.util.listener.EntityNeoListener;
 import pama1234.gdx.util.wrapper.AutoEntityManager;
 import pama1234.gdx.util.wrapper.EntityCenter;
 import pama1234.util.wrapper.Center;
@@ -198,6 +199,12 @@ public abstract class UtilScreen extends UtilScreenRender{
   public void centerScreenRemoveAll(EntityListener... in) {
     for(EntityListener i:in) centerScreen.remove.add(i);
   }
+  public void centerNeoAddAll(EntityNeoListener... in) {
+    for(EntityNeoListener i:in) centerNeo.add.add(i);
+  }
+  public void centerNeoRemoveAll(EntityNeoListener... in) {
+    for(EntityNeoListener i:in) centerNeo.remove.add(i);
+  }
   public <T extends EntityListener> void centerCamAddAll(Iterable<T> in) {
     for(EntityListener i:in) centerCam.add.add(i);
   }
@@ -209,6 +216,12 @@ public abstract class UtilScreen extends UtilScreenRender{
   }
   public <T extends EntityListener> void centerScreenRemoveAll(Iterable<T> in) {
     for(EntityListener i:in) centerScreen.remove.add(i);
+  }
+  public <T extends EntityNeoListener> void centerNeoAddAll(Iterable<T> in) {
+    for(EntityNeoListener i:in) centerNeo.add.add(i);
+  }
+  public <T extends EntityNeoListener> void centerNeoRemoveAll(Iterable<T> in) {
+    for(EntityNeoListener i:in) centerNeo.remove.add(i);
   }
   //---------------------------------------------------------------------------
   public void addScreenTextFields(TextField... in) {
