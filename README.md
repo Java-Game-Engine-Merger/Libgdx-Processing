@@ -1,10 +1,14 @@
-# 只是一个Libgdx游戏框架
+# 基本框架组
 
 <!-- <p align="center"><img src="https://github.com/Libgdx-Processing-Plus/Libgdx-Processing-Plus/tree/public/doc/image/logo.png"></p> -->
 
 ![logo](doc/image/logo.png)
 
 [![jitpack-badge](https://jitpack.io/v/Java-Game-Engine-Merger/Libgdx-Processing.svg)](https://jitpack.io/#Java-Game-Engine-Merger/Libgdx-Processing)
+
+（只是一些Libgdx游戏框架）
+
+[中文](#基本框架组) | [English Version](#fundamental-framework-group)
 
 ## 使用Protobuf
 
@@ -68,8 +72,6 @@ implementation 'com.github.pama1234.just-some-other-libgdx-game:framework:bf0a35
  </dependency>
 ```
 
-[中文](#空想世界框架) | [English](#just-some-other-libgdx-game-framework)
-
 ## 空想世界框架
 
 QQ群：589219461
@@ -118,11 +120,15 @@ QQ群：589219461
 
 安卓版改native依赖项的时候记得手动删除`android\libs\`内的文件和文件夹
 
-## Just Some Other Libgdx game framework
+## Fundamental Framework Group
 
-![LOGO](DOC/Image/Logo.png)
+![logo](doc/image/logo.png)
 
-[![JITPACK-BADGE](https://jitpack.io/v/java-game-engine-meger/libgdx-processing.svg)]/Libgdx-part)
+[![jitpack-badge](https://jitpack.io/v/Java-Game-Engine-Merger/Libgdx-Processing.svg)](https://jitpack.io/#Java-Game-Engine-Merger/Libgdx-Processing)
+
+(Just Some Other Libgdx game framework)
+
+[中文](#基本框架组) | [English Version](#fundamental-framework-group)
 
 ## Use Protobuf
 
