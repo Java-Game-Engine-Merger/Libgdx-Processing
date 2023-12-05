@@ -122,7 +122,7 @@ configure(subprojects.findAll {
   apply plugin: 'idea'
   apply plugin: 'eclipse'
 
-  apply plugin: "com.github.johnrengelman.shadow"
+  // apply plugin: "com.github.johnrengelman.shadow"
   apply plugin: "io.freefair.lombok"
 
   version = '0.0.1'

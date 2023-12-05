@@ -21,6 +21,9 @@ public abstract class Button<T extends UtilScreen>extends Entity<T>{
   public GetFloat nx=()->touch.ox,ny=()->touch.oy;
   public EventExecuter pressE,clickStartE,clickEndE;
   public boolean mouseLimit=true;
+
+  // TODO 评估是否有必要
+  public boolean breakEvent=true;
   public Button(T p) {
     super(p);
   }
@@ -66,10 +69,10 @@ public abstract class Button<T extends UtilScreen>extends Entity<T>{
     end();
   }
   public void start() {
-    touch.state=1;
+    if(breakEvent) touch.state=1;
   }
   public void end() {
-    touch.state=0;
+    if(breakEvent) touch.state=0;
     touch=null;
   }
   @Override
