@@ -28,6 +28,7 @@ import pama1234.gdx.util.listener.EntityListener;
 import pama1234.gdx.util.listener.EntityNeoListener;
 import pama1234.gdx.util.wrapper.AutoEntityManager;
 import pama1234.gdx.util.wrapper.EntityCenter;
+import pama1234.gdx.util.wrapper.ScreenContentContainer;
 import pama1234.util.wrapper.Center;
 import pama1234.util.wrapper.ServerEntityCenter;
 
@@ -292,8 +293,37 @@ public abstract class UtilScreen extends UtilScreenRender{
     center.refresh();
     centerCam.refresh();
     centerScreen.refresh();
+    centerNeo.refresh();
     serverCenter.refresh();
 
     // centerSys.refresh();
+  }
+  public void centerAddContainer(ScreenContentContainer in) {
+    center.add.add(in.center);
+    centerCam.add.add(in.centerCam);
+    centerScreen.add.add(in.centerScreen);
+    centerNeo.add.add(in.centerNeo);
+    serverCenter.add.add(in.serverCenter);
+  }
+  public void centerRemoveContainer(ScreenContentContainer in) {
+    center.remove.add(in.center);
+    centerCam.remove.add(in.centerCam);
+    centerScreen.remove.add(in.centerScreen);
+    centerNeo.remove.add(in.centerNeo);
+    serverCenter.remove.add(in.serverCenter);
+  }
+  public void copyToContainer(ScreenContentContainer in) {
+    in.center=center;
+    in.centerCam=centerCam;
+    in.centerScreen=centerScreen;
+    in.centerNeo=centerNeo;
+    in.serverCenter=serverCenter;
+  }
+  public void copyFromContainer(ScreenContentContainer in) {
+    center=in.center;
+    centerCam=in.centerCam;
+    centerScreen=in.centerScreen;
+    centerNeo=in.centerNeo;
+    serverCenter=in.serverCenter;
   }
 }
