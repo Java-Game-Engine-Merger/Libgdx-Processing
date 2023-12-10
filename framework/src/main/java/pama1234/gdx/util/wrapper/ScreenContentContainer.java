@@ -30,6 +30,7 @@ public class ScreenContentContainer implements EntityNeoListener{
     return this;
   }
 
+  //---------------------------------------------------------------------------
   public void addScreenTextFields(TextField... in) {
     for(TextField e:in) screenStage.addActor(e);
   }
@@ -44,4 +45,42 @@ public class ScreenContentContainer implements EntityNeoListener{
     Group root=camStage.getRoot();
     for(TextField e:in) root.removeActor(e);
   }
+  //---------------------------------------------------------------------------
+  public void centerCamAddAll(EntityListener... in) {
+    for(EntityListener i:in) centerCam.add.add(i);
+  }
+  public void centerCamRemoveAll(EntityListener... in) {
+    for(EntityListener i:in) centerCam.remove.add(i);
+  }
+  public void centerScreenAddAll(EntityListener... in) {
+    for(EntityListener i:in) centerScreen.add.add(i);
+  }
+  public void centerScreenRemoveAll(EntityListener... in) {
+    for(EntityListener i:in) centerScreen.remove.add(i);
+  }
+  public void centerNeoAddAll(EntityNeoListener... in) {
+    for(EntityNeoListener i:in) centerNeo.add.add(i);
+  }
+  public void centerNeoRemoveAll(EntityNeoListener... in) {
+    for(EntityNeoListener i:in) centerNeo.remove.add(i);
+  }
+  public <T extends EntityListener> void centerCamAddAll(Iterable<T> in) {
+    for(EntityListener i:in) centerCam.add.add(i);
+  }
+  public <T extends EntityListener> void centerCamRemoveAll(Iterable<T> in) {
+    for(EntityListener i:in) centerCam.remove.add(i);
+  }
+  public <T extends EntityListener> void centerScreenAddAll(Iterable<T> in) {
+    for(EntityListener i:in) centerScreen.add.add(i);
+  }
+  public <T extends EntityListener> void centerScreenRemoveAll(Iterable<T> in) {
+    for(EntityListener i:in) centerScreen.remove.add(i);
+  }
+  public <T extends EntityNeoListener> void centerNeoAddAll(Iterable<T> in) {
+    for(EntityNeoListener i:in) centerNeo.add.add(i);
+  }
+  public <T extends EntityNeoListener> void centerNeoRemoveAll(Iterable<T> in) {
+    for(EntityNeoListener i:in) centerNeo.remove.add(i);
+  }
+  //---------------------------------------------------------------------------
 }
