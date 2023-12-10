@@ -11,7 +11,7 @@ public abstract class StateEntityBase<P extends UtilScreen,E extends StateEntity
     // initContainer(p);
     // displayCam=new DisplayEntity(this::displayCam);
   }
-  public void initContainer(P p) {
+  public void initContainer() {
     container=new ScreenContentContainer().initMember(p);
   }
   public StateEntityBase(P p,int id) {
