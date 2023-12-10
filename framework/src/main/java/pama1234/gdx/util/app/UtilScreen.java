@@ -28,6 +28,7 @@ import pama1234.gdx.util.listener.EntityListener;
 import pama1234.gdx.util.listener.EntityNeoListener;
 import pama1234.gdx.util.wrapper.AutoEntityManager;
 import pama1234.gdx.util.wrapper.EntityCenter;
+import pama1234.gdx.util.wrapper.EntityNeoCenter;
 import pama1234.gdx.util.wrapper.ScreenContentContainer;
 import pama1234.util.wrapper.Center;
 import pama1234.util.wrapper.ServerEntityCenter;
@@ -75,6 +76,7 @@ public abstract class UtilScreen extends UtilScreenRender{
     centerSys.list.add(cam);
     center.list.add(centerCam=new EntityCenter<>(this));
     center.list.add(centerScreen=new EntityCenter<>(this));
+    center.list.add(centerNeo=new EntityNeoCenter<>(this));
 
     screenStage=new Stage(screenViewport=new ScalingViewport(Scaling.fit,width,height,screenCam),imageBatch);
     camStage=new Stage(camViewport=new ScalingViewport(Scaling.fit,width,height,cam.camera),imageBatch);
@@ -162,10 +164,12 @@ public abstract class UtilScreen extends UtilScreenRender{
     withCam();
     serverCenter.display();
     centerCam.display();
+    centerNeo.displayCam();
     displayWithCam();
     camOverlay();
     withScreen();
     centerScreen.display();
+    centerNeo.display();
     display();
     inputProcessor.display();
     endShape();
