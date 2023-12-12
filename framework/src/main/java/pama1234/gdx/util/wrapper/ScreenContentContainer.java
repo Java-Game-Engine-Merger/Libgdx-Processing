@@ -29,6 +29,13 @@ public class ScreenContentContainer implements EntityNeoListener{
     serverCenter=new ServerEntityCenter<ServerEntityListener>();
     return this;
   }
+  public void refreshAll() {
+    center.refresh();
+    centerCam.refresh();
+    centerScreen.refresh();
+    centerNeo.refresh();
+    serverCenter.refresh();
+  }
 
   //---------------------------------------------------------------------------
   public void addScreenTextFields(TextField... in) {
