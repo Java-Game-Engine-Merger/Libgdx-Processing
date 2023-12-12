@@ -11,28 +11,47 @@ public abstract class ScreenCoreState2D<C extends StateCenter<?,?>,E extends Sta
   public E state(E in) {
     E out=state;
     state=in;
-    if(out!=null) {
-      centerNeo.remove.add(out);
-      if(out.container!=null) centerRemoveContainer(out.container);
-      // centerCam.remove.add(out.displayCam);
-      out.to(in);
-      out.pause();
 
-      // TODO in alpha
-      // refreshAllCenter();
-    }
-    auto.stateChangeEvent(out,in);
-    if(in!=null) {
-      in.resume();
-      in.from(out);
-      centerNeo.add.add(in);
-      if(in.container!=null) centerAddContainer(in.container);
-      // centerCam.add.add(in.displayCam);
+    boolean outIsNull=out==null;
+    boolean inIsNull=in==null;
 
-      // TODO in alpha
-      // refreshAllCenter();
+    if(!outIsNull) {
+      // if(!inIsNull&&in.overlayType) out.underOverlay=true;
+      if(inIsNull||!in.overlayType) {
+        removeStateEntity(in,out);
+      }
     }
+
+    this.auto.stateChangeEvent(out,in);
+
+    if(!inIsNull) {
+      // if(!outIsNull&&out.overlayType) in.underOverlay=false;
+      if(outIsNull||!out.overlayType) {
+        addStateEntity(in,out);
+      }
+    }
+
     return out;
+  }
+  public void addStateEntity(E in,E out) {
+    in.resume();
+    in.from(out);
+    centerNeo.add.add(in);
+    if(in.container!=null) centerAddContainer(in.container);
+    // centerCam.add.add(in.displayCam);
+
+    // TODO in alpha
+    // refreshAllCenter();
+  }
+  public void removeStateEntity(E in,E out) {
+    centerNeo.remove.add(out);
+    if(out.container!=null) centerRemoveContainer(out.container);
+    // centerCam.remove.add(out.displayCam);
+    out.to(in);
+    out.pause();
+
+    // TODO in alpha
+    // refreshAllCenter();
   }
 
   @Override
