@@ -13,7 +13,7 @@ public abstract class ScreenCoreState2D<C extends StateCenter<?,?>,E extends Sta
     state=in;
     if(out!=null) {
       centerNeo.remove.add(out);
-      if(in.container!=null) centerRemoveContainer(in.container);
+      if(out.container!=null) centerRemoveContainer(out.container);
       // centerCam.remove.add(out.displayCam);
       out.to(in);
       out.pause();
