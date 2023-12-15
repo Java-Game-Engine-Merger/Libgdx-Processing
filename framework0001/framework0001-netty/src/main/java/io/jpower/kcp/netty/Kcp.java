@@ -290,6 +290,8 @@ public class Kcp{
       fastack=0;
       xmit=0;
       if(releaseBuf) {
+        // TODO 评估是否需要这个
+        // if(data.refCnt()>0)
         data.release();
       }
       data=null;
@@ -1094,9 +1096,8 @@ public class Kcp{
   }
 
   /**
-   * update getState (call it repeatedly, every 10ms-100ms), or you can ask
-   * ikcp_check when to call it again (without ikcp_input/_send calling).
-   * 'current' - current timestamp in millisec.
+   * update getState (call it repeatedly, every 10ms-100ms), or you can ask ikcp_check when to
+   * call it again (without ikcp_input/_send calling). 'current' - current timestamp in millisec.
    *
    * @param current
    */
@@ -1116,13 +1117,8 @@ public class Kcp{
     }
 
     /*
-     * if (slap >= 0) {
-     * tsFlush += setInterval;
-     * if (itimediff(this.current, tsFlush) >= 0) {
-     * tsFlush = this.current + setInterval;
-     * }
-     * flush();
-     * }
+     * if (slap >= 0) { tsFlush += setInterval; if (itimediff(this.current, tsFlush) >= 0) { tsFlush
+     * = this.current + setInterval; } flush(); }
      */
 
     if(slap>=0) {
@@ -1137,13 +1133,11 @@ public class Kcp{
   }
 
   /**
-   * Determine when should you invoke ikcp_update:
-   * returns when you should invoke ikcp_update in millisec, if there
-   * is no ikcp_input/_send calling. you can call ikcp_update in that
-   * time, instead of call update repeatly.
-   * Important to reduce unnacessary ikcp_update invoking. use it to
-   * schedule ikcp_update (eg. implementing an epoll-like mechanism,
-   * or optimize ikcp_update when handling massive kcp connections)
+   * Determine when should you invoke ikcp_update: returns when you should invoke ikcp_update in
+   * millisec, if there is no ikcp_input/_send calling. you can call ikcp_update in that time,
+   * instead of call update repeatly. Important to reduce unnacessary ikcp_update invoking. use it
+   * to schedule ikcp_update (eg. implementing an epoll-like mechanism, or optimize ikcp_update
+   * when handling massive kcp connections)
    *
    * @param current
    * @return
