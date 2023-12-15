@@ -117,7 +117,12 @@ public class MassPoint extends Point implements ByteBufferData{
       vel.y*=-f;
     }
   }
-  public void cloneFrom(MassPoint in) {
+  // TODO 评估必要性
+  // @Deprecated
+  // public void cloneFrom(MassPoint in) {
+  //   set(in);
+  // }
+  public void set(MassPoint in) {
     pos.set(in.pos);
     vel.set(in.vel);
     f=in.f;
