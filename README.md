@@ -44,9 +44,7 @@
 
 我们的框架通过jit进行打包
 
-<https://jitpack.io/#pama1234/just-some-other-libgdx-game/>
-
-注意，菱形依赖的问题并没有解决，因此在其他项目内使用framework0001和其他内容时可能会需要配置一大堆exclude规则，尤其是在打包安卓的时候，推荐只使用以下两个基础框架
+<https://jitpack.io/#Java-Game-Engine-Merger/Libgdx-Processing>
 
 ### Gradle
 
