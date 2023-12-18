@@ -308,6 +308,9 @@ public abstract class UtilScreen extends UtilScreenRender{
     centerScreen.add.add(in.centerScreen);
     centerNeo.add.add(in.centerNeo);
     serverCenter.add.add(in.serverCenter);
+
+    inputProcessor.sub.add.add(in.screenStage);
+    inputProcessor.sub.add.add(in.camStage);
   }
   public void centerRemoveContainer(ScreenContentContainer in) {
     center.remove.add(in.center);
@@ -315,6 +318,9 @@ public abstract class UtilScreen extends UtilScreenRender{
     centerScreen.remove.add(in.centerScreen);
     centerNeo.remove.add(in.centerNeo);
     serverCenter.remove.add(in.serverCenter);
+
+    inputProcessor.sub.remove.add(in.screenStage);
+    inputProcessor.sub.remove.add(in.camStage);
   }
   public void copyToContainer(ScreenContentContainer in) {
     in.center=center;
@@ -322,6 +328,9 @@ public abstract class UtilScreen extends UtilScreenRender{
     in.centerScreen=centerScreen;
     in.centerNeo=centerNeo;
     in.serverCenter=serverCenter;
+
+    in.screenStage=screenStage;
+    in.camStage=camStage;
   }
   public void copyFromContainer(ScreenContentContainer in) {
     center=in.center;
@@ -329,5 +338,8 @@ public abstract class UtilScreen extends UtilScreenRender{
     centerScreen=in.centerScreen;
     centerNeo=in.centerNeo;
     serverCenter=in.serverCenter;
+
+    screenStage=in.screenStage;
+    camStage=in.camStage;
   }
 }
