@@ -1,8 +1,5 @@
 package pama1234.gdx.util.wrapper;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-
 import pama1234.gdx.game.ui.element.TextField;
 import pama1234.gdx.util.app.UtilScreen;
 import pama1234.gdx.util.listener.EntityListener;
@@ -10,6 +7,9 @@ import pama1234.gdx.util.listener.EntityNeoListener;
 import pama1234.util.Annotations.RedundantCache;
 import pama1234.util.listener.ServerEntityListener;
 import pama1234.util.wrapper.ServerEntityCenter;
+
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 @RedundantCache
 public class ScreenContentContainer implements EntityNeoListener{
@@ -27,6 +27,9 @@ public class ScreenContentContainer implements EntityNeoListener{
     centerScreen=new EntityCenter<UtilScreen,EntityListener>(p);
     centerNeo=new EntityNeoCenter<UtilScreen,EntityNeoListener>(p);
     serverCenter=new ServerEntityCenter<ServerEntityListener>();
+
+    screenStage=new Stage(p.screenViewport,p.imageBatch);
+    camStage=new Stage(p.camViewport,p.imageBatch);
     return this;
   }
   public void refreshAll() {
