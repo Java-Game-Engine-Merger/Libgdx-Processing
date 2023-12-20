@@ -1,5 +1,11 @@
 package pama1234.gdx.game.ui.element;
 
+import pama1234.gdx.util.font.MultiChunkFont;
+import pama1234.gdx.util.font.MultiChunkFontData;
+import pama1234.gdx.util.font.TextStyleSupplier;
+import pama1234.math.geometry.RectI;
+import pama1234.util.function.GetFloat;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
@@ -28,12 +34,6 @@ import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-
-import pama1234.gdx.util.font.MultiChunkFont;
-import pama1234.gdx.util.font.MultiChunkFontData;
-import pama1234.gdx.util.font.TextStyleSupplier;
-import pama1234.math.geometry.RectI;
-import pama1234.util.function.GetFloat;
 
 public class TextField extends Widget implements Disableable{
   protected static final char BACKSPACE=8;
@@ -119,6 +119,11 @@ public class TextField extends Widget implements Disableable{
     this.rectF=rectF;
     this.textSize=textSize;
   }
+
+  // TODO 调用ExecuteFunction
+  public void focusGained() {}
+  public void focusLost() {}
+
   protected void initialize() {
     addListener(inputListener=createInputListener());
   }
