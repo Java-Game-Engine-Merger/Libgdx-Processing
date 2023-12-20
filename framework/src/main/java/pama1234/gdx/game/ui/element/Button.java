@@ -71,17 +71,17 @@ public abstract class Button<T extends UtilScreen>extends Entity<T>{
     end();
   }
   public void start() {
-    if(breakEvent) touch.state=1;
+    if(breakEvent) touch.state+=1;
   }
   public void end() {
-    if(breakEvent) touch.state=0;
+    if(breakEvent) touch.state-=1;
     touch=null;
   }
   @Override
   public void touchStarted(TouchInfo info) {
     TouchInfo temp=touch;
     touch=info;
-    if(info.button==Buttons.LEFT&&inButton(nx.get(),ny.get())) clickStart();
+    if(info.button==Buttons.LEFT&&inButton(nx.get(),ny.get())&&validTouchState(info.state)) clickStart();
     else touch=temp;
   }
   @Override
