@@ -74,8 +74,9 @@ public abstract class UtilScreen extends UtilScreenRender{
     center=new EntityCenter<>(this);
     center.list.add(cam=createCamera());
     centerSys.list.add(cam);
-    center.list.add(centerCam=new EntityCenter<>(this));
+    // TOOD update顺序，centerScreen应当先于centerCam
     center.list.add(centerScreen=new EntityCenter<>(this));
+    center.list.add(centerCam=new EntityCenter<>(this));
     center.list.add(centerNeo=new EntityNeoCenter<>(this));
 
     screenStage=new Stage(screenViewport=new ScalingViewport(Scaling.fit,width,height,screenCam),imageBatch);
