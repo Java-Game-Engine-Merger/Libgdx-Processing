@@ -41,7 +41,7 @@ public abstract class Button<T extends UtilScreen>extends Entity<T>{
       if(!mouseLimit) {
         TouchInfo temp=touch;
         for(TouchInfo e:p.touches) {
-          if(e==temp||!e.active||e.state!=0) continue;
+          if(e==temp||!e.active||!validTouchState(e.state)) continue;
           touch=e;
           if(inButton(nx.get(),ny.get())) {
             clickStart();
@@ -51,6 +51,9 @@ public abstract class Button<T extends UtilScreen>extends Entity<T>{
         touch=temp;
       }
     }
+  }
+  public boolean validTouchState(int in) {
+    return in==0;
   }
   public abstract boolean inButton(float x,float y);
   public boolean active() {
