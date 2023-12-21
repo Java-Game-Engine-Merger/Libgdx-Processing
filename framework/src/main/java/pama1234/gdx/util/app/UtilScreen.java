@@ -316,12 +316,15 @@ public abstract class UtilScreen extends UtilScreenRender{
     // inputProcessor.sub.add.add(in.screenStage);
     // inputProcessor.sub.add.add(in.camStage);
 
-    // TODO 有点丑
-    Array<Actor> ta1=in.screenStage.getActors();
-    for(Actor i:ta1) screenStage.addActor(i);
+    // // TODO 有点丑
+    // // TODO 效果异常
+    // Array<Actor> ta1=in.screenStage.getActors();
+    // for(Actor i:ta1) screenStage.addActor(i);
+    // // for(int i=0;i<ta1.size;i++) screenStage.addActor(ta1.get(i));
 
-    Array<Actor> ta2=in.screenStage.getActors();
-    for(Actor i:ta2) screenStage.addActor(i);
+    // Array<Actor> ta2=in.camStage.getActors();
+    // for(Actor i:ta2) camStage.addActor(i);
+    // // for(int i=0;i<ta2.size;i++) camStage.addActor(ta2.get(i));
   }
   public void centerRemoveContainer(ScreenContentContainer in) {
     center.remove.add(in.center);
@@ -333,13 +336,16 @@ public abstract class UtilScreen extends UtilScreenRender{
     // inputProcessor.sub.remove.add(in.screenStage);
     // inputProcessor.sub.remove.add(in.camStage);
 
-    Group tr1=screenStage.getRoot();
-    Array<Actor> ta1=in.screenStage.getActors();
-    for(Actor i:ta1) tr1.removeActor(i);
+    // Group tr1=screenStage.getRoot();
+    // Array<Actor> ta1=in.screenStage.getActors();
+    // for(Actor i:ta1) tr1.removeActor(i);
+    // // for(int i=0;i<ta1.size;i++) tr1.removeActor(ta1.get(i));
 
-    Group tr2=screenStage.getRoot();
-    Array<Actor> ta2=in.screenStage.getActors();
-    for(Actor i:ta2) tr2.removeActor(i);
+    // Group tr2=camStage.getRoot();
+    // Array<Actor> ta2=in.camStage.getActors();
+    // for(Actor i:ta2) tr2.removeActor(i);
+    // // for(int i=0;i<ta2.size;i++) tr2.removeActor(ta2.get(i));
+
   }
   public void copyToContainer(ScreenContentContainer in) {
     in.center=center;
