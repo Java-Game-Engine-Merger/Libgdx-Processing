@@ -1,8 +1,10 @@
 package pama1234;
 
-import java.lang.reflect.Array;
-
 import pama1234.util.ColorTools;
+
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Tools extends ColorTools{
   // Android特供修正
@@ -74,5 +76,12 @@ public class Tools extends ColorTools{
   }
   public static String getMemory() {
     return Tools.cutToLastDigitString((Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())/(1024*1024));
+  }
+
+  public static final SimpleDateFormat DATE_FORMAT=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSSS");
+  public static String timeString(long ms) {
+    SimpleDateFormat sdf=DATE_FORMAT;
+    Date resultdate=new Date(ms);
+    return sdf.format(resultdate);
   }
 }
