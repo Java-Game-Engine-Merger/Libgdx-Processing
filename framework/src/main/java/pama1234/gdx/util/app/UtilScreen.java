@@ -1,23 +1,5 @@
 package pama1234.gdx.util.app;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.IntArray;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
-
-import hhs.gdx.hslib.tools.LoopThread;
 import pama1234.gdx.game.ui.element.TextField;
 import pama1234.gdx.util.SharedResources;
 import pama1234.gdx.util.cam.CameraController;
@@ -32,6 +14,27 @@ import pama1234.gdx.util.wrapper.EntityNeoCenter;
 import pama1234.gdx.util.wrapper.ScreenContentContainer;
 import pama1234.util.wrapper.Center;
 import pama1234.util.wrapper.ServerEntityCenter;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.IntArray;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+
+import hhs.gdx.hslib.tools.LoopThread;
 
 /**
  * 此中间类主要放渲染相关的东东
@@ -312,6 +315,13 @@ public abstract class UtilScreen extends UtilScreenRender{
 
     // inputProcessor.sub.add.add(in.screenStage);
     // inputProcessor.sub.add.add(in.camStage);
+
+    // TODO 有点丑
+    Array<Actor> ta1=in.screenStage.getActors();
+    for(Actor i:ta1) screenStage.addActor(i);
+
+    Array<Actor> ta2=in.screenStage.getActors();
+    for(Actor i:ta2) screenStage.addActor(i);
   }
   public void centerRemoveContainer(ScreenContentContainer in) {
     center.remove.add(in.center);
@@ -322,6 +332,14 @@ public abstract class UtilScreen extends UtilScreenRender{
 
     // inputProcessor.sub.remove.add(in.screenStage);
     // inputProcessor.sub.remove.add(in.camStage);
+
+    Group tr1=screenStage.getRoot();
+    Array<Actor> ta1=in.screenStage.getActors();
+    for(Actor i:ta1) tr1.removeActor(i);
+
+    Group tr2=screenStage.getRoot();
+    Array<Actor> ta2=in.screenStage.getActors();
+    for(Actor i:ta2) tr2.removeActor(i);
   }
   public void copyToContainer(ScreenContentContainer in) {
     in.center=center;

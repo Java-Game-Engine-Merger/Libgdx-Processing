@@ -110,7 +110,8 @@ public class UtilInputProcesser implements EssentialListener,InputProcessor{
       p.center.touchStarted(info);
       p.touchStarted(info);
     }
-    for(InputProcessor i:sub.list) if(i.touchDown(screenX,screenY,pointer,button)) return true;
+    // TODO 评估info.state==0，这个主要用于避免按钮底下的文本框被触发，因为文本框被按钮挡住时不应当被触发
+    if(info.state==0) for(InputProcessor i:sub.list) if(i.touchDown(screenX,screenY,pointer,button)) return true;
     return false;
   }
   @Override
