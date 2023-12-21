@@ -240,8 +240,8 @@ public final class UkcpServerChannel extends AbstractNioMessageChannel implement
   }
 
   /**
-   * Checks if the specified buffer is a direct buffer and is composed of a single NIO buffer.
-   * (We check this because otherwise we need to make it a non-composite buffer.)
+   * Checks if the specified buffer is a direct buffer and is composed of a single NIO buffer. (We
+   * check this because otherwise we need to make it a non-composite buffer.)
    */
   private static boolean isSingleDirectBuffer(ByteBuf buf) {
     return buf.isDirect()&&buf.nioBufferCount()==1;
@@ -384,6 +384,7 @@ public final class UkcpServerChannel extends AbstractNioMessageChannel implement
           exception=t;
         }
 
+        // TODO 只是连接断了吧，，，评估是否需要报错
         if(childCh.kcpState()==-1&&exception==null) {
           if(log.isDebugEnabled()) {
             log.debug("getState=-1 after update(). channel={}",childCh);
