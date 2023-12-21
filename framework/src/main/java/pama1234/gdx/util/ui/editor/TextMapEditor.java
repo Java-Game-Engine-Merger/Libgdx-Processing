@@ -1,4 +1,4 @@
-package pama1234.gdx.util.editor;
+package pama1234.gdx.util.ui.editor;
 
 import pama1234.gdx.game.ui.element.TextArea;
 import pama1234.gdx.util.app.UtilScreen2D;

@@ -1,4 +1,4 @@
-package pama1234.gdx.util.editor;
+package pama1234.gdx.util.ui.editor;
 
 import static pama1234.gdx.util.UITools.createCross;
 
