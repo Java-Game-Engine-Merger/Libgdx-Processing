@@ -43,8 +43,12 @@ public class SectorCenter<P extends UtilScreen,E extends StateEntityBase<P,?,?>,
     // p.centerCamAddAll(in.buttonsCam);
     ps.container.centerCamAddAll(in.buttonsCam);
 
+    // // TODO TextField不适应树形实体管理
+    // // p.addCamTextFields(in.camTextFields);
+    // ps.container.addCamTextFields(in.camTextFields);
+
+    // for(var e:in.camTextFields) e.setDisabled(false);
     // p.addCamTextFields(in.camTextFields);
-    ps.container.addCamTextFields(in.camTextFields);
   }
   public void removeAll(T in) {
     // p.centerScreenRemoveAll(in.buttonsScreen);
@@ -53,7 +57,9 @@ public class SectorCenter<P extends UtilScreen,E extends StateEntityBase<P,?,?>,
     // p.centerCamRemoveAll(in.buttonsCam);
     ps.container.centerCamRemoveAll(in.buttonsCam);
 
-    // p.removeCamTextFields(in.camTextFields);
-    ps.container.removeCamTextFields(in.camTextFields);
+    // // p.removeCamTextFields(in.camTextFields);
+    // ps.container.removeCamTextFields(in.camTextFields);
+
+    // for(var e:in.camTextFields) e.setDisabled(true);
   }
 }
