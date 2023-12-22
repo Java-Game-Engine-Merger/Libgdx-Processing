@@ -1,5 +1,24 @@
 package pama1234.gdx.util.app;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.IntArray;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+
+import hhs.gdx.hslib.tools.LoopThread;
 import pama1234.gdx.game.ui.element.TextField;
 import pama1234.gdx.util.SharedResources;
 import pama1234.gdx.util.cam.CameraController;
@@ -14,27 +33,6 @@ import pama1234.gdx.util.wrapper.EntityNeoCenter;
 import pama1234.gdx.util.wrapper.ScreenContentContainer;
 import pama1234.util.wrapper.Center;
 import pama1234.util.wrapper.ServerEntityCenter;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.IntArray;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
-
-import hhs.gdx.hslib.tools.LoopThread;
 
 /**
  * 此中间类主要放渲染相关的东东
@@ -247,6 +245,21 @@ public abstract class UtilScreen extends UtilScreenRender{
     Group root=camStage.getRoot();
     for(TextField e:in) root.removeActor(e);
   }
+
+  public void addScreenTextFields(Array<TextField> in) {
+    for(TextField e:in) screenStage.addActor(e);
+  }
+  public void addCamTextFields(Array<TextField> in) {
+    for(TextField e:in) camStage.addActor(e);
+  }
+  public void removeScreenTextFields(Array<TextField> in) {
+    Group root=screenStage.getRoot();
+    for(TextField e:in) root.removeActor(e);
+  }
+  public void removeCamTextFields(Array<TextField> in) {
+    Group root=camStage.getRoot();
+    for(TextField e:in) root.removeActor(e);
+  }
   //---------------------------------------------------------------------------
   public void drawCursor() {
     drawCursor(0,255);
@@ -319,12 +332,15 @@ public abstract class UtilScreen extends UtilScreenRender{
     // // TODO 有点丑
     // // TODO 效果异常
     // Array<Actor> ta1=in.screenStage.getActors();
-    // for(Actor i:ta1) screenStage.addActor(i);
-    // // for(int i=0;i<ta1.size;i++) screenStage.addActor(ta1.get(i));
+    // // for(Actor i:ta1) screenStage.addActor(i);
+    // for(int i=0;i<ta1.size;i++) screenStage.addActor(ta1.get(i));
 
     // Array<Actor> ta2=in.camStage.getActors();
-    // for(Actor i:ta2) camStage.addActor(i);
-    // // for(int i=0;i<ta2.size;i++) camStage.addActor(ta2.get(i));
+    // // for(Actor i:ta2) camStage.addActor(i);
+    // for(int i=0;i<ta2.size;i++) camStage.addActor(ta2.get(i));
+
+    for(var e:in.screenStage) screenStage.addActor(e);
+    for(var e:in.camStage) camStage.addActor(e);
   }
   public void centerRemoveContainer(ScreenContentContainer in) {
     center.remove.add(in.center);
@@ -338,14 +354,18 @@ public abstract class UtilScreen extends UtilScreenRender{
 
     // Group tr1=screenStage.getRoot();
     // Array<Actor> ta1=in.screenStage.getActors();
-    // for(Actor i:ta1) tr1.removeActor(i);
-    // // for(int i=0;i<ta1.size;i++) tr1.removeActor(ta1.get(i));
+    // // for(Actor i:ta1) tr1.removeActor(i);
+    // for(int i=0;i<ta1.size;i++) tr1.removeActor(ta1.get(i));
 
     // Group tr2=camStage.getRoot();
     // Array<Actor> ta2=in.camStage.getActors();
-    // for(Actor i:ta2) tr2.removeActor(i);
-    // // for(int i=0;i<ta2.size;i++) tr2.removeActor(ta2.get(i));
+    // // for(Actor i:ta2) tr2.removeActor(i);
+    // for(int i=0;i<ta2.size;i++) tr2.removeActor(ta2.get(i));
 
+    Group tr1=screenStage.getRoot();
+    for(var e:in.screenStage) tr1.removeActor(e);
+    Group tr2=camStage.getRoot();
+    for(var e:in.camStage) tr2.removeActor(e);
   }
   public void copyToContainer(ScreenContentContainer in) {
     in.center=center;
@@ -354,8 +374,8 @@ public abstract class UtilScreen extends UtilScreenRender{
     in.centerNeo=centerNeo;
     in.serverCenter=serverCenter;
 
-    in.screenStage=screenStage;
-    in.camStage=camStage;
+    // in.screenStage=screenStage;
+    // in.camStage=camStage;
   }
   public void copyFromContainer(ScreenContentContainer in) {
     center=in.center;
@@ -364,7 +384,7 @@ public abstract class UtilScreen extends UtilScreenRender{
     centerNeo=in.centerNeo;
     serverCenter=in.serverCenter;
 
-    screenStage=in.screenStage;
-    camStage=in.camStage;
+    // screenStage=in.screenStage;
+    // camStage=in.camStage;
   }
 }
