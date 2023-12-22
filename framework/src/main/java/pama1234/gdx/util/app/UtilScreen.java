@@ -326,21 +326,14 @@ public abstract class UtilScreen extends UtilScreenRender{
     centerNeo.add.add(in.centerNeo);
     serverCenter.add.add(in.serverCenter);
 
-    // inputProcessor.sub.add.add(in.screenStage);
-    // inputProcessor.sub.add.add(in.camStage);
+    // for(var e:in.screenStage.getChildren()) screenStage.addActor(e);
+    // for(var e:in.camStage.getChildren()) camStage.addActor(e);
 
-    // // TODO 有点丑
-    // // TODO 效果异常
-    // Array<Actor> ta1=in.screenStage.getActors();
-    // // for(Actor i:ta1) screenStage.addActor(i);
-    // for(int i=0;i<ta1.size;i++) screenStage.addActor(ta1.get(i));
+    // for(var e:in.screenStage.list) screenStage.addActor(e);
+    // for(var e:in.camStage.list) camStage.addActor(e);
 
-    // Array<Actor> ta2=in.camStage.getActors();
-    // // for(Actor i:ta2) camStage.addActor(i);
-    // for(int i=0;i<ta2.size;i++) camStage.addActor(ta2.get(i));
-
-    for(var e:in.screenStage) screenStage.addActor(e);
-    for(var e:in.camStage) camStage.addActor(e);
+    // screenStage.addActor(in.screenStage);
+    // camStage.addActor(in.camStage);
   }
   public void centerRemoveContainer(ScreenContentContainer in) {
     center.remove.add(in.center);
@@ -349,23 +342,17 @@ public abstract class UtilScreen extends UtilScreenRender{
     centerNeo.remove.add(in.centerNeo);
     serverCenter.remove.add(in.serverCenter);
 
-    // inputProcessor.sub.remove.add(in.screenStage);
-    // inputProcessor.sub.remove.add(in.camStage);
+    // Group tr1=screenStage.getRoot();
+    // for(var e:in.screenStage.getChildren()) tr1.removeActor(e);
+    // Group tr2=camStage.getRoot();
+    // for(var e:in.camStage.getChildren()) tr2.removeActor(e);
 
     // Group tr1=screenStage.getRoot();
-    // Array<Actor> ta1=in.screenStage.getActors();
-    // // for(Actor i:ta1) tr1.removeActor(i);
-    // for(int i=0;i<ta1.size;i++) tr1.removeActor(ta1.get(i));
-
+    // tr1.removeActor(in.screenStage);
+    // // for(var e:in.screenStage.list) tr1.removeActor(e);
     // Group tr2=camStage.getRoot();
-    // Array<Actor> ta2=in.camStage.getActors();
-    // // for(Actor i:ta2) tr2.removeActor(i);
-    // for(int i=0;i<ta2.size;i++) tr2.removeActor(ta2.get(i));
-
-    Group tr1=screenStage.getRoot();
-    for(var e:in.screenStage) tr1.removeActor(e);
-    Group tr2=camStage.getRoot();
-    for(var e:in.camStage) tr2.removeActor(e);
+    // tr2.removeActor(in.camStage);
+    // // for(var e:in.camStage.list) tr2.removeActor(e);
   }
   public void copyToContainer(ScreenContentContainer in) {
     in.center=center;
@@ -374,8 +361,9 @@ public abstract class UtilScreen extends UtilScreenRender{
     in.centerNeo=centerNeo;
     in.serverCenter=serverCenter;
 
-    // in.screenStage=screenStage;
-    // in.camStage=camStage;
+    // in.screenStage=screenStage.getRoot();
+    // in.camStage=camStage.getRoot();
+
   }
   public void copyFromContainer(ScreenContentContainer in) {
     center=in.center;
@@ -384,7 +372,8 @@ public abstract class UtilScreen extends UtilScreenRender{
     centerNeo=in.centerNeo;
     serverCenter=in.serverCenter;
 
-    // screenStage=in.screenStage;
-    // camStage=in.camStage;
+    // screenStage.setRoot(in.screenStage);
+    // camStage.setRoot(in.camStage);
+
   }
 }

@@ -1,11 +1,5 @@
 package pama1234.gdx.util.wrapper;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Array;
-
-import pama1234.gdx.game.ui.element.TextField;
 import pama1234.gdx.util.app.UtilScreen;
 import pama1234.gdx.util.listener.EntityListener;
 import pama1234.gdx.util.listener.EntityNeoListener;
@@ -21,8 +15,7 @@ public class ScreenContentContainer implements EntityNeoListener{
   public EntityNeoCenter<UtilScreen,EntityNeoListener> centerNeo;
   public ServerEntityCenter<ServerEntityListener> serverCenter;
 
-  // public Stage screenStage,camStage;
-  public ArrayList<Actor> screenStage,camStage;
+  // public ActorCenter screenStage,camStage;
 
   public ScreenContentContainer initMember(UtilScreen p) {
     center=new EntityCenter<UtilScreen,EntityListener>(p);
@@ -31,11 +24,14 @@ public class ScreenContentContainer implements EntityNeoListener{
     centerNeo=new EntityNeoCenter<UtilScreen,EntityNeoListener>(p);
     serverCenter=new ServerEntityCenter<ServerEntityListener>();
 
-    // screenStage=new Stage(p.screenViewport,p.imageBatch);
-    // camStage=new Stage(p.camViewport,p.imageBatch);
+    // screenStage=new Group();
+    // camStage=new Group();
 
-    screenStage=new ArrayList<>();
-    camStage=new ArrayList<>();
+    // screenStage=new ActorCenter();
+    // camStage=new ActorCenter();
+
+    // Stage a=null;
+    // Group b=a.getRoot();
 
     return this;
   }
@@ -48,44 +44,40 @@ public class ScreenContentContainer implements EntityNeoListener{
   }
 
   //---------------------------------------------------------------------------
-  public void addScreenTextFields(TextField... in) {
-    // for(TextField e:in) screenStage.addActor(e);
-    for(TextField e:in) screenStage.add(e);
-  }
-  public void addCamTextFields(TextField... in) {
-    // for(TextField e:in) camStage.addActor(e);
-    for(TextField e:in) camStage.add(e);
-  }
-  public void removeScreenTextFields(TextField... in) {
-    // Group root=screenStage.getRoot();
-    // for(TextField e:in) root.removeActor(e);
-    for(TextField e:in) screenStage.remove(e);
+  // public void addScreenTextFields(TextField... in) {
+  //   // for(TextField e:in) screenStage.addActor(e);
+  //   for(TextField e:in) screenStage.list.add(e);
+  // }
+  // public void addCamTextFields(TextField... in) {
+  //   // for(TextField e:in) camStage.addActor(e);
+  //   for(TextField e:in) camStage.list.add(e);
+  // }
+  // public void removeScreenTextFields(TextField... in) {
+  //   // for(TextField e:in) screenStage.removeActor(e);
+  //   for(TextField e:in) screenStage.list.remove(e);
 
-  }
-  public void removeCamTextFields(TextField... in) {
-    // Group root=camStage.getRoot();
-    // for(TextField e:in) root.removeActor(e);
-    for(TextField e:in) camStage.remove(e);
-  }
+  // }
+  // public void removeCamTextFields(TextField... in) {
+  //   // for(TextField e:in) camStage.removeActor(e);
+  //   for(TextField e:in) camStage.list.remove(e);
+  // }
 
-  public void addScreenTextFields(Array<TextField> in) {
-    // for(TextField e:in) screenStage.addActor(e);
-    for(TextField e:in) screenStage.add(e);
-  }
-  public void addCamTextFields(Array<TextField> in) {
-    // for(TextField e:in) camStage.addActor(e);
-    for(TextField e:in) camStage.add(e);
-  }
-  public void removeScreenTextFields(Array<TextField> in) {
-    // Group root=screenStage.getRoot();
-    // for(TextField e:in) root.removeActor(e);
-    for(TextField e:in) screenStage.remove(e);
-  }
-  public void removeCamTextFields(Array<TextField> in) {
-    // Group root=camStage.getRoot();
-    // for(TextField e:in) root.removeActor(e);
-    for(TextField e:in) camStage.remove(e);
-  }
+  // public void addScreenTextFields(Array<TextField> in) {
+  //   // for(TextField e:in) screenStage.addActor(e);
+  //   for(TextField e:in) screenStage.list.add(e);
+  // }
+  // public void addCamTextFields(Array<TextField> in) {
+  //   // for(TextField e:in) camStage.addActor(e);
+  //   for(TextField e:in) camStage.list.add(e);
+  // }
+  // public void removeScreenTextFields(Array<TextField> in) {
+  //   // for(TextField e:in) screenStage.removeActor(e);
+  //   for(TextField e:in) screenStage.list.remove(e);
+  // }
+  // public void removeCamTextFields(Array<TextField> in) {
+  //   // for(TextField e:in) camStage.removeActor(e);
+  //   for(TextField e:in) camStage.list.remove(e);
+  // }
   //---------------------------------------------------------------------------
   public void centerCamAddAll(EntityListener... in) {
     for(EntityListener i:in) centerCam.add.add(i);
