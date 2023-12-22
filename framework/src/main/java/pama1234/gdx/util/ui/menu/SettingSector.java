@@ -10,13 +10,13 @@ import com.badlogic.gdx.utils.Array;
 public abstract class SettingSector<T extends UtilScreen,E>{
   public TextButtonCam<?> pb;
 
-  public Array<Button<?>> buttons=new Array<>();
+  public Array<Button<?>> buttonsScreen=new Array<>();
   public Array<TextButtonCam<?>> buttonsCam=new Array<>();
   public Array<TextField> camTextFields=new Array<>();
 
   public abstract void createButton(T p,E ps);
   public void clear() {
-    buttons.clear();
+    buttonsScreen.clear();
     buttonsCam.clear();
     camTextFields.clear();
   }
