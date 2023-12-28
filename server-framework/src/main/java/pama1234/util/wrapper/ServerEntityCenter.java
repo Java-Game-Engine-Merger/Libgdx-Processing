@@ -1,10 +1,10 @@
 package pama1234.util.wrapper;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-
 import pama1234.util.entity.ServerEntity;
 import pama1234.util.listener.ServerEntityListener;
+
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class ServerEntityCenter<T extends ServerEntityListener>extends ServerEntity{
   public final LinkedList<T> list=new LinkedList<T>(),
@@ -18,7 +18,7 @@ public class ServerEntityCenter<T extends ServerEntityListener>extends ServerEnt
   public ServerEntityCenter(T[] in) {
     for(T i:in) list.add(i);
   }
-  public void refresh() {
+  public synchronized void refresh() {
     list.addAll(add);
     add.clear();
     list.removeAll(remove);
