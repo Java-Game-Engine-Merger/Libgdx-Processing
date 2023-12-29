@@ -22,7 +22,8 @@ public class ScreenContentContainer implements EntityNeoListener{
     centerCam=new EntityCenter<UtilScreen,EntityListener>(p);
     centerScreen=new EntityCenter<UtilScreen,EntityListener>(p);
     centerNeo=new EntityNeoCenter<UtilScreen,EntityNeoListener>(p);
-    serverCenter=new ServerEntityCenter<ServerEntityListener>();
+    // TODO
+    serverCenter=new ServerEntityCenter<ServerEntityListener>(null);
 
     // screenStage=new Group();
     // camStage=new Group();

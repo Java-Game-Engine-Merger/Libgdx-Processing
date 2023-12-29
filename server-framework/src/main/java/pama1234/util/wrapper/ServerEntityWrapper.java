@@ -1,11 +1,13 @@
 package pama1234.util.wrapper;
 
+import pama1234.util.UtilServer;
 import pama1234.util.entity.ServerEntity;
 import pama1234.util.listener.ServerEntityListener;
 
-public class ServerEntityWrapper<T extends ServerEntityListener>extends ServerEntity{
+public class ServerEntityWrapper<P extends UtilServer,T extends ServerEntityListener>extends ServerEntity<P>{
   public final T content;
-  public ServerEntityWrapper(T son) {
+  public ServerEntityWrapper(P p,T son) {
+    super(p);
     this.content=son;
   }
   @Override

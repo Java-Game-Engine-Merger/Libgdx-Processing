@@ -18,7 +18,7 @@ import pama1234.util.listener.ServerEntityListener;
 import pama1234.util.wrapper.ServerEntityCenter;
 
 public abstract class UtilServer implements Runnable{
-  public ServerEntityCenter<ServerEntityListener> center=new ServerEntityCenter<ServerEntityListener>();
+  public ServerEntityCenter<ServerEntityListener> center=new ServerEntityCenter<ServerEntityListener>(this);
   public boolean doDispose=true;
   public boolean stop;
 

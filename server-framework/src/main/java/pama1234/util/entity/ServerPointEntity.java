@@ -1,10 +1,12 @@
 package pama1234.util.entity;
 
 import pama1234.math.physics.Point;
+import pama1234.util.UtilServer;
 
-public abstract class ServerPointEntity<T extends Point>extends ServerEntity{
+public abstract class ServerPointEntity<P extends UtilServer,T extends Point>extends ServerEntity<P>{
   public final T point;
-  public ServerPointEntity(T in) {
+  public ServerPointEntity(P p,T in) {
+    super(p);
     point=in;
   }
   @Override
