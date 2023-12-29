@@ -1,5 +1,20 @@
 package pama1234.gdx.util.app;
 
+import pama1234.gdx.game.ui.element.TextField;
+import pama1234.gdx.util.SharedResources;
+import pama1234.gdx.util.cam.CameraController;
+import pama1234.gdx.util.info.MouseInfo;
+import pama1234.gdx.util.info.TouchInfo;
+import pama1234.gdx.util.input.UtilInputProcesser;
+import pama1234.gdx.util.listener.EntityListener;
+import pama1234.gdx.util.listener.EntityNeoListener;
+import pama1234.gdx.util.wrapper.AutoEntityManager;
+import pama1234.gdx.util.wrapper.EntityCenter;
+import pama1234.gdx.util.wrapper.EntityNeoCenter;
+import pama1234.gdx.util.wrapper.ScreenContentContainer;
+import pama1234.util.wrapper.Center;
+import pama1234.util.wrapper.ServerEntityCenter;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -19,20 +34,6 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 import hhs.gdx.hslib.tools.LoopThread;
-import pama1234.gdx.game.ui.element.TextField;
-import pama1234.gdx.util.SharedResources;
-import pama1234.gdx.util.cam.CameraController;
-import pama1234.gdx.util.info.MouseInfo;
-import pama1234.gdx.util.info.TouchInfo;
-import pama1234.gdx.util.input.UtilInputProcesser;
-import pama1234.gdx.util.listener.EntityListener;
-import pama1234.gdx.util.listener.EntityNeoListener;
-import pama1234.gdx.util.wrapper.AutoEntityManager;
-import pama1234.gdx.util.wrapper.EntityCenter;
-import pama1234.gdx.util.wrapper.EntityNeoCenter;
-import pama1234.gdx.util.wrapper.ScreenContentContainer;
-import pama1234.util.wrapper.Center;
-import pama1234.util.wrapper.ServerEntityCenter;
 
 /**
  * 此中间类主要放渲染相关的东东
@@ -70,7 +71,8 @@ public abstract class UtilScreen extends UtilScreenRender{
     imageBatch=SharedResources.instance.imageBatch;
     tvgDrawer=SharedResources.instance.tvgDrawer;
     Gdx.input.setInputProcessor(inputProcessor=new UtilInputProcesser(this));
-    serverCenter=new ServerEntityCenter<>();
+    // TODO
+    serverCenter=new ServerEntityCenter<>(null);
     centerSys=new Center<>();
     center=new EntityCenter<>(this);
     center.list.add(cam=createCamera());

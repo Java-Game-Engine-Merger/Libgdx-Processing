@@ -1,16 +1,18 @@
 package pama1234.util.wrapper;
 
-import java.util.ListIterator;
-
+import pama1234.util.UtilServer;
 import pama1234.util.entity.ServerPointEntity;
 
-public class ServerPointCenter<T extends ServerPointEntity<?>>extends ServerEntityCenter<T>{
+import java.util.ListIterator;
+
+public class ServerPointCenter<T extends ServerPointEntity<?,?>>extends ServerEntityCenter<T>{
   public float minDist,minDisplayDist;
   public T select;
-  public ServerPointCenter() {
-    this(4);
+  public ServerPointCenter(UtilServer p) {
+    this(p,4);
   }
-  public ServerPointCenter(float u) {
+  public ServerPointCenter(UtilServer p,float u) {
+    super(p);
     this.minDist=u;
     this.minDisplayDist=u;
   }

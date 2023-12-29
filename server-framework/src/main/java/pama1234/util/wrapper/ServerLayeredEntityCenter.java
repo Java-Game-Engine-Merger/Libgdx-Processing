@@ -1,11 +1,13 @@
 package pama1234.util.wrapper;
 
+import pama1234.util.UtilServer;
 import pama1234.util.entity.ServerEntity;
 
-public class ServerLayeredEntityCenter extends ServerEntity{
+public class ServerLayeredEntityCenter extends ServerEntity<UtilServer>{
   public ServerEntityCenter<?>[] list;
   public boolean reverseDisplay;
-  public ServerLayeredEntityCenter(int size) {
+  public ServerLayeredEntityCenter(UtilServer p,int size) {
+    super(p);
     list=new ServerEntityCenter<?>[size];
   }
   @Override

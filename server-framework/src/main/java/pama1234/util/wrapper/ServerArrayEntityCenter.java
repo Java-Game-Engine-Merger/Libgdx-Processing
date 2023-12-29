@@ -2,21 +2,26 @@ package pama1234.util.wrapper;
 
 import java.util.ArrayList;
 
+import pama1234.util.UtilServer;
 import pama1234.util.entity.ServerEntity;
 import pama1234.util.listener.ServerEntityListener;
 
-public class ServerArrayEntityCenter<T extends ServerEntityListener>extends ServerEntity{
+public class ServerArrayEntityCenter<T extends ServerEntityListener>extends ServerEntity<UtilServer>{
   public final ArrayList<T> list=new ArrayList<T>(),
     add=new ArrayList<T>(),
     remove=new ArrayList<T>();
   public boolean reverseDisplay=true;
-  public ServerArrayEntityCenter() {}
-  public ServerArrayEntityCenter(T in) {
-    list.add(in);
+  public ServerArrayEntityCenter(UtilServer p) {
+    super(p);
   }
-  public ServerArrayEntityCenter(T[] in) {
-    for(T i:in) list.add(i);
-  }
+  // public ServerArrayEntityCenter(UtilServer p,T in) {
+  //   super(p);
+  //   list.add(in);
+  // }
+  // public ServerArrayEntityCenter(UtilServer p,T[] in) {
+  //   super(p);
+  //   for(T i:in) list.add(i);
+  // }
   public void refresh() {
     list.addAll(add);
     add.clear();

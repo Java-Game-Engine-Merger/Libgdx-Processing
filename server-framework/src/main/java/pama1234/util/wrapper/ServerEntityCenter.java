@@ -1,23 +1,28 @@
 package pama1234.util.wrapper;
 
+import pama1234.util.UtilServer;
 import pama1234.util.entity.ServerEntity;
 import pama1234.util.listener.ServerEntityListener;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class ServerEntityCenter<T extends ServerEntityListener>extends ServerEntity{
+public class ServerEntityCenter<T extends ServerEntityListener>extends ServerEntity<UtilServer>{
   public final LinkedList<T> list=new LinkedList<T>(),
     add=new LinkedList<T>(),
     remove=new LinkedList<T>();
   public boolean reverseDisplay=true;
-  public ServerEntityCenter() {}
-  public ServerEntityCenter(T in) {
-    list.add(in);
+  public ServerEntityCenter(UtilServer p) {
+    super(p);
   }
-  public ServerEntityCenter(T[] in) {
-    for(T i:in) list.add(i);
-  }
+  // public ServerEntityCenter(UtilServer p,T in) {
+  //   super(p);
+  //   list.add(in);
+  // }
+  // public ServerEntityCenter(UtilServer p,T[] in) {
+  //   super(p);
+  //   for(T i:in) list.add(i);
+  // }
   public synchronized void refresh() {
     list.addAll(add);
     add.clear();
