@@ -4,24 +4,6 @@ import static pama1234.math.UtilMath.floor;
 import static pama1234.math.UtilMath.max;
 import static pama1234.math.UtilMath.min;
 
-import java.util.Random;
-
-import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.IntArray;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
-import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
-import hhs.gdx.hslib.tools.LoopThread;
 import pama1234.gdx.game.ui.element.Button;
 import pama1234.gdx.game.ui.element.TextButton;
 import pama1234.gdx.util.cam.CameraController;
@@ -41,10 +23,30 @@ import pama1234.gdx.util.wrapper.AutoEntityManager;
 import pama1234.gdx.util.wrapper.DisplayEntity.DisplayWithCam;
 import pama1234.gdx.util.wrapper.EntityCenter;
 import pama1234.gdx.util.wrapper.EntityNeoCenter;
+import pama1234.util.UtilServer;
 import pama1234.util.listener.LifecycleListener;
 import pama1234.util.listener.ServerEntityListener;
 import pama1234.util.wrapper.Center;
 import pama1234.util.wrapper.ServerEntityCenter;
+
+import java.util.Random;
+
+import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.IntArray;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
+import hhs.gdx.hslib.tools.LoopThread;
 
 /**
  * UtilScreen太大了，因此抽离了一部分内容到此类，抽离的规则未确定
@@ -118,7 +120,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
    */
   public EntityNeoCenter<UtilScreen,EntityNeoListener> centerNeo;
   /** 类似center但是存放的是ServerEntityListener */
-  public ServerEntityCenter<ServerEntityListener> serverCenter;
+  public ServerEntityCenter<UtilServer,ServerEntityListener> serverCenter;
   /** 自动注册和删除实体 */
   public AutoEntityManager<UtilScreen> auto;
   /** 监听系统事件 */

@@ -1,5 +1,9 @@
 package pama1234.util;
 
+import pama1234.Tools;
+import pama1234.util.listener.ServerEntityListener;
+import pama1234.util.wrapper.ServerEntityCenter;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,12 +17,8 @@ import java.nio.file.Paths;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import pama1234.Tools;
-import pama1234.util.listener.ServerEntityListener;
-import pama1234.util.wrapper.ServerEntityCenter;
-
 public abstract class UtilServer implements Runnable{
-  public ServerEntityCenter<ServerEntityListener> center=new ServerEntityCenter<ServerEntityListener>(this);
+  public ServerEntityCenter<UtilServer,ServerEntityListener> center=new ServerEntityCenter<UtilServer,ServerEntityListener>(this);
   public boolean doDispose=true;
   public boolean stop;
 

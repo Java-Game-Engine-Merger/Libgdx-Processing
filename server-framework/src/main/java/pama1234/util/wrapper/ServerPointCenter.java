@@ -5,13 +5,13 @@ import pama1234.util.entity.ServerPointEntity;
 
 import java.util.ListIterator;
 
-public class ServerPointCenter<T extends ServerPointEntity<?,?>>extends ServerEntityCenter<T>{
+public class ServerPointCenter<P extends UtilServer,T extends ServerPointEntity<?,?>>extends ServerEntityCenter<P,T>{
   public float minDist,minDisplayDist;
   public T select;
-  public ServerPointCenter(UtilServer p) {
+  public ServerPointCenter(P p) {
     this(p,4);
   }
-  public ServerPointCenter(UtilServer p,float u) {
+  public ServerPointCenter(P p,float u) {
     super(p);
     this.minDist=u;
     this.minDisplayDist=u;

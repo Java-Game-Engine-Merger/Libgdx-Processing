@@ -7,12 +7,12 @@ import pama1234.util.listener.ServerEntityListener;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class ServerEntityCenter<T extends ServerEntityListener>extends ServerEntity<UtilServer>{
+public class ServerEntityCenter<P extends UtilServer,T extends ServerEntityListener>extends ServerEntity<P>{
   public final LinkedList<T> list=new LinkedList<T>(),
     add=new LinkedList<T>(),
     remove=new LinkedList<T>();
   public boolean reverseDisplay=true;
-  public ServerEntityCenter(UtilServer p) {
+  public ServerEntityCenter(P p) {
     super(p);
   }
   // public ServerEntityCenter(UtilServer p,T in) {
