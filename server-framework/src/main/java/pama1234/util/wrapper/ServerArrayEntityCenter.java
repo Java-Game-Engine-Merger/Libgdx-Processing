@@ -1,17 +1,17 @@
 package pama1234.util.wrapper;
 
-import java.util.ArrayList;
-
 import pama1234.util.UtilServer;
 import pama1234.util.entity.ServerEntity;
 import pama1234.util.listener.ServerEntityListener;
 
-public class ServerArrayEntityCenter<T extends ServerEntityListener>extends ServerEntity<UtilServer>{
+import java.util.ArrayList;
+
+public class ServerArrayEntityCenter<P extends UtilServer,T extends ServerEntityListener>extends ServerEntity<P>{
   public final ArrayList<T> list=new ArrayList<T>(),
     add=new ArrayList<T>(),
     remove=new ArrayList<T>();
   public boolean reverseDisplay=true;
-  public ServerArrayEntityCenter(UtilServer p) {
+  public ServerArrayEntityCenter(P p) {
     super(p);
   }
   // public ServerArrayEntityCenter(UtilServer p,T in) {

@@ -4,6 +4,7 @@ import pama1234.gdx.util.app.UtilScreen;
 import pama1234.gdx.util.listener.EntityListener;
 import pama1234.gdx.util.listener.EntityNeoListener;
 import pama1234.util.Annotations.RedundantCache;
+import pama1234.util.UtilServer;
 import pama1234.util.listener.ServerEntityListener;
 import pama1234.util.wrapper.ServerEntityCenter;
 
@@ -13,7 +14,7 @@ public class ScreenContentContainer implements EntityNeoListener{
   public EntityCenter<UtilScreen,EntityListener> centerCam;
   public EntityCenter<UtilScreen,EntityListener> centerScreen;
   public EntityNeoCenter<UtilScreen,EntityNeoListener> centerNeo;
-  public ServerEntityCenter<ServerEntityListener> serverCenter;
+  public ServerEntityCenter<UtilServer,ServerEntityListener> serverCenter;
 
   // public ActorCenter screenStage,camStage;
 
@@ -23,7 +24,7 @@ public class ScreenContentContainer implements EntityNeoListener{
     centerScreen=new EntityCenter<UtilScreen,EntityListener>(p);
     centerNeo=new EntityNeoCenter<UtilScreen,EntityNeoListener>(p);
     // TODO
-    serverCenter=new ServerEntityCenter<ServerEntityListener>(null);
+    serverCenter=new ServerEntityCenter<UtilServer,ServerEntityListener>(null);
 
     // screenStage=new Group();
     // camStage=new Group();
