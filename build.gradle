@@ -125,7 +125,7 @@ configure(subprojects.findAll {
   // apply plugin: "com.github.johnrengelman.shadow"
   apply plugin: "io.freefair.lombok"
 
-  version = '0.0.1'
+  version = "$pama1234PublishVersion"
   ext.appName = 'game'
   repositories {
     maven { url 'https://maven.google.com/public' }

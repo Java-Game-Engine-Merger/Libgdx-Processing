@@ -79,7 +79,7 @@ publishing {
     maven(MavenPublication) {
       groupId = 'pama1234'
       artifactId = 'framework-textmate'
-      version = "0.0.1"
+      version = "$pama1234PublishVersion"
       from components.java
 
       pom {
