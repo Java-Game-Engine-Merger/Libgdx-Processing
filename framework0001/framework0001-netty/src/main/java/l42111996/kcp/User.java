@@ -8,58 +8,59 @@ import java.net.InetSocketAddress;
  * Created by JinMiao
  * 2018/11/2.
  */
-public class User {
+public class User{
 
-    private Channel channel;
-    private InetSocketAddress remoteAddress;
-    private InetSocketAddress localAddress;
+  private Channel channel;
+  private InetSocketAddress remoteAddress;
+  private InetSocketAddress localAddress;
 
-    private Object cache;
+  private Object cache;
 
-    public void setCache(Object cache) {
-        this.cache = cache;
-    }
+  public void setCache(Object cache) {
+    this.cache=cache;
+  }
 
-    public <T>  T getCache() {
-        return (T) cache;
-    }
+  public <T> T getCache() {
+    return (T)cache;
+  }
 
-    public User(Channel channel, InetSocketAddress remoteAddress, InetSocketAddress localAddress) {
-        this.channel = channel;
-        this.remoteAddress = remoteAddress;
-        this.localAddress = localAddress;
-    }
+  public User(Channel channel,InetSocketAddress remoteAddress,InetSocketAddress localAddress) {
+    this.channel=channel;
+    this.remoteAddress=remoteAddress;
+    this.localAddress=localAddress;
+  }
 
-    protected Channel getChannel() {
-        return channel;
-    }
+  protected Channel getChannel() {
+    return channel;
+  }
 
-    protected void setChannel(Channel channel) {
-        this.channel = channel;
-    }
+  protected void setChannel(Channel channel) {
+    this.channel=channel;
+  }
 
-    public InetSocketAddress getRemoteAddress() {
-        return remoteAddress;
-    }
+  public InetSocketAddress getRemoteAddress() {
+    return remoteAddress;
+  }
 
-    protected void setRemoteAddress(InetSocketAddress remoteAddress) {
-        this.remoteAddress = remoteAddress;
-    }
+  protected void setRemoteAddress(InetSocketAddress remoteAddress) {
+    this.remoteAddress=remoteAddress;
+  }
 
-    public InetSocketAddress getLocalAddress() {
-        return localAddress;
-    }
+  public InetSocketAddress getLocalAddress() {
+    return localAddress;
+  }
 
-    protected void setLocalAddress(InetSocketAddress localAddress) {
-        this.localAddress = localAddress;
-    }
+  protected void setLocalAddress(InetSocketAddress localAddress) {
+    this.localAddress=localAddress;
+  }
 
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "remoteAddress=" + remoteAddress +
-                ", localAddress=" + localAddress +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "User{"+
+      "remoteAddress="+
+      remoteAddress+
+      ", localAddress="+
+      localAddress+
+      '}';
+  }
 }

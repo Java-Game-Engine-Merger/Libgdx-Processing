@@ -10,28 +10,28 @@ import org.slf4j.LoggerFactory;
  * Created by JinMiao
  * 2019-06-26.
  */
-public class ClientChannelHandler extends ChannelInboundHandlerAdapter {
-    static final Logger logger = LoggerFactory.getLogger(ClientChannelHandler.class);
+public class ClientChannelHandler extends ChannelInboundHandlerAdapter{
+  static final Logger logger=LoggerFactory.getLogger(ClientChannelHandler.class);
 
-    private IChannelManager channelManager;
+  private IChannelManager channelManager;
 
-    public ClientChannelHandler(IChannelManager channelManager) {
-        this.channelManager = channelManager;
-    }
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        logger.error("",cause);
-        //SocketAddress socketAddress = ctx.channel().localAddress();
-        //Ukcp ukcp = ukcpMap.get(socketAddress);
-        //ukcp.getKcpListener().handleException(cause,ukcp);
-    }
+  public ClientChannelHandler(IChannelManager channelManager) {
+    this.channelManager=channelManager;
+  }
+  @Override
+  public void exceptionCaught(ChannelHandlerContext ctx,Throwable cause) {
+    logger.error("",cause);
+    //SocketAddress socketAddress = ctx.channel().localAddress();
+    //Ukcp ukcp = ukcpMap.get(socketAddress);
+    //ukcp.getKcpListener().handleException(cause,ukcp);
+  }
 
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object object) {
-        DatagramPacket msg = (DatagramPacket) object;
-        Ukcp ukcp = this.channelManager.get(msg);
-        if(ukcp!=null){
-            ukcp.read(msg.content());
-        }
+  @Override
+  public void channelRead(ChannelHandlerContext ctx,Object object) {
+    DatagramPacket msg=(DatagramPacket)object;
+    Ukcp ukcp=this.channelManager.get(msg);
+    if(ukcp!=null) {
+      ukcp.read(msg.content());
     }
+  }
 }

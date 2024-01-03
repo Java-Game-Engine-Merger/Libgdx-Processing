@@ -12,27 +12,27 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by JinMiao
  * 2020/11/24.
  */
-public class NettyMessageExecutorPool implements IMessageExecutorPool {
+public class NettyMessageExecutorPool implements IMessageExecutorPool{
 
-    private EventLoopGroup eventExecutors;
+  private EventLoopGroup eventExecutors;
 
-    protected static final AtomicInteger index = new AtomicInteger();
+  protected static final AtomicInteger index=new AtomicInteger();
 
-    public NettyMessageExecutorPool(int workSize){
-        eventExecutors = new DefaultEventLoopGroup(workSize, r -> {
-            return new Thread(r,"nettyMessageExecutorPool-"+index.incrementAndGet());
-        });
+  public NettyMessageExecutorPool(int workSize) {
+    eventExecutors=new DefaultEventLoopGroup(workSize,r-> {
+      return new Thread(r,"nettyMessageExecutorPool-"+index.incrementAndGet());
+    });
+  }
+
+  @Override
+  public IMessageExecutor getIMessageExecutor() {
+    return new NettyMessageExecutor(eventExecutors.next());
+  }
+
+  @Override
+  public void stop() {
+    if(!eventExecutors.isShuttingDown()) {
+      eventExecutors.shutdownGracefully();
     }
-
-    @Override
-    public IMessageExecutor getIMessageExecutor() {
-        return new NettyMessageExecutor(eventExecutors.next());
-    }
-
-    @Override
-    public void stop() {
-        if(!eventExecutors.isShuttingDown()){
-            eventExecutors.shutdownGracefully();
-        }
-    }
+  }
 }
