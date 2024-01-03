@@ -9,8 +9,8 @@ import java.util.List;
  * Created by JinMiao
  * 2021/2/2.
  */
-public interface IFecDecode {
+public interface IFecDecode{
 
-    List<ByteBuf> decode(final FecPacket pkt);
-    void release();
+  List<ByteBuf> decode(final FecPacket pkt);
+  void release();
 }

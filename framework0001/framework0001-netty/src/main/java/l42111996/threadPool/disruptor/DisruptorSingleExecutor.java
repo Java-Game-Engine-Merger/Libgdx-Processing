@@ -13,126 +13,114 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * 基于 {@link #disruptor} 的单线程队列实现
+ * 
  * @author King
  *
  */
-public class DisruptorSingleExecutor implements IMessageExecutor {
+public class DisruptorSingleExecutor implements IMessageExecutor{
 
-	//65536条消息
-	int ringBufferSize = 2<<15;
-	
-	private WaitStrategy strategy = new BlockingWaitStrategy();
+  //65536条消息
+  int ringBufferSize=2<<15;
 
-	
-	private Disruptor<DistriptorHandler> disruptor = null;
+  private WaitStrategy strategy=new BlockingWaitStrategy();
 
-	private RingBuffer<DistriptorHandler> buffer = null;
-	
-	private DistriptorEventFactory eventFactory = new DistriptorEventFactory();
-	
-	private static final DistriptorEventHandler HANDLER = new DistriptorEventHandler();
-	
-	private AtomicBoolean istop = new AtomicBoolean();
-	
+  private Disruptor<DistriptorHandler> disruptor=null;
 
-	/**线程名字**/
-	private String threadName;
+  private RingBuffer<DistriptorHandler> buffer=null;
 
-	private DisruptorThread currentThread;
+  private DistriptorEventFactory eventFactory=new DistriptorEventFactory();
 
+  private static final DistriptorEventHandler HANDLER=new DistriptorEventHandler();
 
-	public DisruptorSingleExecutor(String threadName)
-	{
-		this.threadName = threadName;
-	}
-	
+  private AtomicBoolean istop=new AtomicBoolean();
 
-	@SuppressWarnings("unchecked")
-	public void start() {
-		LoopThreadfactory loopThreadfactory = new LoopThreadfactory(this);
-//		disruptor = new Disruptor<DistriptorHandler>(eventFactory, ringBufferSize, executor, ProducerType.MULTI, strategy);
-		disruptor = new Disruptor<>(eventFactory, ringBufferSize, loopThreadfactory);
-		buffer = disruptor.getRingBuffer();
-		disruptor.handleEventsWith(DisruptorSingleExecutor.HANDLER);
-		disruptor.start();
-	}
-	
+  /** 线程名字 **/
+  private String threadName;
 
-	
-	/**主线程工厂**/
-	private class LoopThreadfactory implements ThreadFactory {
-		IMessageExecutor iMessageExecutor;
+  private DisruptorThread currentThread;
 
-		public LoopThreadfactory(IMessageExecutor iMessageExecutor) {
-			this.iMessageExecutor = iMessageExecutor;
-		}
+  public DisruptorSingleExecutor(String threadName) {
+    this.threadName=threadName;
+  }
 
-		@Override
-		public Thread newThread(Runnable r) {
-			currentThread = new DisruptorThread(r,iMessageExecutor);
-			currentThread.setName(threadName);
-			return currentThread;
-		}
-	}
-	
+  @SuppressWarnings("unchecked")
+  public void start() {
+    LoopThreadfactory loopThreadfactory=new LoopThreadfactory(this);
+    //		disruptor = new Disruptor<DistriptorHandler>(eventFactory, ringBufferSize, executor, ProducerType.MULTI, strategy);
+    disruptor=new Disruptor<>(eventFactory,ringBufferSize,loopThreadfactory);
+    buffer=disruptor.getRingBuffer();
+    disruptor.handleEventsWith(DisruptorSingleExecutor.HANDLER);
+    disruptor.start();
+  }
 
-	static int num = 1;
-	static long start = System.currentTimeMillis();
-	static long lastNum = 0;
+  /** 主线程工厂 **/
+  private class LoopThreadfactory implements ThreadFactory{
+    IMessageExecutor iMessageExecutor;
 
+    public LoopThreadfactory(IMessageExecutor iMessageExecutor) {
+      this.iMessageExecutor=iMessageExecutor;
+    }
 
-	@Override
-	public void stop() {
-		if(istop.get()) {
-			return;
-		}
-		disruptor.shutdown();
+    @Override
+    public Thread newThread(Runnable r) {
+      currentThread=new DisruptorThread(r,iMessageExecutor);
+      currentThread.setName(threadName);
+      return currentThread;
+    }
+  }
 
-		istop.set(true);
-	}
+  static int num=1;
+  static long start=System.currentTimeMillis();
+  static long lastNum=0;
 
+  @Override
+  public void stop() {
+    if(istop.get()) {
+      return;
+    }
+    disruptor.shutdown();
 
-	public static void main(String[] args) {
-		DisruptorSingleExecutor disruptorSingleExecutor = new DisruptorSingleExecutor("aa");
-		disruptorSingleExecutor.start();
-		disruptorSingleExecutor.execute(() -> {
-			System.out.println("hahaha");
-		});
+    istop.set(true);
+  }
 
+  public static void main(String[] args) {
+    DisruptorSingleExecutor disruptorSingleExecutor=new DisruptorSingleExecutor("aa");
+    disruptorSingleExecutor.start();
+    disruptorSingleExecutor.execute(()-> {
+      System.out.println("hahaha");
+    });
 
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+    try {
+      Thread.sleep(10000);
+    }catch(InterruptedException e) {
+      e.printStackTrace();
+    }
 
+  }
 
-	}
+  public AtomicBoolean getIstop() {
+    return istop;
+  }
 
-	public AtomicBoolean getIstop() {
-		return istop;
-	}
-	
+  @Override
+  public boolean isFull() {
+    return !buffer.hasAvailableCapacity(1);
+  }
 
-	@Override
-	public boolean isFull() {
-		return !buffer.hasAvailableCapacity(1);
-	}
-
-	@Override
-	public void execute(ITask iTask){
-		Thread currentThread = Thread.currentThread();
-		//if(currentThread==this.currentThread){
-		//	iTask.execute();
-		//	return;
-		//}
-		//		if(buffer.hasAvailableCapacity(1))
-//		{
-//			System.out.println("没有容量了");
-//		}
-		long next = buffer.next();
-		DistriptorHandler testEvent = buffer.get(next);
-		testEvent.setTask(iTask);
-		buffer.publish(next);
-	}
+  @Override
+  public void execute(ITask iTask) {
+    Thread currentThread=Thread.currentThread();
+    //if(currentThread==this.currentThread){
+    //	iTask.execute();
+    //	return;
+    //}
+    //		if(buffer.hasAvailableCapacity(1))
+    //		{
+    //			System.out.println("没有容量了");
+    //		}
+    long next=buffer.next();
+    DistriptorHandler testEvent=buffer.get(next);
+    testEvent.setTask(iTask);
+    buffer.publish(next);
+  }
 }

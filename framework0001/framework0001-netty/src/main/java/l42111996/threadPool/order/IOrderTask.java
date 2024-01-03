@@ -6,5 +6,5 @@ package l42111996.threadPool.order;
  */
 public interface IOrderTask extends Runnable{
 
-    OrderedThreadSession getSession();
+  OrderedThreadSession getSession();
 }

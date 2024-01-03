@@ -6,34 +6,32 @@ import io.netty.buffer.ByteBuf;
  * Created by JinMiao
  * 2019-01-04.
  */
-public class DelayPacket {
-    private long ts;
-    private ByteBuf ptr;
+public class DelayPacket{
+  private long ts;
+  private ByteBuf ptr;
 
+  public void init(ByteBuf src) {
+    this.ptr=src.retainedSlice();
 
-    public void init(ByteBuf src) {
-        this.ptr = src.retainedSlice();
+  }
 
-    }
+  public void release() {
+    ptr.release();
+  }
 
+  public long getTs() {
+    return ts;
+  }
 
-    public void release(){
-        ptr.release();
-    }
+  public void setTs(long ts) {
+    this.ts=ts;
+  }
 
-    public long getTs() {
-        return ts;
-    }
+  public ByteBuf getPtr() {
+    return ptr;
+  }
 
-    public void setTs(long ts) {
-        this.ts = ts;
-    }
-
-    public ByteBuf getPtr() {
-        return ptr;
-    }
-
-    public void setPtr(ByteBuf ptr) {
-        this.ptr = ptr;
-    }
+  public void setPtr(ByteBuf ptr) {
+    this.ptr=ptr;
+  }
 }

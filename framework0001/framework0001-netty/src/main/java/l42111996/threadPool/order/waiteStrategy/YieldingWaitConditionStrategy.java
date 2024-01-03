@@ -12,45 +12,36 @@ import java.util.concurrent.TimeUnit;
  * 循环中调用Thread.yield()允许其他准备好的线程执行。
  * 如果需要高性能而且事件消费者线程比逻辑内核少的时候，
  * 推荐使用YieldingWaitStrategy策略。例如：在开启超线程的时候。
+ * 
  * @author juebanlin
  */
-public final class YieldingWaitConditionStrategy implements WaitConditionStrategy
-{
-	protected final Logger log= LoggerFactory.getLogger(getClass());
-    private static final int SPIN_TRIES = 1000;
+public final class YieldingWaitConditionStrategy implements WaitConditionStrategy{
+  protected final Logger log=LoggerFactory.getLogger(getClass());
+  private static final int SPIN_TRIES=1000;
 
-
-    @Override
-	public <T> T waitFor(WaitCondition<T> waitCondition, long timeOut, TimeUnit unit) {
-    	long endTime=System.nanoTime()+unit.toNanos(timeOut);
-    	int counter = SPIN_TRIES;
-    	T task;
-    	while ((task=waitCondition.getAttach())==null)
-        {
-    		if(System.nanoTime()>=endTime)
-    		{
-    			break;
-    		}
-            counter = applyWaitMethod(counter);//等待
-        }
-    	return task;
-	}
-    
-    @Override
-    public void signalAllWhenBlocking()
-    {
+  @Override
+  public <T> T waitFor(WaitCondition<T> waitCondition,long timeOut,TimeUnit unit) {
+    long endTime=System.nanoTime()+unit.toNanos(timeOut);
+    int counter=SPIN_TRIES;
+    T task;
+    while((task=waitCondition.getAttach())==null) {
+      if(System.nanoTime()>=endTime) {
+        break;
+      }
+      counter=applyWaitMethod(counter);//等待
     }
+    return task;
+  }
 
-	private int applyWaitMethod(int counter)
-    {
-        if (0 == counter)
-        {
-            Thread.yield();
-        }
-        else
-        {
-            --counter;
-        }
-        return counter;
+  @Override
+  public void signalAllWhenBlocking() {}
+
+  private int applyWaitMethod(int counter) {
+    if(0==counter) {
+      Thread.yield();
+    }else {
+      --counter;
     }
+    return counter;
+  }
 }

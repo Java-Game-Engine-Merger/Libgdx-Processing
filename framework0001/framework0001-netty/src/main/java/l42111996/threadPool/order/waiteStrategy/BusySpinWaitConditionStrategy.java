@@ -11,27 +11,23 @@ import java.util.concurrent.TimeUnit;
  * 这个性能最好用在事件处理线程比物理内核数目还要小的时候。
  * 例如：在禁用超线程技术的时候。
  */
-public final class BusySpinWaitConditionStrategy implements WaitConditionStrategy
-{
-	protected final Logger log= LoggerFactory.getLogger(getClass());
-	
-    @Override
-	public <T> T waitFor(WaitCondition<T> waitCondition, long timeOut, TimeUnit unit) {
-		long endTime=System.nanoTime()+unit.toNanos(timeOut);
-		T task;
-    	while((task=waitCondition.getAttach())==null)
-		{
-    		if(System.nanoTime()>=endTime)
-    		{
-    			break;
-    		}
-		}
-		return task;
-	}
+public final class BusySpinWaitConditionStrategy implements WaitConditionStrategy{
+  protected final Logger log=LoggerFactory.getLogger(getClass());
 
-    @Override
-    public void signalAllWhenBlocking()
-    {
-    	
+  @Override
+  public <T> T waitFor(WaitCondition<T> waitCondition,long timeOut,TimeUnit unit) {
+    long endTime=System.nanoTime()+unit.toNanos(timeOut);
+    T task;
+    while((task=waitCondition.getAttach())==null) {
+      if(System.nanoTime()>=endTime) {
+        break;
+      }
     }
+    return task;
+  }
+
+  @Override
+  public void signalAllWhenBlocking() {
+
+  }
 }
