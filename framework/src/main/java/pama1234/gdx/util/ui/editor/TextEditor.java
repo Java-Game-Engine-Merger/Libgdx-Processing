@@ -126,6 +126,15 @@ public class TextEditor<T extends ScreenCore2D>extends PointEntity<T,PathPoint>{
     stage.addActor(textArea);
   }
   public void removeFrom(Stage stage) {
+    stage.getRoot().removeActor(textArea);
+  }
+
+  public void addToCam(T p) {
+    p.centerCamAddAll(this);
+    p.camStage.addActor(textArea);
+  }
+  public void removeFromCam(T p) {
+    p.centerCamRemoveAll(this);
     p.camStage.getRoot().removeActor(textArea);
   }
 }
