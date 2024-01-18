@@ -1,7 +1,9 @@
 package pama1234.gdx.util.wrapper;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import pama1234.gdx.util.app.UtilScreen;
 import pama1234.gdx.util.entity.Entity;
@@ -138,10 +140,16 @@ public class EntityCenter<T extends UtilScreen,E extends EntityListener>extends 
   // }
   //---------------------------------------------------------------------------
   public void addAll(E[] list) {
-    for(E e:list) add.add(e);
+    Collections.addAll(add,list);
   }
   public void removeAll(E[] list) {
-    for(E e:list) remove.add(e);
+    Collections.addAll(remove,list);
+  }
+  public void addAll(List<E> list) {
+    add.addAll(list);
+  }
+  public void removeAll(List<E> list) {
+    remove.addAll(list);
   }
   public void add(E e) {
     add.add(e);
