@@ -146,6 +146,11 @@ public class TextButtonCam<T extends UtilScreen>extends TextButton<T>{
     super.textSupplier(updateText);
     return this;
   }
+  public TextButtonCam<T> textSupplierWithUpdate(TextButtonEvent<T> updateText) {
+    textSupplier(updateText);
+    updateText();
+    return this;
+  }
   @Override
   public TextButtonCam<T> updateText() {
     super.updateText();
