@@ -118,17 +118,17 @@ public class FileTextEditor<T extends ScreenCore2D>extends TextEditor<T>{
     p.centerCamRemoveAll(textButtons);
   }
   @Override
-  public void addToCam(T stage) {
+  public void addToCam(T p) {
     p.camStage.addActor(fileField);
     p.camStage.addActor(nameField);
-    super.addTo(p.camStage);
+    super.addToCam(p);
     p.centerCamAddAll(textButtons);
   }
   @Override
-  public void removeFromCam(T stage) {
+  public void removeFromCam(T p) {
     p.camStage.getRoot().removeActor(fileField);
     p.camStage.getRoot().removeActor(nameField);
-    super.removeFrom(p.camStage);
+    super.removeFromCam(p);
     p.centerCamRemoveAll(textButtons);
   }
   @Override
