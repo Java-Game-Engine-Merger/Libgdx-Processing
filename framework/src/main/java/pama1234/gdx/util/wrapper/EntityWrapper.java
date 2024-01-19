@@ -6,7 +6,7 @@ import pama1234.gdx.util.info.MouseInfo;
 import pama1234.gdx.util.info.TouchInfo;
 import pama1234.gdx.util.listener.EntityListener;
 
-public class EntityWrapper<T extends UtilScreen,E extends EntityListener>extends Entity<UtilScreen>{
+public class EntityWrapper<T extends UtilScreen,E extends EntityListener>extends Entity<T>{
   public E content;
   public EntityWrapper(T p,E son) {
     super(p);
