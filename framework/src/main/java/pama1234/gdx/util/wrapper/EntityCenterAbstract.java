@@ -1,15 +1,14 @@
 package pama1234.gdx.util.wrapper;
 
+import java.util.*;
+
 import pama1234.gdx.util.app.UtilScreen;
 import pama1234.gdx.util.entity.Entity;
 import pama1234.gdx.util.info.MouseInfo;
 import pama1234.gdx.util.info.TouchInfo;
 import pama1234.gdx.util.listener.EntityListener;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentLinkedDeque;
-
-public abstract class EntityCenterAbstract<T extends UtilScreen,E extends EntityListener,L extends List<E>>extends Entity<T>{
+public abstract class EntityCenterAbstract<T extends UtilScreen,E extends EntityListener,L extends Collection<E>>extends Entity<T>{
   public static <T> Iterator<T> descendingIterator(List<? extends T> list) {
     ListIterator<? extends T> li=list.listIterator(list.size());
     return new Iterator<T>() {
@@ -21,7 +20,11 @@ public abstract class EntityCenterAbstract<T extends UtilScreen,E extends Entity
       }
     };
   }
+  public static <T> Iterator<T> descendingIterator(Deque<? extends T> list) {
+    return (Iterator<T>)list.descendingIterator();
+  }
   public abstract L createList();
+  public abstract Iterator<E> descendingIterator(L list);
   public final L list=createList(),
     add=createList(),
     remove=createList();
@@ -35,7 +38,7 @@ public abstract class EntityCenterAbstract<T extends UtilScreen,E extends Entity
   }
   public EntityCenterAbstract(T p,E[] in) {
     this(p);
-    for(E i:in) list.add(i);
+    Collections.addAll(list,in);
   }
   public synchronized void refresh() {
     list.addAll(add);
