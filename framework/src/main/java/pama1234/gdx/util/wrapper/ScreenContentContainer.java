@@ -10,18 +10,26 @@ import pama1234.util.wrapper.ServerEntityCenter;
 
 @RedundantCache
 public class ScreenContentContainer implements EntityNeoListener{
-  public EntityCenter<UtilScreen,EntityListener> center;
-  public EntityCenter<UtilScreen,EntityListener> centerCam;
-  public EntityCenter<UtilScreen,EntityListener> centerScreen;
+  //  public EntityCenter<UtilScreen,EntityListener> center;
+  //  public EntityCenter<UtilScreen,EntityListener> centerCam;
+  //  public EntityCenter<UtilScreen,EntityListener> centerScreen;
+  public EntityCenterConcurrent<UtilScreen,EntityListener> center;
+  public EntityCenterConcurrent<UtilScreen,EntityListener> centerCam;
+  public EntityCenterConcurrent<UtilScreen,EntityListener> centerScreen;
+
   public EntityNeoCenter<UtilScreen,EntityNeoListener> centerNeo;
   public ServerEntityCenter<UtilServer,ServerEntityListener> serverCenter;
 
   // public ActorCenter screenStage,camStage;
 
   public ScreenContentContainer initMember(UtilScreen p) {
-    center=new EntityCenter<UtilScreen,EntityListener>(p);
-    centerCam=new EntityCenter<UtilScreen,EntityListener>(p);
-    centerScreen=new EntityCenter<UtilScreen,EntityListener>(p);
+    //    center=new EntityCenter<UtilScreen,EntityListener>(p);
+    //    centerCam=new EntityCenter<UtilScreen,EntityListener>(p);
+    //    centerScreen=new EntityCenter<UtilScreen,EntityListener>(p);
+    center=new EntityCenterConcurrent<UtilScreen,EntityListener>(p);
+    centerCam=new EntityCenterConcurrent<UtilScreen,EntityListener>(p);
+    centerScreen=new EntityCenterConcurrent<UtilScreen,EntityListener>(p);
+
     centerNeo=new EntityNeoCenter<UtilScreen,EntityNeoListener>(p);
     // TODO
     serverCenter=new ServerEntityCenter<UtilServer,ServerEntityListener>(null);

@@ -22,6 +22,7 @@ import pama1234.gdx.util.listener.SystemListener;
 import pama1234.gdx.util.wrapper.AutoEntityManager;
 import pama1234.gdx.util.wrapper.DisplayEntity.DisplayWithCam;
 import pama1234.gdx.util.wrapper.EntityCenter;
+import pama1234.gdx.util.wrapper.EntityCenterConcurrent;
 import pama1234.gdx.util.wrapper.EntityNeoCenter;
 import pama1234.util.UtilServer;
 import pama1234.util.listener.LifecycleListener;
@@ -59,6 +60,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public int width,height;
   public int frameCount;
   public float frameRate;
+  /** 当屏幕刷新率不为60或其他情况时，使用多线程来分离游戏的刷新和渲染 */
   public boolean doUpdateThread;
   public LoopThread updateThread;
   // public float frameDelta;
@@ -102,25 +104,19 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
    * @webref UtilScreen:center
    * @webBrief EntityCenter containing EntityListeners
    */
-  public EntityCenter<UtilScreen,EntityListener> center;
-  /**
-   * 执行update和display方法，以相机视角为坐标变幻标准
-   * </p>
-   * TODO 应当改为更高效的实现
-   */
-  public EntityCenter<UtilScreen,EntityListener> centerCam;
-  /**
-   * 执行update和display方法，以屏幕为坐标变幻标准
-   * </p>
-   * TODO 应当改为更高效的实现
-   */
-  public EntityCenter<UtilScreen,EntityListener> centerScreen;
-  /**
-   * {@link UtilScreenCore#centerScreen} 加上 {@link DisplayWithCam}
-   */
+  //  public EntityCenter<UtilScreen,EntityListener> center;
+  //  /** 执行update和display方法，以相机视角为坐标变幻标准 */
+  //  public EntityCenter<UtilScreen,EntityListener> centerCam;
+  //  /** 执行update和display方法，以屏幕为坐标变幻标准 */
+  //  public EntityCenter<UtilScreen,EntityListener> centerScreen;
+  /** {@link UtilScreenCore#centerScreen} 加上 {@link DisplayWithCam} */
   public EntityNeoCenter<UtilScreen,EntityNeoListener> centerNeo;
   /** 类似center但是存放的是ServerEntityListener */
   public ServerEntityCenter<UtilServer,ServerEntityListener> serverCenter;
+
+  public EntityCenterConcurrent<UtilScreen,EntityListener> centerSync,centerCamSync,centerScreenSync;
+  public EntityCenterConcurrent<UtilScreen,EntityListener> center,centerCam,centerScreen;
+
   /** 自动注册和删除实体 */
   public AutoEntityManager<UtilScreen> auto;
   /** 监听系统事件 */
