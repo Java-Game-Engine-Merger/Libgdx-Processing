@@ -1,13 +1,15 @@
 package pama1234.gdx.util.wrapper;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
+
 import pama1234.gdx.util.app.UtilScreen;
 import pama1234.gdx.util.entity.Entity;
 import pama1234.gdx.util.info.MouseInfo;
 import pama1234.gdx.util.info.TouchInfo;
 import pama1234.gdx.util.listener.EntityListener;
-
-import java.util.*;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class EntityCenterConcurrent<T extends UtilScreen,E extends EntityListener>extends Entity<T>{
   public static <T> Iterator<T> descendingIterator(ConcurrentLinkedDeque<? extends T> list) {
