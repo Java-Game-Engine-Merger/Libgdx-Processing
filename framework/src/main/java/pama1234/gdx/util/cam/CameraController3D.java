@@ -19,6 +19,10 @@ public class CameraController3D extends CameraController{
 
   public float opx,opy;
   public float cu;
+
+  public boolean activePosMovement=true;
+  public boolean activeViewRotation=true;
+  public boolean fixViewUpDirection=true;
   public CameraController3D(UtilScreen3D p,float x,float y,float z,float s,float r,float frameU) {
     super(p,x,y,z);
     camera=pcam=new PerspectiveCamera(60,p.width,p.height);
@@ -42,51 +46,58 @@ public class CameraController3D extends CameraController{
   public void update() {
     point.update();
     viewDir.update();
+
     final float sinV=sin(viewDir.pos.y),
       cosV=cos(viewDir.pos.y),
       sinH=sin(viewDir.pos.x),
       cosH=cos(viewDir.pos.x);
-    float dx=0,dz=0;
-    float tx=point.des.x,
-      ty=point.des.y,
-      tz=point.des.z;
+
     final float x=point.x(),
       y=point.y(),
       z=point.z();
-    final boolean up=p.isKeyPressed(62),
-      down=p.isKeyPressed(59),
-      left=p.isKeyPressed(29),
-      right=p.isKeyPressed(32),
-      front=p.isKeyPressed(51),
-      back=p.isKeyPressed(47);
-    if(up!=down) {
-      if(up) ty-=moveSpeed;
-      else ty+=moveSpeed;
-    }
-    if(left!=right) {
-      if(left) {
-        dx+=moveSpeed*sinH;
-        dz-=moveSpeed*cosH;
-      }else {
-        dx-=moveSpeed*sinH;
-        dz+=moveSpeed*cosH;
+
+    if(activePosMovement) {
+      float dx=0,dz=0;
+      float tx=point.des.x,
+        ty=point.des.y,
+        tz=point.des.z;
+      final boolean up=p.isKeyPressed(62),
+        down=p.isKeyPressed(59),
+        left=p.isKeyPressed(29),
+        right=p.isKeyPressed(32),
+        front=p.isKeyPressed(51),
+        back=p.isKeyPressed(47);
+
+      if(up!=down) {
+        if(up) ty-=moveSpeed;
+        else ty+=moveSpeed;
       }
-    }
-    if(front!=back) {
-      if(front) {
-        dz-=moveSpeed*sinH;
-        dx-=moveSpeed*cosH;
-      }else {
-        dz+=moveSpeed*sinH;
-        dx+=moveSpeed*cosH;
+      if(left!=right) {
+        if(left) {
+          dx+=moveSpeed*sinH;
+          dz-=moveSpeed*cosH;
+        }else {
+          dx-=moveSpeed*sinH;
+          dz+=moveSpeed*cosH;
+        }
       }
+      if(front!=back) {
+        if(front) {
+          dz-=moveSpeed*sinH;
+          dx-=moveSpeed*cosH;
+        }else {
+          dz+=moveSpeed*sinH;
+          dx+=moveSpeed*cosH;
+        }
+      }
+      tx+=dx;
+      tz+=dz;
+      point.set(tx,ty,tz);
     }
-    tx+=dx;
-    tz+=dz;
-    point.set(tx,ty,tz);
     camera.position.set(x,y,z);
-    camera.up.set(0,-1,0);
-    camera.lookAt(x+cosH*sinV,y+cosV,z+sinH*sinV);
+
+    if(fixViewUpDirection) camera.up.set(0,-1,0);
+    if(activeViewRotation) camera.lookAt(x+cosH*sinV,y+cosV,z+sinH*sinV);
     camera.update();
   }
   @Override
