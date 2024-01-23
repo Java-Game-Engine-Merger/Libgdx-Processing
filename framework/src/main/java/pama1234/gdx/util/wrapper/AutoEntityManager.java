@@ -21,14 +21,17 @@ public class AutoEntityManager<T extends UtilScreen>extends LayeredEntityCenter<
   public EntityCenter<T,StateEntity<T,?>> stateEntityComplexCenter;
 
   // 操作目标
-  public EntityCenter<T,EntityListener>[] target;
+  public EntityCenterConcurrent<T,EntityListener>[] target;
+  //  public EntityCenter<T,EntityListener>[] target;
+
   public AutoEntityManager(T p) {
     super(p,2);
 
     list[0]=stateEntityCenter=new EntityCenter<>(p);
     list[1]=stateEntityComplexCenter=new EntityCenter<>(p);
 
-    target=new EntityCenter[] {p.center,p.centerScreen,p.centerCam,p.centerNeo};
+    target=new EntityCenterConcurrent[] {p.center,p.centerScreen,p.centerCam};
+    //    target=new EntityCenter[] {p.center,p.centerScreen,p.centerCam,p.centerNeo};
   }
 
   public <E extends EntityListener> void register(GetEntityWithStateChange<E> in,int eType,int[] data) {
