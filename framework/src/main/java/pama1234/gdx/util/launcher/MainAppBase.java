@@ -22,6 +22,10 @@ public class MainAppBase extends Game{
   {
     instance=this;
   }
+  public MainAppBase() {}
+  public MainAppBase(Class<? extends UtilScreen>... in) {
+    for(int i=0;i<in.length;i++) screenClassList.add(i,in[i]);
+  }
   @Override
   public void create() {
     setScreen(newScreen());
