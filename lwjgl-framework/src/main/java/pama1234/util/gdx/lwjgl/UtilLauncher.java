@@ -1,5 +1,6 @@
 package pama1234.util.gdx.lwjgl;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
@@ -11,7 +12,8 @@ import pama1234.gdx.util.launcher.MainAppBase;
 
 public class UtilLauncher{
 
-  public static Lwjgl3ApplicationConfiguration getDefaultConfiguration(MainAppBase app) {
+  public static Lwjgl3ApplicationConfiguration getDefaultConfiguration(ApplicationListener appl) {
+
     Gdx.files=new Lwjgl3Files();
     SystemSetting.load();
 
@@ -24,30 +26,32 @@ public class UtilLauncher{
     conf.setWindowedMode(SystemSetting.data.width,SystemSetting.data.height);
     conf.setWindowIcon("icon/icon128.png","icon/icon64.png","icon/icon32.png","icon/icon16.png");
 
-    conf.setWindowListener(new Lwjgl3WindowListener() {
-      @Override
-      public void created(Lwjgl3Window window) {}
-      @Override
-      public void iconified(boolean isIconified) {}
-      @Override
-      public void maximized(boolean isMaximized) {}
-      @Override
-      public void focusLost() {
-        app.focusLost();
-      }
-      @Override
-      public void focusGained() {
-        app.focusGained();
-      }
-      @Override
-      public boolean closeRequested() {
-        return true;
-      }
-      @Override
-      public void filesDropped(String[] files) {}
-      @Override
-      public void refreshRequested() {}
-    });
+    if(appl instanceof MainAppBase app) {
+      conf.setWindowListener(new Lwjgl3WindowListener() {
+        @Override
+        public void created(Lwjgl3Window window) {}
+        @Override
+        public void iconified(boolean isIconified) {}
+        @Override
+        public void maximized(boolean isMaximized) {}
+        @Override
+        public void focusLost() {
+          app.focusLost();
+        }
+        @Override
+        public void focusGained() {
+          app.focusGained();
+        }
+        @Override
+        public boolean closeRequested() {
+          return true;
+        }
+        @Override
+        public void filesDropped(String[] files) {}
+        @Override
+        public void refreshRequested() {}
+      });
+    }
     return conf;
   }
 }
