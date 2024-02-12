@@ -2,12 +2,11 @@ package pama1234.util.wrapper;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
 
-public abstract class CenterAbstract<T,E extends Collection<T>>{
-  public abstract E createList();
+public abstract class CenterAbstract<T,L extends Collection<T>>{
+  public abstract L createList();
 
-  public final E list=createList(),
+  public final L list=createList(),
     add=createList(),
     remove=createList();
   public synchronized void refresh() {

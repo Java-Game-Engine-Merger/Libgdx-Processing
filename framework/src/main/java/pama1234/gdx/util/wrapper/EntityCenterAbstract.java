@@ -9,19 +9,19 @@ import pama1234.gdx.util.info.TouchInfo;
 import pama1234.gdx.util.listener.EntityListener;
 
 public abstract class EntityCenterAbstract<T extends UtilScreen,E extends EntityListener,L extends Collection<E>>extends Entity<T>{
-  public static <T> Iterator<T> descendingIterator(List<? extends T> list) {
-    ListIterator<? extends T> li=list.listIterator(list.size());
-    return new Iterator<T>() {
+  public static <R> Iterator<R> descendingIteratorList(List<R> list) {
+    ListIterator<R> li=list.listIterator(list.size());
+    return new Iterator<R>() {
       public boolean hasNext() {
         return li.hasPrevious();
       }
-      public T next() {
+      public R next() {
         return li.previous();
       }
     };
   }
-  public static <T> Iterator<T> descendingIterator(Deque<? extends T> list) {
-    return (Iterator<T>)list.descendingIterator();
+  public static <R> Iterator<R> descendingIteratorDeque(Deque<R> list) {
+    return list.descendingIterator();
   }
   public abstract L createList();
   public abstract Iterator<E> descendingIterator(L list);
@@ -40,7 +40,8 @@ public abstract class EntityCenterAbstract<T extends UtilScreen,E extends Entity
     this(p);
     Collections.addAll(list,in);
   }
-  public synchronized void refresh() {
+  //  public synchronized void refresh() {
+  public void refresh() {
     list.addAll(add);
     add.clear();
     list.removeAll(remove);
