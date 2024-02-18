@@ -1,11 +1,12 @@
 package hhs.gdx.hslib.tools;
 
+import java.lang.reflect.Field;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
@@ -17,7 +18,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.GlyphAndBitmap;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Pools;
-import java.lang.reflect.Field;
+
+import pama1234.gdx.util.font.BetterBitmapFont;
 
 /**
  * GDX-LAZY-FONT for LibGDX 1.5.0+<br>
@@ -27,7 +29,7 @@ import java.lang.reflect.Field;
  * @version 2.1.5
  * @see <a href="https://github.com/dingjibang/GDX-LAZY-FONT">...</a>
  */
-public class LazyBitmapFont extends BitmapFont{
+public class LazyBitmapFont extends BetterBitmapFont {
   public final int fontSize;
   private final FreeTypeFontGenerator generator;
   private final FreeTypeBitmapFontData data;

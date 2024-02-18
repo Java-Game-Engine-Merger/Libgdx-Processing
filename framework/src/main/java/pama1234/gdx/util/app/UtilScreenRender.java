@@ -2,6 +2,7 @@ package pama1234.gdx.util.app;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -21,7 +22,7 @@ import pama1234.math.transform.Pose3D;
  * @see UtilScreen2D
  * @see UtilScreen3D
  */
-public abstract class UtilScreenRender extends UtilScreenColor{
+public abstract class UtilScreenRender extends UtilScreenTextRender{
   //---------------------------------------------------------------------------
   public void image(Texture in,float x,float y) {
     imageBatch.begin();
@@ -89,82 +90,6 @@ public abstract class UtilScreenRender extends UtilScreenColor{
     imageBatch.begin();
     in.draw(imageBatch);
     imageBatch.end();
-  }
-  //---------------------------------------------------------------------------
-  /**
-   * 全称fastText，比libgdx的text方法更快一些，无法绘制多色或有换行的文字
-   * 
-   * @param in 文本
-   * @param x  坐标
-   * @param y  坐标
-   */
-  public void text(String in,float x,float y) {
-    fontBatch.begin();
-    font.fastText(in==null?"null":in,x,y);
-    fontBatch.end();
-  }
-  public void text(String in,float x,float y,float z) {
-    pushMatrix();
-    translate(x,y,z);
-    text(in);
-    popMatrix();
-  }
-  public void text(String in,float x,float y,float z,float rx,float ry,float rz) {
-    pushMatrix();
-    translate(x,y,z);
-    rotate(rx,ry,rz);
-    text(in);
-    popMatrix();
-  }
-  public void text(String in) {
-    text(in,0,0);
-  }
-  public void text(String in,Pose3D pose) {
-    pushMatrix();
-    pose(pose);
-    text(in);
-    popMatrix();
-  }
-  public float textWidth(String in) {
-    return font.textWidth(in);
-  }
-  public float textWidthNoScale(String in) {
-    return font.textWidthNoScale(in);
-  }
-  public void textScale(float in) {
-    font.textScale(in);
-  }
-  public float textScale() {
-    return font.styleFast.scale;
-  }
-  public void textSize(float in) {
-    font.size(in);
-  }
-  public float textSize() {
-    return font.styleFast.size;
-  }
-  public void textStyle(TextStyleSupplier in) {
-    font.style=in;
-    if(in==null) fontBatch.setColor(font.styleFast.foreground);
-  }
-  public float fontScale(float in) {
-    if(in>=1) return MathUtils.floor(in);
-    else return Math.max(MathUtils.floor(in*fontGridSize)/fontGridSize,1/fontGridSize);
-  }
-  //---------------------------------------------------------------------------
-  public void fullText(String in,float x,float y) {
-    fontBatch.begin();
-    font.drawF(fontBatch,in==null?"null":in,x,y);
-    fontBatch.end();
-  }
-  @Deprecated
-  public void drawTextCenter(String in,float x,float y) {
-    fontBatch.begin();
-    font.drawF(fontBatch,in==null?"null":in,x,y);
-    fontBatch.end();
-  }
-  public void setTextScale(float in) {
-    font.getData().setScale(in);
   }
   //---------------------------------------------------------------------------
   public void clear() {

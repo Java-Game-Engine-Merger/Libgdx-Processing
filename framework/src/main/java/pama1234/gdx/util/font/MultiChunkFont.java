@@ -20,7 +20,7 @@ import pama1234.math.vec.Vec3i;
 import pama1234.util.Annotations.RedundantCache;
 
 @UniFontDependent
-public class MultiChunkFont extends BitmapFont{
+public class MultiChunkFont extends BetterBitmapFont{
   public static final int useCR=0,showCR=1,ignoreCR=2;
 
   public FileHandle[] fontFile;
