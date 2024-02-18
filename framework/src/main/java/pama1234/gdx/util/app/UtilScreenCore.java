@@ -8,7 +8,7 @@ import pama1234.gdx.game.ui.element.Button;
 import pama1234.gdx.game.ui.element.TextButton;
 import pama1234.gdx.util.cam.CameraController;
 import pama1234.gdx.util.element.FontStyle;
-import pama1234.gdx.util.font.MultiChunkFont;
+import pama1234.gdx.util.font.BetterBitmapFont;
 import pama1234.gdx.util.graphics.ShapeRendererBase.ShapeType;
 import pama1234.gdx.util.graphics.UtilPolygonSpriteBatch;
 import pama1234.gdx.util.graphics.UtilShapeRenderer;
@@ -57,8 +57,8 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public int width,height;
   public int frameCount;
   public float frameRate;
-  /** 当屏幕刷新率不为60或其他情况时，使用多线程来分离游戏的刷新和渲染 */
-  public boolean doUpdateThread;
+  /** 当屏幕刷新率不为60或其他情况时，使用新的线程来进行游戏的刷新，而游戏的渲染使用主线程 */
+  public boolean threadedUpdate;
   public LoopThread updateThread;
   // public float frameDelta;
   //---------------------------------------------------------------------------
@@ -85,7 +85,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public Camera usedCamera;
   public SpriteBatch fontBatch,imageBatch;
   public TinyVGShapeDrawer tvgDrawer;
-  public MultiChunkFont font;
+  public BetterBitmapFont font;
   //---------------------------------------------------------------------------
   public FontStyle fontStyle=new FontStyle();
   public Color textColor,fillColor,strokeColor;
@@ -218,7 +218,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
     // font.dispose();
     center.dispose();
     serverCenter.dispose();
-    if(doUpdateThread) updateThread.stop=true;
+    if(threadedUpdate) updateThread.stop=true;
   }
   //---------------------------------------------------------------------------
   /**

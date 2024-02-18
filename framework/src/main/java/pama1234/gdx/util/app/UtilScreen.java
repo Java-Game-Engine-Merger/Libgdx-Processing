@@ -128,7 +128,7 @@ public abstract class UtilScreen extends UtilScreenRender{
     withCam();
     center.refresh();
     innerResize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-    if(doUpdateThread) {
+    if(threadedUpdate) {
       // Gdx.app.postRunnable(new LoopThread("DoUpdateLoopThread",60) {
       //   @Override
       //   public void loop() {
@@ -151,7 +151,7 @@ public abstract class UtilScreen extends UtilScreenRender{
   public void render(float delta) {
     frameRate=delta;
     // textScale(pus);
-    if(!doUpdateThread) doUpdate();
+    if(!threadedUpdate) doUpdate();
     doDraw();
     frameCount++;
   }

@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Pools;
 
 import pama1234.gdx.util.font.BetterBitmapFont;
+import pama1234.gdx.util.font.FastGlyphLayout;
 
 /**
  * GDX-LAZY-FONT for LibGDX 1.5.0+<br>
@@ -46,7 +47,7 @@ public class LazyBitmapFont extends BetterBitmapFont {
     this.parameter=param;
     this.data=new LazyBitmapFontData(this,generator,fontSize,color);
     try {
-      Field f=getClass().getSuperclass().getDeclaredField("data");
+      Field f=getClass().getSuperclass().getSuperclass().getDeclaredField("data");
       f.setAccessible(true);
       f.set(this,data);
     }catch(Exception e) {
@@ -146,6 +147,47 @@ public class LazyBitmapFont extends BetterBitmapFont {
     super.dispose();
     data.dispose();
   }
+
+  @Override
+  public float textWidthNoScale(CharSequence in) {
+    return 0;
+  }
+
+  @Override
+  public void size(float in) {
+
+  }
+
+  @Override
+  public void fastText(String in, float x, float y) {
+
+  }
+
+  @Override
+  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y) {
+    return null;
+  }
+
+  @Override
+  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y, float targetWidth, int halign, boolean wrap) {
+    return null;
+  }
+
+  @Override
+  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y, int start, int end, float targetWidth, int halign, boolean wrap) {
+    return null;
+  }
+
+  @Override
+  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y, int start, int end, float targetWidth, int halign, boolean wrap, String truncate) {
+    return null;
+  }
+
+  @Override
+  public void setFullTextColor(Color color) {
+
+  }
+
   public static class LazyBitmapFontData extends FreeTypeBitmapFontData{
     private final FreeTypeFontGenerator generator;
     private final int fontSize;

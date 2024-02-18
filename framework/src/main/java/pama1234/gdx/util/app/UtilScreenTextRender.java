@@ -81,9 +81,12 @@ public abstract class UtilScreenTextRender extends UtilScreenColor{
     if(in>=1) return MathUtils.floor(in);
     else return Math.max(MathUtils.floor(in*fontGridSize)/fontGridSize,1/fontGridSize);
   }
-//  public void textFont(BetterBitmapFont fontIn) {
-//    font=fontIn;
-//  }
+  public BetterBitmapFont textFont() {
+    return font;
+  }
+  public void textFont(BetterBitmapFont fontIn) {
+    font=fontIn;
+  }
   //---------------------------------------------------------------------------
   public void fullText(String in,float x,float y) {
     fontBatch.begin();

@@ -33,23 +33,23 @@ public abstract class UtilScreenColor extends UtilScreenPose{
   // @Deprecated
   public void setTextColor(int gray) {
     font.getColor().set(gray/255f,gray/255f,gray/255f,1);
-    font.cacheM.setColor(font.getColor());
+    font.setFullTextColor(font.getColor());
     // setTextColor(gray,255);
   }
   // @Deprecated
   public void setTextColor(Color in) {
     font.getColor().set(in);
-    font.cacheM.setColor(font.getColor());
+    font.setFullTextColor(font.getColor());
   }
   // @Deprecated
   public void setTextColor(int gray,int alpha) {
     font.getColor().set(gray/255f,gray/255f,gray/255f,alpha/255f);
-    font.cacheM.setColor(font.getColor());
+    font.setFullTextColor(font.getColor());
   }
   // @Deprecated
   public void setTextColor(Color color,int alpha) {
     font.getColor().set(color.r,color.g,color.b,alpha/255f);
-    font.cacheM.setColor(font.getColor());
+    font.setFullTextColor(font.getColor());
   }
   //---------------------------------------------------------------------------
   public void fill(Color in) {
