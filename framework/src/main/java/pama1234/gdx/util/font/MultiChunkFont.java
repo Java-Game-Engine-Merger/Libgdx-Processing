@@ -31,12 +31,6 @@ public class MultiChunkFont extends BetterBitmapFont{
   public MultiChunkFontData mfontData;
   public Array<TextureRegion> multiRegions;
 
-  @RedundantCache
-  public SpriteBatch fontBatch;
-  @RedundantCache
-  public FontStyle styleFast;
-
-  public TextStyleSupplier style;
   public boolean useLF=true,useTab=true;
   public int stateCR=ignoreCR;
   // public boolean useCR;
@@ -132,26 +126,30 @@ public class MultiChunkFont extends BetterBitmapFont{
     }
     return out;
   }
+  @Override
   public float size() {
     return styleFast.size;
   }
+  @Override
   public void size(int in) {//TODO
     size((float)in);
   }
+  @Override
   public void size(float in) {
     if(styleFast.size==in) return;
     styleFast.size=in;
     for(int i=0;i<fontFile.length;i++) if(dataM[i]!=null) dataM[i].getData().setScale(styleFast.size/styleFast.defaultSize);
   }
-  @Deprecated
-  public void fastText(char in,float x,float y) {
-    cacheV.set(x,y);
-    inPos.set(cacheV);
-    int pos=in>>>digitShift;
-    if(loadOnDemand&&dataM[pos]==null) load(pos);
-    if(style!=null) style.text(Character.toString(in));
-    drawChar(cacheV,in,pos,0);
-  }
+  //  @Deprecated
+  //  public void fastText(char in,float x,float y) {
+  //    cacheV.set(x,y);
+  //    inPos.set(cacheV);
+  //    int pos=in>>>digitShift;
+  //    if(loadOnDemand&&dataM[pos]==null) load(pos);
+  //    if(style!=null) style.text(Character.toString(in));
+  //    drawChar(cacheV,in,pos,0);
+  //  }
+  @Override
   public void fastText(String in,float x,float y) {
     posI.set(0,0,0);
     cacheV.set(x,y);
@@ -243,10 +241,9 @@ public class MultiChunkFont extends BetterBitmapFont{
       glyph.u,glyph.v,
       glyph.u2,glyph.v2);
   }
+  @Override
   public void color(Color in) {
-    styleFast.foreground=in;
-    fontBatch.setColor(styleFast.foreground);
-
+      super.color(in);
   }
   @Override
   public void setColor(Color in) {
@@ -364,6 +361,12 @@ public class MultiChunkFont extends BetterBitmapFont{
     cacheM.draw(batch);
     return layout;
   }
+
+  @Override
+  public void setFullTextColor(Color color) {
+    cacheM.setColor(color);
+  }
+
   private void drawCharNewLine(Vec2f v) {
     posI.x=0;
     posI.z=0;
