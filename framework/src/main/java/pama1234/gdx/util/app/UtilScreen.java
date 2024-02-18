@@ -41,9 +41,10 @@ import hhs.gdx.hslib.tools.LoopThread;
 public abstract class UtilScreen extends UtilScreenRender{
   public void createRenderUtil() {
     fontBatch=SharedResources.instance.fontBatch;
-    font=SharedResources.instance.font;
-    font.fontBatch=fontBatch;
-    font.styleFast=fontStyle;
+//    font=SharedResources.instance.font;
+//    font.fontBatch=fontBatch;
+//    font.styleFast=fontStyle;
+    textFont(SharedResources.instance.font);
     textColor=new Color(0,0,0,1);
     font.color(textColor);
     fillColor=new Color(1,1,1,1);
