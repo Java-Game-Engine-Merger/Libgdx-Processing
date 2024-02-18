@@ -1,12 +1,11 @@
 package pama1234.gdx.util.app;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
 
 import pama1234.gdx.util.font.BetterBitmapFont;
 import pama1234.gdx.util.font.TextStyleSupplier;
 import pama1234.math.transform.Pose3D;
-import pama1234.util.Annotations.FastText;
+import pama1234.util.Annotations.SyntacticSugar;
 
 /**
  * 此中间类主要放渲染文本相关的东东
@@ -15,27 +14,17 @@ import pama1234.util.Annotations.FastText;
  * @see UtilScreen3D
  */
 public abstract class UtilScreenTextRender extends UtilScreenColor{
-  /**
-   * 全称fastText，比libgdx的text方法更快一些，无法绘制多色或有换行的文字
-   *
-   * @param in 文本
-   * @param x  坐标
-   * @param y  坐标
-   */
-  @FastText
   public void text(String in,float x,float y) {
     fontBatch.begin();
-    font.fastText(in==null?"null":in,x,y);
+    font.text(in==null?"null":in,x,y);
     fontBatch.end();
   }
-  @FastText
   public void text(String in,float x,float y,float z) {
     pushMatrix();
     translate(x,y,z);
     text(in);
     popMatrix();
   }
-  @FastText
   public void text(String in,float x,float y,float z,float rx,float ry,float rz) {
     pushMatrix();
     translate(x,y,z);
@@ -43,11 +32,10 @@ public abstract class UtilScreenTextRender extends UtilScreenColor{
     text(in);
     popMatrix();
   }
-  @FastText
+  @SyntacticSugar
   public void text(String in) {
     text(in,0,0);
   }
-  @FastText
   public void text(String in,Pose3D pose) {
     pushMatrix();
     pose(pose);
@@ -86,6 +74,12 @@ public abstract class UtilScreenTextRender extends UtilScreenColor{
   }
   public void textFont(BetterBitmapFont fontIn) {
     font=fontIn;
+
+    font.fontBatch=fontBatch;
+    font.styleFast=fontStyle;
+  }
+  public void textMode(int in) {
+    font.textMode=in;
   }
   //---------------------------------------------------------------------------
   public void fullText(String in,float x,float y) {

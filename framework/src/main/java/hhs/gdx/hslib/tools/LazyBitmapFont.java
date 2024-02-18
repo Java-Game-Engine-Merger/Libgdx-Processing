@@ -30,12 +30,16 @@ import pama1234.gdx.util.font.FastGlyphLayout;
  * @version 2.1.5
  * @see <a href="https://github.com/dingjibang/GDX-LAZY-FONT">...</a>
  */
-public class LazyBitmapFont extends BetterBitmapFont {
+public class LazyBitmapFont extends BetterBitmapFont{
   public final int fontSize;
   private final FreeTypeFontGenerator generator;
   private final FreeTypeBitmapFontData data;
   private final FreeTypeFontParameter parameter;
+
   public LazyBitmapFont(FreeTypeFontGenerator generator,int fontSize,Color color) {
+    this(generator,fontSize,false,color);
+  }
+  public LazyBitmapFont(FreeTypeFontGenerator generator,int fontSize,boolean flip,Color color) {
     if(generator==null) {
       throw new GdxRuntimeException(
         "lazyBitmapFont global generator must be not null to use this constructor.");
@@ -44,6 +48,7 @@ public class LazyBitmapFont extends BetterBitmapFont {
     this.fontSize=fontSize;
     FreeTypeFontParameter param=new FreeTypeFontParameter();
     param.size=fontSize;
+    param.flip=flip;
     this.parameter=param;
     this.data=new LazyBitmapFontData(this,generator,fontSize,color);
     try {
@@ -159,28 +164,32 @@ public class LazyBitmapFont extends BetterBitmapFont {
   }
 
   @Override
-  public void fastText(String in, float x, float y) {
+  public void fastText(String in,float x,float y) {
 
   }
 
   @Override
-  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y) {
-    return null;
+  public GlyphLayout drawF(Batch batch,CharSequence str,float x,float y) {
+    return draw(batch,str,x,y);
   }
-
   @Override
-  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y, float targetWidth, int halign, boolean wrap) {
-    return null;
+  public GlyphLayout drawF(Batch batch,CharSequence str,float x,float y,float targetWidth,int halign,boolean wrap) {
+    return draw(batch,str,x,y,targetWidth,halign,wrap);
   }
-
   @Override
-  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y, int start, int end, float targetWidth, int halign, boolean wrap) {
-    return null;
+  public GlyphLayout drawF(Batch batch,CharSequence str,
+    float x,float y,int start,int end,
+    float targetWidth,int halign,boolean wrap) {
+
+    return draw(batch,str,x,y,start,end,targetWidth,halign,wrap);
   }
-
   @Override
-  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y, int start, int end, float targetWidth, int halign, boolean wrap, String truncate) {
-    return null;
+  public GlyphLayout drawF(Batch batch,CharSequence str,
+    float x,float y,int start,int end,
+    float targetWidth,int halign,boolean wrap,
+    String truncate) {
+
+    return draw(batch,str,x,y,start,end,targetWidth,halign,wrap,truncate);
   }
 
   @Override

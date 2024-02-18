@@ -12,7 +12,7 @@ import pama1234.util.function.GetFloat;
 /**
  * @see ScreenCore2D
  */
-public abstract class UtilScreen2D extends UtilScreen{
+public abstract class UtilScreen2D extends UtilScreen implements UtilScreenInterface{
   public Style[] styleStack=new Style[10];
   public int styleStackPointer=-1;
 

@@ -67,4 +67,11 @@ public class Annotations{
   public @interface FastText{
 
   }
+
+  @Documented
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(value= {CONSTRUCTOR,FIELD,LOCAL_VARIABLE,METHOD,PACKAGE,MODULE,PARAMETER,TYPE})
+  public @interface SyntacticSugar{
+
+  }
 }

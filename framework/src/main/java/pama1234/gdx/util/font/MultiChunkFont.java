@@ -8,16 +8,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
-import pama1234.gdx.util.element.FontStyle;
 import pama1234.gdx.util.font.FontUtil.UniFontDependent;
 import pama1234.math.vec.Vec2f;
 import pama1234.math.vec.Vec3i;
-import pama1234.util.Annotations.RedundantCache;
 
 @UniFontDependent
 public class MultiChunkFont extends BetterBitmapFont{
@@ -255,7 +252,7 @@ public class MultiChunkFont extends BetterBitmapFont{
     super.setColor(r,g,b,a);
     cacheM.setColor(r,g,b,a);
   }
-  // @Override
+  @Override
   public void textScale(float in) {
     styleFast.scale=in;
   }
@@ -276,6 +273,7 @@ public class MultiChunkFont extends BetterBitmapFont{
   public Array<TextureRegion> getRegions() {//TODO
     return multiRegions;
   }
+  @Override
   public float textWidthNoScale(CharSequence in) {
     @UniFontDependent
     float out=2;
@@ -287,6 +285,7 @@ public class MultiChunkFont extends BetterBitmapFont{
     }
     return out;
   }
+  @Override
   public float textWidth(CharSequence in) {
     return textWidthNoScale(in)*styleFast.scale;
   }
@@ -303,7 +302,8 @@ public class MultiChunkFont extends BetterBitmapFont{
   public MultiChunkFontData getDataM() {
     return mfontData;
   }
-  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y) {
+  @Override
+  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y);
     cacheM.draw(batch);
@@ -314,7 +314,8 @@ public class MultiChunkFont extends BetterBitmapFont{
     cacheM.addText(layout,x,y);
     cacheM.draw(batch);
   }
-  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y,float targetWidth,int halign,boolean wrap) {
+  @Override
+  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y, float targetWidth, int halign, boolean wrap) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y,targetWidth,halign,wrap);
     cacheM.draw(batch);
@@ -334,7 +335,8 @@ public class MultiChunkFont extends BetterBitmapFont{
    * @param wrap
    * @return
    */
-  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,boolean wrap) {
+  @Override
+  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y, int start, int end, float targetWidth, int halign, boolean wrap) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y,start,end,targetWidth,halign,wrap);
     cacheM.draw(batch);
@@ -355,7 +357,8 @@ public class MultiChunkFont extends BetterBitmapFont{
    * @param truncate
    * @return
    */
-  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,boolean wrap,String truncate) {
+  @Override
+  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y, int start, int end, float targetWidth, int halign, boolean wrap, String truncate) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y,start,end,targetWidth,halign,wrap,truncate);
     cacheM.draw(batch);
