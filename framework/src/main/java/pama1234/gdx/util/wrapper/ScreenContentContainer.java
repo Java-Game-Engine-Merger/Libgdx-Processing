@@ -13,9 +13,9 @@ public class ScreenContentContainer implements EntityNeoListener{
   //  public EntityCenter<UtilScreen,EntityListener> center;
   //  public EntityCenter<UtilScreen,EntityListener> centerCam;
   //  public EntityCenter<UtilScreen,EntityListener> centerScreen;
-  public EntityCenterConcurrent<UtilScreen,EntityListener> center;
-  public EntityCenterConcurrent<UtilScreen,EntityListener> centerCam;
-  public EntityCenterConcurrent<UtilScreen,EntityListener> centerScreen;
+  public EntityCenterAbstract<UtilScreen,EntityListener,?> center;
+  public EntityCenterAbstract<UtilScreen,EntityListener,?> centerCam;
+  public EntityCenterAbstract<UtilScreen,EntityListener,?> centerScreen;
 
   public EntityNeoCenter<UtilScreen,EntityNeoListener> centerNeo;
   public ServerEntityCenter<UtilServer,ServerEntityListener> serverCenter;

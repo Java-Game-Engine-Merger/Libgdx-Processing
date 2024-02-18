@@ -14,6 +14,9 @@ import pama1234.util.function.GetInt;
 public class TextButton<T extends UtilScreen>extends Button<T>{
   public static Color fillColor=UtilScreen.color(127,191);
   public static Color pressedFillColor=UtilScreen.color(94,203,234,200);
+  public static Color textColor=UtilScreen.color(255,200);
+  public static Color pressedTextColor=UtilScreen.color(255,220);
+
   @Setter
   public String text;
   @Setter
@@ -85,11 +88,11 @@ public class TextButton<T extends UtilScreen>extends Button<T>{
     // p.noStroke();
     if(touch!=null) {
       // if(inButton(p.mouse.x,p.mouse.y)) p.fill(0,90,130,200); else 
-      p.fill(pressedFillColor);
-      p.textColor(255,220);
+      p.fill(getPressedFillColor());
+      p.textColor(getPressedTextColor());
     }else {
-      p.fill(fillColor);
-      p.textColor(255,200);
+      p.fill(getFillColor());
+      p.textColor(getTextColor());
     }
     p.beginBlend();//TODO
     p.rect(tx,ty,tw,th);
@@ -168,6 +171,18 @@ public class TextButton<T extends UtilScreen>extends Button<T>{
   //   this.rect=new RectF(()->x,()->y,createDefaultWidthSupplier(p),p::getButtonUnitLength);
   //   return this;
   // }
+  public Color getFillColor() {
+    return fillColor;
+  }
+  public Color getPressedFillColor() {
+    return pressedFillColor;
+  }
+  public Color getTextColor() {
+    return textColor;
+  }
+  public Color getPressedTextColor() {
+    return pressedTextColor;
+  }
   //---------------------------------------------------------------------------
   /**
    * ButtonAutoWidthRect，适合用于带有单行文字的按钮

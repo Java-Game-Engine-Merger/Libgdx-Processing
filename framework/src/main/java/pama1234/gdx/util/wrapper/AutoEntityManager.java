@@ -21,7 +21,7 @@ public class AutoEntityManager<T extends UtilScreen>extends LayeredEntityCenter<
   public EntityCenter<T,StateEntity<T,?>> stateEntityComplexCenter;
 
   // 操作目标
-  public EntityCenterConcurrent<T,EntityListener>[] target;
+  public EntityCenterAbstract<T,EntityListener,?>[] target;
   //  public EntityCenter<T,EntityListener>[] target;
 
   public AutoEntityManager(T p) {
@@ -30,7 +30,7 @@ public class AutoEntityManager<T extends UtilScreen>extends LayeredEntityCenter<
     list[0]=stateEntityCenter=new EntityCenter<>(p);
     list[1]=stateEntityComplexCenter=new EntityCenter<>(p);
 
-    target=new EntityCenterConcurrent[] {p.center,p.centerScreen,p.centerCam};
+    target=new EntityCenterAbstract[] {p.center,p.centerScreen,p.centerCam};
     //    target=new EntityCenter[] {p.center,p.centerScreen,p.centerCam,p.centerNeo};
   }
 

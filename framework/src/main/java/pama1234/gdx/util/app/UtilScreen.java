@@ -72,14 +72,14 @@ public abstract class UtilScreen extends UtilScreenRender{
     serverCenter=new ServerEntityCenter<>(null);
     centerSys=new Center<>();
     //    center=new EntityCenter<>(this);
-    center=new EntityCenterConcurrent<>(this);
+    center=createEntityCenter();
     center.list.add(cam=createCamera());
     centerSys.list.add(cam);
     // TOOD update顺序，centerScreen应当先于centerCam
     //    center.list.add(centerScreen=new EntityCenter<>(this));
     //    center.list.add(centerCam=new EntityCenter<>(this));
-    center.list.add(centerScreen=new EntityCenterConcurrent<>(this));
-    center.list.add(centerCam=new EntityCenterConcurrent<>(this));
+    center.list.add(centerScreen=createEntityCenter());
+    center.list.add(centerCam=createEntityCenter());
 
     center.list.add(centerNeo=new EntityNeoCenter<>(this));
 
@@ -378,5 +378,8 @@ public abstract class UtilScreen extends UtilScreenRender{
     // screenStage.setRoot(in.screenStage);
     // camStage.setRoot(in.camStage);
 
+  }
+  public EntityCenterAbstract<UtilScreen,EntityListener,?> createEntityCenter() {
+    return new EntityCenterConcurrent<>(this);
   }
 }
