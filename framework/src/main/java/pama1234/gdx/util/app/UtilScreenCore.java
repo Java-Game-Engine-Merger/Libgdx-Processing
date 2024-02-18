@@ -19,11 +19,8 @@ import pama1234.gdx.util.listener.EntityListener;
 import pama1234.gdx.util.listener.EntityNeoListener;
 import pama1234.gdx.util.listener.InputListener;
 import pama1234.gdx.util.listener.SystemListener;
-import pama1234.gdx.util.wrapper.AutoEntityManager;
+import pama1234.gdx.util.wrapper.*;
 import pama1234.gdx.util.wrapper.DisplayEntity.DisplayWithCam;
-import pama1234.gdx.util.wrapper.EntityCenter;
-import pama1234.gdx.util.wrapper.EntityCenterConcurrent;
-import pama1234.gdx.util.wrapper.EntityNeoCenter;
 import pama1234.util.UtilServer;
 import pama1234.util.listener.LifecycleListener;
 import pama1234.util.listener.ServerEntityListener;
@@ -114,8 +111,8 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   /** 类似center但是存放的是ServerEntityListener */
   public ServerEntityCenter<UtilServer,ServerEntityListener> serverCenter;
 
-  public EntityCenterConcurrent<UtilScreen,EntityListener> centerSync,centerCamSync,centerScreenSync;
-  public EntityCenterConcurrent<UtilScreen,EntityListener> center,centerCam,centerScreen;
+  //  public EntityCenterConcurrent<UtilScreen,EntityListener> centerSync,centerCamSync,centerScreenSync;
+  public EntityCenterAbstract<UtilScreen,EntityListener,?> center,centerCam,centerScreen;
 
   /** 自动注册和删除实体 */
   public AutoEntityManager<UtilScreen> auto;
