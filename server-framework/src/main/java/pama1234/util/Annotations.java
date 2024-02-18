@@ -60,4 +60,11 @@ public class Annotations{
   @Retention(RetentionPolicy.RUNTIME)
   @Target(value= {CONSTRUCTOR,FIELD,LOCAL_VARIABLE,METHOD,PACKAGE,MODULE,PARAMETER,TYPE})
   public static @interface ZenithLang{}
+
+  @Documented
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(value= {CONSTRUCTOR,FIELD,LOCAL_VARIABLE,METHOD,PACKAGE,MODULE,PARAMETER,TYPE})
+  public @interface FastText{
+
+  }
 }
