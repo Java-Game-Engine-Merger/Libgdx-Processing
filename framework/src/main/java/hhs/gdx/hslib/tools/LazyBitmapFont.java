@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Pools;
 
 import pama1234.gdx.util.font.BetterBitmapFont;
-import pama1234.gdx.util.font.FastGlyphLayout;
+import pama1234.gdx.util.font.FontUtil.UniFontDependent;
 
 /**
  * GDX-LAZY-FONT for LibGDX 1.5.0+<br>
@@ -155,7 +155,23 @@ public class LazyBitmapFont extends BetterBitmapFont{
 
   @Override
   public float textWidthNoScale(CharSequence in) {
-    return 0;
+    @UniFontDependent
+    float out=2;
+    for(int i=0;i<in.length();i++) {
+      char tc=in.charAt(i);
+      out=getAndAddCharWidth(out,tc);
+    }
+    return out;
+  }
+
+  public float getAndAddCharWidth(float x,char tc) {
+    Glyph glyph=getData().getGlyph(tc);
+    if(glyph==null) {
+      System.err.println("MultiChunkFont.getAndAddCharWidth char=<"+tc+"> char="+(int)tc);
+      return x;
+    }
+    x+=glyph.xadvance/(float)fontSize*16;
+    return x;
   }
 
   @Override

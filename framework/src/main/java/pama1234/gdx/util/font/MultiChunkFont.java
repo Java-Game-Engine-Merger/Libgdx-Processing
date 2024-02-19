@@ -273,6 +273,11 @@ public class MultiChunkFont extends BetterBitmapFont{
   public Array<TextureRegion> getRegions() {//TODO
     return multiRegions;
   }
+
+  @Override
+  public float textWidth(CharSequence in) {
+    return textWidthNoScale(in)*styleFast.scale;
+  }
   @Override
   public float textWidthNoScale(CharSequence in) {
     @UniFontDependent
@@ -285,10 +290,6 @@ public class MultiChunkFont extends BetterBitmapFont{
     }
     return out;
   }
-  @Override
-  public float textWidth(CharSequence in) {
-    return textWidthNoScale(in)*styleFast.scale;
-  }
   public float getAndAddCharWidth(float x,char tc,int pos) {
     BitmapFont font=dataM[pos];
     Glyph glyph=font.getData().getGlyph(tc);
@@ -299,6 +300,7 @@ public class MultiChunkFont extends BetterBitmapFont{
     x+=glyph.xadvance;
     return x;
   }
+
   public MultiChunkFontData getDataM() {
     return mfontData;
   }
