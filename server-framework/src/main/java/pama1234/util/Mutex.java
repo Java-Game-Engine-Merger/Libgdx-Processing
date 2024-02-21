@@ -1,4 +1,4 @@
-package pama1234.gdx.game.util;
+package pama1234.util;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

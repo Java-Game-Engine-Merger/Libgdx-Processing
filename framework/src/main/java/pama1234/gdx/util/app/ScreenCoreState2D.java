@@ -54,9 +54,27 @@ public abstract class ScreenCoreState2D<C extends StateCenter<?,?>,E extends Sta
     // refreshAllCenter();
   }
 
+  public E stateNull() {
+    E out=state;
+    state=null;
+    if(out!=null) {
+      centerNeo.list.remove(out);
+      // centerCam.list.remove(out.displayCam);
+      out.to(null);
+      out.pause();
+    }
+    return out;
+  }
+
   @Override
   public E stateBack() {
     // TODO
     return null;
   }
+
+//  @Override
+//  public void dispose() {
+//    stateNull();
+//    super.dispose();
+//  }
 }
