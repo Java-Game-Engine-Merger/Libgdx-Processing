@@ -12,7 +12,7 @@ configurations {
 dependencies {
   api project(':server-framework')
 
-  testImplementation 'junit:junit:4.13.1'
+  testImplementation 'junit:junit:4.13.2'
   testImplementation 'com.carrotsearch:junit-benchmarks:0.7.2'
 
   testImplementation 'org.openjdk.jmh:jmh-core:1.37'
@@ -21,7 +21,7 @@ dependencies {
 
   implementation 'com.lmax:disruptor:4.0.0'
   implementation 'org.jctools:jctools-core:4.0.2'
-  implementation 'org.slf4j:slf4j-api:2.0.9'
+  implementation 'org.slf4j:slf4j-api:2.0.11'
   implementation 'org.slf4j:slf4j-simple:2.0.9'
 
   implementation "io.netty:netty-buffer:$nettyVersion"
