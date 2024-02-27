@@ -19,9 +19,9 @@ include 'framework0001:framework0001-metaphysics'
 // include 'framework0002:xr4j-lwjgl3'
 // include 'framework0002:xr4j-android'
 
-include 'framework0003:framework0003-androidDex'
-include 'framework0003:framework0003-bytecode'
-include 'framework0003:framework0003-textmate'
+//include 'framework0003:framework0003-androidDex'
+//include 'framework0003:framework0003-bytecode'
+//include 'framework0003:framework0003-textmate'
 
 // include 'framework0004:framework0004-terminal'
 // include 'framework0004:framework0004-terminal-android'
