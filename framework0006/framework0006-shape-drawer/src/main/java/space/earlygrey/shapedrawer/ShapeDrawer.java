@@ -1,6 +1,9 @@
 package space.earlygrey.shapedrawer;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -17,10 +20,9 @@ import space.earlygrey.shapedrawer.shapes.Pen;
 /**
  * <p>
  * Uses a Batch to draw lines, outlined shapes and paths. Meant to be an analogue of
- * {@link com.badlogic.gdx.graphics.glutils.ShapeRenderer}
- * but uses a Batch instead of an
- * {@link com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer}, so that it can be used
- * in between {@link Batch#begin()} and {@link Batch#end()}.
+ * {@link com.badlogic.gdx.graphics.glutils.ShapeRenderer} but uses a Batch instead of an
+ * {@link com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer}, so that it can be used in
+ * between {@link Batch#begin()} and {@link Batch#end()}.
  * </p>
  * <p>
  * Line mitering can be performed when drawing Polygons and Paths, see {@link JoinType} for
@@ -28,8 +30,7 @@ import space.earlygrey.shapedrawer.shapes.Pen;
  * </p>
  * <p>
  * Also includes an option to snap lines to the centre of pixels, see
- * {@link #line(float, float, float, float, float, boolean)}
- * for more information.
+ * {@link #line(float, float, float, float, float, boolean)} for more information.
  * </p>
  * <p>
  * Uses the projection matrix of the supplied Batch so there is no need to set one as with
@@ -37,17 +38,22 @@ import space.earlygrey.shapedrawer.shapes.Pen;
  * </p>
  * <p>
  * Note that the way filled shapes are drawn depends on whether you provide a batch implementing
- * {@link com.badlogic.gdx.graphics.g2d.PolygonBatch}
- * (eg a {@link com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch}) or not (eg a
- * {@link com.badlogic.gdx.graphics.g2d.SpriteBatch}).
- * Filled polygon drawing is more efficient with a PolygonBatch, and if possible this is
- * recommended.
+ * {@link com.badlogic.gdx.graphics.g2d.PolygonBatch} (eg a
+ * {@link com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch}) or not (eg a
+ * {@link com.badlogic.gdx.graphics.g2d.SpriteBatch}). Filled polygon drawing is more efficient
+ * with a PolygonBatch, and if possible this is recommended.
  * </p>
  *
  * @author earlygrey
  */
 
 public class ShapeDrawer extends AbstractShapeDrawer{
+  public static TextureRegion createBlankTextyreRegion() {
+    Pixmap tPixmap=new Pixmap(1,1,Format.RGBA8888);
+    tPixmap.setColor(0xffffffff);
+    tPixmap.fill();
+    return new TextureRegion(new Texture(tPixmap),0,0,1,1);
+  }
 
   protected Pen pen;
   protected Brush brush;
@@ -57,7 +63,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   //================================================================================
 
   public ShapeDrawer(Batch batch) {
-    this(batch,null,new DefaultSideEstimator());
+    //    this(batch,null,new DefaultSideEstimator());
+    this(batch,createBlankTextyreRegion(),new DefaultSideEstimator());
   }
 
   public ShapeDrawer(Batch batch,TextureRegion region) {
@@ -93,8 +100,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #line(float, float, float, float, float, boolean)}()} with {@code lineWidth} set
-   * to
-   * the current default and {@code snap} set to true.
+   * to the current default and {@code snap} set to true.
    * </p>
    *
    * @param s the starting point of the line
@@ -165,8 +171,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #line(float, float, float, float, Color, float)}()} with {@code lineWidth} set
-   * to
-   * the current default.
+   * to the current default.
    * </p>
    *
    * @param x1    the x-component of the first point
@@ -299,19 +304,16 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Draws a line between (x1, y1) and (x2, y2) with width {@code lineWidth}. The edges of the
-   * line are centred at
-   * (x1, y1) and (x2, y2).
+   * line are centred at (x1, y1) and (x2, y2).
    * </p>
    * <p>
    * The colour of the line will be blended between the first and second colours.
    * </p>
    * <p>
-   * If {@code snap} is true, the start and end
-   * points will be snapped to the centre of their respective pixels, and then offset very
-   * slightly so that the line
-   * is guaranteed to contain the centre of the pixel. This is important when pixel perfect
-   * precision
-   * is necessary, such as when drawing to a low resolution frame buffer.
+   * If {@code snap} is true, the start and end points will be snapped to the centre of their
+   * respective pixels, and then offset very slightly so that the line is guaranteed to contain
+   * the centre of the pixel. This is important when pixel perfect precision is necessary, such as
+   * when drawing to a low resolution frame buffer.
    * </p>
    *
    * @param x1        the x-component of the first point
@@ -345,8 +347,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #path(Iterable, float, JoinType, boolean)} with open set to true and
-   * {@code lineWidth}
-   * set to the current default.
+   * {@code lineWidth} set to the current default.
    * </p>
    *
    * @param path     an ordered Iterable of Vector2s representing path points
@@ -392,8 +393,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #path(Iterable, float, JoinType, boolean)} with {@code joinType} set to
-   * {@link JoinType#SMOOTH}
-   * (also see {@link #isJoinNecessary(float)}).
+   * {@link JoinType#SMOOTH} (also see {@link #isJoinNecessary(float)}).
    * </p>
    *
    * @param path      an ordered Iterable of Vector2s representing path points
@@ -410,22 +410,19 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * </p>
    * <p>
    * The points at which two lines connect can be mitered to give a smooth join, see
-   * {@link JoinType} for the types of mitre.
-   * Note that this may cause strange looking joins when the angle between connected lines
-   * approaches &pi;, as the miter
-   * can get arbitratily long. For thin lines where the mitre cannot be seen, you can set
-   * {@code joinType} to {@link JoinType#NONE}.
+   * {@link JoinType} for the types of mitre. Note that this may cause strange looking joins when
+   * the angle between connected lines approaches &pi;, as the miter can get arbitratily long. For
+   * thin lines where the mitre cannot be seen, you can set {@code joinType} to
+   * {@link JoinType#NONE}.
    * </p>
    * <p>
    * Only a subset of the path containing unique consecutive points (up to some small error) will
-   * be considerered.
-   * For example, the paths [(0,0), (1.0001,1), (1,1), (2,2)] and [(0,0), (1,1), (2,2)] will be
-   * drawn identically.
+   * be considerered. For example, the paths [(0,0), (1.0001,1), (1,1), (2,2)] and [(0,0), (1,1),
+   * (2,2)] will be drawn identically.
    * </p>
    * <p>
    * If {@code path} is empty nothing will be drawn, if it contains two points
-   * {@link #line(float, float, float, float, float, boolean)}
-   * will be used.
+   * {@link #line(float, float, float, float, float, boolean)} will be used.
    * </p>
    *
    * @param path      an {@code Iterable<T>} containing the ordered points in the path
@@ -562,8 +559,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #ellipse(float, float, float, float, float, float, JoinType)} with rotation set
-   * to 0
-   * and radiusX and radiusY set to {@code radius}.
+   * to 0 and radiusX and radiusY set to {@code radius}.
    * </p>
    *
    * @param centreX   the x-coordinate of the centre point
@@ -625,10 +621,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
 
   /**
    * <p>
-   * Draws an ellipse as a stretched regular polygon, estimating the number of sides required
-   * (see {@link #estimateSidesRequired(float, float)}) to appear smooth enough based on the
-   * pixel size that has been set. Calls
-   * {@link #polygon(float, float, int, float, float, float, JoinType)}.
+   * Draws an ellipse as a stretched regular polygon, estimating the number of sides required (see
+   * {@link #estimateSidesRequired(float, float)}) to appear smooth enough based on the pixel size
+   * that has been set. Calls {@link #polygon(float, float, int, float, float, float, JoinType)}.
    * </p>
    *
    * @param centreX   the x-coordinate of the centre point
@@ -650,8 +645,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Draws a filled circle (disc) by calling
-   * {@link #filledEllipse(float, float, float, float, float)} with rotation set to 0
-   * and radiusX and radiusY set to {@code radius}.
+   * {@link #filledEllipse(float, float, float, float, float)} with rotation set to 0 and radiusX
+   * and radiusY set to {@code radius}.
    * </p>
    *
    * @param centreX the x-coordinate of the centre point
@@ -665,8 +660,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Draws a filled circle (disc) by calling
-   * {@link #filledEllipse(float, float, float, float, float)} with rotation set to 0
-   * and radiusX and radiusY set to {@code radius}.
+   * {@link #filledEllipse(float, float, float, float, float)} with rotation set to 0 and radiusX
+   * and radiusY set to {@code radius}.
    * </p>
    *
    * @param centre the centre of the disc
@@ -680,8 +675,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * <p>
    * Draws a filled circle (disc) by calling
    * {@link #filledEllipse(float, float, float, float, float, float, float)} with rotation set to
-   * 0
-   * and radiusX and radiusY set to {@code radius}.
+   * 0 and radiusX and radiusY set to {@code radius}.
    * </p>
    *
    * @param centreX the x-coordinate of the centre point
@@ -698,8 +692,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * <p>
    * Draws a filled circle (disc) by calling
    * {@link #filledEllipse(float, float, float, float, float, float, float)} with rotation set to
-   * 0
-   * and radiusX and radiusY set to {@code radius}.
+   * 0 and radiusX and radiusY set to {@code radius}.
    * </p>
    *
    * @param centre the centre of the disc
@@ -761,9 +754,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
 
   /**
    * <p>
-   * Draws an ellipse as a stretched regular polygon, estimating the number of sides required
-   * (see {@link #estimateSidesRequired(float, float)}) to appear smooth enough based on the
-   * pixel size that has been set.
+   * Draws an ellipse as a stretched regular polygon, estimating the number of sides required (see
+   * {@link #estimateSidesRequired(float, float)}) to appear smooth enough based on the pixel size
+   * that has been set.
    * </p>
    *
    * @param centreX    the x-coordinate of the centre point
@@ -960,8 +953,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #polygon(float, float, int, float, float, float, float)} with scaleX and scaleY
-   * set to
-   * {@code scale}, rotation set to 0, and with the current default line width.
+   * set to {@code scale}, rotation set to 0, and with the current default line width.
    * </p>
    *
    * @param centreX the x-coordinate of the centre point
@@ -976,8 +968,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #polygon(float, float, int, float, float, float, float)} with scaleX and scaleY
-   * set to
-   * {@code scale} and with the current default line width.
+   * set to {@code scale} and with the current default line width.
    * </p>
    *
    * @param centreX  the x-coordinate of the centre point
@@ -992,9 +983,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
 
   /**
    * <p>
-   * Calls {@link #polygon(float, float, int, float, float, float, float, JoinType)}
-   * with the current default line width and
-   * with joinType set to {@link JoinType#POINTY} (also see {@link #isJoinNecessary(float)}).
+   * Calls {@link #polygon(float, float, int, float, float, float, float, JoinType)} with the
+   * current default line width and with joinType set to {@link JoinType#POINTY} (also see
+   * {@link #isJoinNecessary(float)}).
    * </p>
    *
    * @param centreX  the x-coordinate of the centre point
@@ -1010,8 +1001,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
 
   /**
    * <p>
-   * Calls {@link #polygon(float, float, int, float, float, float, float, JoinType)}
-   * with joinType set to {@link JoinType#POINTY} (also see {@link #isJoinNecessary(float)}).
+   * Calls {@link #polygon(float, float, int, float, float, float, float, JoinType)} with joinType
+   * set to {@link JoinType#POINTY} (also see {@link #isJoinNecessary(float)}).
    * </p>
    *
    * @param centreX   the x-coordinate of the centre point
@@ -1084,8 +1075,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #filledPolygon(float, float, int, float, float, float)} with scaleX and scaleY
-   * set to
-   * {@code scale}.
+   * set to {@code scale}.
    * </p>
    *
    * @param centreX  the x-coordinate of the centre point
@@ -1284,10 +1274,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * Draws a filled polygon.
    * </p>
    * <p>
-   * Note: this triangulates the polygon every time it is called - it is recommended to cache
-   * the triangles and use {@link #filledPolygon(Polygon, short[])} or
-   * {@link #filledPolygon(Polygon, ShortArray)} instead.
-   * You can use something like
+   * Note: this triangulates the polygon every time it is called - it is recommended to cache the
+   * triangles and use {@link #filledPolygon(Polygon, short[])} or
+   * {@link #filledPolygon(Polygon, ShortArray)} instead. You can use something like
    * {@link com.badlogic.gdx.math.EarClippingTriangulator#computeTriangles(float[])} to calculate
    * the triangles.
    * </p>
@@ -1303,10 +1292,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * Draws a filled polygon using the specified vertices.
    * </p>
    * <p>
-   * Note: this triangulates the polygon every time it is called - it is recommended to cache
-   * the triangles and use {@link #filledPolygon(float[], short[])} or
-   * {@link #filledPolygon(float[], ShortArray)} instead.
-   * You can use something like
+   * Note: this triangulates the polygon every time it is called - it is recommended to cache the
+   * triangles and use {@link #filledPolygon(float[], short[])} or
+   * {@link #filledPolygon(float[], ShortArray)} instead. You can use something like
    * {@link com.badlogic.gdx.math.EarClippingTriangulator#computeTriangles(float[])} to calculate
    * the triangles.
    * </p>
@@ -1323,10 +1311,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * Draws a filled polygon using the specified vertices.
    * </p>
    * <p>
-   * Note: this triangulates the polygon every time it is called - it is recommended to cache
-   * the triangles and use {@link #filledPolygon(float[], short[])} or
-   * {@link #filledPolygon(float[], ShortArray)} instead.
-   * You can use something like
+   * Note: this triangulates the polygon every time it is called - it is recommended to cache the
+   * triangles and use {@link #filledPolygon(float[], short[])} or
+   * {@link #filledPolygon(float[], ShortArray)} instead. You can use something like
    * {@link com.badlogic.gdx.math.EarClippingTriangulator#computeTriangles(float[])} to calculate
    * the triangles.
    * </p>
@@ -1347,11 +1334,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    *
    * @param polygon   the polygon to draw
    * @param triangles ordered triples of the indices of the float[] defining the polygon vertices
-   *                  corresponding to triangles.
-   *                  You can use something like
+   *                  corresponding to triangles. You can use something like
    *                  {@link com.badlogic.gdx.math.EarClippingTriangulator#computeTriangles(float[])}
-   *                  to
-   *                  calculate them.
+   *                  to calculate them.
    */
   public void filledPolygon(Polygon polygon,short[] triangles) {
     filledPolygon(polygon.getTransformedVertices(),triangles);
@@ -1365,11 +1350,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * @param vertices  consecutive ordered pairs of the x-y coordinates of the vertices of the
    *                  polygon
    * @param triangles ordered triples of the indices of the float[] defining the polygon vertices
-   *                  corresponding to triangles.
-   *                  You can use something like
+   *                  corresponding to triangles. You can use something like
    *                  {@link com.badlogic.gdx.math.EarClippingTriangulator#computeTriangles(float[])}
-   *                  to
-   *                  calculate them.
+   *                  to calculate them.
    */
   public void filledPolygon(float[] vertices,short[] triangles) {
     filledPolygonDrawer.polygon(vertices,triangles);
@@ -1382,11 +1365,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    *
    * @param polygon   the polygon to draw
    * @param triangles ordered triples of the indices of the float[] defining the polygon vertices
-   *                  corresponding to triangles.
-   *                  You can use something like
+   *                  corresponding to triangles. You can use something like
    *                  {@link com.badlogic.gdx.math.EarClippingTriangulator#computeTriangles(float[])}
-   *                  to
-   *                  calculate them.
+   *                  to calculate them.
    */
   public void filledPolygon(Polygon polygon,ShortArray triangles) {
     filledPolygon(polygon.getTransformedVertices(),triangles);
@@ -1400,11 +1381,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * @param vertices  consecutive ordered pairs of the x-y coordinates of the vertices of the
    *                  polygon
    * @param triangles ordered triples of the indices of the float[] defining the polygon vertices
-   *                  corresponding to triangles.
-   *                  You can use something like
+   *                  corresponding to triangles. You can use something like
    *                  {@link com.badlogic.gdx.math.EarClippingTriangulator#computeTriangles(float[])}
-   *                  to
-   *                  calculate them.
+   *                  to calculate them.
    */
   public void filledPolygon(float[] vertices,ShortArray triangles) {
     filledPolygonDrawer.polygon(vertices,triangles);
@@ -1418,11 +1397,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * @param vertices  consecutive ordered pairs of the x-y coordinates of the vertices of the
    *                  polygon
    * @param triangles ordered triples of the indices of the float[] defining the polygon vertices
-   *                  corresponding to triangles.
-   *                  You can use something like
+   *                  corresponding to triangles. You can use something like
    *                  {@link com.badlogic.gdx.math.EarClippingTriangulator#computeTriangles(float[])}
-   *                  to
-   *                  calculate them.
+   *                  to calculate them.
    * @param offsetX   the x-offset of the vertices
    * @param offsetY   the y-offset of the vertices
    */
@@ -1603,11 +1580,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * @param vertices  consecutive ordered pairs of the x-y coordinates of the vertices of the
    *                  polygon
    * @param triangles ordered triples of the indices of the float[] defining the polygon vertices
-   *                  corresponding to triangles.
-   *                  You can use something like
+   *                  corresponding to triangles. You can use something like
    *                  {@link com.badlogic.gdx.math.EarClippingTriangulator#computeTriangles(float[])}
-   *                  to
-   *                  calculate them.
+   *                  to calculate them.
    * @param offsetX   the x-offset of the vertices
    * @param offsetY   the y-offset of the vertices
    */
@@ -1755,8 +1730,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
 
   /**
    * <p>
-   * Calls {@link #rectangle(Rectangle, float)} with the current default line width.
-   * See {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
+   * Calls {@link #rectangle(Rectangle, float)} with the current default line width. See
+   * {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
    * </p>
    *
    * @param rect a {@link Rectangle} object
@@ -1767,8 +1742,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
 
   /**
    * <p>
-   * Calls {@link #rectangle(Rectangle, Color, float)} with the current default line width.
-   * See {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
+   * Calls {@link #rectangle(Rectangle, Color, float)} with the current default line width. See
+   * {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
    * </p>
    *
    * @param rect  a {@link Rectangle} object
@@ -1780,8 +1755,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
 
   /**
    * <p>
-   * Calls {@link #rectangle(float, float, float, float, float)}.
-   * See {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
+   * Calls {@link #rectangle(float, float, float, float, float)}. See
+   * {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
    * </p>
    *
    * @param rect      a {@link Rectangle} object
@@ -1793,8 +1768,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
 
   /**
    * <p>
-   * Calls {@link #rectangle(float, float, float, float, Color, float)}.
-   * See {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
+   * Calls {@link #rectangle(float, float, float, float, Color, float)}. See
+   * {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
    * </p>
    *
    * @param rect      a {@link Rectangle} object
@@ -1808,8 +1783,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #rectangle(float, float, float, float, float)} with the current default line
-   * width.
-   * See {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
+   * width. See {@link #rectangle(float, float, float, float, float, JoinType)} for more
+   * information.
    * </p>
    *
    * @param x      the x-coordinate of the bottom left corner of the rectangle
@@ -1824,8 +1799,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #rectangle(float, float, float, float, Color, float)} with the current default
-   * line width.
-   * See {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
+   * line width. See {@link #rectangle(float, float, float, float, float, JoinType)} for more
+   * information.
    * </p>
    *
    * @param x      the x-coordinate of the bottom left corner of the rectangle
@@ -1841,8 +1816,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #rectangle(float, float, float, float, float, JoinType)} with joinType set to
-   * {@link JoinType#POINTY}.
-   * See {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
+   * {@link JoinType#POINTY}. See {@link #rectangle(float, float, float, float, float, JoinType)}
+   * for more information.
    * </p>
    *
    * @param x         the x-coordinate of the bottom left corner of the rectangle
@@ -1857,8 +1832,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
 
   /**
    * <p>
-   * Calls {@link #rectangle(float, float, float, float, float)}.
-   * See {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
+   * Calls {@link #rectangle(float, float, float, float, float)}. See
+   * {@link #rectangle(float, float, float, float, float, JoinType)} for more information.
    * </p>
    *
    * @param x         the x-coordinate of the bottom left corner of the rectangle
@@ -1981,8 +1956,8 @@ public class ShapeDrawer extends AbstractShapeDrawer{
 
   /**
    * <p>
-   * Calls {@link #filledRectangle(float, float, float, float, Color)}.
-   * See {@link #filledRectangle(float, float, float, float, Color)} for more information.
+   * Calls {@link #filledRectangle(float, float, float, float, Color)}. See
+   * {@link #filledRectangle(float, float, float, float, Color)} for more information.
    * </p>
    *
    * @param rect  a {@link Rectangle} object

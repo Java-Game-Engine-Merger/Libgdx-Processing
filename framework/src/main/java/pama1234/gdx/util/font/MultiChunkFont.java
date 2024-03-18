@@ -16,6 +16,8 @@ import pama1234.gdx.util.font.FontUtil.UniFontDependent;
 import pama1234.math.vec.Vec2f;
 import pama1234.math.vec.Vec3i;
 
+import static pama1234.gdx.util.SharedResources.createBlankTextyreRegion;
+
 @UniFontDependent
 public class MultiChunkFont extends BetterBitmapFont{
   public static final int useCR=0,showCR=1,ignoreCR=2;
@@ -62,12 +64,10 @@ public class MultiChunkFont extends BetterBitmapFont{
     cacheV=new Vec2f();
     inPos=new Vec2f();
     posI=new Vec3i();
-    Pixmap tPixmap=new Pixmap(1,1,Format.RGBA8888);
-    tPixmap.setColor(0xffffffff);
-    tPixmap.fill();
-    backgroundAlt=new TextureRegion(new Texture(tPixmap),0,0,1,1);
+    backgroundAlt=createBlankTextyreRegion();
     cacheM=newFontCacheM();
   }
+
   public void markupEnabled(boolean in) {
     getData().markupEnabled=in;
     // getDataM().markupEnabled=in;

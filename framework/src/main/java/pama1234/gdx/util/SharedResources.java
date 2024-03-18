@@ -2,8 +2,12 @@ package pama1234.gdx.util;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import pama1234.gdx.util.font.MultiChunkFont;
 import pama1234.gdx.util.graphics.UtilPolygonSpriteBatch;
@@ -15,6 +19,13 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
  * UtilScreen的共享绘制工具
  */
 public class SharedResources implements Disposable{
+  public static TextureRegion createBlankTextyreRegion() {
+    Pixmap tPixmap=new Pixmap(1,1, Format.RGBA8888);
+    tPixmap.setColor(0xffffffff);
+    tPixmap.fill();
+    return new TextureRegion(new Texture(tPixmap),0,0,1,1);
+  }
+
   public static SharedResources instance=new SharedResources();
   public MultiChunkFont font;
   public SpriteBatch fontBatch;
