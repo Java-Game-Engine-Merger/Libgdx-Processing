@@ -240,7 +240,7 @@ public class MultiChunkFont extends BetterBitmapFont{
   }
   @Override
   public void color(Color in) {
-      super.color(in);
+    super.color(in);
   }
   @Override
   public void setColor(Color in) {
@@ -305,7 +305,7 @@ public class MultiChunkFont extends BetterBitmapFont{
     return mfontData;
   }
   @Override
-  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y) {
+  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y);
     cacheM.draw(batch);
@@ -317,7 +317,7 @@ public class MultiChunkFont extends BetterBitmapFont{
     cacheM.draw(batch);
   }
   @Override
-  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y, float targetWidth, int halign, boolean wrap) {
+  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y,float targetWidth,int halign,boolean wrap) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y,targetWidth,halign,wrap);
     cacheM.draw(batch);
@@ -338,7 +338,7 @@ public class MultiChunkFont extends BetterBitmapFont{
    * @return
    */
   @Override
-  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y, int start, int end, float targetWidth, int halign, boolean wrap) {
+  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,boolean wrap) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y,start,end,targetWidth,halign,wrap);
     cacheM.draw(batch);
@@ -360,7 +360,7 @@ public class MultiChunkFont extends BetterBitmapFont{
    * @return
    */
   @Override
-  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y, int start, int end, float targetWidth, int halign, boolean wrap, String truncate) {
+  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,boolean wrap,String truncate) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y,start,end,targetWidth,halign,wrap,truncate);
     cacheM.draw(batch);

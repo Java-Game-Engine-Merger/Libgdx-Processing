@@ -30,7 +30,6 @@ import pama1234.gdx.util.listener.EntityNeoListener;
 import pama1234.gdx.util.wrapper.*;
 import pama1234.util.wrapper.Center;
 import pama1234.util.wrapper.ServerEntityCenter;
-import space.earlygrey.shapedrawer.ShapeDrawer;
 
 /**
  * 此中间类主要放渲染相关的东东
@@ -56,7 +55,7 @@ public abstract class UtilScreen extends UtilScreenRender{
     pFill=SharedResources.instance.pFill;
     pFill.setColor(fillColor);
 
-    shapeDrawer=new ShapeDrawer(imageBatch);
+    shapeDrawer=SharedResources.instance.shapeDrawer;
   }
   public void createInputUtil() {
     vectorCache=new Vector3();

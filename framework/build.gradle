@@ -11,7 +11,8 @@ dependencies {
   api ("com.github.lyze237:gdx-TinyVG:$gdxTinyVGVersion") {
 //    exclude group: "com.badlogicgames.gdx"
   }
-  api ("space.earlygrey:shapedrawer:$gdxShapeDrawerVersion")
+//  api ("space.earlygrey:shapedrawer:$gdxShapeDrawerVersion")
+  api project(":framework0006:framework0006-shape-drawer")
 
   // api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
   api "$gdxCustomModule:gdx-freetype:$gdxCustomVersion"
