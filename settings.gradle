@@ -5,7 +5,7 @@ include 'doclet'
 include 'framework','server-framework'
 include 'android-framework'
 include 'lwjgl-framework'
-include 'taptap-framework'
+//include 'taptap-framework'
 // include 'taptap-framework:taptap-sdk-aar'
 
 include 'framework0001:framework0001-neat'

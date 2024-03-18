@@ -13,12 +13,15 @@ import pama1234.gdx.util.launcher.MainAppBase;
 public class UtilLauncher{
 
   public static Lwjgl3ApplicationConfiguration getDefaultConfiguration(ApplicationListener appl) {
+    return getDefaultConfiguration(appl,"Loading");
+  }
+  public static Lwjgl3ApplicationConfiguration getDefaultConfiguration(ApplicationListener appl,String title) {
 
     Gdx.files=new Lwjgl3Files();
     SystemSetting.load();
 
     Lwjgl3ApplicationConfiguration conf=new Lwjgl3ApplicationConfiguration();
-    conf.setTitle("Loading");
+    conf.setTitle(title);
     conf.useVsync(true);
     conf.setForegroundFPS(SystemSetting.data.targetFps);
     if(SystemSetting.data.fullScreen) conf.setFullscreenMode(

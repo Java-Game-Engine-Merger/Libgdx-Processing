@@ -76,6 +76,7 @@ configure(subprojects.findAll {
       it.name == 'framework0001' ||
       it.name == 'framework0002' || it.name == 'taptap-framework' ||
       it.name == 'framework0003' || it.name == 'framework0004' ||
+      it.name == 'framework0005' || it.name == 'framework0006' ||
       it.name == 'xr4j-android' ||
       it.name == 'framework0003-androidDex' ||
       it.name == 'framework0004-terminal-android' ||
