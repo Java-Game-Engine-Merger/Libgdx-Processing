@@ -224,11 +224,16 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
   }
   public void line(float x1,float y1,float x2,float y2) {
     if(stroke) {
-      // rStroke.renderer.setShader(PGraphicsOpenGL.);
-      rStroke.line(x1,y1,x2,y2);
-      rStroke.flush();
-      // rFill.line(x1,y1,x2,y2);
-      // rFill.flush();
+      //      // rStroke.renderer.setShader(PGraphicsOpenGL.);
+      //      rStroke.line(x1,y1,x2,y2);
+      //      rStroke.flush();
+      //      // rFill.line(x1,y1,x2,y2);
+      //      // rFill.flush();
+
+      shapeDrawer.setColor(strokeColor);
+      shapeDrawer.getBatch().begin();
+      shapeDrawer.line(x1,y1,x2,y2);
+      shapeDrawer.getBatch().end();
     }
   }
   public void cross(float x,float y,float w,float h) {

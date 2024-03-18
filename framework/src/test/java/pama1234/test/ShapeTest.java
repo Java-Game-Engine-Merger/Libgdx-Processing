@@ -42,13 +42,12 @@ public class ShapeTest extends UtilScreen2D{
   }
 
   @Override
-  public void display() {
-
-  }
+  public void display() {}
 
   @Override
   public void displayWithCam() {
 
+    line(0,0,50,50);
   }
 
   @Override
