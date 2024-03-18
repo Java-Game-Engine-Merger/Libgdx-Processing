@@ -151,7 +151,7 @@ public abstract class UtilScreenColor extends UtilScreenPose{
     strokeWeight=in;
 
     Gdx.gl.glLineWidth(strokeWeight);
-    shapeDrawer.setDefaultLineWidth(strokeWeight/4f);
+    shapeDrawer.setDefaultLineWidth(strokeWeight);
   }
   //---------------------------------------------------------------------------
   public void color(Color c,float gray) {
@@ -196,7 +196,7 @@ public abstract class UtilScreenColor extends UtilScreenPose{
     int colorValue=(int)Long.parseLong(hex,16);
 
     // 提取颜色通道
-    float alpha=((colorValue>>24)&0xFF)/255f;
+    float alpha=hex.length()>6?((colorValue>>24)&0xFF)/255f:1;
     float red=((colorValue>>16)&0xFF)/255f;
     float green=((colorValue>>8)&0xFF)/255f;
     float blue=(colorValue&0xFF)/255f;

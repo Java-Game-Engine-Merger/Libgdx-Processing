@@ -48,11 +48,13 @@ import space.earlygrey.shapedrawer.shapes.Pen;
  */
 
 public class ShapeDrawer extends AbstractShapeDrawer{
-  public static TextureRegion createBlankTextyreRegion() {
+  public static TextureRegion createBlankTextureRegion() {
     Pixmap tPixmap=new Pixmap(1,1,Format.RGBA8888);
     tPixmap.setColor(0xffffffff);
     tPixmap.fill();
-    return new TextureRegion(new Texture(tPixmap),0,0,1,1);
+    TextureRegion tr=new TextureRegion(new Texture(tPixmap),0,0,1,1);
+    tPixmap.dispose();
+    return tr;
   }
 
   protected Pen pen;
@@ -64,7 +66,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
 
   public ShapeDrawer(Batch batch) {
     //    this(batch,null,new DefaultSideEstimator());
-    this(batch,createBlankTextyreRegion(),new DefaultSideEstimator());
+    this(batch, createBlankTextureRegion(),new DefaultSideEstimator());
   }
 
   public ShapeDrawer(Batch batch,TextureRegion region) {
@@ -2141,7 +2143,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
     filledPolygonDrawer.rectangle(x,y,width,height,rotation,c1,c2,c3,c4);
   }
 
-//  public void setStrokeColor(Color strokeColor) {
-//    setColor(strokeColor);
-//  }
+  //  public void setStrokeColor(Color strokeColor) {
+  //    setColor(strokeColor);
+  //  }
 }

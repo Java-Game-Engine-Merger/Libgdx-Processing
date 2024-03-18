@@ -13,6 +13,7 @@ import dev.lyze.gdxtinyvg.TinyVG;
 import pama1234.math.UtilMath;
 import pama1234.math.geometry.RectI;
 import pama1234.math.transform.Pose3D;
+import space.earlygrey.shapedrawer.JoinType;
 
 /**
  * 此中间类主要放渲染相关的东东
@@ -122,7 +123,7 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
     }
     if(stroke) {
       shapeDrawer.setColor(strokeColor);
-      shapeDrawer.circle(x,y,size);
+      shapeDrawer.circle(x,y,size,JoinType.SMOOTH);
     }
     shapeDrawer.getBatch().end();
   }
@@ -249,7 +250,7 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
     if(stroke) {
       shapeDrawer.getBatch().begin();
       shapeDrawer.setColor(strokeColor);
-//      shapeDrawer.setDefaultLineWidth(strokeWeight/4f);
+      //      shapeDrawer.setDefaultLineWidth(strokeWeight/4f);
       shapeDrawer.line(x1,y1,x2,y2);
       shapeDrawer.getBatch().end();
       //      shapeDrawer.getBatch().flush();
