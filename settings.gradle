@@ -27,3 +27,6 @@ include 'framework0001:framework0001-metaphysics'
 // include 'framework0004:framework0004-terminal-android'
 
 // include 'game0001:game0001-android', 'game0001:game0001-lwjgl3', 'game0001:game0001-core', 'game0001:game0001-server', 'game0001:game0001-headless', 'game0001:game0001-pico4', 'game0001:game0001-taptap'
+include 'framework0006:framework0006-shape-drawer'
+findProject(':framework0006:framework0006-shape-drawer')?.name = 'framework0006-shape-drawer'
+
