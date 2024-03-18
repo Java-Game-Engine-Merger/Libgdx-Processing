@@ -1,6 +1,6 @@
 apply plugin: 'maven-publish'
 
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+[compileJava , compileTestJava]*.options*.encoding = 'UTF-8'
 eclipse.project.name = 'framework'
 
 dependencies {
@@ -8,21 +8,16 @@ dependencies {
 
   api project(':server-framework')
 
-  api ("com.github.lyze237:gdx-TinyVG:$gdxTinyVGVersion") {
-//    exclude group: "com.badlogicgames.gdx"
-  }
+  api("com.github.lyze237:gdx-TinyVG:$gdxTinyVGVersion")
+
 //  api ("space.earlygrey:shapedrawer:$gdxShapeDrawerVersion")
   api project(":framework0006:framework0006-shape-drawer")
 
-  // api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
   api "$gdxCustomModule:gdx-freetype:$gdxCustomVersion"
   api 'org.apache.logging.log4j:log4j-core:2.22.1'
 
-  // implementation "javax.vecmath:vecmath:$vecmathVersion"
-  // implementation "com.esotericsoftware:kryo:$kryoVersion"
-  // implementation "org.yaml:snakeyaml:$snakeYamlVersion"
-
-  // implementation "io.netty:netty-all:$nettyVersion"
+  testImplementation project(":lwjgl-framework")
+  testImplementation "$gdxModule:gdx-platform:$gdxVersion:natives-desktop"
 }
 
 publishing {
