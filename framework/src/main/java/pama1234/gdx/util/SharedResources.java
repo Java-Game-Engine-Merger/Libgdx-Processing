@@ -9,6 +9,7 @@ import pama1234.gdx.util.font.MultiChunkFont;
 import pama1234.gdx.util.graphics.UtilPolygonSpriteBatch;
 import pama1234.gdx.util.graphics.UtilShapeRenderer;
 import pama1234.util.listener.Disposable;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 /**
  * UtilScreen的共享绘制工具
@@ -22,15 +23,20 @@ public class SharedResources implements Disposable{
   public UtilShapeRenderer rFill;
   public UtilShapeRenderer rStroke;
   public UtilPolygonSpriteBatch pFill;
+
+  public ShapeDrawer shapeDrawer;
+
   {
     fontBatch=createSpriteBatch();
     font=genMultiChunkFont();
     font.fontBatch=fontBatch;
     imageBatch=createSpriteBatch();
-    tvgDrawer=new TinyVGShapeDrawer(imageBatch);
     rFill=new UtilShapeRenderer();
     rStroke=new UtilShapeRenderer();
     pFill=new UtilPolygonSpriteBatch();
+
+    tvgDrawer=new TinyVGShapeDrawer(imageBatch);
+    shapeDrawer=new ShapeDrawer(imageBatch);
   }
   public static SpriteBatch createSpriteBatch() {
     SpriteBatch spriteBatch=new SpriteBatch(1000,ShaderUtil.createDefaultShader());

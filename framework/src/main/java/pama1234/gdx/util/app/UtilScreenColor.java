@@ -175,6 +175,32 @@ public abstract class UtilScreenColor extends UtilScreenPose{
   public static Color color(float r,float g,float b,float a) {
     return new Color(r/255f,g/255f,b/255f,a/255f);
   }
+
+  /**
+   * A function that generates a Color object from a hexadecimal string representation.
+   * 输入AARRGGBB格式的十六进制字符串。
+   *
+   * @param hex the hexadecimal string representing the color
+   * @return the Color object created from the hexadecimal string
+   */
+  public static Color color(String hex) {
+    // 去除可能存在的#符号
+    if(hex.startsWith("#")) {
+      hex=hex.substring(1);
+    }
+
+    // 解析颜色值
+    int colorValue=(int)Long.parseLong(hex,16);
+
+    // 提取颜色通道
+    float alpha=((colorValue>>24)&0xFF)/255f;
+    float red=((colorValue>>16)&0xFF)/255f;
+    float green=((colorValue>>8)&0xFF)/255f;
+    float blue=(colorValue&0xFF)/255f;
+
+    return new Color(red,green,blue,alpha);
+  }
+
   /**
    * 应当改为更加"消耗内存空间增加效率"的做法
    * 
