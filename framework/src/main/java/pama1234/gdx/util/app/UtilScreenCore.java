@@ -45,6 +45,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import hhs.gdx.hslib.tools.LoopThread;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 /**
  * UtilScreen太大了，因此抽离了一部分内容到此类，抽离的规则未确定
@@ -92,6 +93,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public boolean fill=true,stroke=true;
   public float defaultStrokeWeight,strokeWeight;
   public UtilShapeRenderer rFill,rStroke;
+  public ShapeDrawer shapeDrawer;
   public UtilPolygonSpriteBatch pFill;
   public boolean background=true;
   public Color backgroundColor;

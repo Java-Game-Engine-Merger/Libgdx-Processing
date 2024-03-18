@@ -1,17 +1,5 @@
 package pama1234.gdx.util.app;
 
-import pama1234.gdx.game.ui.element.TextField;
-import pama1234.gdx.util.SharedResources;
-import pama1234.gdx.util.cam.CameraController;
-import pama1234.gdx.util.info.MouseInfo;
-import pama1234.gdx.util.info.TouchInfo;
-import pama1234.gdx.util.input.UtilInputProcesser;
-import pama1234.gdx.util.listener.EntityListener;
-import pama1234.gdx.util.listener.EntityNeoListener;
-import pama1234.gdx.util.wrapper.*;
-import pama1234.util.wrapper.Center;
-import pama1234.util.wrapper.ServerEntityCenter;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -31,6 +19,18 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 import hhs.gdx.hslib.tools.LoopThread;
+import pama1234.gdx.game.ui.element.TextField;
+import pama1234.gdx.util.SharedResources;
+import pama1234.gdx.util.cam.CameraController;
+import pama1234.gdx.util.info.MouseInfo;
+import pama1234.gdx.util.info.TouchInfo;
+import pama1234.gdx.util.input.UtilInputProcesser;
+import pama1234.gdx.util.listener.EntityListener;
+import pama1234.gdx.util.listener.EntityNeoListener;
+import pama1234.gdx.util.wrapper.*;
+import pama1234.util.wrapper.Center;
+import pama1234.util.wrapper.ServerEntityCenter;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 /**
  * 此中间类主要放渲染相关的东东
@@ -41,9 +41,9 @@ import hhs.gdx.hslib.tools.LoopThread;
 public abstract class UtilScreen extends UtilScreenRender{
   public void createRenderUtil() {
     fontBatch=SharedResources.instance.fontBatch;
-//    font=SharedResources.instance.font;
-//    font.fontBatch=fontBatch;
-//    font.styleFast=fontStyle;
+    //    font=SharedResources.instance.font;
+    //    font.fontBatch=fontBatch;
+    //    font.styleFast=fontStyle;
     textFont(SharedResources.instance.font);
     textColor=new Color(0,0,0,1);
     font.color(textColor);
@@ -55,6 +55,8 @@ public abstract class UtilScreen extends UtilScreenRender{
     rStroke.setColor(strokeColor);
     pFill=SharedResources.instance.pFill;
     pFill.setColor(fillColor);
+
+    shapeDrawer=new ShapeDrawer(imageBatch);
   }
   public void createInputUtil() {
     vectorCache=new Vector3();
