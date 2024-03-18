@@ -16,7 +16,8 @@ import pama1234.gdx.util.font.FontUtil.UniFontDependent;
 import pama1234.math.vec.Vec2f;
 import pama1234.math.vec.Vec3i;
 
-import static pama1234.gdx.util.SharedResources.createBlankTextyreRegion;
+import static space.earlygrey.shapedrawer.ShapeDrawer.createBlankTextureRegion;
+
 
 @UniFontDependent
 public class MultiChunkFont extends BetterBitmapFont{
@@ -64,7 +65,7 @@ public class MultiChunkFont extends BetterBitmapFont{
     cacheV=new Vec2f();
     inPos=new Vec2f();
     posI=new Vec3i();
-    backgroundAlt=createBlankTextyreRegion();
+    backgroundAlt=createBlankTextureRegion();
     cacheM=newFontCacheM();
   }
 
