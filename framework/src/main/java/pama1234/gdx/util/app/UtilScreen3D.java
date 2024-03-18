@@ -63,7 +63,8 @@ public abstract class UtilScreen3D extends UtilScreen{
     setCamera(cam.camera);
     textScale(1);
     // strokeWeight(defaultStrokeWeight=u/16*cam2d.scale.pos);
-    strokeWeight(defaultStrokeWeight=u/16);
+//    strokeWeight(defaultStrokeWeight=u/16);
+    strokeWeight(defaultStrokeWeight=4);
   }
   //TODO fix 3d screen vec unproject to world vec
   @Override

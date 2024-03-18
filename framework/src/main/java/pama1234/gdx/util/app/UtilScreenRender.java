@@ -109,9 +109,22 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
     ScreenUtils.clear(in,true);
   }
   //---------------------------------------------------------------------------
-  public void circle(float x,float y,float s) {//TODO
-    int seg=circleSeg(s);
-    circle(x,y,s,seg);
+  public void circle(float x,float y,float size) {//TODO
+    int seg=circleSeg(size);
+    circle(x,y,size,seg);
+  }
+  // TODO in alpha
+  public void scircle(float x,float y,float size) {
+    shapeDrawer.getBatch().begin();
+    if(fill) {
+      shapeDrawer.setColor(fillColor);
+      shapeDrawer.filledCircle(x,y,size);
+    }
+    if(stroke) {
+      shapeDrawer.setColor(strokeColor);
+      shapeDrawer.circle(x,y,size);
+    }
+    shapeDrawer.getBatch().end();
   }
   public static int circleSeg(float s) {
     return UtilMath.max((int)(MathUtils.PI*s),6);
@@ -224,16 +237,22 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
   }
   public void line(float x1,float y1,float x2,float y2) {
     if(stroke) {
-      //      // rStroke.renderer.setShader(PGraphicsOpenGL.);
-      //      rStroke.line(x1,y1,x2,y2);
-      //      rStroke.flush();
-      //      // rFill.line(x1,y1,x2,y2);
-      //      // rFill.flush();
-
-      shapeDrawer.setColor(strokeColor);
+      // rStroke.renderer.setShader(PGraphicsOpenGL.);
+      rStroke.line(x1,y1,x2,y2);
+      rStroke.flush();
+      // rFill.line(x1,y1,x2,y2);
+      // rFill.flush();
+    }
+  }
+  // TODO in alpha
+  public void sline(float x1,float y1,float x2,float y2) {
+    if(stroke) {
       shapeDrawer.getBatch().begin();
+      shapeDrawer.setColor(strokeColor);
+//      shapeDrawer.setDefaultLineWidth(strokeWeight/4f);
       shapeDrawer.line(x1,y1,x2,y2);
       shapeDrawer.getBatch().end();
+      //      shapeDrawer.getBatch().flush();
     }
   }
   public void cross(float x,float y,float w,float h) {
