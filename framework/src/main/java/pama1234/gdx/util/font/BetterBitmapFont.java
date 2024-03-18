@@ -4,9 +4,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
-import pama1234.gdx.util.app.UtilScreenCore;
 import pama1234.gdx.util.element.FontStyle;
-import pama1234.gdx.util.font.FontUtil.UniFontDependent;
 import pama1234.util.Annotations.RedundantCache;
 
 /**
@@ -86,7 +84,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
    */
   public abstract void fastText(String in,float x,float y);
 
-  public abstract GlyphLayout drawF(Batch batch, CharSequence str, float x, float y);
+  public abstract GlyphLayout drawF(Batch batch,CharSequence str,float x,float y);
   public abstract GlyphLayout drawF(Batch batch,CharSequence str,float x,float y,float targetWidth,int halign,boolean wrap);
   /**
    * used by TextArea and TextField

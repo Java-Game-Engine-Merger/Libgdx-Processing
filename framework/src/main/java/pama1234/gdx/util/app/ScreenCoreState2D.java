@@ -72,9 +72,9 @@ public abstract class ScreenCoreState2D<C extends StateCenter<?,?>,E extends Sta
     return null;
   }
 
-//  @Override
-//  public void dispose() {
-//    stateNull();
-//    super.dispose();
-//  }
+  //  @Override
+  //  public void dispose() {
+  //    stateNull();
+  //    super.dispose();
+  //  }
 }
