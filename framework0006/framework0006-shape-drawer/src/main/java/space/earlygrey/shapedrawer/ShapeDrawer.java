@@ -2141,4 +2141,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
     filledPolygonDrawer.rectangle(x,y,width,height,rotation,c1,c2,c3,c4);
   }
 
+//  public void setStrokeColor(Color strokeColor) {
+//    setColor(strokeColor);
+//  }
 }
