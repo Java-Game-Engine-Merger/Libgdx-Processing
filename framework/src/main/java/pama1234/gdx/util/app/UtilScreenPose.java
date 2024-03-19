@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import pama1234.math.UtilMath;
 import pama1234.math.transform.Pose3D;
 import pama1234.math.vec.Vec3f;
+import pama1234.math.vec.Vec4f;
 
 public abstract class UtilScreenPose extends UtilScreenCore{
   public Matrix4 matrix() {
@@ -28,6 +29,12 @@ public abstract class UtilScreenPose extends UtilScreenCore{
     matrixStackPointer=-1;
     // Arrays.fill(matrixStack,null);
     setMatrix(usedCamera.combined);
+  }
+  public void copyMatrix(int i) {
+    setMatrix(matrix().set(matrixStack[i]));
+  }
+  public void copyMatrix(Matrix4 m) {
+    setMatrix(matrix().set(m));
   }
   //---------------------------------------------------------------------------
   // @Deprecated
@@ -101,9 +108,23 @@ public abstract class UtilScreenPose extends UtilScreenCore{
     //    tempDir.rotate(tempDir,rz);
     setMatrix(matrix);
   }
+
+  public void rotate(float rx,float ry,float rz,float rw) {
+    Matrix4 matrix=matrix();
+    tq.set(rx,ry,rz,rw);
+    matrix.rotate(tq);
+    setMatrix(matrix);
+  }
   public void rotate(Quaternion q) {
     Matrix4 matrix=matrix();
     matrix.rotate(q);
+    setMatrix(matrix);
+  }
+  Quaternion tq=new Quaternion();
+  public void rotate(Vec4f q) {
+    Matrix4 matrix=matrix();
+    tq.set(q.x,q.y,q.z,q.w);
+    matrix.rotate(tq);
     setMatrix(matrix);
   }
   public void rotate(Vec3f vec) {
@@ -117,11 +138,12 @@ public abstract class UtilScreenPose extends UtilScreenCore{
   public void scale(Vec3f vec) {
     scale(vec.x,vec.y,vec.z);
   }
-  Quaternion tq=new Quaternion();
+  //  Quaternion tq=new Quaternion();
   public void pose(Pose3D pose) {
     translate(pose.pos);
-    tq.set(pose.rotate.x,pose.rotate.y,pose.rotate.z,pose.rotate.w);
-    rotate(tq);
+    //    tq.set(pose.rotate.x,pose.rotate.y,pose.rotate.z,pose.rotate.w);
+    //    rotate(tq);
+    rotate(pose.rotate);
     scale(pose.scale);
   }
   //---------------------------------------------------------------------------
