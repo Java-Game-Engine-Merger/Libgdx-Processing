@@ -3,7 +3,10 @@ package pama1234.math.transform;
 import pama1234.math.vec.Vec3f;
 
 public class Pose3D{
-  public Vec3f pos,rotate,scale;
+  public Vec3f pos;
+  /** in rad format */
+  public Vec3f rotate;
+  public Vec3f scale;
   public Pose3D() {
     this(0,0,0);
   }

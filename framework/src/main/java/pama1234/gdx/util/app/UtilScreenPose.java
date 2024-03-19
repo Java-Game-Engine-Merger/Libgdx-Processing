@@ -95,8 +95,8 @@ public abstract class UtilScreenPose extends UtilScreenCore{
     scale(vec.x,vec.y,vec.z);
   }
   public void pose(Pose3D pose) {
-    rotate(pose.rotate);
     translate(pose.pos);
+    rotate(pose.rotate);
     scale(pose.scale);
   }
   //---------------------------------------------------------------------------
