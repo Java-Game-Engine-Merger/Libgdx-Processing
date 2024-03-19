@@ -3,6 +3,9 @@ package pama1234.gdx.util.font;
 import com.badlogic.gdx.graphics.Color;
 
 public interface TextStyleSupplier{
+  /**
+   * 输入将会查询配色的字符串
+   */
   public void text(String in);
   /**
    * i是目前字符在字符串中的位置
