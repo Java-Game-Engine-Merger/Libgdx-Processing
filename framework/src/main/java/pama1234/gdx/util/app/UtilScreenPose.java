@@ -2,6 +2,8 @@ package pama1234.gdx.util.app;
 
 import com.badlogic.gdx.math.Matrix4;
 
+import com.badlogic.gdx.math.Quaternion;
+import com.badlogic.gdx.math.Vector3;
 import pama1234.math.UtilMath;
 import pama1234.math.transform.Pose3D;
 import pama1234.math.vec.Vec3f;
@@ -76,11 +78,32 @@ public abstract class UtilScreenPose extends UtilScreenCore{
   public void translate(Vec3f vec) {
     translate(vec.x,vec.y,vec.z);
   }
+  /** 有bug */
+  @Deprecated
   public void rotate(float rx,float ry,float rz) {
     Matrix4 matrix=matrix();
     matrix.rotate(1,0,0,UtilMath.deg(rx));
     matrix.rotate(0,1,0,UtilMath.deg(ry));
     matrix.rotate(0,0,1,UtilMath.deg(rz));
+    setMatrix(matrix);
+  }
+  /** 暂时替代 */
+  Vector3 tempDir=new Vector3();
+  @Deprecated
+  public void rotateTempFun(float rx,float ry,float rz) {
+    Matrix4 matrix=matrix();
+    matrix.rotate(0,1,0,UtilMath.deg(ry));
+    tempDir.set(1,0,0);
+    tempDir.rotate(ry,0,1,0);
+    matrix.rotate(tempDir,UtilMath.deg(rx));
+    tempDir.rotate(tempDir,rx);
+    matrix.rotate(tempDir,UtilMath.deg(rz));
+    //    tempDir.rotate(tempDir,rz);
+    setMatrix(matrix);
+  }
+  public void rotate(Quaternion q) {
+    Matrix4 matrix=matrix();
+    matrix.rotate(q);
     setMatrix(matrix);
   }
   public void rotate(Vec3f vec) {
@@ -94,9 +117,11 @@ public abstract class UtilScreenPose extends UtilScreenCore{
   public void scale(Vec3f vec) {
     scale(vec.x,vec.y,vec.z);
   }
+  Quaternion tq=new Quaternion();
   public void pose(Pose3D pose) {
     translate(pose.pos);
-    rotate(pose.rotate);
+    tq.set(pose.rotate.x,pose.rotate.y,pose.rotate.z,pose.rotate.w);
+    rotate(tq);
     scale(pose.scale);
   }
   //---------------------------------------------------------------------------
