@@ -39,7 +39,7 @@ public class PoseTest3D extends UtilScreen3D{
   public void setup() {
     poseO=new Pose3D();
     //    pose=new Pose3D(20,0,0,0,UtilMath.HALF_PI,0);
-    pose=new Pose3D(20,0,0);
+    pose=new Pose3D(0,0,-50);
     noStroke();
   }
 
