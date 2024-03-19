@@ -2,6 +2,8 @@ package pama1234.math.vec;
 
 import java.nio.ByteBuffer;
 
+import javax.vecmath.AxisAngle4f;
+import javax.vecmath.Matrix4f;
 import javax.vecmath.Vector3f;
 
 import pama1234.Tools;
@@ -118,6 +120,26 @@ public class Vec3f extends Vector3f implements ByteBufferData{
   public void rotateZ(float dir) {
     rotate(dir);
   }
+
+  public static Vec3f taxis=new Vec3f();
+  public void rotateAxis(Vec3f pos,Vec3f des,float deg) {
+    taxis.set(des);
+    taxis.sub(pos);
+    rotateAxis(taxis,deg);
+  }
+
+  public static Matrix4f tm=new Matrix4f();
+  public static AxisAngle4f tq=new AxisAngle4f();
+  public void rotateAxis(Vec3f axis,float deg) {
+    //    Matrix4 matrix=matrix();
+    tq.set(axis.x,axis.y,axis.z,UtilMath.rad(deg));
+    //    matrix.rotate(tq);
+    tm.set(0);
+    tm.setRotation(tq);
+    //    setMatrix(matrix);
+    tm.transform(this);
+  }
+
   public final float dot(float xIn,float yIn,float zIn) {
     return this.x*xIn+this.y*yIn+this.z*zIn;
   }

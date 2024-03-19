@@ -136,6 +136,16 @@ public abstract class UtilScreenPose extends UtilScreenCore{
     matrix.rotate(tq);
     setMatrix(matrix);
   }
+  public void rotateAxis(Vec3f v,float in) {
+    Matrix4 matrix=matrix();
+    matrix.rotate(v.x,v.y,v.z,UtilMath.deg(in));
+    setMatrix(matrix);
+  }
+  public void rotateAxis(float axisX,float axisY,float axisZ,float in) {
+    Matrix4 matrix=matrix();
+    matrix.rotate(axisX,axisY,axisZ,UtilMath.deg(in));
+    setMatrix(matrix);
+  }
   public void rotateX(float in) {
     Matrix4 matrix=matrix();
     matrix.rotate(1,0,0,UtilMath.deg(in));
