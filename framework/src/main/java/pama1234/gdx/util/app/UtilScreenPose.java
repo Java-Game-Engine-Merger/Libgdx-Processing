@@ -1,9 +1,9 @@
 package pama1234.gdx.util.app;
 
 import com.badlogic.gdx.math.Matrix4;
-
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
+
 import pama1234.math.UtilMath;
 import pama1234.math.transform.Pose3D;
 import pama1234.math.vec.Vec3f;
@@ -94,6 +94,15 @@ public abstract class UtilScreenPose extends UtilScreenCore{
     matrix.rotate(0,0,1,UtilMath.deg(rz));
     setMatrix(matrix);
   }
+  /** 有bug */
+  @Deprecated
+  public void rotateDeg(float rx,float ry,float rz) {
+    Matrix4 matrix=matrix();
+    matrix.rotate(1,0,0,rx);
+    matrix.rotate(0,1,0,ry);
+    matrix.rotate(0,0,1,rz);
+    setMatrix(matrix);
+  }
   /** 暂时替代 */
   Vector3 tempDir=new Vector3();
   @Deprecated
@@ -125,6 +134,21 @@ public abstract class UtilScreenPose extends UtilScreenCore{
     Matrix4 matrix=matrix();
     tq.set(q.x,q.y,q.z,q.w);
     matrix.rotate(tq);
+    setMatrix(matrix);
+  }
+  public void rotateX(float in) {
+    Matrix4 matrix=matrix();
+    matrix.rotate(1,0,0,UtilMath.deg(in));
+    setMatrix(matrix);
+  }
+  public void rotateY(float in) {
+    Matrix4 matrix=matrix();
+    matrix.rotate(0,1,0,UtilMath.deg(in));
+    setMatrix(matrix);
+  }
+  public void rotateZ(float in) {
+    Matrix4 matrix=matrix();
+    matrix.rotate(0,0,1,UtilMath.deg(in));
     setMatrix(matrix);
   }
   public void rotate(Vec3f vec) {
