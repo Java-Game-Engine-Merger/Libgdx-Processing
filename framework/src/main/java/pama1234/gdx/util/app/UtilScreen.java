@@ -112,14 +112,23 @@ public abstract class UtilScreen extends UtilScreenRender{
     centerScreen.list.add(new EntityListener() {
       @Override
       public void display() {
-        rendererEnd();
+        rendererEnd();//TODO unintuitive
+        usedRenderer=screenStage.getBatch();
+//        endShape();
         screenStage.draw();
+//        beginShape();
+        rendererEnd();//TODO ugly
       }
     });
     centerCam.list.add(new EntityListener() {
       @Override
       public void display() {
+        rendererEnd();
+        usedRenderer=camStage.getBatch();
+//        endShape();
         camStage.draw();
+//        beginShape();
+        rendererEnd();
       }
     });
 
@@ -183,15 +192,6 @@ public abstract class UtilScreen extends UtilScreenRender{
     endShape();
   }
   public void camOverlay() {}
-  //---------------------------------------------------------------------------
-  public void beginBlend() {
-    Gdx.gl.glEnable(GL20.GL_BLEND);
-    // Gdx.gl.glBlendFunc(GL20.GL_ONE,GL20.GL_ONE);
-    // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
-  }
-  public void endBlend() {
-    Gdx.gl.glDisable(GL20.GL_BLEND);
-  }
   //---------------------------------------------------------------------------
   public void withScreen() {
     setCamera(screenCam);

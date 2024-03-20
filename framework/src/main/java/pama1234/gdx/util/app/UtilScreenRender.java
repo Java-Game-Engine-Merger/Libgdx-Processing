@@ -2,7 +2,6 @@ package pama1234.gdx.util.app;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import dev.lyze.gdxtinyvg.TinyVG;
-import pama1234.gdx.util.graphics.UtilShapeRenderer;
 import pama1234.math.UtilMath;
 import pama1234.math.geometry.RectI;
 import pama1234.math.transform.Pose3D;

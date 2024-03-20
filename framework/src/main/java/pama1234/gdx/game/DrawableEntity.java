@@ -31,10 +31,15 @@ public class DrawableEntity extends Entity<UtilScreen> implements Drawable{
   }
   // public abstract void f(Batch batch,float x,float y,float width,float height);
   public void draw(Batch batch,float x,float y,float width,float height) {
-    batch.end();//TODO
+    //    batch.end();//TODO
+    var r=p.usedRenderer;
+    if(r!=batch) throw new RuntimeException("plz ask pama to fix this");
+    p.rendererEnd();
     f.draw(b,x,y,width,height);
+    p.renderer(r);
     // f(b,x,y,width,height);
-    batch.begin();
+    //    batch.begin();
+
   }
   public float getLeftWidth() {
     return leftWidth;
