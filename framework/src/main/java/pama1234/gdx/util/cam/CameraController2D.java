@@ -128,6 +128,7 @@ public class CameraController2D extends CameraController{
   @Override
   public void display() {
     p.strokeWeight(1/ocam.zoom);
+    p.sstrokeWeight(1);
   }
   @Override
   public void frameResized(int w,int h) {

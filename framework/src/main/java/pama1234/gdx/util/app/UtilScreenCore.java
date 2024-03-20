@@ -1,10 +1,23 @@
 package pama1234.gdx.util.app;
 
-import static pama1234.math.UtilMath.floor;
-import static pama1234.math.UtilMath.max;
-import static pama1234.math.UtilMath.min;
+import static pama1234.math.UtilMath.*;
 
+import java.util.Random;
+
+import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.IntArray;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
+import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
+import hhs.gdx.hslib.tools.LoopThread;
 import pama1234.gdx.game.ui.element.Button;
 import pama1234.gdx.game.ui.element.TextButton;
 import pama1234.gdx.util.cam.CameraController;
@@ -20,32 +33,15 @@ import pama1234.gdx.util.listener.EntityListener;
 import pama1234.gdx.util.listener.EntityNeoListener;
 import pama1234.gdx.util.listener.InputListener;
 import pama1234.gdx.util.listener.SystemListener;
-import pama1234.gdx.util.wrapper.*;
+import pama1234.gdx.util.wrapper.AutoEntityManager;
 import pama1234.gdx.util.wrapper.DisplayEntity.DisplayWithCam;
+import pama1234.gdx.util.wrapper.EntityCenterAbstract;
+import pama1234.gdx.util.wrapper.EntityNeoCenter;
 import pama1234.util.UtilServer;
 import pama1234.util.listener.LifecycleListener;
 import pama1234.util.listener.ServerEntityListener;
 import pama1234.util.wrapper.Center;
 import pama1234.util.wrapper.ServerEntityCenter;
-
-import java.util.Random;
-
-import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.IntArray;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
-import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
-import hhs.gdx.hslib.tools.LoopThread;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 /**
@@ -168,10 +164,21 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
     rStroke.begin(ShapeType.Line);
   }
   public void endShape() {
-    rendererEnd();
+    rendererEnd();// TODO
     rFill.end();
     rStroke.end();
   }
+  //---------------------------------------------------------------------------
+
+  public void beginBlend() {
+    Gdx.gl.glEnable(GL20.GL_BLEND);
+    // Gdx.gl.glBlendFunc(GL20.GL_ONE,GL20.GL_ONE);
+    // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
+  }
+  public void endBlend() {
+    Gdx.gl.glDisable(GL20.GL_BLEND);
+  }
+
   /**
    * switch to renderer
    *
@@ -181,19 +188,27 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
     if(usedRenderer==renderer) return;
 
     if(usedRenderer!=null) {
-      if(usedRenderer instanceof Batch batch&&batch.isDrawing()) batch.end();
-      else if(usedRenderer instanceof UtilShapeRenderer r&&r.isDrawing()) r.flush();
+      if(usedRenderer instanceof Batch batch&&batch.isDrawing()) {
+        //        batch.flush();
+        batch.end();
+      }else if(usedRenderer instanceof UtilShapeRenderer r) {
+        if(r.isDrawing()) r.flush();
+        //        endBlend();
+      }
     }
     usedRenderer=renderer;
 
     if(usedRenderer!=null) {
       if(usedRenderer instanceof Batch batch) batch.begin();
+      else if(usedRenderer instanceof UtilShapeRenderer r) {
+        beginBlend();
+      }
     }
   }
   public void rendererEnd() {
     renderer(null);
-//    if(usedRenderer instanceof Batch batch&&batch.isDrawing()) batch.end();
-//    else if(usedRenderer instanceof UtilShapeRenderer r&&r.isDrawing()) r.flush();
+    //    if(usedRenderer instanceof Batch batch&&batch.isDrawing()) batch.end();
+    //    else if(usedRenderer instanceof UtilShapeRenderer r&&r.isDrawing()) r.flush();
   }
   public void setCamera(Camera in) {
     if(usedCamera!=in) usedCamera=in;

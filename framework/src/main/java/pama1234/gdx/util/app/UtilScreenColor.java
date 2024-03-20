@@ -151,7 +151,9 @@ public abstract class UtilScreenColor extends UtilScreenPose{
     strokeWeight=in;
 
     Gdx.gl.glLineWidth(strokeWeight);
-    shapeDrawer.setDefaultLineWidth(strokeWeight);
+  }
+  public void sstrokeWeight(float in) {
+    shapeDrawer.setDefaultLineWidth(in);
   }
   //---------------------------------------------------------------------------
   public void color(Color c,float gray) {
