@@ -4,6 +4,7 @@ import static pama1234.math.UtilMath.floor;
 import static pama1234.math.UtilMath.max;
 import static pama1234.math.UtilMath.min;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import pama1234.gdx.game.ui.element.Button;
 import pama1234.gdx.game.ui.element.TextButton;
 import pama1234.gdx.util.cam.CameraController;
@@ -87,6 +88,11 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public SpriteBatch fontBatch,imageBatch;
   public TinyVGShapeDrawer tvgDrawer;
   public BetterBitmapFont font;
+
+  // UtilShapeRenderer or SpriteBatch
+  //TODO currentRendererType not used
+  public int currentRendererType;
+  public Object usedRenderer;
   //---------------------------------------------------------------------------
   public FontStyle fontStyle=new FontStyle();
   public Color textColor,fillColor,strokeColor;
@@ -162,8 +168,32 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
     rStroke.begin(ShapeType.Line);
   }
   public void endShape() {
+    rendererEnd();
     rFill.end();
     rStroke.end();
+  }
+  /**
+   * switch to renderer
+   *
+   * @param renderer
+   */
+  public void renderer(Object renderer) {
+    if(usedRenderer==renderer) return;
+
+    if(usedRenderer!=null) {
+      if(usedRenderer instanceof Batch batch&&batch.isDrawing()) batch.end();
+      else if(usedRenderer instanceof UtilShapeRenderer r&&r.isDrawing()) r.flush();
+    }
+    usedRenderer=renderer;
+
+    if(usedRenderer!=null) {
+      if(usedRenderer instanceof Batch batch) batch.begin();
+    }
+  }
+  public void rendererEnd() {
+    renderer(null);
+//    if(usedRenderer instanceof Batch batch&&batch.isDrawing()) batch.end();
+//    else if(usedRenderer instanceof UtilShapeRenderer r&&r.isDrawing()) r.flush();
   }
   public void setCamera(Camera in) {
     if(usedCamera!=in) usedCamera=in;

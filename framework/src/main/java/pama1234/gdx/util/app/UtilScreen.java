@@ -112,6 +112,7 @@ public abstract class UtilScreen extends UtilScreenRender{
     centerScreen.list.add(new EntityListener() {
       @Override
       public void display() {
+        rendererEnd();
         screenStage.draw();
       }
     });
