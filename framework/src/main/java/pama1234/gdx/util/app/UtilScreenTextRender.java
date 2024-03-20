@@ -15,9 +15,10 @@ import pama1234.util.Annotations.SyntacticSugar;
  */
 public abstract class UtilScreenTextRender extends UtilScreenColor{
   public void text(String in,float x,float y) {
-    fontBatch.begin();
+    renderer(fontBatch);
+    //    fontBatch.begin();
     font.text(in==null?"null":in,x,y);
-    fontBatch.end();
+    //    fontBatch.end();
   }
   public void text(String in,float x,float y,float z) {
     pushMatrix();
@@ -83,15 +84,17 @@ public abstract class UtilScreenTextRender extends UtilScreenColor{
   }
   //---------------------------------------------------------------------------
   public void fullText(String in,float x,float y) {
-    fontBatch.begin();
+    renderer(fontBatch);
+    //    fontBatch.begin();
     font.drawF(fontBatch,in==null?"null":in,x,y);
-    fontBatch.end();
+    //    fontBatch.end();
   }
   @Deprecated
   public void drawTextCenter(String in,float x,float y) {
-    fontBatch.begin();
+    renderer(fontBatch);
+    //    fontBatch.begin();
     font.drawF(fontBatch,in==null?"null":in,x,y);
-    fontBatch.end();
+    //    fontBatch.end();
   }
   public void setTextScale(float in) {
     font.getData().setScale(in);
