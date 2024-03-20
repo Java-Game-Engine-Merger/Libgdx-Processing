@@ -2,6 +2,7 @@ package pama1234.gdx.util.app;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import dev.lyze.gdxtinyvg.TinyVG;
+import pama1234.gdx.util.graphics.UtilShapeRenderer;
 import pama1234.math.UtilMath;
 import pama1234.math.geometry.RectI;
 import pama1234.math.transform.Pose3D;
@@ -22,73 +24,85 @@ import space.earlygrey.shapedrawer.JoinType;
  * @see UtilScreen3D
  */
 public abstract class UtilScreenRender extends UtilScreenTextRender{
+
   //---------------------------------------------------------------------------
   public void image(Texture in,float x,float y) {
-    imageBatch.begin();
+    renderer(imageBatch);
+    //    imageBatch.begin();
     imageBatch.draw(in,x,y);
-    imageBatch.end();
+    //    imageBatch.end();
   }
   public void tvg(TinyVG in) {//TODO
-    imageBatch.begin();
+    renderer(imageBatch);
+    //    imageBatch.begin();
     in.draw(tvgDrawer);
-    imageBatch.end();
+    //    imageBatch.end();
   }
   @Deprecated
   public void image(Texture in,float x,float y,float z) {
-    imageBatch.begin();
+    renderer(imageBatch);
+    //    imageBatch.begin();
     imageBatch.draw(in,x,y);
-    imageBatch.end();
+    //    imageBatch.end();
   }
   public void image(TextureRegion in,float x,float y) {
-    imageBatch.begin();
+    renderer(imageBatch);
+    //    imageBatch.begin();
     imageBatch.draw(in,x,y);
-    imageBatch.end();
+    //    imageBatch.end();
   }
   public void image(Texture in,float x,float y,float w,float h) {
-    imageBatch.begin();
+    renderer(imageBatch);
+    //    imageBatch.begin();
     imageBatch.draw(in,x,y,w,h);
-    imageBatch.end();
+    //    imageBatch.end();
   }
   public void image(TextureRegion in,float x,float y,ShaderProgram shader) {
-    imageBatch.begin();
+    renderer(imageBatch);
+    //    imageBatch.begin();
     imageBatch.setShader(shader);
     imageBatch.draw(in,x,y);
     imageBatch.setShader(null);
-    imageBatch.end();
+    //    imageBatch.end();
   }
   public void image(Texture in,float x,float y,float w,float h,ShaderProgram shader) {
-    imageBatch.begin();
+    renderer(imageBatch);
+    //    imageBatch.begin();
     imageBatch.setShader(shader);
     imageBatch.draw(in,x,y,w,h);
     imageBatch.setShader(null);
-    imageBatch.end();
+    //    imageBatch.end();
   }
   public void imageCenterPos(Texture in,float x,float y,float w,float h) {
-    imageBatch.begin();
+    renderer(imageBatch);
+    //    imageBatch.begin();
     imageBatch.draw(in,x-w/2,y-h/2,w,h);
-    imageBatch.end();
+    //    imageBatch.end();
   }
   @Deprecated
   public void imageCenterPos(Texture in,float x,float y,float z,float w,float h) {
     pushMatrix();
     translate(0,0,z);
-    imageBatch.begin();
+    renderer(imageBatch);
+    //    imageBatch.begin();
     imageBatch.draw(in,x-w/2,y-h/2,w,h);
-    imageBatch.end();
+    //    imageBatch.end();
     popMatrix();
   }
   public void image(TextureRegion in,float x,float y,float w,float h) {
-    imageBatch.begin();
+    renderer(imageBatch);
+    //    imageBatch.begin();
     innerImage(in,x,y,w,h);
-    imageBatch.end();
+    //    imageBatch.end();
   }
   public void innerImage(TextureRegion in,float x,float y,float w,float h) {
     imageBatch.draw(in,x,y,w,h);
   }
   public void sprite(Sprite in) {
-    imageBatch.begin();
+    renderer(imageBatch);
+    //    imageBatch.begin();
     in.draw(imageBatch);
-    imageBatch.end();
+    //    imageBatch.end();
   }
   //---------------------------------------------------------------------------
   public void clear() {
@@ -116,7 +130,8 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
   }
   // TODO in alpha
   public void scircle(float x,float y,float size) {
-    shapeDrawer.getBatch().begin();
+    renderer(shapeDrawer.getBatch());
+    //    shapeDrawer.getBatch().begin();
     if(fill) {
       shapeDrawer.setColor(fillColor);
       shapeDrawer.filledCircle(x,y,size);
@@ -125,19 +140,21 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
       shapeDrawer.setColor(strokeColor);
       shapeDrawer.circle(x,y,size,JoinType.SMOOTH);
     }
-    shapeDrawer.getBatch().end();
+    //    shapeDrawer.getBatch().end();
   }
   public static int circleSeg(float s) {
     return UtilMath.max((int)(MathUtils.PI*s),6);
   }
   public void circle(float x,float y,float s,int seg) {
     if(fill) {
+      renderer(rFill);
       rFill.circle(x,y,s,seg);
-      rFill.flush();
+      //      rFill.flush();
     }
     if(stroke) {
+      renderer(rStroke);
       rStroke.circle(x,y,s,seg);
-      rStroke.flush();
+      //      rStroke.flush();
     }
   }
   public void circle(float x,float y,float z,float s,int seg) {
@@ -149,12 +166,14 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
   //---------------------------------------------------------------------------
   public void rect(float x,float y,float w,float h) {
     if(fill) {
+      renderer(rFill);
       rFill.rect(x,y,w,h);
-      rFill.flush();
+      //      rFill.flush();
     }
     if(stroke) {
+      renderer(rStroke);
       rStroke.rect(x,y,w,h);
-      rStroke.flush();
+      //      rStroke.flush();
     }
   }
   public void rect(float x,float y,float z,float w,float h) {
@@ -177,47 +196,55 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
   }
   public void triangle(float x1,float y1,float x2,float y2,float x3,float y3) {
     if(fill) {
+      renderer(rFill);
       rFill.triangle(x1,y1,x2,y2,x3,y3);
-      rFill.flush();
+      //      rFill.flush();
     }
     if(stroke) {
+      renderer(rStroke);
       rStroke.triangle(x1,y1,x2,y2,x3,y3);
-      rStroke.flush();
+      //      rStroke.flush();
     }
   }
   public void polygon(PolygonRegion polygon,float x,float y) {
     if(fill) {
-      pFill.begin();
+      renderer(pFill);
+      //      pFill.begin();
       pFill.draw(polygon,x,y);
-      pFill.flush();
-      pFill.end();
+      //      pFill.flush();
+      //      pFill.end();
     }
     if(stroke) {
+      renderer(rStroke);
       rStroke.polygon(polygon,x,y);
-      rStroke.flush();
+      //      rStroke.flush();
     }
   }
   @Deprecated
   public void polygon(float[] array,int l) {
     if(fill) {
-      pFill.begin();
+      renderer(pFill);
+      //      pFill.begin();
       pFill.polygon(array,0,l*2);
-      pFill.flush();
-      pFill.end();
+      //      pFill.flush();
+      //      pFill.end();
     }
     if(stroke) {
+      renderer(rStroke);
       rStroke.polygon(array,0,l*2);
-      rStroke.flush();
+      //      rStroke.flush();
     }
   }
   public void quad(float x1,float y1,float x2,float y2,float x3,float y3,float x4,float y4) {
     if(fill) {
+      renderer(rFill);
       rFill.polygonVarargs(x1,y1,x2,y2,x3,y3,x4,y4);
-      rFill.flush();
+      //      rFill.flush();
     }
     if(stroke) {
+      renderer(rStroke);
       rStroke.polygonVarargs(x1,y1,x2,y2,x3,y3,x4,y4);
-      rStroke.flush();
+      //      rStroke.flush();
     }
   }
   //---------------------------------------------------------------------------
@@ -227,20 +254,23 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
   }
   public void arc(float x,float y,float radius,float start,float degrees) {
     if(stroke) {
+      renderer(rStroke);
       rStroke.arcNoBorder(x,y,radius,start,degrees,UtilMath.max(1,(int)(6*(float)Math.cbrt(radius)*(degrees/360))));
-      rStroke.flush();
+      //      rStroke.flush();
     }
   }
   public void dot(float x,float y,int color) {
+    renderer(rFill);
     rFill.getColor().set(color);
     rFill.rect(x-0.5f,y-0.5f,1,1);
-    rFill.flush();
+    //    rFill.flush();
   }
   public void line(float x1,float y1,float x2,float y2) {
     if(stroke) {
+      renderer(rStroke);
       // rStroke.renderer.setShader(PGraphicsOpenGL.);
       rStroke.line(x1,y1,x2,y2);
-      rStroke.flush();
+      //      rStroke.flush();
       // rFill.line(x1,y1,x2,y2);
       // rFill.flush();
     }
@@ -248,11 +278,12 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
   // TODO in alpha
   public void sline(float x1,float y1,float x2,float y2) {
     if(stroke) {
-      shapeDrawer.getBatch().begin();
+      renderer(shapeDrawer.getBatch());
+      //      shapeDrawer.getBatch().begin();
       shapeDrawer.setColor(strokeColor);
       //      shapeDrawer.setDefaultLineWidth(strokeWeight/4f);
       shapeDrawer.line(x1,y1,x2,y2);
-      shapeDrawer.getBatch().end();
+      //      shapeDrawer.getBatch().end();
       //      shapeDrawer.getBatch().flush();
     }
   }
@@ -270,7 +301,8 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
     fillRect(x+w-weight,y,weight,h);
   }
   public void fillRect(float x,float y,float w,float h) {
+    renderer(rFill);
     rFill.rect(x,y,w,h);
-    rFill.flush();
+    //    rFill.flush();
   }
 }
