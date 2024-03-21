@@ -66,7 +66,8 @@ public class ModelTest3D extends UtilScreen3D{
       e.transform.rotate(1,0,0,random(-180,180));
       instance[i]=e;
     }
-
+    //new Renderable();
+    var a=imageBatch;
   }
 
   @Override
