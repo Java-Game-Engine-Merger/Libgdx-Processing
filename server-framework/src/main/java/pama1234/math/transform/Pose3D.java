@@ -5,8 +5,8 @@ import pama1234.math.vec.Vec4f;
 
 public class Pose3D{
   public Vec3f pos;
-//  /** in rad format */
-//  public Vec3f rotate;
+  //  /** in rad format */
+  //  public Vec3f rotate;
   public Vec4f rotate;
   public Vec3f scale;
   public Pose3D() {
@@ -14,7 +14,7 @@ public class Pose3D{
   }
   public Pose3D(float dx,float dy,float dz) {
     pos=new Vec3f(dx,dz,dy);
-    rotate= new Vec4f();
+    rotate=new Vec4f();
     scale=new Vec3f();
     scale=new Vec3f(1,1,1);
   }
@@ -22,7 +22,7 @@ public class Pose3D{
     float dx,float dy,float dz,
     float rx,float ry,float rz) {
     pos=new Vec3f(dx,dz,dy);
-    rotate= new Vec4f(rx,ry,rz,0);
+    rotate=new Vec4f(rx,ry,rz,0);
     scale=new Vec3f(1,1,1);
   }
   public Pose3D(
@@ -30,7 +30,7 @@ public class Pose3D{
     float rx,float ry,float rz,
     float sx,float sy,float sz) {
     pos=new Vec3f(dx,dz,dy);
-    rotate= new Vec4f(rx,ry,rz,0);
+    rotate=new Vec4f(rx,ry,rz,0);
     scale=new Vec3f(sx,sy,sz);
   }
   public float dx() {
