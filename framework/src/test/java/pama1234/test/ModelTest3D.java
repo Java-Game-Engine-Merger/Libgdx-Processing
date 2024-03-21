@@ -1,24 +1,27 @@
 package pama1234.test;
 
-import static pama1234.util.gdx.lwjgl.UtilLauncher.getDefaultConfiguration;
-
-import java.util.ArrayList;
-
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import org.junit.jupiter.api.Test;
-
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.VertexAttributes.Usage;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-
-import com.badlogic.gdx.graphics.g3d.Model;
+import org.junit.jupiter.api.Test;
 import pama1234.Tools;
 import pama1234.gdx.util.app.UtilScreen3D;
 import pama1234.gdx.util.launcher.MainAppBase;
 import pama1234.math.UtilMath;
 import pama1234.math.transform.Pose3D;
 
-public class PoseTest3D extends UtilScreen3D{
+import java.util.ArrayList;
+
+import static pama1234.util.gdx.lwjgl.UtilLauncher.getDefaultConfiguration;
+
+public class ModelTest3D extends UtilScreen3D{
   public static void main(String[] args) {
     test0001();
   }
@@ -27,7 +30,7 @@ public class PoseTest3D extends UtilScreen3D{
   public static void test0001() {
     MainAppBase mab=new MainAppBase() {
       {
-        var classArray=new Class[] {PoseTest3D.class};
+        var classArray=new Class[] {ModelTest3D.class};
         screenClassList=new ArrayList<>(classArray.length);
         for(int i=0;i<classArray.length;i++) {
           screenClassList.add(i,classArray[i]);
@@ -38,19 +41,26 @@ public class PoseTest3D extends UtilScreen3D{
     new Lwjgl3Application(mab,getDefaultConfiguration(mab,"ShapeTest"));
   }
 
-  Pose3D poseO,pose;
-  Model model;
-
+  public Model[] model;
+  public ModelInstance[] instance;
 
   @Override
   public void setup() {
-    poseO=new Pose3D();
-    //    pose=new Pose3D(20,0,0,0,UtilMath.HALF_PI,0);
-    pose=new Pose3D(0,0,-50);
-//    pose.rotate.set(0,1,0,UtilMath.HALF_PI);
-    model=new Model();
-//    ModelBatch mb=new ModelBatch();
     noStroke();
+
+    ModelBuilder modelBuilder=new ModelBuilder();
+    model=new Model[100];
+    for(int i=0;i<model.length;i++) {
+      model[i]=modelBuilder.createBox(5f,5f,5f,
+        new Material(ColorAttribute.createDiffuse(colorFromInt(Tools.hsbColor((int)((float)i/model.length*255),255,255)))),
+        Usage.Position|Usage.Normal);
+    }
+    instance=new ModelInstance[model.length];
+    for(int i=0;i<model.length;i++) {
+      ModelInstance e=new ModelInstance(model[i]);
+      e.transform.translate(random(-100,100),random(-100,100),random(-100,100));
+      instance[i]=e;
+    }
   }
 
   @Override
@@ -60,35 +70,32 @@ public class PoseTest3D extends UtilScreen3D{
 
   @Override
   public void display() {
-    text(
-      Tools.cutToLastDigitString(UtilMath.deg(pose.rx()))+
-        " "+
-        Tools.cutToLastDigitString(UtilMath.deg(pose.ry()))+
-        " "+
-        Tools.cutToLastDigitString(UtilMath.deg(pose.rz())));
+    //    modelBatch.begin(cam);
+    //    modelBatch.render(instance);
+    //    modelBatch.end();
+
   }
 
   @Override
   public void displayWithCam() {
-    fill(0);
-    pushMatrix();
-    pose(poseO);
-    scircle(0,0,3);
-    popMatrix();
 
-    fill(255,127,0);
-
-    pushMatrix();
-    //    rotateToCam(pose);
-    pose(pose);
-    scircle(0,0,3);
-    popMatrix();
-
+    for(int i=0;i<instance.length;i++) {
+      model(instance[i]);
+    }
   }
 
   @Override
   public void frameResized() {
 
+  }
+
+  @Override
+  public void dispose() {
+    super.dispose();
+
+    for(int i=0;i<model.length;i++) {
+      model[i].dispose();
+    }
   }
 
   Vector3 tmp=new Vector3(),tmp2=new Vector3(),dir=new Vector3(),tmp3=new Vector3();

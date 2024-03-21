@@ -113,9 +113,11 @@ public abstract class UtilScreen3D extends UtilScreen{
   }
   //---------------------------------------------------------------------------
   public void model(ModelInstance in) {
-    modelBatch.begin(usedCamera);
+//    endBlend();
+    renderer(modelBatch);
+//    modelBatch.begin(usedCamera);
     modelBatch.render(in);
-    modelBatch.end();
+//    modelBatch.end();
   }
   public void modelFlush(ModelInstance in) {
     model(in);
