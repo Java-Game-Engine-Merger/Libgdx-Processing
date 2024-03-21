@@ -63,7 +63,7 @@ public abstract class UtilScreen3D extends UtilScreen{
     setCamera(cam.camera);
     textScale(1);
     // strokeWeight(defaultStrokeWeight=u/16*cam2d.scale.pos);
-//    strokeWeight(defaultStrokeWeight=u/16);
+    //    strokeWeight(defaultStrokeWeight=u/16);
     strokeWeight(defaultStrokeWeight=1);
   }
   //TODO fix 3d screen vec unproject to world vec
@@ -113,11 +113,11 @@ public abstract class UtilScreen3D extends UtilScreen{
   }
   //---------------------------------------------------------------------------
   public void model(ModelInstance in) {
-//    endBlend();
+    //    endBlend();
     renderer(modelBatch);
-//    modelBatch.begin(usedCamera);
+    //    modelBatch.begin(usedCamera);
     modelBatch.render(in);
-//    modelBatch.end();
+    //    modelBatch.end();
   }
   public void modelFlush(ModelInstance in) {
     model(in);
