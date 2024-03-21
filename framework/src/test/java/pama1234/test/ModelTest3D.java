@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Quaternion;
@@ -51,16 +52,21 @@ public class ModelTest3D extends UtilScreen3D{
     ModelBuilder modelBuilder=new ModelBuilder();
     model=new Model[100];
     for(int i=0;i<model.length;i++) {
-      model[i]=modelBuilder.createBox(5f,5f,5f,
+      model[i]=modelBuilder.createBox(5f,50f,5f,
         new Material(ColorAttribute.createDiffuse(colorFromInt(Tools.hsbColor((int)((float)i/model.length*255),255,255)))),
         Usage.Position|Usage.Normal);
     }
     instance=new ModelInstance[model.length];
+    int range=50;
     for(int i=0;i<model.length;i++) {
       ModelInstance e=new ModelInstance(model[i]);
-      e.transform.translate(random(-100,100),random(-100,100),random(-100,100));
+      e.transform.translate(random(-range,range),random(-range,range),random(-range,range));
+      e.transform.rotate(0,0,1,random(-180,180));
+      e.transform.rotate(0,1,0,random(-180,180));
+      e.transform.rotate(1,0,0,random(-180,180));
       instance[i]=e;
     }
+
   }
 
   @Override
