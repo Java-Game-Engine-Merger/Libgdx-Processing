@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Plane;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
@@ -132,6 +133,15 @@ public abstract class UtilScreen3D extends UtilScreen{
     modelBatch.flush();
     beginShape();
   }
+  //---------------------------------------------------------------------------
+
+  @Override
+  public void setMatrix(Matrix4 combined) {
+    super.setMatrix(combined);
+//    decalBatch.setProjectionMatrix(combined);
+//    modelBatch.setProjectionMatrix(combined);
+  }
+
   //---------------------------------------------------------------------------
   @Override
   public void dispose() {
