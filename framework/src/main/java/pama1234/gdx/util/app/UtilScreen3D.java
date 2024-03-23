@@ -2,6 +2,7 @@ package pama1234.gdx.util.app;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
@@ -63,7 +64,7 @@ public abstract class UtilScreen3D extends UtilScreen{
     setCamera(cam.camera);
     textScale(1);
     // strokeWeight(defaultStrokeWeight=u/16*cam2d.scale.pos);
-//    strokeWeight(defaultStrokeWeight=u/16);
+    //    strokeWeight(defaultStrokeWeight=u/16);
     strokeWeight(defaultStrokeWeight=1);
   }
   //TODO fix 3d screen vec unproject to world vec
@@ -95,6 +96,12 @@ public abstract class UtilScreen3D extends UtilScreen{
     }else return null;// 射线与平面不相交
   }
   //---------------------------------------------------------------------------
+  public void enableDepth() {
+    Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT|GL20.GL_DEPTH_BUFFER_BIT);
+    Gdx.gl.glClearDepthf(1f);
+    Gdx.gl.glDepthFunc(GL20.GL_LESS);
+  }
   public void decal(Decal in) {
     decalBatch.add(in);
   }
