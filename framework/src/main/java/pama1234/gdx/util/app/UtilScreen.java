@@ -39,7 +39,7 @@ import pama1234.util.wrapper.ServerEntityCenter;
  */
 public abstract class UtilScreen extends UtilScreenRender{
   public void createRenderUtil() {
-    fontBatch=SharedResources.instance.fontBatch;
+//    fontBatch=SharedResources.instance.fontBatch;
     //    font=SharedResources.instance.font;
     //    font.fontBatch=fontBatch;
     //    font.styleFast=fontStyle;

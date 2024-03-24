@@ -15,7 +15,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
   public static final int fastText=0,fullText=1;
 
   @RedundantCache
-  public SpriteBatch fontBatch;
+  public Batch fontBatch;
   @RedundantCache
   public FontStyle styleFast;
 

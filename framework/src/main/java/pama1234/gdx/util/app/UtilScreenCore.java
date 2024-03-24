@@ -93,7 +93,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public CameraController cam;
   public OrthographicCamera screenCam;
   public Camera usedCamera;
-  public SpriteBatch fontBatch,imageBatch;
+  public Batch imageBatch;
   public TinyVGShapeDrawer tvgDrawer;
   public BetterBitmapFont font;
 
@@ -233,7 +233,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
     setMatrix(in.combined);
   }
   public void setMatrix(Matrix4 combined) {
-    fontBatch.setProjectionMatrix(combined);
+//    fontBatch.setProjectionMatrix(combined);
     imageBatch.setProjectionMatrix(combined);
     rFill.setProjectionMatrix(combined);
     pFill.setProjectionMatrix(combined);
