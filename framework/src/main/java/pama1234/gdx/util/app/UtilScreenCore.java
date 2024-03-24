@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -75,6 +76,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public boolean is3d;
   public boolean depth;
   public FlushablePool<Model> modelPool;
+  public ModelBuilder modelBuilder;
 
   public DecalBatch decalBatch;
   public ModelBatch modelBatch;
