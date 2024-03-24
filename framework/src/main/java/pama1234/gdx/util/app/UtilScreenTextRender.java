@@ -15,7 +15,7 @@ import pama1234.util.Annotations.SyntacticSugar;
  */
 public abstract class UtilScreenTextRender extends UtilScreenColor{
   public void text(String in,float x,float y) {
-    renderer(fontBatch);
+    renderer(imageBatch);
     //    fontBatch.begin();
     font.text(in==null?"null":in,x,y);
     //    fontBatch.end();
@@ -62,9 +62,10 @@ public abstract class UtilScreenTextRender extends UtilScreenColor{
   public float textSize() {
     return font.styleFast.size;
   }
+  @Deprecated
   public void textStyle(TextStyleSupplier in) {
     font.style=in;
-    if(in==null) fontBatch.setColor(font.styleFast.foreground);
+    if(in==null) imageBatch.setColor(font.styleFast.foreground);
   }
   public float fontScale(float in) {
     if(in>=1) return MathUtils.floor(in);
@@ -76,7 +77,7 @@ public abstract class UtilScreenTextRender extends UtilScreenColor{
   public void textFont(BetterBitmapFont fontIn) {
     font=fontIn;
 
-    font.fontBatch=fontBatch;
+    font.fontBatch=imageBatch;
     font.styleFast=fontStyle;
   }
   public void textMode(int in) {
@@ -84,17 +85,13 @@ public abstract class UtilScreenTextRender extends UtilScreenColor{
   }
   //---------------------------------------------------------------------------
   public void fullText(String in,float x,float y) {
-    renderer(fontBatch);
-    //    fontBatch.begin();
-    font.drawF(fontBatch,in==null?"null":in,x,y);
-    //    fontBatch.end();
+    renderer(imageBatch);
+    font.drawF(imageBatch,in==null?"null":in,x,y);
   }
   @Deprecated
   public void drawTextCenter(String in,float x,float y) {
-    renderer(fontBatch);
-    //    fontBatch.begin();
-    font.drawF(fontBatch,in==null?"null":in,x,y);
-    //    fontBatch.end();
+    renderer(imageBatch);
+    font.drawF(imageBatch,in==null?"null":in,x,y);
   }
   public void setTextScale(float in) {
     font.getData().setScale(in);
