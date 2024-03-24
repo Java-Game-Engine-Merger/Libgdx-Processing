@@ -10,9 +10,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.Renderable;
+import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.FlushablePool;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -66,7 +71,13 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public int touchCount;
   public TouchInfo[] touches=new TouchInfo[16];
   public boolean grabCursor;
+  //---------------------------------------------------------------------------
   public boolean is3d;
+  public boolean depth;
+  public FlushablePool<Model> modelPool;
+
+  public DecalBatch decalBatch;
+  public ModelBatch modelBatch;
   //---------------------------------------------------------------------------
   public boolean keyPressed;
   /** normally "a" and "A" will be treat as 'A' */
