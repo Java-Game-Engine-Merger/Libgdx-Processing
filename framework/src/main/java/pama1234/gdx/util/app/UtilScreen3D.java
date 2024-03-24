@@ -5,16 +5,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Plane;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
-
 import com.badlogic.gdx.utils.FlushablePool;
+
 import pama1234.gdx.util.cam.CameraController;
 import pama1234.gdx.util.cam.CameraController3D;
 
@@ -63,11 +63,12 @@ public abstract class UtilScreen3D extends UtilScreen{
 
       @Override
       public Model obtain() {
-        Model obtain = super.obtain();
+        Model obtain=super.obtain();
         // TODO
         return obtain;
       }
     };
+    modelBuilder=new ModelBuilder();
   }
   @Override
   public CameraController createCamera() {
@@ -111,6 +112,7 @@ public abstract class UtilScreen3D extends UtilScreen{
   }
   //---------------------------------------------------------------------------
   public void enableDepth() {
+    Gdx.gl.glDepthMask(true);
     Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT|GL20.GL_DEPTH_BUFFER_BIT);
     Gdx.gl.glClearDepthf(1f);
@@ -130,25 +132,6 @@ public abstract class UtilScreen3D extends UtilScreen{
     // Gdx.gl.glEnable(GL20.GL_BLEND);
     // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
     decalBatch.flush();
-    beginShape();
-  }
-  //---------------------------------------------------------------------------
-  public void model(ModelInstance in) {
-    modelBatch.begin(usedCamera);
-    modelBatch.render(in);
-    modelBatch.end();
-  }
-  public void modelFlush(ModelInstance in) {
-    model(in);
-    flushModel();
-  }
-  public void flushModel() {
-    endShape();
-    // Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
-    // Gdx.gl20.glDepthMask(false);
-    // Gdx.gl.glEnable(GL20.GL_BLEND);
-    // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
-    modelBatch.flush();
     beginShape();
   }
   //---------------------------------------------------------------------------

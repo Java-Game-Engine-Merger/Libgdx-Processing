@@ -2,9 +2,13 @@ package pama1234.gdx.util.app;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -22,6 +26,26 @@ import space.earlygrey.shapedrawer.JoinType;
  * @see UtilScreen3D
  */
 public abstract class UtilScreenRender extends UtilScreenTextRender{
+  //---------------------------------------------------------------------------
+  public void model(ModelInstance in) {
+    modelBatch.begin(usedCamera);
+    modelBatch.render(in);
+    modelBatch.end();
+  }
+  public void modelFlush(ModelInstance in) {
+    model(in);
+    flushModel();
+  }
+  public void flushModel() {
+    endShape();
+    // Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+    // Gdx.gl20.glDepthMask(false);
+    // Gdx.gl.glEnable(GL20.GL_BLEND);
+    // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
+    modelBatch.flush();
+    beginShape();
+  }
+
   public void depth(boolean flag) {
     depth=flag;
   }
@@ -31,8 +55,28 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
     in.draw(tvgDrawer);
   }
   public void image(Texture in,float x,float y) {
-    renderer(imageBatch);
-    imageBatch.draw(in,x,y);
+    if(depth) {
+      modelBuilder.begin();
+
+      modelBuilder.createRect(
+        x,y,0,
+        x+in.getWidth(),y,0,
+        x+in.getWidth(),y+in.getHeight(),0,
+        x,y+in.getHeight(),0,
+
+        0,0,0,
+
+        new Material(TextureAttribute.createDiffuse(in)),
+        VertexAttributes.Usage.Position);
+      //      modelBuilder.part("Texture xy",GL20.GL_TRIANGLES,0,new Material(TextureAttribute.createDiffuse(in))).rect;
+
+      var m=modelBuilder.end();
+      var mi=new ModelInstance(m);
+      model(mi);
+    }else {
+      renderer(imageBatch);
+      imageBatch.draw(in,x,y);
+    }
   }
   @Deprecated
   public void image(Texture in,float x,float y,float z) {
