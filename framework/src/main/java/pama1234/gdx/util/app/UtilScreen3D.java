@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Plane;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
@@ -134,6 +135,36 @@ public abstract class UtilScreen3D extends UtilScreen{
     decalBatch.flush();
     beginShape();
   }
+  //---------------------------------------------------------------------------
+  //  public void model(ModelInstance in) {
+  //    //    endBlend();
+  //    renderer(modelBatch);
+  //    //    modelBatch.begin(usedCamera);
+  //    modelBatch.render(in);
+  //    //    modelBatch.end();
+  //  }
+  //  public void modelFlush(ModelInstance in) {
+  //    model(in);
+  //    flushModel();
+  //  }
+  //  public void flushModel() {
+  //    endShape();
+  //    // Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+  //    // Gdx.gl20.glDepthMask(false);
+  //    // Gdx.gl.glEnable(GL20.GL_BLEND);
+  //    // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
+  //    modelBatch.flush();
+  //    beginShape();
+  //  }
+  //  //---------------------------------------------------------------------------
+
+  @Override
+  public void setMatrix(Matrix4 combined) {
+    super.setMatrix(combined);
+    //    decalBatch.setProjectionMatrix(combined);
+    //    modelBatch.setProjectionMatrix(combined);
+  }
+
   //---------------------------------------------------------------------------
   @Override
   public void dispose() {

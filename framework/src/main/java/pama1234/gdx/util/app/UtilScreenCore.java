@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
@@ -204,6 +203,8 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
       if(usedRenderer instanceof Batch batch&&batch.isDrawing()) {
         //        batch.flush();
         batch.end();
+      }else if(usedRenderer instanceof ModelBatch mb) {
+        mb.end();
       }else if(usedRenderer instanceof UtilShapeRenderer r) {
         if(r.isDrawing()) r.flush();
         //        endBlend();
@@ -212,8 +213,11 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
     usedRenderer=renderer;
 
     if(usedRenderer!=null) {
-      if(usedRenderer instanceof Batch batch) batch.begin();
-      else if(usedRenderer instanceof UtilShapeRenderer r) {
+      if(usedRenderer instanceof Batch batch) {
+        batch.begin();
+      }else if(usedRenderer instanceof ModelBatch mb) {
+        mb.begin(usedCamera);
+      }else if(usedRenderer instanceof UtilShapeRenderer r) {
         beginBlend();
       }
     }

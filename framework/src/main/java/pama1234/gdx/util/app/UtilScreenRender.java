@@ -28,20 +28,17 @@ import space.earlygrey.shapedrawer.JoinType;
 public abstract class UtilScreenRender extends UtilScreenTextRender{
   //---------------------------------------------------------------------------
   public void model(ModelInstance in) {
-    modelBatch.begin(usedCamera);
+    renderer(modelBatch);
     modelBatch.render(in);
-    modelBatch.end();
   }
+  @Deprecated
   public void modelFlush(ModelInstance in) {
     model(in);
     flushModel();
   }
+  @Deprecated
   public void flushModel() {
     endShape();
-    // Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
-    // Gdx.gl20.glDepthMask(false);
-    // Gdx.gl.glEnable(GL20.GL_BLEND);
-    // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
     modelBatch.flush();
     beginShape();
   }
