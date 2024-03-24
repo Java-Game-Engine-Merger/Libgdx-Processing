@@ -93,6 +93,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public CameraController cam;
   public OrthographicCamera screenCam;
   public Camera usedCamera;
+  /** 一般来说，这是一个SpriteBatch */
   public Batch imageBatch;
   public TinyVGShapeDrawer tvgDrawer;
   public BetterBitmapFont font;
