@@ -3,6 +3,7 @@ package pama1234.gdx.util.app;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
@@ -13,13 +14,12 @@ import com.badlogic.gdx.math.Plane;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
+import com.badlogic.gdx.utils.FlushablePool;
 import pama1234.gdx.util.cam.CameraController;
 import pama1234.gdx.util.cam.CameraController3D;
 
 public abstract class UtilScreen3D extends UtilScreen{
   public CameraController3D cam3d;
-  public DecalBatch decalBatch;
-  public ModelBatch modelBatch;
   public CameraGroupStrategy cameraGroupStrategy;
 
   public Ray rayCache=new Ray();
@@ -54,6 +54,20 @@ public abstract class UtilScreen3D extends UtilScreen{
     cameraGroupStrategy=new CameraGroupStrategy(cam.camera);
     decalBatch=new DecalBatch(cameraGroupStrategy);//TODO
     modelBatch=new ModelBatch();
+
+    modelPool=new FlushablePool<Model>() {
+      @Override
+      protected Model newObject() {
+        return new Model();
+      }
+
+      @Override
+      public Model obtain() {
+        Model obtain = super.obtain();
+        // TODO
+        return obtain;
+      }
+    };
   }
   @Override
   public CameraController createCamera() {
