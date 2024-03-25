@@ -10,31 +10,33 @@ import pama1234.math.vec.Vec3f;
 import pama1234.math.vec.Vec4f;
 
 public abstract class UtilScreenPose extends UtilScreenCore{
+  public static final Matrix4 cleanMat4=new Matrix4();
   public Matrix4 matrix() {
-    if(matrixStackPointer<0) return usedCamera.combined;
+    if(matrixStackPointer<0) return cleanMat4;
     return matrixStack[matrixStackPointer];
   }
   public void pushMatrix() {
     Matrix4 tmat=matrixStack[matrixStackPointer+1];
-    Matrix4 matIn=matrixStackPointer<0?usedCamera.combined:matrixStack[matrixStackPointer];
+    Matrix4 matIn=matrixStackPointer<0?cleanMat4:matrixStack[matrixStackPointer];
     matrixStack[matrixStackPointer+1]=tmat==null?matIn.cpy():tmat.set(matIn);
     matrixStackPointer++;
-    setMatrix(matrix());
+    setTransformMatrix(matrix());
   }
   public void popMatrix() {
     matrixStackPointer--;
-    setMatrix(matrix());
+    setTransformMatrix(matrix());
   }
   public void clearMatrix() {
     matrixStackPointer=-1;
     // Arrays.fill(matrixStack,null);
-    setMatrix(usedCamera.combined);
+    setProjectionMatrix(usedCamera.projection);
+    setTransformMatrix(matrix());
   }
   public void copyMatrix(int i) {
-    setMatrix(matrix().set(matrixStack[i]));
+    setTransformMatrix(matrix().set(matrixStack[i]));
   }
   public void copyMatrix(Matrix4 m) {
-    setMatrix(matrix().set(m));
+    setTransformMatrix(matrix().set(m));
   }
   //---------------------------------------------------------------------------
   // @Deprecated
@@ -64,23 +66,23 @@ public abstract class UtilScreenPose extends UtilScreenCore{
   public void translate(float dx,float dy) {
     Matrix4 matrix=matrix();
     matrix.translate(dx,dy,0);
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   public void rotate(float rad) {
     Matrix4 matrix=matrix();
     matrix.rotate(0,0,1,UtilMath.deg(rad));
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   public void scale(float in) {
     Matrix4 matrix=matrix();
     matrix.scale(in,in,in);
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   //---------------------------------------------------------------------------
   public void translate(float dx,float dy,float dz) {
     Matrix4 matrix=matrix();
     matrix.translate(dx,dy,dz);
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   public void translate(Vec3f vec) {
     translate(vec.x,vec.y,vec.z);
@@ -92,7 +94,7 @@ public abstract class UtilScreenPose extends UtilScreenCore{
     matrix.rotate(1,0,0,UtilMath.deg(rx));
     matrix.rotate(0,1,0,UtilMath.deg(ry));
     matrix.rotate(0,0,1,UtilMath.deg(rz));
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   /** 有bug */
   @Deprecated
@@ -101,7 +103,7 @@ public abstract class UtilScreenPose extends UtilScreenCore{
     matrix.rotate(1,0,0,rx);
     matrix.rotate(0,1,0,ry);
     matrix.rotate(0,0,1,rz);
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   /** 暂时替代 */
   Vector3 tempDir=new Vector3();
@@ -115,51 +117,51 @@ public abstract class UtilScreenPose extends UtilScreenCore{
     tempDir.rotate(tempDir,rx);
     matrix.rotate(tempDir,UtilMath.deg(rz));
     //    tempDir.rotate(tempDir,rz);
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
 
   public void rotate(float rx,float ry,float rz,float rw) {
     Matrix4 matrix=matrix();
     tq.set(rx,ry,rz,rw);
     matrix.rotate(tq);
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   public void rotate(Quaternion q) {
     Matrix4 matrix=matrix();
     matrix.rotate(q);
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   Quaternion tq=new Quaternion();
   public void rotate(Vec4f q) {
     Matrix4 matrix=matrix();
     tq.set(q.x,q.y,q.z,q.w);
     matrix.rotate(tq);
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   public void rotateAxis(Vec3f v,float in) {
     Matrix4 matrix=matrix();
     matrix.rotate(v.x,v.y,v.z,UtilMath.deg(in));
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   public void rotateAxis(float axisX,float axisY,float axisZ,float in) {
     Matrix4 matrix=matrix();
     matrix.rotate(axisX,axisY,axisZ,UtilMath.deg(in));
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   public void rotateX(float in) {
     Matrix4 matrix=matrix();
     matrix.rotate(1,0,0,UtilMath.deg(in));
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   public void rotateY(float in) {
     Matrix4 matrix=matrix();
     matrix.rotate(0,1,0,UtilMath.deg(in));
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   public void rotateZ(float in) {
     Matrix4 matrix=matrix();
     matrix.rotate(0,0,1,UtilMath.deg(in));
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   public void rotate(Vec3f vec) {
     rotate(vec.x,vec.y,vec.z);
@@ -167,7 +169,7 @@ public abstract class UtilScreenPose extends UtilScreenCore{
   public void scale(float sx,float sy,float sz) {
     Matrix4 matrix=matrix();
     matrix.scale(sx,sy,sz);
-    setMatrix(matrix);
+    setTransformMatrix(matrix);
   }
   public void scale(Vec3f vec) {
     scale(vec.x,vec.y,vec.z);
