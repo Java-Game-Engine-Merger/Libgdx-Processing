@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Color;
 import pama1234.gdx.util.app.UtilScreen3D;
 import pama1234.gdx.util.entity.EntityNeo;
 import pama1234.gdx.util.launcher.MainAppBase;
+import pama1234.math.UtilMath;
 
 public class ShapeTest3D extends UtilScreen3D{
   public static void main(String[] args) {
@@ -37,6 +38,9 @@ public class ShapeTest3D extends UtilScreen3D{
   public void setup() {
     fill(ColorUtil.clas);
     stroke(ColorUtil.keyword);
+
+//    translate(0,0,1);
+rotateX(UtilMath.HALF_PI);
 
     centerNeo.add(new EntityNeo<>(this) {
       @Override

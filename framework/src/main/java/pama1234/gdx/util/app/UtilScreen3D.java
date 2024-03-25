@@ -160,8 +160,8 @@ public abstract class UtilScreen3D extends UtilScreen{
   //  //---------------------------------------------------------------------------
 
   @Override
-  public void setMatrix(Matrix4 combined) {
-    super.setMatrix(combined);
+  public void setProjectionMatrix(Matrix4 projection) {
+    super.setProjectionMatrix(projection);
     //    decalBatch.setProjectionMatrix(combined);
     //    modelBatch.setProjectionMatrix(combined);
   }

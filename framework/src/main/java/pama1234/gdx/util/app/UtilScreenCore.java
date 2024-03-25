@@ -9,7 +9,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
@@ -21,13 +20,11 @@ import com.badlogic.gdx.utils.FlushablePool;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import com.cyphercove.flexbatch.FlexBatch;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import hhs.gdx.hslib.tools.LoopThread;
 import pama1234.gdx.game.ui.element.Button;
 import pama1234.gdx.game.ui.element.TextButton;
 import pama1234.gdx.util.cam.CameraController;
-import pama1234.gdx.util.element.Element3D;
 import pama1234.gdx.util.element.FontStyle;
 import pama1234.gdx.util.font.BetterBitmapFont;
 import pama1234.gdx.util.graphics.ShapeRendererBase.ShapeType;
@@ -234,14 +231,26 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public void setCamera(Camera in) {
     if(usedCamera!=in) usedCamera=in;
     else return;
-    setMatrix(in.combined);
+    setProjectionMatrix(in.projection);
+//    setTransformMatrix(in.combined);
   }
-  public void setMatrix(Matrix4 combined) {
-//    fontBatch.setProjectionMatrix(combined);
-    imageBatch.setProjectionMatrix(combined);
-    rFill.setProjectionMatrix(combined);
-    pFill.setProjectionMatrix(combined);
-    rStroke.setProjectionMatrix(combined);
+
+  /**
+   * 请勿使用这个方法来传递变换参数（位移，旋转，缩放）
+   * @param projection
+   */
+  public void setProjectionMatrix(Matrix4 projection) {
+//    fontBatch.setProjectionMatrix(projection);
+    imageBatch.setProjectionMatrix(projection);
+    rFill.setProjectionMatrix(projection);
+    pFill.setProjectionMatrix(projection);
+    rStroke.setProjectionMatrix(projection);
+  }
+  public void setTransformMatrix(Matrix4 transform) {
+    imageBatch.setTransformMatrix(transform);
+    rFill.setTransformMatrix(transform);
+    pFill.setTransformMatrix(transform);
+    rStroke.setTransformMatrix(transform);
   }
   @Override
   public void init() {}

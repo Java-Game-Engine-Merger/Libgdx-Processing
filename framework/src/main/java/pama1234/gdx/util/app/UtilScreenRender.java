@@ -62,7 +62,7 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
 //        x,y+in.getHeight(),0,
 //
 //        0,0,0,
-//z
+//
 //        new Material(TextureAttribute.createDiffuse(in)),
 //        VertexAttributes.Usage.Position);
 //
@@ -178,6 +178,18 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
     popMatrix();
   }
   //---------------------------------------------------------------------------
+  // TODO in alpha
+  public void srect(float x,float y,float w,float h) {
+    renderer(shapeDrawer.getBatch());
+    if(fill) {
+      shapeDrawer.setColor(fillColor);
+      shapeDrawer.filledRectangle(x,y,w,h);
+    }
+    if(stroke) {
+      shapeDrawer.setColor(strokeColor);
+      shapeDrawer.rectangle(x,y,w,h);
+    }
+  }
   public void rect(float x,float y,float w,float h) {
     if(fill) {
       renderer(rFill);
