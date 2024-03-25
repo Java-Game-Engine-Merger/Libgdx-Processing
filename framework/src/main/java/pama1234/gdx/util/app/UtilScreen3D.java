@@ -70,6 +70,7 @@ public abstract class UtilScreen3D extends UtilScreen{
       }
     };
     modelBuilder=new ModelBuilder();
+//    flexBatch=new FlexBatch<>();
   }
   @Override
   public CameraController createCamera() {

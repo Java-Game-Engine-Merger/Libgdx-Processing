@@ -21,11 +21,13 @@ import com.badlogic.gdx.utils.FlushablePool;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import com.cyphercove.flexbatch.FlexBatch;
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import hhs.gdx.hslib.tools.LoopThread;
 import pama1234.gdx.game.ui.element.Button;
 import pama1234.gdx.game.ui.element.TextButton;
 import pama1234.gdx.util.cam.CameraController;
+import pama1234.gdx.util.element.Element3D;
 import pama1234.gdx.util.element.FontStyle;
 import pama1234.gdx.util.font.BetterBitmapFont;
 import pama1234.gdx.util.graphics.ShapeRendererBase.ShapeType;
@@ -76,6 +78,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public boolean depth;
   public FlushablePool<Model> modelPool;
   public ModelBuilder modelBuilder;
+//  public FlexBatch<Element3D> flexBatch;
 
   public DecalBatch decalBatch;
   public ModelBatch modelBatch;

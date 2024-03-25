@@ -53,23 +53,22 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
   }
   public void image(Texture in,float x,float y) {
     if(depth) {
-      modelBuilder.begin();
-
-      modelBuilder.createRect(
-        x,y,0,
-        x+in.getWidth(),y,0,
-        x+in.getWidth(),y+in.getHeight(),0,
-        x,y+in.getHeight(),0,
-
-        0,0,0,
-
-        new Material(TextureAttribute.createDiffuse(in)),
-        VertexAttributes.Usage.Position);
-      //      modelBuilder.part("Texture xy",GL20.GL_TRIANGLES,0,new Material(TextureAttribute.createDiffuse(in))).rect;
-
-      var m=modelBuilder.end();
-      var mi=new ModelInstance(m);
-      model(mi);
+//      modelBuilder.begin();
+//
+//      modelBuilder.createRect(
+//        x,y,0,
+//        x+in.getWidth(),y,0,
+//        x+in.getWidth(),y+in.getHeight(),0,
+//        x,y+in.getHeight(),0,
+//
+//        0,0,0,
+//z
+//        new Material(TextureAttribute.createDiffuse(in)),
+//        VertexAttributes.Usage.Position);
+//
+//      var m=modelBuilder.end();
+//      var mi=new ModelInstance(m);
+//      model(mi);
     }else {
       renderer(imageBatch);
       imageBatch.draw(in,x,y);
