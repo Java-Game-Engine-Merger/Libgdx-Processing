@@ -301,6 +301,7 @@ public abstract class AbstractShapeDrawer{
    * @return the previous packed float value of the ShapeDrawer's colour
    */
   public float setColor(Color color) {
+    getBatch().setColor(color);
     return setColor(color.toFloatBits());
   }
 
@@ -315,6 +316,7 @@ public abstract class AbstractShapeDrawer{
    * @return the previous packed float value of the ShapeDrawer's colour
    */
   public float setColor(float floatBits) {
+    getBatch().setPackedColor(floatBits);
     return batchManager.setColor(floatBits);
   }
 
