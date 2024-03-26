@@ -1,2 +1,5 @@
-env:
-  JITPACK_NDK_VERSION: "21.1.6352462"
+#env:
+#  JITPACK_NDK_VERSION: "21.1.6352462"
+
+#jdk:
+#  - openjdk17

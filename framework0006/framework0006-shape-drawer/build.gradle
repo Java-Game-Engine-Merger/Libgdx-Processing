@@ -12,7 +12,6 @@ dependencies {
   testImplementation(platform("org.junit:junit-bom:5.9.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")
 
-  val gdxVersion = rootProject.ext["gdxVersion"]
   api("com.badlogicgames.gdx:gdx:$gdxVersion")
 }
 
@@ -23,8 +22,7 @@ tasks.test {
 
 publishing {
   publications {
-    create<MavenPublication>("maven") {
-      val pama1234PublishVersion: String by project
+    maven(MavenPublication) {
       groupId = "pama1234"
       artifactId = "p6-drawer"
       version = "$pama1234PublishVersion"
