@@ -64,10 +64,10 @@ dependencies {
   coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$androidDesugarVersion"
 
   implementation ("$gdxModule:gdx-backend-android:$gdxVersion") {
-    exclude group: "com.badlogicgames.gdx"
+//    exclude group: "com.badlogicgames.gdx"
   }
 
-  implementation project(':framework')
+  api project(":framework")
 
   // implementation 'net.java.dev.jna:jna:5.13.0'
 }
