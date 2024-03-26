@@ -13,7 +13,7 @@ dependencies {
   }
 
   api project(":framework0006:framework0006-shape-drawer")
-  api project(":framework0006:framework0006-flex-batch")
+//  api project(":framework0006:framework0006-flex-batch")
 
   api "$gdxCustomModule:gdx-freetype:$gdxCustomVersion"
   api 'org.apache.logging.log4j:log4j-core:2.22.1'
