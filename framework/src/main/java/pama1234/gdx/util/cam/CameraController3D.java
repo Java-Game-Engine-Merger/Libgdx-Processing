@@ -13,8 +13,14 @@ import pama1234.gdx.util.info.TouchInfo;
 import pama1234.math.physics.PathPoint;
 
 public class CameraController3D extends CameraController{
+
   public PathPoint viewDir=new PathPoint(PI/2*3,-PI/2f,0.5f);
+
   public float moveSpeed=1;
+  public float moveSpeedStep=1/4f;
+  public float moveSpeedMin=1/4f;
+  public float moveSpeedMax=32;
+
   public float viewSpeed=15f;
 
   public float opx,opy;
@@ -22,6 +28,7 @@ public class CameraController3D extends CameraController{
 
   public boolean activePosMovement=true;
   public boolean activeViewRotation=true;
+  public boolean activeMoveSpeedChange=true;
   public boolean fixViewUpDirection=true;
   public CameraController3D(UtilScreen3D p,float x,float y,float z,float s,float r,float frameU) {
     super(p,x,y,z);
@@ -168,9 +175,11 @@ public class CameraController3D extends CameraController{
   }
   @Override
   public void mouseWheel(float x,float y) {
-    moveSpeed+=y/4;
-    if(moveSpeed<1/4f) moveSpeed=1/4f;
-    if(moveSpeed>32) moveSpeed=32;
+    if(activeMoveSpeedChange) {
+      moveSpeed+=y*moveSpeedStep;
+      if(moveSpeed<moveSpeedMin) moveSpeed=moveSpeedMin;
+      if(moveSpeed>moveSpeedMax) moveSpeed=moveSpeedMax;
+    }
   }
   @Override
   public void frameResized(int w,int h) {
