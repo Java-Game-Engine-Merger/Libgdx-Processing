@@ -59,6 +59,9 @@ public class Vec3f extends Vector3f implements ByteBufferData{
   public float dist(float a,float b,float c) {
     return (float)Math.sqrt(Tools.sq(x-a)+Tools.sq(y-b)+Tools.sq(z-c));
   }
+  public float dist(Vec3f v) {
+    return dist(v.x,v.y,v.z);
+  }
   public boolean toNumber() {
     if(Float.isInfinite(x)||Float.isNaN(x)) {
       x=0;
