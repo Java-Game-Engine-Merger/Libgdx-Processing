@@ -395,7 +395,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #path(Iterable, float, JoinType, boolean)} with {@code joinType} set to
-   * {@link JoinType#SMOOTH} (also see {@link #isJoinNecessary(float)}).
+   * {@link JoinType#BEVEL} (also see {@link #isJoinNecessary(float)}).
    * </p>
    *
    * @param path      an ordered Iterable of Vector2s representing path points
@@ -403,7 +403,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * @param open      if false then the first and last points are connected
    */
   public <T extends Vector2> void path(Iterable<T> path,float lineWidth,boolean open) {
-    path(path,lineWidth,isJoinNecessary(lineWidth)?JoinType.SMOOTH:JoinType.NONE,open);
+    path(path,lineWidth,isJoinNecessary(lineWidth)?JoinType.BEVEL :JoinType.NONE,open);
   }
 
   /**
@@ -480,7 +480,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * @param open      if false then the first and last points are connected
    */
   public void path(float[] path,int start,int end,float lineWidth,boolean open) {
-    path(path,start,end,lineWidth,isJoinNecessary(lineWidth)?JoinType.SMOOTH:JoinType.NONE,open);
+    path(path,start,end,lineWidth,isJoinNecessary(lineWidth)?JoinType.BEVEL :JoinType.NONE,open);
   }
 
   /**
@@ -546,7 +546,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #circle(float, float, float, JoinType)} with joinType set to
-   * {@link JoinType#SMOOTH}.
+   * {@link JoinType#BEVEL}.
    * </p>
    *
    * @param centreX   the x-coordinate of the centre point
@@ -555,7 +555,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * @param lineWidth the width of the line in world units
    */
   public void circle(float centreX,float centreY,float radius,float lineWidth) {
-    circle(centreX,centreY,radius,lineWidth,isJoinNecessary(lineWidth)?JoinType.SMOOTH:JoinType.NONE);
+    circle(centreX,centreY,radius,lineWidth,isJoinNecessary(lineWidth)?JoinType.BEVEL :JoinType.NONE);
   }
 
   /**
@@ -607,7 +607,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   /**
    * <p>
    * Calls {@link #ellipse(float, float, float, float, float, float, JoinType)} with joinType set
-   * to {@link JoinType#SMOOTH}.
+   * to {@link JoinType#BEVEL}.
    * </p>
    *
    * @param centreX   the x-coordinate of the centre point
@@ -618,7 +618,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * @param lineWidth the width of the line in world units
    */
   public void ellipse(float centreX,float centreY,float radiusX,float radiusY,float rotation,float lineWidth) {
-    ellipse(centreX,centreY,radiusX,radiusY,rotation,lineWidth,isJoinNecessary(lineWidth)?JoinType.SMOOTH:JoinType.NONE);
+    ellipse(centreX,centreY,radiusX,radiusY,rotation,lineWidth,isJoinNecessary(lineWidth)?JoinType.BEVEL :JoinType.NONE);
   }
 
   /**

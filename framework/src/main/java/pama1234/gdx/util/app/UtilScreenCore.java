@@ -27,7 +27,6 @@ import pama1234.gdx.game.ui.element.TextButton;
 import pama1234.gdx.util.cam.CameraController;
 import pama1234.gdx.util.element.FontStyle;
 import pama1234.gdx.util.font.BetterBitmapFont;
-import pama1234.gdx.util.graphics.ShapeRendererBase.ShapeType;
 import pama1234.gdx.util.graphics.UtilPolygonSpriteBatch;
 import pama1234.gdx.util.graphics.UtilShapeRenderer;
 import pama1234.gdx.util.info.MouseInfo;
@@ -117,7 +116,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public boolean fill=true,stroke=true;
 
   public float defaultStrokeWeight,strokeWeight;
-  public JoinType joinType=JoinType.SMOOTH;
+  public JoinType joinType=JoinType.BEVEL;
 
 //  public UtilShapeRenderer rFill,rStroke;
   public ShapeDrawer shapeDrawer;

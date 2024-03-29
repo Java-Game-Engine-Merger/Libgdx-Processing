@@ -37,7 +37,7 @@ public class GraphDrawerDrawable extends ShapeDrawerDrawable{
   /**
    * The type of mitre joint used for connecting the sample points.
    */
-  private JoinType joinType=JoinType.SMOOTH;
+  private JoinType joinType=JoinType.BEVEL;
 
   /**
    * The number of sample points to estimate the shape of the graph. Increase this for better

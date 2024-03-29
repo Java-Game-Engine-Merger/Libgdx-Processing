@@ -24,7 +24,7 @@ class PolygonDrawer extends DrawerTemplate<BatchManager>{
     if(joinType==JoinType.NONE) {
       drawPolygonNoJoin(centre,sides,lineWidth,rotation,radius,startAngle,radians);
     }else {
-      drawPolygonWithJoin(centre,sides,halfLineWidth,rotation,radius,startAngle,radians,joinType==JoinType.SMOOTH);
+      drawPolygonWithJoin(centre,sides,halfLineWidth,rotation,radius,startAngle,radians,joinType==JoinType.BEVEL);
     }
     if(!wasCaching) batchManager.endCaching();
   }

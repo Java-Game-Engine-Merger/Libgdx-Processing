@@ -27,7 +27,7 @@ abstract class DrawerTemplate<T extends BatchManager>{
 
   /**
    * <p>
-   * Draws a trangle that fills the gap at joints when {@link JoinType#SMOOTH} join type is used.
+   * Draws a trangle that fills the gap at joints when {@link JoinType#BEVEL} join type is used.
    * </p>
    * 
    * @param A the point before the join

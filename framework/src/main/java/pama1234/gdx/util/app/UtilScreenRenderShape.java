@@ -1,16 +1,10 @@
 package pama1234.gdx.util.app;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import dev.lyze.gdxtinyvg.TinyVG;
 import pama1234.math.UtilMath;
 import pama1234.math.geometry.RectI;
 import pama1234.math.transform.Pose3D;
@@ -55,7 +49,7 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     }
     if(stroke) {
       shapeDrawer.setColor(strokeColor);
-      shapeDrawer.circle(x,y,size,JoinType.SMOOTH);
+      shapeDrawer.circle(x,y,size,JoinType.BEVEL);
     }
   }
   public static int circleSeg(float s) {
@@ -70,7 +64,7 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     }
     if(stroke) {
       shapeDrawer.setColor(strokeColor);
-      shapeDrawer.circle(x,y,size,JoinType.SMOOTH);
+      shapeDrawer.circle(x,y,size,JoinType.BEVEL);
     }
   }
   public void circle(float x,float y,float z,float s,int seg) {

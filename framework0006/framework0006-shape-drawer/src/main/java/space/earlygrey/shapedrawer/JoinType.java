@@ -19,5 +19,5 @@ public enum JoinType{
   /**
    * A truncated mitre joint.
    */
-  SMOOTH
+  BEVEL
 }

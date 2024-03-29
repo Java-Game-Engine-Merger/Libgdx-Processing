@@ -1,16 +1,8 @@
 package pama1234.util.neat.raimannma.architecture;
 
-import static pama1234.util.neat.raimannma.methods.Utils.randBoolean;
-import static pama1234.util.neat.raimannma.methods.Utils.randFloat;
-import static pama1234.util.neat.raimannma.methods.Utils.randInt;
+import static pama1234.util.neat.raimannma.methods.Utils.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -118,7 +110,7 @@ public abstract class NetworkCore<N extends Node,C extends Connection>{
   }
 
   //---------------------------------------------------------------------------
-------------------------------------
+
   @FunctionalInterface
   public interface NewNetwork<T extends NetworkCore<?,?>>{
     public T get(int inputSize,int outputSize);
@@ -132,7 +124,7 @@ public abstract class NetworkCore<N extends Node,C extends Connection>{
   }
 
   //---------------------------------------------------------------------------
-------------------------------------
+
   /**
    * Create an offspring from two parent networks.
    * <p>
@@ -255,5 +247,5 @@ public abstract class NetworkCore<N extends Node,C extends Connection>{
   }
 
   //---------------------------------------------------------------------------
-------------------------------------
+
 }
