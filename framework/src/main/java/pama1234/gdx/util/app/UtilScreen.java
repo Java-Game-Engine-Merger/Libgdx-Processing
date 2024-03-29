@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -37,9 +36,9 @@ import pama1234.util.wrapper.ServerEntityCenter;
  * @see UtilScreen2D
  * @see UtilScreen3D
  */
-public abstract class UtilScreen extends UtilScreenRender{
+public abstract class UtilScreen extends UtilScreenRenderShape{
   public void createRenderUtil() {
-//    fontBatch=SharedResources.instance.fontBatch;
+    //    fontBatch=SharedResources.instance.fontBatch;
     //    font=SharedResources.instance.font;
     //    font.fontBatch=fontBatch;
     //    font.styleFast=fontStyle;
@@ -48,10 +47,10 @@ public abstract class UtilScreen extends UtilScreenRender{
     font.color(textColor);
     fillColor=new Color(1,1,1,1);
     strokeColor=new Color(0,0,0,1);
-//    rFill=SharedResources.instance.rFill;
-//    rStroke=SharedResources.instance.rStroke;
-//    rFill.setColor(fillColor);
-//    rStroke.setColor(strokeColor);
+    //    rFill=SharedResources.instance.rFill;
+    //    rStroke=SharedResources.instance.rStroke;
+    //    rFill.setColor(fillColor);
+    //    rStroke.setColor(strokeColor);
     pFill=SharedResources.instance.pFill;
     pFill.setColor(fillColor);
 
@@ -64,7 +63,9 @@ public abstract class UtilScreen extends UtilScreenRender{
     keyPressedArray=new IntArray(false,12);
     backgroundColor=new Color(1,1,1,0);
   }
+
   //---------------------------------------------------------------------------
+
   public void preInit() {
     screenCam=new OrthographicCamera();
     imageBatch=SharedResources.instance.imageBatch;
@@ -114,9 +115,9 @@ public abstract class UtilScreen extends UtilScreenRender{
       public void display() {
         rendererEnd();//TODO unintuitive
         usedRenderer=screenStage.getBatch();
-//        endShape();
+        //        endShape();
         screenStage.draw();
-//        beginShape();
+        //        beginShape();
         rendererEnd();//TODO ugly
       }
     });
@@ -125,9 +126,9 @@ public abstract class UtilScreen extends UtilScreenRender{
       public void display() {
         rendererEnd();
         usedRenderer=camStage.getBatch();
-//        endShape();
+        //        endShape();
         camStage.draw();
-//        beginShape();
+        //        beginShape();
         rendererEnd();
       }
     });
@@ -158,7 +159,9 @@ public abstract class UtilScreen extends UtilScreenRender{
     }
   }
   public abstract CameraController createCamera();
+
   //---------------------------------------------------------------------------
+
   @Override
   public void render(float delta) {
     frameRate=delta;
@@ -176,7 +179,7 @@ public abstract class UtilScreen extends UtilScreenRender{
     update();
   }
   public void doDraw() {
-//    beginShape();
+    //    beginShape();
     if(background) background(backgroundColor);
     withCam();
     serverCenter.display();
@@ -189,17 +192,21 @@ public abstract class UtilScreen extends UtilScreenRender{
     centerNeo.display();
     display();
     inputProcessor.display();
-//    endShape();
+    //    endShape();
   }
   public void camOverlay() {}
+
   //---------------------------------------------------------------------------
+
   public void withScreen() {
     setCamera(screenCam);
     textScale(pus);
     strokeWeight(defaultStrokeWeight=u);
   }
   public abstract void withCam();
+
   //---------------------------------------------------------------------------
+
   public void centerCamAddAll(EntityListener... in) {
     for(EntityListener i:in) centerCam.add.add(i);
   }
@@ -236,7 +243,9 @@ public abstract class UtilScreen extends UtilScreenRender{
   public <T extends EntityNeoListener> void centerNeoRemoveAll(Iterable<T> in) {
     for(EntityNeoListener i:in) centerNeo.remove.add(i);
   }
+
   //---------------------------------------------------------------------------
+
   public void addScreenTextFields(TextField... in) {
     for(TextField e:in) screenStage.addActor(e);
   }
@@ -266,7 +275,9 @@ public abstract class UtilScreen extends UtilScreenRender{
     Group root=camStage.getRoot();
     for(TextField e:in) root.removeActor(e);
   }
+
   //---------------------------------------------------------------------------
+
   public void drawCursor() {
     drawCursor(0,255);
   }
@@ -278,7 +289,9 @@ public abstract class UtilScreen extends UtilScreenRender{
     rect(mouse.x-0.5f,mouse.y-4,1,8);
     endBlend();
   }
+
   //---------------------------------------------------------------------------
+
   public static String[] loadStrings(FileHandle file) {
     return file.readString("UTF-8").replace("\r","").split("\n");
   }
@@ -315,7 +328,9 @@ public abstract class UtilScreen extends UtilScreenRender{
     }
     return p;
   }
+
   //---------------------------------------------------------------------------
+
   public void refreshAllCenter() {
     center.refresh();
     centerCam.refresh();

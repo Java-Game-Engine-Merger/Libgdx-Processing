@@ -76,7 +76,9 @@ public class Slider<T extends UtilScreen>extends TextButtonCam<T>{
     p.text(text,tx+(textOffset?8:0),ty+(th-p.textSize()*p.textScale())/2f-1*p.textScale());
     p.endBlend();
   }
+
   //---------------------------------------------------------------------------
+
   @FunctionalInterface
   public interface SliderEvent<T extends UtilScreen>extends ButtonEventBase<Slider<T>>{
     public void execute(Slider<T> button);
@@ -97,7 +99,9 @@ public class Slider<T extends UtilScreen>extends TextButtonCam<T>{
     clickEndE=()->clickEnd.execute(this);
     return this;
   }
+
   //---------------------------------------------------------------------------
+
   @Override
   public Slider<T> activeCondition(GetBoolean active) {
     super.activeCondition(active);

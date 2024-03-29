@@ -116,7 +116,9 @@ public abstract class NetworkCore<N extends Node,C extends Connection>{
       this.gates.add(connection); // add connection to gates list
     }
   }
-  //---------------------------------------------------------------------------------------------------------------
+
+  //---------------------------------------------------------------------------
+------------------------------------
   @FunctionalInterface
   public interface NewNetwork<T extends NetworkCore<?,?>>{
     public T get(int inputSize,int outputSize);
@@ -128,7 +130,9 @@ public abstract class NetworkCore<N extends Node,C extends Connection>{
       return get(NodeType.HIDDEN);
     }
   }
-  //---------------------------------------------------------------------------------------------------------------
+
+  //---------------------------------------------------------------------------
+------------------------------------
   /**
    * Create an offspring from two parent networks.
    * <p>
@@ -249,5 +253,7 @@ public abstract class NetworkCore<N extends Node,C extends Connection>{
         connection.getConnectionDataAsIntArray()));
     return connections;
   }
-  //---------------------------------------------------------------------------------------------------------------
+
+  //---------------------------------------------------------------------------
+------------------------------------
 }

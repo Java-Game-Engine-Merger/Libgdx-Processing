@@ -41,11 +41,15 @@ public class PGraphicsOpenGL extends ShapeRendererBase{
   //  static public final int POINT_SPRITES = 52;
   //  static public final int NON_STROKED_SHAPE = 60;
   //  static public final int STROKED_SHAPE     = 61;
+
   //---------------------------------------------------------------------------
+
   // shape closing modes
   public static int OPEN=1;
   public static int CLOSE=2;
+
   //---------------------------------------------------------------------------
+
   // shape drawing modes
   /** Draw mode convention to use (x, y) to (width, height) */
   public static int CORNER=0;
@@ -63,12 +67,16 @@ public class PGraphicsOpenGL extends ShapeRendererBase{
    * diameter.
    */
   public static int DIAMETER=3;
+
   //---------------------------------------------------------------------------
+
   // arc drawing modes
   //static final int OPEN = 1;  // shared
   public static int CHORD=2;
   public static int PIE=3;
+
   //---------------------------------------------------------------------------
+
   public static FileHandle defColorShaderVertURL=Gdx.files.internal("p4/shaders/ColorVert.glsl");
   public static FileHandle defTextureShaderVertURL=Gdx.files.internal("p4/shaders/TexVert.glsl");
   public static FileHandle defLightShaderVertURL=Gdx.files.internal("p4/shaders/LightVert.glsl");
@@ -82,9 +90,13 @@ public class PGraphicsOpenGL extends ShapeRendererBase{
   public static FileHandle defPointShaderVertURL=Gdx.files.internal("p4/shaders/PointVert.glsl");
   public static FileHandle defPointShaderFragURL=Gdx.files.internal("p4/shaders/PointFrag.glsl");
   public static FileHandle maskShaderFragURL=Gdx.files.internal("p4/shaders/MaskFrag.glsl");
+
   //---------------------------------------------------------------------------
+
   // public static ShaderProgram lineShader=loadShader(defLineShaderVertURL);
+
   //---------------------------------------------------------------------------
+
   public static String loadVertexShader(FileHandle url) {
     // try {
     //   return PApplet.loadStrings(url.openStream());
@@ -93,14 +105,20 @@ public class PGraphicsOpenGL extends ShapeRendererBase{
     // }
     return url.readString("UTF-8");
   }
+
   //---------------------------------------------------------------------------
+
   // public PGL pgl;
   public UtilScreen parent;
+
   //---------------------------------------------------------------------------
+
   public int shape;
   public int vertexIndex;
   public float[] vertices;
+
   //---------------------------------------------------------------------------
+
   public static ShaderProgram loadShader(FileHandle fragFilename) {
     // if(fragFilename==null||fragFilename.equals("")) {
     //   PGraphics.showWarning(MISSING_FRAGMENT_SHADER);
@@ -134,7 +152,9 @@ public class PGraphicsOpenGL extends ShapeRendererBase{
     }
     return shader.get();
   }
+
   //---------------------------------------------------------------------------
+
   public void beginShape(int kind) {
     shape=kind;
   }

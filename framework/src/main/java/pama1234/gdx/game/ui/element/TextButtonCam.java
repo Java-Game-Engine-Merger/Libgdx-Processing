@@ -81,7 +81,9 @@ public class TextButtonCam<T extends UtilScreen>extends TextButton<T>{
   public GetFloat createDefaultWidthSupplier(T p) {
     return ()->p.textWidthNoScale(this.text)+(this.textOffset?16:0);
   }
+
   //---------------------------------------------------------------------------
+
   @UniFontDependent
   public TextButtonCam<T> rectAuto(float x,float y) {
     rectAuto(()->x,()->y);
@@ -95,7 +97,9 @@ public class TextButtonCam<T extends UtilScreen>extends TextButton<T>{
     super.rectAutoWidth(0,0,h);
     return this;
   }
+
   //---------------------------------------------------------------------------
+
   @Override
   public TextButtonCam<T> activeCondition(GetBoolean active) {
     super.activeCondition(active);
@@ -156,7 +160,9 @@ public class TextButtonCam<T extends UtilScreen>extends TextButton<T>{
     super.updateText();
     return this;
   }
+
   //---------------------------------------------------------------------------
+
   /**
    * 提示：应当使用 {@link TextButtonCam#rectAuto}
    */

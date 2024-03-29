@@ -53,7 +53,9 @@ public class ScreenContentContainer implements EntityNeoListener{
     serverCenter.refresh();
   }
 
+
   //---------------------------------------------------------------------------
+
   // public void addScreenTextFields(TextField... in) {
   //   // for(TextField e:in) screenStage.addActor(e);
   //   for(TextField e:in) screenStage.list.add(e);
@@ -88,7 +90,9 @@ public class ScreenContentContainer implements EntityNeoListener{
   //   // for(TextField e:in) camStage.removeActor(e);
   //   for(TextField e:in) camStage.list.remove(e);
   // }
+
   //---------------------------------------------------------------------------
+
   public void centerCamAddAll(EntityListener... in) {
     for(EntityListener i:in) centerCam.add.add(i);
   }
@@ -125,5 +129,7 @@ public class ScreenContentContainer implements EntityNeoListener{
   public <T extends EntityNeoListener> void centerNeoRemoveAll(Iterable<T> in) {
     for(EntityNeoListener i:in) centerNeo.remove.add(i);
   }
+
   //---------------------------------------------------------------------------
+
 }

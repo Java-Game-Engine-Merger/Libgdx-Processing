@@ -71,7 +71,9 @@ public abstract class ScreenCore2D extends UtilScreen2D{
   }
   public void keyboardHidden(TextField textField) {}
   public void touchButtonToRight(TouchInfo info) {}
+
   //---------------------------------------------------------------------------
+
   public String timeString() {
     return dateFormat.format(new Date());
   }

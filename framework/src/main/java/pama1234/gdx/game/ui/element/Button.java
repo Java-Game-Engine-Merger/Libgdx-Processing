@@ -88,7 +88,9 @@ public abstract class Button<T extends UtilScreen>extends Entity<T>{
   public void touchEnded(TouchInfo info) {
     if(touch==info) clickEnd();
   }
+
   //---------------------------------------------------------------------------
+
   public void executePress() {
     pressE.execute();
   }
@@ -98,7 +100,9 @@ public abstract class Button<T extends UtilScreen>extends Entity<T>{
   public void executeClickEnd() {
     clickEndE.execute();
   }
+
   //---------------------------------------------------------------------------
+
   public Button<T> activeCondition(GetBoolean active) {
     this.active=active;
     return this;
@@ -109,7 +113,9 @@ public abstract class Button<T extends UtilScreen>extends Entity<T>{
     clickEndE=()->clickEnd.execute(this);
     return this;
   }
+
   //---------------------------------------------------------------------------
+
   @FunctionalInterface
   public interface ButtonEventBase<T extends Button<?>>{
     public void execute(T button);

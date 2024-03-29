@@ -106,12 +106,16 @@ public class TextButton<T extends UtilScreen>extends Button<T>{
   public GetFloat createDefaultWidthSupplier(T p) {
     return ()->p.textWidthNoScale(text)*p.pus+(textOffset?p.pu:0);
   }
+
   //---------------------------------------------------------------------------
+
   @FunctionalInterface
   public interface TextButtonEvent<T extends UtilScreen>extends ButtonEventBase<TextButton<T>>{
     public void execute(TextButton<T> button);
   }
+
   //---------------------------------------------------------------------------
+
   @Override
   public TextButton<T> activeCondition(GetBoolean active) {
     super.activeCondition(active);
@@ -183,7 +187,9 @@ public class TextButton<T extends UtilScreen>extends Button<T>{
   public Color getPressedTextColor() {
     return pressedTextColor;
   }
+
   //---------------------------------------------------------------------------
+
   /**
    * ButtonAutoWidthRect，适合用于带有单行文字的按钮
    */

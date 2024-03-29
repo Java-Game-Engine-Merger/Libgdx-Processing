@@ -46,6 +46,7 @@ import pama1234.util.listener.LifecycleListener;
 import pama1234.util.listener.ServerEntityListener;
 import pama1234.util.wrapper.Center;
 import pama1234.util.wrapper.ServerEntityCenter;
+import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 /**
@@ -63,14 +64,18 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public boolean threadedUpdate;
   public LoopThread updateThread;
   // public float frameDelta;
+
   //---------------------------------------------------------------------------
+
   public boolean mouseMoved;
   public MouseInfo mouse;
   public Vector3 vectorCache;
   public int touchCount;
   public TouchInfo[] touches=new TouchInfo[16];
   public boolean grabCursor;
+
   //---------------------------------------------------------------------------
+
   public boolean is3d;
   public boolean depth;
   public FlushablePool<Model> modelPool;
@@ -79,7 +84,9 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
 
   public DecalBatch decalBatch;
   public ModelBatch modelBatch;
+
   //---------------------------------------------------------------------------
+
   public boolean keyPressed;
   /** normally "a" and "A" will be treat as 'A' */
   public char key;
@@ -102,11 +109,16 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   //TODO currentRendererType not used
   public int currentRendererType;
   public Object usedRenderer;
+
   //---------------------------------------------------------------------------
+
   public FontStyle fontStyle=new FontStyle();
   public Color textColor,fillColor,strokeColor;
   public boolean fill=true,stroke=true;
+
   public float defaultStrokeWeight,strokeWeight;
+  public JoinType joinType=JoinType.SMOOTH;
+
 //  public UtilShapeRenderer rFill,rStroke;
   public ShapeDrawer shapeDrawer;
   public UtilPolygonSpriteBatch pFill;
@@ -151,13 +163,19 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   // TODO 电脑端Android调试模式下无法在init环节初始化pus值，调整执行顺序
   public int pus=1;
   public boolean stop;
+
   //---------------------------------------------------------------------------
+
   // public boolean isAndroid=true;
   public boolean isAndroid=Gdx.app.getType()==ApplicationType.Android;
+
   //---------------------------------------------------------------------------
+
   public Matrix4[] matrixStack=new Matrix4[10];
   public int matrixStackPointer=-1;
+
   //---------------------------------------------------------------------------
+
   public Stage screenStage,camStage;
   public Viewport screenViewport,camViewport;
 
@@ -168,7 +186,9 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public int bu;
   // TODO
   public boolean fullSettings;
+
   //---------------------------------------------------------------------------
+
   public boolean isKeyPressed(int in) {
     return keyPressedArray.contains(in);
   }
@@ -181,7 +201,9 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
 //    rFill.end();
 //    rStroke.end();
 //  }
+
   //---------------------------------------------------------------------------
+
 
   public void beginBlend() {
     Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -297,7 +319,9 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
     serverCenter.dispose();
     if(threadedUpdate) updateThread.stop=true;
   }
+
   //---------------------------------------------------------------------------
+
   /**
    * 移动至FileUtil
    * 
@@ -340,11 +364,15 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
     System.out.println(out);
     return out;
   }
+
   //---------------------------------------------------------------------------
+
   public int getButtonUnitLength() {
     return bu;
   }
+
   //---------------------------------------------------------------------------
+
   public void changeGrab() {
     Gdx.input.setCursorCatched(grabCursor=!grabCursor);
   }
@@ -354,7 +382,9 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public void noGrab() {
     Gdx.input.setCursorCatched(grabCursor=false);
   }
+
   //---------------------------------------------------------------------------
+
   @Override
   public void mousePressed(MouseInfo info) {}
   @Override
@@ -385,7 +415,9 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public void focusGained() {}
   @Override
   public void focusLost() {}
+
   //---------------------------------------------------------------------------
+
   public void focusGainedOuter() {
     focus=true;
     // centerSys.focusGained();

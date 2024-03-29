@@ -143,7 +143,9 @@ public abstract class EntityCenterAbstract<T extends UtilScreen,E extends Entity
   // public void focusLost() {
   //   for(E e:list) e.focusLost();
   // }
+
   //---------------------------------------------------------------------------
+
   public void addAll(E[] list) {
     Collections.addAll(add,list);
   }

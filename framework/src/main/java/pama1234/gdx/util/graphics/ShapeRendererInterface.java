@@ -17,7 +17,9 @@ public interface ShapeRendererInterface extends ImmediateModeRenderer{
   public int getNumVertices();
   public int getMaxVertices();
   public void dispose();
+
   //---------------------------------------------------------------------------
+
   public default void beginShape(int kind) {
     begin(null,kind);
   }

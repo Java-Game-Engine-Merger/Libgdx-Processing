@@ -22,104 +22,10 @@ import space.earlygrey.shapedrawer.JoinType;
  * @see UtilScreen2D
  * @see UtilScreen3D
  */
-public abstract class UtilScreenRender extends UtilScreenTextRender{
-  //---------------------------------------------------------------------------
-  public void model(ModelInstance in) {
-    renderer(modelBatch);
-    modelBatch.render(in);
-  }
-  @Deprecated
-  public void modelFlush(ModelInstance in) {
-    model(in);
-    flushModel();
-  }
-  @Deprecated
-  public void flushModel() {
-//    endShape();
-    modelBatch.flush();
-//    beginShape();
-  }
+public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
 
-  public void depth(boolean flag) {
-    depth=flag;
-  }
   //---------------------------------------------------------------------------
-  public void tvg(TinyVG in) {//TODO
-    renderer(imageBatch);
-    in.draw(tvgDrawer);
-  }
-  public void image(Texture in,float x,float y) {
-    if(depth) {
-      //      modelBuilder.begin();
-      //
-      //      modelBuilder.createRect(
-      //        x,y,0,
-      //        x+in.getWidth(),y,0,
-      //        x+in.getWidth(),y+in.getHeight(),0,
-      //        x,y+in.getHeight(),0,
-      //
-      //        0,0,0,
-      //
-      //        new Material(TextureAttribute.createDiffuse(in)),
-      //        VertexAttributes.Usage.Position);
-      //
-      //      var m=modelBuilder.end();
-      //      var mi=new ModelInstance(m);
-      //      model(mi);
-    }else {
-      renderer(imageBatch);
-      imageBatch.draw(in,x,y);
-    }
-  }
-  @Deprecated
-  public void image(Texture in,float x,float y,float z) {
-    renderer(imageBatch);
-    imageBatch.draw(in,x,y);
-  }
-  public void image(TextureRegion in,float x,float y) {
-    renderer(imageBatch);
-    imageBatch.draw(in,x,y);
-  }
-  public void image(Texture in,float x,float y,float w,float h) {
-    renderer(imageBatch);
-    imageBatch.draw(in,x,y,w,h);
-  }
-  public void image(TextureRegion in,float x,float y,ShaderProgram shader) {
-    renderer(imageBatch);
-    imageBatch.setShader(shader);
-    imageBatch.draw(in,x,y);
-    imageBatch.setShader(null);
-  }
-  public void image(Texture in,float x,float y,float w,float h,ShaderProgram shader) {
-    renderer(imageBatch);
-    imageBatch.setShader(shader);
-    imageBatch.draw(in,x,y,w,h);
-    imageBatch.setShader(null);
-  }
-  public void imageCenterPos(Texture in,float x,float y,float w,float h) {
-    renderer(imageBatch);
-    imageBatch.draw(in,x-w/2,y-h/2,w,h);
-  }
-  @Deprecated
-  public void imageCenterPos(Texture in,float x,float y,float z,float w,float h) {
-    pushMatrix();
-    translate(0,0,z);
-    renderer(imageBatch);
-    imageBatch.draw(in,x-w/2,y-h/2,w,h);
-    popMatrix();
-  }
-  public void image(TextureRegion in,float x,float y,float w,float h) {
-    renderer(imageBatch);
-    innerImage(in,x,y,w,h);
-  }
-  public void innerImage(TextureRegion in,float x,float y,float w,float h) {
-    imageBatch.draw(in,x,y,w,h);
-  }
-  public void sprite(Sprite in) {
-    renderer(imageBatch);
-    in.draw(imageBatch);
-  }
-  //---------------------------------------------------------------------------
+
   public void clear() {
     ScreenUtils.clear(0,0,0,0,true);
   }
@@ -138,7 +44,9 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
   public void background(Color in) {
     ScreenUtils.clear(in,true);
   }
+
   //---------------------------------------------------------------------------
+
   public void circle(float x,float y,float size) {
     renderer(shapeDrawer.getBatch());
     if(fill) {
@@ -171,7 +79,9 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
     circle(x,y,s,seg);
     popMatrix();
   }
+
   //---------------------------------------------------------------------------
+
   public void rect(float x,float y,float w,float h) {
     renderer(shapeDrawer.getBatch());
     if(fill) {
@@ -266,7 +176,9 @@ public abstract class UtilScreenRender extends UtilScreenTextRender{
       shapeDrawer.polygon(vertices);
     }
   }
+
   //---------------------------------------------------------------------------
+
   @Deprecated
   public void arc(float x1,float y1,float x2,float y2,float a,float b) {
     //TODO

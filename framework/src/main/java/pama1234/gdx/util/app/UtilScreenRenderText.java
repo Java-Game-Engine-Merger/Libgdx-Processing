@@ -13,7 +13,7 @@ import pama1234.util.Annotations.SyntacticSugar;
  * @see UtilScreen2D
  * @see UtilScreen3D
  */
-public abstract class UtilScreenTextRender extends UtilScreenColor{
+public abstract class UtilScreenRenderText extends UtilScreenColor{
   public void text(String in,float x,float y) {
     renderer(imageBatch);
     //    fontBatch.begin();
@@ -43,7 +43,9 @@ public abstract class UtilScreenTextRender extends UtilScreenColor{
     text(in);
     popMatrix();
   }
+
   //---------------------------------------------------------------------------
+
   public float textWidth(String in) {
     return font.textWidth(in);
   }
@@ -83,7 +85,9 @@ public abstract class UtilScreenTextRender extends UtilScreenColor{
   public void textMode(int in) {
     font.textMode=in;
   }
+
   //---------------------------------------------------------------------------
+
   public void fullText(String in,float x,float y) {
     renderer(imageBatch);
     font.drawF(imageBatch,in==null?"null":in,x,y);

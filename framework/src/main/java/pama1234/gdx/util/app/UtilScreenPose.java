@@ -38,7 +38,9 @@ public abstract class UtilScreenPose extends UtilScreenCore{
   public void copyMatrix(Matrix4 m) {
     setTransformMatrix(matrix().set(m));
   }
+
   //---------------------------------------------------------------------------
+
   // @Deprecated
   // public void pushMatrix(float dx,float dy,float deg) {
   //   pushMatrix();
@@ -78,7 +80,9 @@ public abstract class UtilScreenPose extends UtilScreenCore{
     matrix.scale(in,in,in);
     setTransformMatrix(matrix);
   }
+
   //---------------------------------------------------------------------------
+
   public void translate(float dx,float dy,float dz) {
     Matrix4 matrix=matrix();
     matrix.translate(dx,dy,dz);
@@ -182,7 +186,9 @@ public abstract class UtilScreenPose extends UtilScreenCore{
     rotate(pose.rotate);
     scale(pose.scale);
   }
+
   //---------------------------------------------------------------------------
+
   public boolean customOrigin;
   @Deprecated
   public void origin(boolean horizontal,boolean vertical) {

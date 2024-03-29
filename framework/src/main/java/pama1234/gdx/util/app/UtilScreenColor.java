@@ -56,16 +56,18 @@ public abstract class UtilScreenColor extends UtilScreenPose{
     font.getColor().set(color.r,color.g,color.b,alpha/255f);
     font.setFullTextColor(font.getColor());
   }
+
   //---------------------------------------------------------------------------
+
   public void fill(Color in) {
     fillColor.set(in);
-//    rFill.setColor(fillColor);
+    //    rFill.setColor(fillColor);
     pFill.setColor(fillColor);
   }
   public void fill(Color in,int a) {
     fillColor.set(in);
     fillColor.a=a/255f;
-//    rFill.setColor(fillColor);
+    //    rFill.setColor(fillColor);
     pFill.setColor(fillColor);
   }
   public void fill(int gray) {
@@ -73,17 +75,17 @@ public abstract class UtilScreenColor extends UtilScreenPose{
   }
   public void fill(int gray,int a) {
     fillColor.set(gray/255f,gray/255f,gray/255f,a/255f);
-//    rFill.setColor(fillColor);
+    //    rFill.setColor(fillColor);
     pFill.setColor(fillColor);
   }
   public void fill(int r,int g,int b) {
     fillColor.set(r/255f,g/255f,b/255f,1);
-//    rFill.setColor(fillColor);
+    //    rFill.setColor(fillColor);
     pFill.setColor(fillColor);
   }
   public void fill(int r,int g,int b,int a) {
     fillColor.set(r/255f,g/255f,b/255f,a/255f);
-//    rFill.setColor(fillColor);
+    //    rFill.setColor(fillColor);
     pFill.setColor(fillColor);
   }
   public void fillHex(int argb) {
@@ -95,7 +97,9 @@ public abstract class UtilScreenColor extends UtilScreenPose{
   public void doFill() {
     fill=true;
   }
+
   //---------------------------------------------------------------------------
+
   public void tint(Color in) {
     Color tc=imageBatch.getColor();
     tc.set(in);
@@ -120,30 +124,32 @@ public abstract class UtilScreenColor extends UtilScreenPose{
   public void noTint() {
     imageBatch.setColor(imageBatch.getColor().set(1,1,1,1));
   }
+
   //---------------------------------------------------------------------------
+
   public void stroke(Color in) {
     strokeColor.set(in);
-//    rStroke.setColor(strokeColor);
+    //    rStroke.setColor(strokeColor);
   }
   public void stroke(Color in,int alpha) {
     strokeColor.set(in);
     strokeColor.a=alpha/255f;
-//    rStroke.setColor(strokeColor);
+    //    rStroke.setColor(strokeColor);
   }
   public void stroke(int gray) {
     stroke(gray,255);
   }
   public void stroke(int gray,int a) {
     strokeColor.set(gray/255f,gray/255f,gray/255f,a/255f);
-//    rStroke.setColor(strokeColor);
+    //    rStroke.setColor(strokeColor);
   }
   public void stroke(int r,int g,int b) {
     strokeColor.set(r/255f,g/255f,b/255f,1);
-//    rStroke.setColor(strokeColor);
+    //    rStroke.setColor(strokeColor);
   }
   public void stroke(int r,int g,int b,int a) {
     strokeColor.set(r/255f,g/255f,b/255f,a/255f);
-//    rStroke.setColor(strokeColor);
+    //    rStroke.setColor(strokeColor);
   }
   public void noStroke() {
     stroke=false;
@@ -151,6 +157,16 @@ public abstract class UtilScreenColor extends UtilScreenPose{
   public void doStroke() {
     stroke=true;
   }
+
+  //---------------------------------------------------------------------------
+
+  public void strokeCap() {
+
+  }
+
+  public void strokeJoin() {
+  }
+
   public void strokeWeight(float in) {
     if(in<=0) return;
     strokeWeight=in;
@@ -160,7 +176,9 @@ public abstract class UtilScreenColor extends UtilScreenPose{
   public void sstrokeWeight(float in) {
     shapeDrawer.setDefaultLineWidth(in);
   }
+
   //---------------------------------------------------------------------------
+
   public void color(Color c,float gray) {
     c.set(gray/255f,gray/255f,gray/255f,1);
   }
@@ -253,7 +271,9 @@ public abstract class UtilScreenColor extends UtilScreenPose{
       out.set(a.r+tr*pos,a.g+tg*pos,a.b+tb*pos,a.a+ta*pos);
     }
   }
+
   //---------------------------------------------------------------------------
+
   public void backgroundColor(int r,int g,int b) {
     color(backgroundColor,r,g,b);
   }

@@ -112,7 +112,9 @@ public abstract class UtilScreen3D extends UtilScreen{
       return intersectionCache;// 射线与平面相交，intersection变量保存了交点的坐标
     }else return null;// 射线与平面不相交
   }
+
   //---------------------------------------------------------------------------
+
   public void enableDepth() {
     Gdx.gl.glDepthMask(true);
     Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
@@ -136,7 +138,9 @@ public abstract class UtilScreen3D extends UtilScreen{
     decalBatch.flush();
 //    beginShape();
   }
+
   //---------------------------------------------------------------------------
+
   //  public void model(ModelInstance in) {
   //    //    endBlend();
   //    renderer(modelBatch);
@@ -157,7 +161,9 @@ public abstract class UtilScreen3D extends UtilScreen{
   //    modelBatch.flush();
   //    beginShape();
   //  }
-  //  //---------------------------------------------------------------------------
+  //
+  //---------------------------------------------------------------------------
+
 
   @Override
   public void setProjectionMatrix(Matrix4 projection) {
@@ -166,7 +172,9 @@ public abstract class UtilScreen3D extends UtilScreen{
     //    modelBatch.setProjectionMatrix(combined);
   }
 
+
   //---------------------------------------------------------------------------
+
   @Override
   public void dispose() {
     super.dispose();
