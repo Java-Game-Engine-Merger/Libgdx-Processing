@@ -45,6 +45,7 @@ import pama1234.util.listener.LifecycleListener;
 import pama1234.util.listener.ServerEntityListener;
 import pama1234.util.wrapper.Center;
 import pama1234.util.wrapper.ServerEntityCenter;
+import space.earlygrey.shapedrawer.CapType;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -79,7 +80,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public boolean depth;
   public FlushablePool<Model> modelPool;
   public ModelBuilder modelBuilder;
-//  public FlexBatch<Element3D> flexBatch;
+  //  public FlexBatch<Element3D> flexBatch;
 
   public DecalBatch decalBatch;
   public ModelBatch modelBatch;
@@ -116,9 +117,10 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public boolean fill=true,stroke=true;
 
   public float defaultStrokeWeight,strokeWeight;
-  public JoinType joinType=JoinType.BEVEL;
+  public JoinType joinType=JoinType.POINTY;
+  public CapType capType=CapType.ROUND;
 
-//  public UtilShapeRenderer rFill,rStroke;
+  //  public UtilShapeRenderer rFill,rStroke;
   public ShapeDrawer shapeDrawer;
   public UtilPolygonSpriteBatch pFill;
   public boolean background=true;
@@ -191,18 +193,17 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public boolean isKeyPressed(int in) {
     return keyPressedArray.contains(in);
   }
-//  public void beginShape() {
-//    rFill.begin(ShapeType.Filled);
-//    rStroke.begin(ShapeType.Line);
-//  }
-//  public void endShape() {
-//    rendererEnd();// TODO
-//    rFill.end();
-//    rStroke.end();
-//  }
+  //  public void beginShape() {
+  //    rFill.begin(ShapeType.Filled);
+  //    rStroke.begin(ShapeType.Line);
+  //  }
+  //  public void endShape() {
+  //    rendererEnd();// TODO
+  //    rFill.end();
+  //    rStroke.end();
+  //  }
 
   //---------------------------------------------------------------------------
-
 
   public void beginBlend() {
     Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -253,25 +254,26 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
     if(usedCamera!=in) usedCamera=in;
     else return;
     setProjectionMatrix(in.projection);
-//    setTransformMatrix(in.combined);
+    //    setTransformMatrix(in.combined);
   }
 
   /**
    * 请勿使用这个方法来传递变换参数（位移，旋转，缩放）
+   * 
    * @param projection
    */
   public void setProjectionMatrix(Matrix4 projection) {
-//    fontBatch.setProjectionMatrix(projection);
+    //    fontBatch.setProjectionMatrix(projection);
     imageBatch.setProjectionMatrix(projection);
-//    rFill.setProjectionMatrix(projection);
+    //    rFill.setProjectionMatrix(projection);
     pFill.setProjectionMatrix(projection);
-//    rStroke.setProjectionMatrix(projection);
+    //    rStroke.setProjectionMatrix(projection);
   }
   public void setTransformMatrix(Matrix4 transform) {
     imageBatch.setTransformMatrix(transform);
-//    rFill.setTransformMatrix(transform);
+    //    rFill.setTransformMatrix(transform);
     pFill.setTransformMatrix(transform);
-//    rStroke.setTransformMatrix(transform);
+    //    rStroke.setTransformMatrix(transform);
   }
   @Override
   public void init() {}

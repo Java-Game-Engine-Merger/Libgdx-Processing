@@ -6,8 +6,8 @@ package space.earlygrey.shapedrawer;
 public enum JoinType{
   /**
    * No mitering is performed. This defaults to
-   * {@link ShapeDrawer#line(float, float, float, float, float, boolean)}
-   * and is the fastest option.
+   * {@link ShapeDrawer#line(float, float, float, float, float, boolean)} and is the fastest
+   * option.
    */
   NONE,
 
@@ -19,5 +19,10 @@ public enum JoinType{
   /**
    * A truncated mitre joint.
    */
-  BEVEL
+  BEVEL,
+
+  /**
+   * 圆角
+   */
+  SMOOTH
 }
