@@ -128,13 +128,13 @@ public abstract class UtilScreen3D extends UtilScreen{
     flushDecal();
   }
   public void flushDecal() {
-    endShape();
+//    endShape();
     // Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
     // Gdx.gl20.glDepthMask(false);
     // Gdx.gl.glEnable(GL20.GL_BLEND);
     // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
     decalBatch.flush();
-    beginShape();
+//    beginShape();
   }
   //---------------------------------------------------------------------------
   //  public void model(ModelInstance in) {

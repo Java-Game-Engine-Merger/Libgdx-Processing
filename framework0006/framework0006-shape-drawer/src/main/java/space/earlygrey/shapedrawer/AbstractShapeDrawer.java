@@ -25,7 +25,7 @@ public abstract class AbstractShapeDrawer{
   //================================================================================
 
   final BatchManager batchManager;
-  float defaultLineWidth=1;
+  public float defaultLineWidth=1;
   boolean defaultSnap=false;
 
   protected static final Matrix4 mat4=new Matrix4();
@@ -156,7 +156,7 @@ public abstract class AbstractShapeDrawer{
    * @param lineWidth the width of the line in world units
    * @return whether drawing joins will likely be discernible
    */
-  protected boolean isJoinNecessary(float lineWidth) {
+  public boolean isJoinNecessary(float lineWidth) {
     return lineWidth>3*getPixelSize();
   }
 

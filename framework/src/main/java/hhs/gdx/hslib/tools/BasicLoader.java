@@ -40,7 +40,7 @@ public class BasicLoader extends BasicScreen{
     // batch.draw(back,0,0,Resource.width*asset.getProgress(),Resource.u);
     // batch.end();
     withScreen();
-    beginShape();
+//    beginShape();
     // pushMatrix();
     noStroke();
     fill(255);
@@ -58,7 +58,7 @@ public class BasicLoader extends BasicScreen{
     textColor(255);
     text("↓ 加载中",Resource.width*progress,Resource.height-Resource.u*2.5f);
     // cleanOrigin();
-    endShape();
+//    endShape();
     // popMatrix();
   }
   @Override

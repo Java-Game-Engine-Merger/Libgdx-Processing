@@ -48,10 +48,10 @@ public abstract class UtilScreen extends UtilScreenRender{
     font.color(textColor);
     fillColor=new Color(1,1,1,1);
     strokeColor=new Color(0,0,0,1);
-    rFill=SharedResources.instance.rFill;
-    rStroke=SharedResources.instance.rStroke;
-    rFill.setColor(fillColor);
-    rStroke.setColor(strokeColor);
+//    rFill=SharedResources.instance.rFill;
+//    rStroke=SharedResources.instance.rStroke;
+//    rFill.setColor(fillColor);
+//    rStroke.setColor(strokeColor);
     pFill=SharedResources.instance.pFill;
     pFill.setColor(fillColor);
 
@@ -176,7 +176,7 @@ public abstract class UtilScreen extends UtilScreenRender{
     update();
   }
   public void doDraw() {
-    beginShape();
+//    beginShape();
     if(background) background(backgroundColor);
     withCam();
     serverCenter.display();
@@ -189,7 +189,7 @@ public abstract class UtilScreen extends UtilScreenRender{
     centerNeo.display();
     display();
     inputProcessor.display();
-    endShape();
+//    endShape();
   }
   public void camOverlay() {}
   //---------------------------------------------------------------------------

@@ -31,10 +31,10 @@ public class Graphics{
   }
   public void beginShape() {
     begin();
-    p.beginShape();
+//    p.beginShape();
   }
   public void endShape() {
-    p.endShape();
+//    p.endShape();
     end();
   }
   public void begin() {

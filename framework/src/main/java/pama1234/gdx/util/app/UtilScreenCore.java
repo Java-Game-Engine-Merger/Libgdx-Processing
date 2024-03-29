@@ -107,7 +107,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public Color textColor,fillColor,strokeColor;
   public boolean fill=true,stroke=true;
   public float defaultStrokeWeight,strokeWeight;
-  public UtilShapeRenderer rFill,rStroke;
+//  public UtilShapeRenderer rFill,rStroke;
   public ShapeDrawer shapeDrawer;
   public UtilPolygonSpriteBatch pFill;
   public boolean background=true;
@@ -172,15 +172,15 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public boolean isKeyPressed(int in) {
     return keyPressedArray.contains(in);
   }
-  public void beginShape() {
-    rFill.begin(ShapeType.Filled);
-    rStroke.begin(ShapeType.Line);
-  }
-  public void endShape() {
-    rendererEnd();// TODO
-    rFill.end();
-    rStroke.end();
-  }
+//  public void beginShape() {
+//    rFill.begin(ShapeType.Filled);
+//    rStroke.begin(ShapeType.Line);
+//  }
+//  public void endShape() {
+//    rendererEnd();// TODO
+//    rFill.end();
+//    rStroke.end();
+//  }
   //---------------------------------------------------------------------------
 
   public void beginBlend() {
@@ -242,15 +242,15 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public void setProjectionMatrix(Matrix4 projection) {
 //    fontBatch.setProjectionMatrix(projection);
     imageBatch.setProjectionMatrix(projection);
-    rFill.setProjectionMatrix(projection);
+//    rFill.setProjectionMatrix(projection);
     pFill.setProjectionMatrix(projection);
-    rStroke.setProjectionMatrix(projection);
+//    rStroke.setProjectionMatrix(projection);
   }
   public void setTransformMatrix(Matrix4 transform) {
     imageBatch.setTransformMatrix(transform);
-    rFill.setTransformMatrix(transform);
+//    rFill.setTransformMatrix(transform);
     pFill.setTransformMatrix(transform);
-    rStroke.setTransformMatrix(transform);
+//    rStroke.setTransformMatrix(transform);
   }
   @Override
   public void init() {}

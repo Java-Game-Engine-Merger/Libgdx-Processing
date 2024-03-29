@@ -46,10 +46,10 @@ public abstract class Component<T extends UtilScreen>extends PointEntity<T,PathP
     // buffer().begin();
     // p.setCamera(cam);
     g.begin();
-    p.beginShape();
+//    p.beginShape();
   }
   public void endDraw() {
-    p.endShape();
+//    p.endShape();
     buffer().end();
   }
   @Override
