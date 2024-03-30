@@ -29,7 +29,19 @@ public abstract class UtilScreenRenderImage extends UtilScreenRenderText{
   }
 
   public void depth(boolean flag) {
+    if(depth==flag) return;
+
     depth=flag;
+
+    if(depth) {
+      shapeDrawer=shapeDrawer3d;
+      imageBatch=batch3d;
+      font.fontBatch=batch3d;
+    }else {
+      shapeDrawer=shapeDrawerDefault;
+      imageBatch=imageBatchDefault;
+      font.fontBatch=imageBatchDefault;
+    }
   }
 
   //---------------------------------------------------------------------------

@@ -26,9 +26,11 @@ import pama1234.gdx.util.info.TouchInfo;
 import pama1234.gdx.util.input.UtilInputProcesser;
 import pama1234.gdx.util.listener.EntityListener;
 import pama1234.gdx.util.listener.EntityNeoListener;
+import pama1234.gdx.util.p3d.SpriteBatch3D;
 import pama1234.gdx.util.wrapper.*;
 import pama1234.util.wrapper.Center;
 import pama1234.util.wrapper.ServerEntityCenter;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 /**
  * 此中间类主要放渲染相关的东东
@@ -54,7 +56,7 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
     pFill=SharedResources.instance.pFill;
     pFill.setColor(fillColor);
 
-    shapeDrawer=SharedResources.instance.shapeDrawer;
+    shapeDrawer=shapeDrawerDefault=SharedResources.instance.shapeDrawer;
   }
   public void createInputUtil() {
     vectorCache=new Vector3();
@@ -68,8 +70,9 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
 
   public void preInit() {
     screenCam=new OrthographicCamera();
-    imageBatch=SharedResources.instance.imageBatch;
+    imageBatch=imageBatchDefault=SharedResources.instance.imageBatch;
     tvgDrawer=SharedResources.instance.tvgDrawer;
+
     Gdx.input.setInputProcessor(inputProcessor=new UtilInputProcesser(this));
     // TODO
     serverCenter=new ServerEntityCenter<>(null);
@@ -144,6 +147,9 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
     });
 
     auto=new AutoEntityManager<UtilScreen>(this);
+
+    batch3d=new SpriteBatch3D(cam.camera);
+    shapeDrawer3d=new ShapeDrawer(batch3d);
   }
   public void postInit() {
     createRenderUtil();

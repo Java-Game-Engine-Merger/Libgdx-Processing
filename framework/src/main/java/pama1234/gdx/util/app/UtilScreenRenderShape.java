@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import pama1234.math.UtilMath;
 import pama1234.math.geometry.RectI;
 import pama1234.math.transform.Pose3D;
+import space.earlygrey.shapedrawer.CapType;
 import space.earlygrey.shapedrawer.JoinType;
 
 /**
@@ -198,6 +199,10 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
       renderer(shapeDrawer.getBatch());
       shapeDrawer.setColor(strokeColor);
       shapeDrawer.line(x1,y1,x2,y2);
+      if(capType==CapType.ROUND) {
+        shapeDrawer.filledCircle(x1,y1,strokeWeight/2f);
+        shapeDrawer.filledCircle(x2,y2,strokeWeight/2f);
+      }
     }
   }
   public void cross(float x,float y,float w,float h) {

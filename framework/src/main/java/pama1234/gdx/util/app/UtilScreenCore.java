@@ -36,6 +36,7 @@ import pama1234.gdx.util.listener.EntityListener;
 import pama1234.gdx.util.listener.EntityNeoListener;
 import pama1234.gdx.util.listener.InputListener;
 import pama1234.gdx.util.listener.SystemListener;
+import pama1234.gdx.util.p3d.SpriteBatch3D;
 import pama1234.gdx.util.wrapper.AutoEntityManager;
 import pama1234.gdx.util.wrapper.DisplayEntity.DisplayWithCam;
 import pama1234.gdx.util.wrapper.EntityCenterAbstract;
@@ -101,7 +102,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public OrthographicCamera screenCam;
   public Camera usedCamera;
   /** 一般来说，这是一个SpriteBatch */
-  public Batch imageBatch;
+  public Batch imageBatch,imageBatchDefault;
   public TinyVGShapeDrawer tvgDrawer;
   public BetterBitmapFont font;
 
@@ -121,8 +122,12 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public CapType capType=CapType.ROUND;
 
   //  public UtilShapeRenderer rFill,rStroke;
-  public ShapeDrawer shapeDrawer;
+  public ShapeDrawer shapeDrawer,shapeDrawerDefault;
   public UtilPolygonSpriteBatch pFill;
+
+  public static ShapeDrawer shapeDrawer3d;
+  public static SpriteBatch3D batch3d;
+
   public boolean background=true;
   public Color backgroundColor;
   /**
