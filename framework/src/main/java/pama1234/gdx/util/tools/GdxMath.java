@@ -17,15 +17,15 @@ public class GdxMath{
   }
 
   public static Vec4f rotateToFace(
-          float posX,float posY,float posZ,
-          float desX,float desY,float desZ) {
+    float posX,float posY,float posZ,
+    float desX,float desY,float desZ) {
     return rotateToFace(posX,posY,posZ,desX,desY,desZ,up.x,up.y,up.z);
   }
 
   public static Vec4f rotateToFace(
-          float posX,float posY,float posZ,
-          float desX,float desY,float desZ,
-          float upX,float upY,float upZ) {
+    float posX,float posY,float posZ,
+    float desX,float desY,float desZ,
+    float upX,float upY,float upZ) {
 
     tmp3.set(-posX,-posY,-posZ);
 
@@ -35,9 +35,9 @@ public class GdxMath{
     tmp2.set(dir).crs(tmp).nor();
 
     rotation.setFromAxes(true,
-            tmp.x,tmp2.x,dir.x,
-            tmp.y,tmp2.y,dir.y,
-            tmp.z,tmp2.z,dir.z);
+      tmp.x,tmp2.x,dir.x,
+      tmp.y,tmp2.y,dir.y,
+      tmp.z,tmp2.z,dir.z);
 
     outputCache.set(rotation.x,rotation.y,rotation.z,rotation.w);
     return outputCache;

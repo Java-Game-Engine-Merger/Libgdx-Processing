@@ -211,9 +211,11 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
   @Deprecated
   public void line(float x1,float y1,float z1,float x2,float y2,float z2) {
     float dist=UtilMath.dist(x1,y1,z1,x2,y2,z2);
+
     float midX=(x1+x2)/2f;
     float midY=(y1+y2)/2f;
     float midZ=(z1+z2)/2f;
+
     float dx=x2-x1;
     float dy=y2-y1;
     float dz=z2-z1;
@@ -224,7 +226,10 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
 
     up_f_line.set(dx,dy,dz);
     up_f_line.nor();
-    rotateToCam(midX,midY,midZ,up_f_line.x,up_f_line.y,up_f_line.z);
+    rotateToCam(
+      midX,midY,midZ,
+      up_f_line.x,up_f_line.y,up_f_line.z);
+    rotateZ(-UtilMath.HALF_PI);
 
     line(-dist/2,0,dist/2,0);
 
