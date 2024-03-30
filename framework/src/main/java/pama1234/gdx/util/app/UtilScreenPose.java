@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 
+import pama1234.gdx.util.tools.GdxMath;
 import pama1234.math.UtilMath;
 import pama1234.math.transform.Pose3D;
 import pama1234.math.vec.Vec3f;
@@ -11,6 +12,11 @@ import pama1234.math.vec.Vec4f;
 
 public abstract class UtilScreenPose extends UtilScreenCore{
   public static final Matrix4 cleanMat4=new Matrix4();
+
+  /**
+   *
+   * @return the current transform matrix
+   */
   public Matrix4 matrix() {
     if(matrixStackPointer<0) return cleanMat4;
     return matrixStack[matrixStackPointer];
@@ -100,13 +106,10 @@ public abstract class UtilScreenPose extends UtilScreenCore{
     matrix.rotate(0,0,1,UtilMath.deg(rz));
     setTransformMatrix(matrix);
   }
-  /** 有bug */
+  /** 没写完 */
   @Deprecated
-  public void rotateDeg(float rx,float ry,float rz) {
+  public void rotateDeg(float yaw,float pitch,float deg) {
     Matrix4 matrix=matrix();
-    matrix.rotate(1,0,0,rx);
-    matrix.rotate(0,1,0,ry);
-    matrix.rotate(0,0,1,rz);
     setTransformMatrix(matrix);
   }
   /** 暂时替代 */
@@ -169,6 +172,24 @@ public abstract class UtilScreenPose extends UtilScreenCore{
   }
   public void rotate(Vec3f vec) {
     rotate(vec.x,vec.y,vec.z);
+  }
+
+  public void rotateToCam(float x,float y,float z) {
+    Vec3f up=GdxMath.up;
+    rotateToCam(x,y,z,up.x,up.y,up.z);
+
+  }
+  public void rotateToCam(
+    float x,float y,float z,
+    float upX,float upY,float upZ) {
+    var des=usedCamera.position;
+    Vec4f v=GdxMath.rotateToFace(
+      x,y,z,
+      des.x,des.y,des.z,
+      upX,upY,upZ);
+
+    rotate(v.x,v.y,v.z,v.w);
+
   }
   public void scale(float sx,float sy,float sz) {
     Matrix4 matrix=matrix();

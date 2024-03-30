@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import pama1234.math.UtilMath;
 import pama1234.math.geometry.RectI;
 import pama1234.math.transform.Pose3D;
+import pama1234.math.vec.Vec3f;
 import space.earlygrey.shapedrawer.CapType;
 import space.earlygrey.shapedrawer.JoinType;
 
@@ -205,6 +206,30 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
       }
     }
   }
+  public Vec3f up_f_line=new Vec3f();
+  /** TODO 没写完 */
+  @Deprecated
+  public void line(float x1,float y1,float z1,float x2,float y2,float z2) {
+    float dist=UtilMath.dist(x1,y1,z1,x2,y2,z2);
+    float midX=(x1+x2)/2f;
+    float midY=(y1+y2)/2f;
+    float midZ=(z1+z2)/2f;
+    float dx=x2-x1;
+    float dy=y2-y1;
+    float dz=z2-z1;
+
+    pushMatrix();
+
+    translate(midX,midY,midZ);
+
+    up_f_line.set(dx,dy,dz);
+    up_f_line.nor();
+    rotateToCam(midX,midY,midZ,up_f_line.x,up_f_line.y,up_f_line.z);
+
+    line(-dist/2,0,dist/2,0);
+
+    popMatrix();
+  }
   public void cross(float x,float y,float w,float h) {
     line(x-w,y,x+w,y);
     line(x,y-h,x,y+h);
@@ -219,9 +244,6 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     fillRect(x+w-weight,y,weight,h);
   }
   public void fillRect(float x,float y,float w,float h) {
-    //    renderer(rFill);
-    //    rFill.rect(x,y,w,h);
-
     renderer(shapeDrawer.getBatch());
     shapeDrawer.setColor(fillColor);
     shapeDrawer.filledRectangle(x,y,w,h);
