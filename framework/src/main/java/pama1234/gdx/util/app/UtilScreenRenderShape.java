@@ -222,4 +222,10 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     shapeDrawer.filledRectangle(x,y,w,h);
 
   }
+  public void fillCircle(float x,float y,float size) {
+    renderer(shapeDrawer.getBatch());
+    shapeDrawer.setColor(fillColor);
+    shapeDrawer.filledCircle(x,y,size);
+
+  }
 }

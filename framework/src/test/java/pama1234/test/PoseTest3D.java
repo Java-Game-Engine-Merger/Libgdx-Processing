@@ -71,7 +71,7 @@ public class PoseTest3D extends UtilScreen3D{
     fill(0);
     pushMatrix();
     pose(poseO);
-    scircle(0,0,3);
+    circle(0,0,3);
     popMatrix();
 
     fill(255,127,0);
@@ -79,7 +79,7 @@ public class PoseTest3D extends UtilScreen3D{
     pushMatrix();
     //    rotateToCam(pose);
     pose(pose);
-    scircle(0,0,3);
+    circle(0,0,3);
     popMatrix();
 
   }

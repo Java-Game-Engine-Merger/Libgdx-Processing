@@ -45,8 +45,8 @@ public class ShapeTest3D extends UtilScreen3D{
     centerNeo.add(new EntityNeo<>(this) {
       @Override
       public void displayCam() {
-        sline(50,0,100,50);
-        scircle(0,0,32);
+        line(50,0,100,50);
+        circle(0,0,32);
       }
     });
   }

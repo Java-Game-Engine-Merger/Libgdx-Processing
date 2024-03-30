@@ -113,19 +113,33 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
     centerScreen.list.add(new EntityListener() {
       @Override
       public void display() {
+        //        var t=usedRenderer;
         rendererEnd();//TODO unintuitive
         usedRenderer=screenStage.getBatch();
         screenStage.draw();
         rendererEnd();//TODO ugly
+
+        //        setProjectionMatrix(usedCamera.projection);
+        //        setTransformMatrix(matrix());
+
+        //        setCamera(screenCam);
+        //        usedRenderer=t;
       }
     });
     centerCam.list.add(new EntityListener() {
       @Override
       public void display() {
+        //        var t=usedRenderer;
         rendererEnd();
         usedRenderer=camStage.getBatch();
         camStage.draw();
         rendererEnd();
+
+        //        setProjectionMatrix(usedCamera.projection);
+        //        setTransformMatrix(matrix());
+
+        //        setCamera(usedCamera);
+        //        usedRenderer=t;
       }
     });
 

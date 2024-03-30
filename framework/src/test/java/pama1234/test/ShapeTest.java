@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 
 import pama1234.gdx.util.app.UtilScreen2D;
+import pama1234.gdx.util.entity.Entity;
 import pama1234.gdx.util.launcher.MainAppBase;
 
 public class ShapeTest extends UtilScreen2D{
@@ -33,7 +34,15 @@ public class ShapeTest extends UtilScreen2D{
 
   @Override
   public void setup() {
+    centerCamAddAll(new Entity<>(this) {
+      @Override
+      public void display() {
 
+        line(0,0,50,50);
+
+        line(50,0,100,50);
+      }
+    });
   }
 
   @Override
@@ -49,7 +58,7 @@ public class ShapeTest extends UtilScreen2D{
 
     line(0,0,50,50);
 
-    sline(50,0,100,50);
+    line(50,0,100,50);
   }
 
   @Override
