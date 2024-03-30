@@ -70,7 +70,7 @@ public abstract class UtilScreen3D extends UtilScreen{
       }
     };
     modelBuilder=new ModelBuilder();
-//    flexBatch=new FlexBatch<>();
+    //    flexBatch=new FlexBatch<>();
   }
   @Override
   public CameraController createCamera() {
@@ -129,14 +129,15 @@ public abstract class UtilScreen3D extends UtilScreen{
     decal(in);
     flushDecal();
   }
+  @Deprecated
   public void flushDecal() {
-//    endShape();
+    //    endShape();
     // Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
     // Gdx.gl20.glDepthMask(false);
     // Gdx.gl.glEnable(GL20.GL_BLEND);
     // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
     decalBatch.flush();
-//    beginShape();
+    //    beginShape();
   }
 
   //---------------------------------------------------------------------------
@@ -164,14 +165,12 @@ public abstract class UtilScreen3D extends UtilScreen{
   //
   //---------------------------------------------------------------------------
 
-
   @Override
   public void setProjectionMatrix(Matrix4 projection) {
     super.setProjectionMatrix(projection);
     //    decalBatch.setProjectionMatrix(combined);
     //    modelBatch.setProjectionMatrix(combined);
   }
-
 
   //---------------------------------------------------------------------------
 

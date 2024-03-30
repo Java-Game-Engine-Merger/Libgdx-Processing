@@ -40,8 +40,8 @@ public abstract class SpriteBatch3DCore extends ModelBatch implements Batch{
   }
 
   public static class MeshPool extends FlushablePool<Mesh>{
-    public static final float[] VERTICES_EMPTY = new float[0];
-    public static final short[] INDICES_EMPTY = new short[0];
+    public static final float[] VERTICES_EMPTY=new float[0];
+    public static final short[] INDICES_EMPTY=new short[0];
     //    public VertexAttributes attr=MeshBuilder.createAttributes(Usage.Position|Usage.Normal);
     public VertexAttributes attr=new VertexAttributes(
       new VertexAttribute(Usage.Position,3,ShaderProgram.POSITION_ATTRIBUTE),

@@ -66,7 +66,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
 
   public ShapeDrawer(Batch batch) {
     //    this(batch,null,new DefaultSideEstimator());
-    this(batch, createBlankTextureRegion(),new DefaultSideEstimator());
+    this(batch,createBlankTextureRegion(),new DefaultSideEstimator());
   }
 
   public ShapeDrawer(Batch batch,TextureRegion region) {
@@ -403,7 +403,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * @param open      if false then the first and last points are connected
    */
   public <T extends Vector2> void path(Iterable<T> path,float lineWidth,boolean open) {
-    path(path,lineWidth,isJoinNecessary(lineWidth)?JoinType.BEVEL :JoinType.NONE,open);
+    path(path,lineWidth,isJoinNecessary(lineWidth)?JoinType.BEVEL:JoinType.NONE,open);
   }
 
   /**
@@ -480,7 +480,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * @param open      if false then the first and last points are connected
    */
   public void path(float[] path,int start,int end,float lineWidth,boolean open) {
-    path(path,start,end,lineWidth,isJoinNecessary(lineWidth)?JoinType.BEVEL :JoinType.NONE,open);
+    path(path,start,end,lineWidth,isJoinNecessary(lineWidth)?JoinType.BEVEL:JoinType.NONE,open);
   }
 
   /**
@@ -555,7 +555,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * @param lineWidth the width of the line in world units
    */
   public void circle(float centreX,float centreY,float radius,float lineWidth) {
-    circle(centreX,centreY,radius,lineWidth,isJoinNecessary(lineWidth)?JoinType.BEVEL :JoinType.NONE);
+    circle(centreX,centreY,radius,lineWidth,isJoinNecessary(lineWidth)?JoinType.BEVEL:JoinType.NONE);
   }
 
   /**
@@ -618,7 +618,7 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    * @param lineWidth the width of the line in world units
    */
   public void ellipse(float centreX,float centreY,float radiusX,float radiusY,float rotation,float lineWidth) {
-    ellipse(centreX,centreY,radiusX,radiusY,rotation,lineWidth,isJoinNecessary(lineWidth)?JoinType.BEVEL :JoinType.NONE);
+    ellipse(centreX,centreY,radiusX,radiusY,rotation,lineWidth,isJoinNecessary(lineWidth)?JoinType.BEVEL:JoinType.NONE);
   }
 
   /**

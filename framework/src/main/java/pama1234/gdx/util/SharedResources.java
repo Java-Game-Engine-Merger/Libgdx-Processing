@@ -26,7 +26,7 @@ public class SharedResources implements Disposable{
 
   public static SharedResources instance=new SharedResources();
   public MultiChunkFont font;
-//  public SpriteBatch fontBatch;
+  //  public SpriteBatch fontBatch;
   public SpriteBatch imageBatch;
   public TinyVGShapeDrawer tvgDrawer;
   public UtilShapeRenderer rFill;
@@ -76,7 +76,7 @@ public class SharedResources implements Disposable{
   }
   @Override
   public void dispose() {
-//    fontBatch.dispose();
+    //    fontBatch.dispose();
     font.dispose();
     imageBatch.dispose();
     tvgDrawer.dispose();

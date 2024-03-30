@@ -23,9 +23,9 @@ public abstract class UtilScreenRenderImage extends UtilScreenRenderText{
   }
   @Deprecated
   public void flushModel() {
-    //    endShape();
+    //        endShape();
     modelBatch.flush();
-    //    beginShape();
+    //        beginShape();
   }
 
   public void depth(boolean flag) {

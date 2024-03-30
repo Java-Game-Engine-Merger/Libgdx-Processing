@@ -39,8 +39,8 @@ public class ShapeTest3D extends UtilScreen3D{
     fill(ColorUtil.clas);
     stroke(ColorUtil.keyword);
 
-//    translate(0,0,1);
-rotateX(UtilMath.HALF_PI);
+    //    translate(0,0,1);
+    rotateX(UtilMath.HALF_PI);
 
     centerNeo.add(new EntityNeo<>(this) {
       @Override

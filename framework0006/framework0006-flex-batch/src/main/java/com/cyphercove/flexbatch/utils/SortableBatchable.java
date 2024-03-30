@@ -1,11 +1,12 @@
-/* ******************************************************************************
+/*
+ * ******************************************************************************
  * Copyright 2017 See AUTHORS file.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,10 +19,10 @@ package com.cyphercove.flexbatch.utils;
 import com.badlogic.gdx.math.Vector3;
 
 /** A 3D Batchable that can be sorted by {@link BatchableSorter}. */
-public interface SortableBatchable {
-	/** @return Whether this Batchable is opaque. */
-	boolean isOpaque ();
+public interface SortableBatchable{
+  /** @return Whether this Batchable is opaque. */
+  boolean isOpaque();
 
-	/** @return The squared distance from the given camera position. */
-	float calculateDistanceSquared (Vector3 camPosition);
+  /** @return The squared distance from the given camera position. */
+  float calculateDistanceSquared(Vector3 camPosition);
 }

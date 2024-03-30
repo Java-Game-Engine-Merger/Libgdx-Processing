@@ -94,12 +94,12 @@ public class TextEditor<T extends ScreenCore2D>extends PointEntity<T,PathPoint>{
   public void textFieldExit(TextField in) {}
   @Override
   public void display() {
-//    p.beginBlend();
+    //    p.beginBlend();
     p.doStroke();
     move.display(p);
     resize.display(p);
     p.noStroke();
-//    p.endBlend();
+    //    p.endBlend();
   }
   @Override
   public void touchStarted(TouchInfo info) {

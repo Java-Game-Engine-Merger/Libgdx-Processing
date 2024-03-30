@@ -3,6 +3,9 @@ package pama1234.gdx.util.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 
+import space.earlygrey.shapedrawer.CapType;
+import space.earlygrey.shapedrawer.JoinType;
+
 /**
  * 此中间类主要放颜色赋值方面的方法
  * 
@@ -160,11 +163,12 @@ public abstract class UtilScreenColor extends UtilScreenPose{
 
   //---------------------------------------------------------------------------
 
-  public void strokeCap() {
-
+  public void strokeCap(CapType capType) {
+    this.capType=capType;
   }
 
-  public void strokeJoin() {
+  public void strokeJoin(JoinType joinType) {
+    this.joinType=joinType;
   }
 
   public void strokeWeight(float in) {

@@ -2,8 +2,6 @@ package pama1234.gdx.util.font;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -17,7 +15,6 @@ import pama1234.math.vec.Vec2f;
 import pama1234.math.vec.Vec3i;
 
 import static space.earlygrey.shapedrawer.ShapeDrawer.createBlankTextureRegion;
-
 
 @UniFontDependent
 public class MultiChunkFont extends BetterBitmapFont{

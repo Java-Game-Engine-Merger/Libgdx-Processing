@@ -4,7 +4,6 @@ import static pama1234.util.gdx.lwjgl.UtilLauncher.getDefaultConfiguration;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import org.junit.jupiter.api.Test;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
@@ -41,15 +40,14 @@ public class PoseTest3D extends UtilScreen3D{
   Pose3D poseO,pose;
   Model model;
 
-
   @Override
   public void setup() {
     poseO=new Pose3D();
     //    pose=new Pose3D(20,0,0,0,UtilMath.HALF_PI,0);
     pose=new Pose3D(0,0,-50);
-//    pose.rotate.set(0,1,0,UtilMath.HALF_PI);
+    //    pose.rotate.set(0,1,0,UtilMath.HALF_PI);
     model=new Model();
-//    ModelBatch mb=new ModelBatch();
+    //    ModelBatch mb=new ModelBatch();
     noStroke();
   }
 

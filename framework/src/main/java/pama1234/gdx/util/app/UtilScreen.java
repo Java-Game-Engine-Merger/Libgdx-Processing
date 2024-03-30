@@ -115,9 +115,7 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
       public void display() {
         rendererEnd();//TODO unintuitive
         usedRenderer=screenStage.getBatch();
-        //        endShape();
         screenStage.draw();
-        //        beginShape();
         rendererEnd();//TODO ugly
       }
     });
@@ -126,9 +124,7 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
       public void display() {
         rendererEnd();
         usedRenderer=camStage.getBatch();
-        //        endShape();
         camStage.draw();
-        //        beginShape();
         rendererEnd();
       }
     });
@@ -179,7 +175,7 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
     update();
   }
   public void doDraw() {
-    //    beginShape();
+    beginShape();
     if(background) background(backgroundColor);
     withCam();
     serverCenter.display();
@@ -192,7 +188,7 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
     centerNeo.display();
     display();
     inputProcessor.display();
-    //    endShape();
+    endShape();
   }
   public void camOverlay() {}
 

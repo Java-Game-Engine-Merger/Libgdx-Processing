@@ -53,7 +53,6 @@ public class ScreenContentContainer implements EntityNeoListener{
     serverCenter.refresh();
   }
 
-
   //---------------------------------------------------------------------------
 
   // public void addScreenTextFields(TextField... in) {

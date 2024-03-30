@@ -193,15 +193,15 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public boolean isKeyPressed(int in) {
     return keyPressedArray.contains(in);
   }
-  //  public void beginShape() {
-  //    rFill.begin(ShapeType.Filled);
-  //    rStroke.begin(ShapeType.Line);
-  //  }
-  //  public void endShape() {
-  //    rendererEnd();// TODO
-  //    rFill.end();
-  //    rStroke.end();
-  //  }
+  public void beginShape() {
+    //    rFill.begin(ShapeType.Filled);
+    //    rStroke.begin(ShapeType.Line);
+  }
+  public void endShape() {
+    rendererEnd();// TODO
+    //    rFill.end();
+    //    rStroke.end();
+  }
 
   //---------------------------------------------------------------------------
 
