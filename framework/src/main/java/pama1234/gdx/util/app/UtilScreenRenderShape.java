@@ -229,14 +229,16 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
 
     MathPool.vec3fPool.free(foot);
 
-    float dist0=-UtilMath.distKeepNegative(ox,oy,oz,x1,y1,z1);
+    float dist0=UtilMath.dist(ox,oy,oz,x1,y1,z1);
+    //    float dist0=UtilMath.distKeepNegative(ox,oy,oz,x1,y1,z1);
 
     //    var tv=MathPool.vec3fPool.obtain(ox,oy,oz);
     //    tv.sub(x1,y1,z1);
     float dist2=UtilMath.dist(ox,oy,oz,x2,y2,z2);
 
     //    boolean leftSide=true;
-    //    boolean leftSide=MathTools.isLeft(x1,y1,z1,x2,y2,z2,ox,oy,oz);
+    boolean leftSide=MathTools.isLeft(x1,y1,z1,x2,y2,z2,ox,oy,oz);
+    if(!leftSide) dist0*=-1;
     //    boolean leftSide=abs(dist0+dist1-dist2)<UtilMath.FLOAT_ROUNDING_ERROR;
     //    MathPool.vec3fPool.free(tv);
 
