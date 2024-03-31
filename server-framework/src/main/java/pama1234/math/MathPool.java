@@ -4,6 +4,9 @@ import com.esotericsoftware.kryo.util.Pool;
 
 import pama1234.math.vec.Vec3f;
 
+/**
+ * 记得释放obtain的对象
+ */
 public class MathPool{
   public static Vec3fPool vec3fPool=new Vec3fPool();
 

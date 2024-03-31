@@ -1,5 +1,7 @@
 package pama1234.math;
 
+import static pama1234.math.UtilMath.abs;
+
 import pama1234.math.geometry.RectF;
 import pama1234.math.geometry.RectI;
 import pama1234.math.geometry.Triangle2f;
@@ -222,7 +224,7 @@ public class MathTools{
   }
   public static boolean isPointInTriangle(Vec2f a,Vec2f b,Vec2f c,Vec2f v) {
     // 计算三角形的面积
-    float areaABC=0.5f*UtilMath.abs(a.crossProduct(b)+b.crossProduct(c)+c.crossProduct(a));
+    float areaABC=0.5f*abs(a.crossProduct(b)+b.crossProduct(c)+c.crossProduct(a));
     // 计算三角形的边向量
     Vec2f ab=b.subNew(a);
     Vec2f bc=c.subNew(b);
@@ -237,7 +239,7 @@ public class MathTools{
     float distCA=cv.dot(ca)/ca.length();
     // 判断二维矢量是否在三角形的内部
     float sumDist=distAB+distBC+distCA;
-    float diffArea=UtilMath.abs(areaABC-0.5f*UtilMath.abs(av.crossProduct(ab)+bv.crossProduct(bc)+cv.crossProduct(ca)));
+    float diffArea=abs(areaABC-0.5f*abs(av.crossProduct(ab)+bv.crossProduct(bc)+cv.crossProduct(ca)));
     return Math.abs(sumDist-3)<1e-6f&&diffArea<1e-6f;
   }
   public static boolean isIntersectEdge(Vec2f in,Vec2f a,Vec2f b) {
@@ -250,13 +252,13 @@ public class MathTools{
     float lenPToE=b.length();
     return lenPToI+lenIToE<lenPToE+1e-6;
   }
-  public static void main(String[] args) {
-    Vec2f a=new Vec2f(0,0);
-    // Triangle2f b=new Triangle2f(-1,-1,1,-1,-1,4);
-    Triangle2f c=new Triangle2f(-1,-1,0,-1,-1,4);
-    // System.out.println(inTriangle(a,b));
-    System.out.println(inTriangle(a,c));
-  }
+  //  public static void main(String[] args) {
+  //    Vec2f a=new Vec2f(0,0);
+  //    // Triangle2f b=new Triangle2f(-1,-1,1,-1,-1,4);
+  //    Triangle2f c=new Triangle2f(-1,-1,0,-1,-1,4);
+  //    // System.out.println(inTriangle(a,b));
+  //    System.out.println(inTriangle(a,c));
+  //  }
   /**
    * 
    * 此方法为AI生成，未验证
@@ -292,26 +294,62 @@ public class MathTools{
     float x2,float y2,float z2,
     float x3,float y3,float z3) {
 
-    Vec3f A=MathPool.vec3fPool.obtain(x1,y1,z1); // 直线上的第一个点
-    Vec3f B=MathPool.vec3fPool.obtain(x2,y2,z2); // 直线上的第二个点
-    Vec3f P=MathPool.vec3fPool.obtain(x3,y3,z3); // 直线外的点
+    //    Vec3f A=MathPool.vec3fPool.obtain(x1,y1,z1); // 直线上的第一个点
+    //    Vec3f B=MathPool.vec3fPool.obtain(x2,y2,z2); // 直线上的第二个点
+    //    Vec3f P=MathPool.vec3fPool.obtain(x3,y3,z3); // 直线外的点
+    //
+    //    // 计算AB的方向
+    //    Vec3f AB=MathPool.vec3fPool.obtain();
+    //    AB.sub(B,A);
+    //    AB.normalize();
+    //
+    //    // 计算AP的方向
+    //    Vec3f AP=MathPool.vec3fPool.obtain();
+    //    AP.sub(P,A);
+    //
+    //    // 计算AP在AB上的投影长度（即最短距离）
+    //    float projectionLength=AP.dot(AB);
+    //
+    //    // 计算垂足点Q
+    //    Vec3f Q=MathPool.vec3fPool.obtain();
+    //    Q.scaleAdd(projectionLength,AB,A);
 
-    // 计算AB的方向
-    Vec3f AB=MathPool.vec3fPool.obtain();
-    AB.sub(B,A);
-    AB.normalize();
+    Vec3f retVal=MathPool.vec3fPool.obtain();
 
-    // 计算AP的方向
-    Vec3f AP=MathPool.vec3fPool.obtain();
-    AP.sub(P,A);
+    float dx=x1-x2;
+    float dy=y1-y2;
+    float dz=z1-z2;
+    float ep=UtilMath.FLOAT_ROUNDING_ERROR;
+    if(abs(dx)<ep&&abs(dy)<ep&&abs(dz)<ep) {
+      retVal.set(x1,y1,z1);
+      return retVal;
+    }
 
-    // 计算AP在AB上的投影长度（即最短距离）
-    float projectionLength=AP.dot(AB);
+    float u=0+
+      (x3-x1)*(x1-x2)+
+      (y3-y1)*(y1-y2)+
+      (z3-z1)*(z1-z2);
 
-    // 计算垂足点Q
-    Vec3f Q=MathPool.vec3fPool.obtain();
-    Q.scaleAdd(projectionLength,AB,A);
+    u=u/((dx*dx)+(dy*dy)+(dz*dz));
 
-    return Q;
+    retVal.x=x1+u*dx;
+    retVal.y=y1+u*dy;
+    retVal.z=z1+u*dz;
+
+    return retVal;
+
+    //    return Q;
+  }
+
+  public static void main(String[] args) {
+    System.out.println(perpendicularFoot(
+      0,0,0,
+      0,1,0,
+      0,2,2));
+
+    System.out.println(perpendicularFoot(
+      0,0,0,
+      0,1,1,
+      0,1,2));
   }
 }

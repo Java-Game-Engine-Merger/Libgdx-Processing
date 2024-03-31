@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import pama1234.math.MathPool;
+import pama1234.math.MathTools;
 import pama1234.math.UtilMath;
 import pama1234.math.geometry.RectI;
 import pama1234.math.transform.Pose3D;
@@ -206,10 +208,9 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
       }
     }
   }
-  public Vec3f up_f_line=new Vec3f();
-  /** TODO 没写完 */
-  @Deprecated
+  //  public Vec3f up_f_line=new Vec3f();
   public void line(float x1,float y1,float z1,float x2,float y2,float z2) {
+    //    beginBlend();
     float dist=UtilMath.dist(x1,y1,z1,x2,y2,z2);
 
     float midX=(x1+x2)/2f;
@@ -220,6 +221,22 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     float dy=y2-y1;
     float dz=z2-z1;
 
+    //    float ox=x1;
+    //    float oy=y1;
+    //    float oz=z1;
+
+    var cam=usedCamera.position;
+
+    var foot=MathTools.perpendicularFoot(x1,y1,z1,x2,y2,z2,cam.x,cam.y,cam.z);
+    float ox=foot.x;
+    float oy=foot.y;
+    float oz=foot.z;
+
+
+    MathPool.vec3fPool.free(foot);
+
+    float dist0=UtilMath.dist(ox,oy,oz,x1,y1,z1);
+
     pushMatrix();
 
     //    translate(midX,midY,midZ);
@@ -229,20 +246,32 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     //    rotateToCam(
     //      midX,midY,midZ,
     //      up_f_line.x,up_f_line.y,up_f_line.z);
-    //    rotateZ(-UtilMath.HALF_PI);
+    //    rotateZ(UtilMath.HALF_PI);
     //
-    //    line(-dist/2,0,dist/2,0);
+    //    float left=-dist/2;
+    //    float right=dist/2;
+    //    line(left,0,right,0);
 
-    translate(x1,y1,z1);
+    //    noStroke();
+    //    //    circle(cam.x,cam.y,cam.z,3,0);
+    //    circle(ox,oy,oz,3,0);
+    //    doStroke();
 
-    up_f_line.set(dx,dy,dz);
+    translate(ox,oy,oz);
+
+    Vec3f up_f_line=MathPool.vec3fPool.obtain(dx,dy,dz);
+    //    up_f_line.set(dx,dy,dz);
+
+    //    up_f_line.set(foot.x,foot.y,foot.z);
     up_f_line.nor();
     rotateToCam(
-      midX,midY,midZ,
+      ox,oy,oz,
+      //      midX,midY,midZ,
       up_f_line.x,up_f_line.y,up_f_line.z);
-    rotateZ(-UtilMath.HALF_PI);
+    rotateZ(UtilMath.HALF_PI);
 
-    line(0,0,dist,0);
+    line(dist0,0,dist0+dist,0);
+    //    line(dist0,0,dist,0);
 
     popMatrix();
   }
