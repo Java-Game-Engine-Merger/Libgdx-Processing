@@ -4,6 +4,7 @@ import pama1234.math.geometry.RectF;
 import pama1234.math.geometry.RectI;
 import pama1234.math.geometry.Triangle2f;
 import pama1234.math.vec.Vec2f;
+import pama1234.math.vec.Vec3f;
 
 public class MathTools{
   public static float msq(float in) {
@@ -279,5 +280,38 @@ public class MathTools{
     float vectorLength=UtilMath.sqrt(xIn*xIn+yIn*yIn);
     // check if vector is within sector angle and radius
     return angleBetween<=angle/2&&vectorLength<=r;
+  }
+
+  /**
+   * 3D，计算点到直线的垂直距离的垂足，前两个点为直线，后一个点为需要计算垂足的点
+   *
+   * @return
+   */
+  public static Vec3f perpendicularFoot(
+    float x1,float y1,float z1,
+    float x2,float y2,float z2,
+    float x3,float y3,float z3) {
+
+    Vec3f A=MathPool.vec3fPool.obtain(x1,y1,z1); // 直线上的第一个点
+    Vec3f B=MathPool.vec3fPool.obtain(x2,y2,z2); // 直线上的第二个点
+    Vec3f P=MathPool.vec3fPool.obtain(x3,y3,z3); // 直线外的点
+
+    // 计算AB的方向
+    Vec3f AB=MathPool.vec3fPool.obtain();
+    AB.sub(B,A);
+    AB.normalize();
+
+    // 计算AP的方向
+    Vec3f AP=MathPool.vec3fPool.obtain();
+    AP.sub(P,A);
+
+    // 计算AP在AB上的投影长度（即最短距离）
+    float projectionLength=AP.dot(AB);
+
+    // 计算垂足点Q
+    Vec3f Q=MathPool.vec3fPool.obtain();
+    Q.scaleAdd(projectionLength,AB,A);
+
+    return Q;
   }
 }

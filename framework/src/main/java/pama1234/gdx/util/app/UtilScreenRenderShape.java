@@ -222,7 +222,18 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
 
     pushMatrix();
 
-    translate(midX,midY,midZ);
+    //    translate(midX,midY,midZ);
+    //
+    //    up_f_line.set(dx,dy,dz);
+    //    up_f_line.nor();
+    //    rotateToCam(
+    //      midX,midY,midZ,
+    //      up_f_line.x,up_f_line.y,up_f_line.z);
+    //    rotateZ(-UtilMath.HALF_PI);
+    //
+    //    line(-dist/2,0,dist/2,0);
+
+    translate(x1,y1,z1);
 
     up_f_line.set(dx,dy,dz);
     up_f_line.nor();
@@ -231,7 +242,7 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
       up_f_line.x,up_f_line.y,up_f_line.z);
     rotateZ(-UtilMath.HALF_PI);
 
-    line(-dist/2,0,dist/2,0);
+    line(0,0,dist,0);
 
     popMatrix();
   }
