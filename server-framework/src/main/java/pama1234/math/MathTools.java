@@ -285,8 +285,8 @@ public class MathTools{
   }
 
   /**
-   * 3D，计算点到直线的垂直距离的垂足，前两个点为直线，后一个点为需要计算垂足的点
-   *
+   * 3D，计算点到直线的垂直距离的垂足，前两个点为直线，后一个点为需要计算垂足的点 TODO AI生成的
+   * 
    * @return
    */
   public static Vec3f perpendicularFoot(
@@ -313,6 +313,8 @@ public class MathTools{
     //    // 计算垂足点Q
     //    Vec3f Q=MathPool.vec3fPool.obtain();
     //    Q.scaleAdd(projectionLength,AB,A);
+    //
+    //    return Q;
 
     Vec3f retVal=MathPool.vec3fPool.obtain();
 
@@ -337,8 +339,6 @@ public class MathTools{
     retVal.z=z1+u*dz;
 
     return retVal;
-
-    //    return Q;
   }
 
   @Deprecated

@@ -28,13 +28,19 @@ public class MathPool{
     }
     @Override
     public Vec3f obtain() {
+      Vec3f obtain=obtainInner();
+      obtain.set(0);
+      return obtain;
+    }
+
+    public Vec3f obtainInner() {
       Vec3f obtain=super.obtain();
       obtain.pool=this;
       return obtain;
     }
 
     public Vec3f obtain(float x,float y,float z) {
-      Vec3f obtain=obtain();
+      Vec3f obtain=obtainInner();
       obtain.set(x,y,z);
       return obtain;
     }
