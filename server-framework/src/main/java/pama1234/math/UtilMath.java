@@ -47,6 +47,9 @@ public class UtilMath{
   public static float dist(float x1,float y1,float z1,float x2,float y2,float z2) {
     return mag(x1-x2,y1-y2,z1-z2);
   }
+  public static float distKeepNegative(float x1,float y1,float z1,float x2,float y2,float z2) {
+    return magKeepNegative(x1-x2,y1-y2,z1-z2);
+  }
   public static float mag(float[] in) {
     float out=0;
     for(float e:in) out+=e*e;
@@ -57,6 +60,20 @@ public class UtilMath{
   }
   public static float mag(float a,float b,float c) {
     return sqrt(a*a+b*b+c*c);
+  }
+  public static float magKeepNegative(float a,float b,float c) {
+    float a2=a*a;
+    if(a<0) a2*=-1;
+    float b2=b*b;
+    if(b<0) b2*=-1;
+    float c2=c*c;
+    if(c<0) c2*=-1;
+    float sqrtIn=a2+b2+c2;
+    boolean negative=sqrtIn<0;
+    sqrtIn=abs(sqrtIn);
+    float sqrtOut=sqrt(sqrtIn);
+    if(negative) sqrtOut*=-1;
+    return sqrtOut;
   }
   public static float sqrt(float in) {
     return (float)Math.sqrt(in);

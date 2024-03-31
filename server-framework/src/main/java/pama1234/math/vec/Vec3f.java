@@ -8,12 +8,23 @@ import javax.vecmath.Vector3f;
 
 import pama1234.Tools;
 import pama1234.data.nio.ByteBufferData;
+import pama1234.math.MathPool.ExecuteFree;
 import pama1234.math.UtilMath;
 import pama1234.math.mat.Mat4f;
 
 public class Vec3f extends Vector3f implements ByteBufferData{
   private static final long serialVersionUID=8654339263948261774L;
   public static final int buffer_size=FLOAT_SIZE*3;
+
+  public ExecuteFree<Vec3f> pool;
+
+  public void free() {
+    //    if(pool!=null) {
+    pool.free(this);
+    pool=null;
+    //    }
+  }
+
   public Vec3f(int i,int j,int k) {
     x=i;
     y=j;

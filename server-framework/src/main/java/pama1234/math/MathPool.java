@@ -10,7 +10,7 @@ import pama1234.math.vec.Vec3f;
 public class MathPool{
   public static Vec3fPool vec3fPool=new Vec3fPool();
 
-  public static class Vec3fPool extends Pool<Vec3f>{
+  public static class Vec3fPool extends Pool<Vec3f> implements ExecuteFree<Vec3f>{
     public Vec3fPool() {
       this(true,true);
     }
@@ -29,15 +29,19 @@ public class MathPool{
     @Override
     public Vec3f obtain() {
       Vec3f obtain=super.obtain();
-      //      obtain.set(0);
+      obtain.pool=this;
       return obtain;
     }
 
     public Vec3f obtain(float x,float y,float z) {
-      Vec3f obtain=super.obtain();
+      Vec3f obtain=obtain();
       obtain.set(x,y,z);
       return obtain;
     }
 
+  }
+
+  public interface ExecuteFree<T>{
+    void free(T o);
   }
 }

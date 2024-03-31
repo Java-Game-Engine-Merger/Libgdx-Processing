@@ -341,15 +341,67 @@ public class MathTools{
     //    return Q;
   }
 
+  @Deprecated
+
+  /** 判断向量是否在直线的左侧，有错 */
+  public static boolean isLeft(Vec3f startPoint,Vec3f endPoint,Vec3f pointToCheck) {
+    //    return (b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x)>0;
+
+    // 计算线段向量
+    Vec3f lineVector=MathPool.vec3fPool.obtain();
+    lineVector.sub(endPoint,startPoint);
+
+    // 计算线段起点到待判断点的向量
+    Vec3f pointVector=MathPool.vec3fPool.obtain();
+    pointVector.sub(pointToCheck,startPoint);
+
+    // 计算线段向量与点向量的叉乘
+    Vec3f crossProduct=MathPool.vec3fPool.obtain();
+    crossProduct.cross(lineVector,pointVector);
+    lineVector.free();
+    pointVector.free();
+
+    // 判断点在线段的左侧还是右侧
+    float outz=crossProduct.z;
+    crossProduct.free();
+
+    if(outz>0) {
+      //      System.out.println("Point is on the left side of the line segment.");
+      return true;
+    }else if(outz<0) {
+      //      System.out.println("Point is on the right side of the line segment.");
+    }else {
+      //      System.out.println("Point is on the line segment.");
+    }
+    return false;
+  }
+  @Deprecated
+  /** 判断向量是否在直线的左侧，有错 */
+  public static boolean isLeft(float x1,float y1,float z1,float x2,float y2,float z2,float x3,float y3,float z3) {
+    Vec3f a=MathPool.vec3fPool.obtain(x1,y1,z1),
+      b=MathPool.vec3fPool.obtain(x2,y2,z2),
+      c=MathPool.vec3fPool.obtain(x3,y3,z3);
+    boolean flag=isLeft(a,b,c);
+    a.free();
+    b.free();
+    c.free();
+    return flag;
+  }
+
   public static void main(String[] args) {
-    System.out.println(perpendicularFoot(
+    //    System.out.println(perpendicularFoot(
+    //      0,0,0,
+    //      0,1,0,
+    //      0,2,2));
+    //
+    //    System.out.println(perpendicularFoot(
+    //      0,0,0,
+    //      0,1,1,
+    //      0,1,2));
+
+    System.out.println(isLeft(
       0,0,0,
       0,1,0,
-      0,2,2));
-
-    System.out.println(perpendicularFoot(
-      0,0,0,
-      0,1,1,
-      0,1,2));
+      0,-1,2));
   }
 }

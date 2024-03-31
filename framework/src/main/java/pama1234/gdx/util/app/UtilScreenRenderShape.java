@@ -208,10 +208,9 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
       }
     }
   }
-  //  public Vec3f up_f_line=new Vec3f();
   public void line(float x1,float y1,float z1,float x2,float y2,float z2) {
     //    beginBlend();
-    float dist=UtilMath.dist(x1,y1,z1,x2,y2,z2);
+    float dist1=UtilMath.dist(x1,y1,z1,x2,y2,z2);
 
     float midX=(x1+x2)/2f;
     float midY=(y1+y2)/2f;
@@ -221,10 +220,6 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     float dy=y2-y1;
     float dz=z2-z1;
 
-    //    float ox=x1;
-    //    float oy=y1;
-    //    float oz=z1;
-
     var cam=usedCamera.position;
 
     var foot=MathTools.perpendicularFoot(x1,y1,z1,x2,y2,z2,cam.x,cam.y,cam.z);
@@ -232,46 +227,37 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     float oy=foot.y;
     float oz=foot.z;
 
-
     MathPool.vec3fPool.free(foot);
 
-    float dist0=UtilMath.dist(ox,oy,oz,x1,y1,z1);
+    float dist0=-UtilMath.distKeepNegative(ox,oy,oz,x1,y1,z1);
+
+    //    var tv=MathPool.vec3fPool.obtain(ox,oy,oz);
+    //    tv.sub(x1,y1,z1);
+    float dist2=UtilMath.dist(ox,oy,oz,x2,y2,z2);
+
+    //    boolean leftSide=true;
+    //    boolean leftSide=MathTools.isLeft(x1,y1,z1,x2,y2,z2,ox,oy,oz);
+    //    boolean leftSide=abs(dist0+dist1-dist2)<UtilMath.FLOAT_ROUNDING_ERROR;
+    //    MathPool.vec3fPool.free(tv);
 
     pushMatrix();
 
-    //    translate(midX,midY,midZ);
-    //
-    //    up_f_line.set(dx,dy,dz);
-    //    up_f_line.nor();
-    //    rotateToCam(
-    //      midX,midY,midZ,
-    //      up_f_line.x,up_f_line.y,up_f_line.z);
-    //    rotateZ(UtilMath.HALF_PI);
-    //
-    //    float left=-dist/2;
-    //    float right=dist/2;
-    //    line(left,0,right,0);
-
-    //    noStroke();
-    //    //    circle(cam.x,cam.y,cam.z,3,0);
-    //    circle(ox,oy,oz,3,0);
-    //    doStroke();
-
     translate(ox,oy,oz);
 
-    Vec3f up_f_line=MathPool.vec3fPool.obtain(dx,dy,dz);
-    //    up_f_line.set(dx,dy,dz);
+    Vec3f up=MathPool.vec3fPool.obtain(dx,dy,dz);
+    up.nor();
 
-    //    up_f_line.set(foot.x,foot.y,foot.z);
-    up_f_line.nor();
     rotateToCam(
       ox,oy,oz,
-      //      midX,midY,midZ,
-      up_f_line.x,up_f_line.y,up_f_line.z);
+      up.x,up.y,up.z);
+    MathPool.vec3fPool.free(up);
     rotateZ(UtilMath.HALF_PI);
 
-    line(dist0,0,dist0+dist,0);
-    //    line(dist0,0,dist,0);
+    //    if(leftSide) {
+    line(dist0,0,dist0+dist1,0);
+    //    }else {
+    //      line(-dist0,0,-dist0+dist1,0);
+    //    }
 
     popMatrix();
   }
