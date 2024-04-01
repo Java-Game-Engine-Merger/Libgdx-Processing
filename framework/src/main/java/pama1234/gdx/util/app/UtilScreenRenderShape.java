@@ -88,24 +88,24 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     float px=sx,py=sy;
 
     var usedCapType=capType;
-    capType=CapType.NONE;
+    capType=CapType.ROUND_LEFT;
 
     for(int i=0;i<seg;i++) {
       vx=sin(deg*i)*s;
       vy=cos(deg*i)*s;
 
       line(vx,vy,0,px,py,0);
-      if(usedCapType==CapType.ROUND) {
-        shapeDrawer.filledCircle(vx,vy,shapeDrawer.defaultLineWidth/2f);
-      }
+      //      if(usedCapType==CapType.ROUND) {
+      //        shapeDrawer.filledCircle(vx,vy,shapeDrawer.defaultLineWidth/2f);
+      //      }
 
       px=vx;
       py=vy;
     }
     line(sx,sy,0,px,py,0);
-    if(usedCapType==CapType.ROUND) {
-      shapeDrawer.filledCircle(sx,sy,shapeDrawer.defaultLineWidth/2f);
-    }
+    //    if(usedCapType==CapType.ROUND) {
+    //      shapeDrawer.filledCircle(sx,sy,shapeDrawer.defaultLineWidth/2f);
+    //    }
     capType=usedCapType;
   }
   public void circleWithSeg(float x,float y,float z,float s,int seg) {
@@ -242,6 +242,8 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
       if(capType==CapType.ROUND) {
         shapeDrawer.filledCircle(x1,y1,shapeDrawer.defaultLineWidth/2f);
         shapeDrawer.filledCircle(x2,y2,shapeDrawer.defaultLineWidth/2f);
+      }else if(capType==CapType.ROUND_LEFT) {
+        shapeDrawer.filledCircle(x1,y1,shapeDrawer.defaultLineWidth/2f);
       }
     }
   }

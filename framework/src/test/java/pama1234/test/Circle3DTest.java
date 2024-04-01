@@ -10,6 +10,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 
 import pama1234.gdx.util.app.UtilScreen3D;
 import pama1234.gdx.util.launcher.MainAppBase;
+import pama1234.test.ShapeTest3D.ColorUtil;
 
 public class Circle3DTest extends UtilScreen3D{
   public static void main(String[] args) {
@@ -34,6 +35,7 @@ public class Circle3DTest extends UtilScreen3D{
   public void setup() {
     doStroke();
     stroke(0);
+    backgroundColor=ColorUtil.background;
   }
 
   @Override
