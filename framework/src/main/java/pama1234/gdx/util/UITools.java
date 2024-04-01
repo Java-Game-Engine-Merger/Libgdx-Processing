@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 
 import pama1234.gdx.util.app.UtilScreen;
 import pama1234.gdx.util.app.UtilScreen2D;
+import pama1234.gdx.util.app.UtilScreen3D;
 import pama1234.gdx.util.app.UtilScreenColor;
 import pama1234.gdx.util.element.Graphics;
 import pama1234.gdx.util.element.MoveableCross;
@@ -77,6 +78,15 @@ public class UITools{
     GetFloat gf;
     if(p.isAndroid) gf=()->UtilMath.constrain(64f/p.cam2d.scale(),16,32);
     else gf=()->UtilMath.constrain(16f/p.cam2d.scale(),16,32);
+    MoveableCross out=new MoveableCross(gf,gf);
+    out.strokeColor=strokeColor;
+    return out;
+  }
+  // TODO
+  public static MoveableCross createCross(UtilScreen3D p,Color strokeColor) {
+    GetFloat gf;
+    if(p.isAndroid) gf=()->UtilMath.constrain(64f/p.cam3d.scale(),16,32);
+    else gf=()->UtilMath.constrain(16f/p.cam.scale(),16,32);
     MoveableCross out=new MoveableCross(gf,gf);
     out.strokeColor=strokeColor;
     return out;
