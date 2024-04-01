@@ -1,5 +1,8 @@
 package pama1234.gdx.util.app;
 
+import static pama1234.math.UtilMath.cos;
+import static pama1234.math.UtilMath.sin;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -59,22 +62,56 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
   public static int circleSeg(float s) {
     return UtilMath.max((int)(MathUtils.PI*s),6);
   }
-  // TODO pass segment size to shapeDrawer
-  public void circle(float x,float y,float size,int seg) {
+  public void circleWithSeg(float x,float y,float size,int seg) {
     renderer(shapeDrawer.getBatch());
     if(fill) {
       shapeDrawer.setColor(fillColor);
-      shapeDrawer.filledCircle(x,y,size);
+      shapeDrawer.filledCircleWithSeg(x,y,size,seg);
     }
     if(stroke) {
       shapeDrawer.setColor(strokeColor);
-      shapeDrawer.circle(x,y,size,JoinType.BEVEL);
+      shapeDrawer.circleWithSeg(x,y,size,JoinType.BEVEL,seg);
     }
   }
-  public void circle(float x,float y,float z,float s,int seg) {
+  public void circle(float x,float y,float z,float s) {
     pushMatrix();
     translate(0,0,z);
-    circle(x,y,s,seg);
+    circle(x,y,s);
+    popMatrix();
+  }
+  // 只绘制线条，填充就调用另外那个方法
+  public void circle3d(float x,float y,float z,float s) {
+    int seg=circleSeg(s);
+    float deg=UtilMath.PI2/seg;
+    float sx=sin(0)*s,sy=cos(0)*s;
+    float vx,vy;
+    float px=sx,py=sy;
+
+    var usedCapType=capType;
+    capType=CapType.NONE;
+
+    for(int i=0;i<seg;i++) {
+      vx=sin(deg*i)*s;
+      vy=cos(deg*i)*s;
+
+      line(vx,vy,0,px,py,0);
+      if(usedCapType==CapType.ROUND) {
+        shapeDrawer.filledCircle(vx,vy,shapeDrawer.defaultLineWidth/2f);
+      }
+
+      px=vx;
+      py=vy;
+    }
+    line(sx,sy,0,px,py,0);
+    if(usedCapType==CapType.ROUND) {
+      shapeDrawer.filledCircle(sx,sy,shapeDrawer.defaultLineWidth/2f);
+    }
+    capType=usedCapType;
+  }
+  public void circleWithSeg(float x,float y,float z,float s,int seg) {
+    pushMatrix();
+    translate(0,0,z);
+    circleWithSeg(x,y,s,seg);
     popMatrix();
   }
 
@@ -185,7 +222,7 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     if(stroke) {
       renderer(shapeDrawer.getBatch());
       shapeDrawer.setColor(strokeColor);
-      shapeDrawer.arc(x,y,radius,UtilMath.rad(start),UtilMath.rad(degrees));
+      shapeDrawer.arc(x,y,radius,UtilMath.rad(start),UtilMath.rad(degrees),JoinType.POINTY);
       //      renderer(rStroke);
       //      rStroke.arcNoBorder(x,y,radius,start,degrees,UtilMath.max(1,(int)(6*(float)Math.cbrt(radius)*(degrees/360))));
     }
@@ -209,7 +246,6 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     }
   }
   public void line(float x1,float y1,float z1,float x2,float y2,float z2) {
-    //    beginBlend();
     float dist1=UtilMath.dist(x1,y1,z1,x2,y2,z2);
 
     float midX=(x1+x2)/2f;
@@ -248,11 +284,7 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     MathPool.vec3fPool.free(up);
     rotateZ(UtilMath.HALF_PI);
 
-    //    if(leftSide) {
     line(dist0,0,dist0+dist1,0);
-    //    }else {
-    //      line(-dist0,0,-dist0+dist1,0);
-    //    }
 
     popMatrix();
   }

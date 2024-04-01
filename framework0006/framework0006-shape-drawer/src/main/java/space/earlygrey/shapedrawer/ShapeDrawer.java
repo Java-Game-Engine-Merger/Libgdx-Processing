@@ -542,6 +542,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
   public void circle(float centreX,float centreY,float radius,JoinType joinType) {
     circle(centreX,centreY,radius,defaultLineWidth,joinType);
   }
+  public void circleWithSeg(float centreX,float centreY,float radius,JoinType joinType,float seg) {
+    polygon(centreX,centreY,estimateSidesRequired(radius,radius),radius,radius,0,defaultLineWidth,joinType);
+  }
 
   /**
    * <p>
@@ -657,6 +660,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    */
   public void filledCircle(float centreX,float centreY,float radius) {
     filledEllipse(centreX,centreY,radius,radius,0);
+  }
+  public void filledCircleWithSeg(float centreX,float centreY,float radius,float seg) {
+    filledPolygonDrawer.polygon(centreX,centreY,estimateSidesRequired(radius,radius),radius,radius,0,0,ShapeUtils.PI2,batchManager.floatBits,batchManager.floatBits);
   }
 
   /**
@@ -794,6 +800,9 @@ public class ShapeDrawer extends AbstractShapeDrawer{
    */
   public void arc(float centreX,float centreY,float radius,float startAngle,float radians) {
     arc(centreX,centreY,radius,startAngle,radians,defaultLineWidth);
+  }
+  public void arc(float centreX,float centreY,float radius,float startAngle,float radians,JoinType joinType) {
+    polygonDrawer.polygon(centreX,centreY,estimateSidesRequired(radius,radius),radius,radius,0,defaultLineWidth,joinType,startAngle,radians);
   }
 
   /**
