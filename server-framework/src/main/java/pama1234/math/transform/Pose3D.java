@@ -7,8 +7,10 @@ public class Pose3D{
   public Vec3f pos;
   //  /** in rad format */
   //  public Vec3f rotate;
+  // TODO
   public Vec4f rotate;
   public Vec3f scale;
+
   public Pose3D() {
     this(0,0,0);
   }

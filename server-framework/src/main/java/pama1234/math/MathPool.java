@@ -44,7 +44,6 @@ public class MathPool{
       obtain.set(x,y,z);
       return obtain;
     }
-
   }
 
   public interface ExecuteFree<T>{
