@@ -26,7 +26,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
 
   public TextStyleSupplier style;
 
-  public int textMode;
+  public int textMode=fastText;
 
   public BetterBitmapFont() {}
   public BetterBitmapFont(boolean flip) {

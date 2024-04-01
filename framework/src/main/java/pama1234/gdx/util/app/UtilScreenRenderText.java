@@ -77,7 +77,7 @@ public abstract class UtilScreenRenderText extends UtilScreenColor{
   public void textFont(BetterBitmapFont fontIn) {
     font=fontIn;
 
-    //    font.fontBatch=()->imageBatch;
+    font.fontBatch=()->imageBatch;
     font.styleFast=fontStyle;
   }
   public void textMode(int in) {

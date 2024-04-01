@@ -38,7 +38,7 @@ public class SharedResources implements Disposable{
   {
     imageBatch=createSpriteBatch();
     font=genMultiChunkFont();
-    font.fontBatch=()->imageBatch;
+//    font.fontBatch=()->imageBatch;
     rFill=new UtilShapeRenderer();
     rStroke=new UtilShapeRenderer();
     pFill=new UtilPolygonSpriteBatch();
