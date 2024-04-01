@@ -1,5 +1,7 @@
 package pama1234.gdx.util.font;
 
+import static space.earlygrey.shapedrawer.ShapeDrawer.createBlankTextureRegion;
+
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,8 +15,6 @@ import com.badlogic.gdx.utils.Array;
 import pama1234.gdx.util.font.FontUtil.UniFontDependent;
 import pama1234.math.vec.Vec2f;
 import pama1234.math.vec.Vec3i;
-
-import static space.earlygrey.shapedrawer.ShapeDrawer.createBlankTextureRegion;
 
 @UniFontDependent
 public class MultiChunkFont extends BetterBitmapFont{
@@ -203,23 +203,23 @@ public class MultiChunkFont extends BetterBitmapFont{
     }
     Texture texture=regions.get(glyph.page).getTexture();
     if(style!=null) {
-      fontBatch.setColor(style.background(posI.z,posI.y,i));
-      fontBatch.draw(backgroundAlt,
+      fontBatch().setColor(style.background(posI.z,posI.y,i));
+      fontBatch().draw(backgroundAlt,
         v.x+backgroundXOffset*styleFast.scale,
         v.y,
         glyph.xadvance*styleFast.scale,
         lineSize*styleFast.scale);
-      fontBatch.setColor(style.foreground(posI.z,posI.y,i));
+      fontBatch().setColor(style.foreground(posI.z,posI.y,i));
       drawChar(v,glyph,texture);
     }else {
       if(styleFast.background!=null) {
-        fontBatch.setColor(styleFast.background);
-        fontBatch.draw(backgroundAlt,
+        fontBatch().setColor(styleFast.background);
+        fontBatch().draw(backgroundAlt,
           v.x+backgroundXOffset*styleFast.scale,
           v.y,
           glyph.xadvance*styleFast.scale,
           lineSize*styleFast.scale);
-        fontBatch.setColor(styleFast.foreground);
+        fontBatch().setColor(styleFast.foreground);
       }
       drawChar(v,glyph,texture);
     }
@@ -228,7 +228,7 @@ public class MultiChunkFont extends BetterBitmapFont{
     v.x+=glyph.xadvance*styleFast.scale;
   }
   private void drawChar(Vec2f v,Glyph glyph,Texture texture) {
-    fontBatch.draw(texture,
+    fontBatch().draw(texture,
       v.x+glyph.xoffset*styleFast.scale,
       v.y+glyph.yoffset*styleFast.scale,
       glyph.width*styleFast.scale,

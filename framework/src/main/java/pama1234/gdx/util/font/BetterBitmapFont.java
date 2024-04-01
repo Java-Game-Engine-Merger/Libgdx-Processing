@@ -2,10 +2,15 @@ package pama1234.gdx.util.font;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+
 import pama1234.gdx.util.element.FontStyle;
 import pama1234.util.Annotations.RedundantCache;
+import pama1234.util.function.Get;
 
 /**
  * 提供两种渲染文本的方式，一种不支持换行符号等，一种支持换行
@@ -15,7 +20,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
   public static final int fastText=0,fullText=1;
 
   @RedundantCache
-  public Batch fontBatch;
+  public Get<Batch> fontBatch;
   @RedundantCache
   public FontStyle styleFast;
 
@@ -54,7 +59,11 @@ public abstract class BetterBitmapFont extends BitmapFont{
 
   public void color(Color in) {
     styleFast.foreground=in;
-    fontBatch.setColor(styleFast.foreground);
+    fontBatch().setColor(styleFast.foreground);
+  }
+
+  public Batch fontBatch() {
+    return fontBatch.get();
   }
 
   public float textWidth(CharSequence in) {
@@ -124,7 +133,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
     if(textMode==fastText) {
       fastText(in,x,y);
     }else if(textMode==fullText) {
-      drawF(fontBatch,in,x,y);
+      drawF(fontBatch.get(),in,x,y);
     }
   }
 }

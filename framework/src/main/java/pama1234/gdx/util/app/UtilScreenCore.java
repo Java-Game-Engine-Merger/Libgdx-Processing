@@ -258,7 +258,9 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public void setCamera(Camera in) {
     if(usedCamera!=in) usedCamera=in;
     else return;
-    setProjectionMatrix(in.projection);
+    // TODO combined or projection
+    setProjectionMatrix(in.combined);
+    //    setProjectionMatrix(in.projection);
     //    setTransformMatrix(in.combined);
   }
 

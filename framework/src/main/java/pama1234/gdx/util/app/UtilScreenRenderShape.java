@@ -203,8 +203,8 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
       shapeDrawer.setColor(strokeColor);
       shapeDrawer.line(x1,y1,x2,y2);
       if(capType==CapType.ROUND) {
-        shapeDrawer.filledCircle(x1,y1,strokeWeight/2f);
-        shapeDrawer.filledCircle(x2,y2,strokeWeight/2f);
+        shapeDrawer.filledCircle(x1,y1,shapeDrawer.defaultLineWidth/2f);
+        shapeDrawer.filledCircle(x2,y2,shapeDrawer.defaultLineWidth/2f);
       }
     }
   }
