@@ -15,10 +15,8 @@ import pama1234.util.Annotations.SyntacticSugar;
  */
 public abstract class UtilScreenRenderText extends UtilScreenColor{
   public void text(String in,float x,float y) {
-    renderer(imageBatch);
-    //    fontBatch.begin();
+    renderer(font.fontBatch());
     font.text(in==null?"null":in,x,y);
-    //    fontBatch.end();
   }
   public void text(String in,float x,float y,float z) {
     pushMatrix();
@@ -79,7 +77,7 @@ public abstract class UtilScreenRenderText extends UtilScreenColor{
   public void textFont(BetterBitmapFont fontIn) {
     font=fontIn;
 
-//    font.fontBatch=()->imageBatch;
+    //    font.fontBatch=()->imageBatch;
     font.styleFast=fontStyle;
   }
   public void textMode(int in) {

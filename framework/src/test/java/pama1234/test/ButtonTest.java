@@ -13,7 +13,7 @@ import pama1234.gdx.util.app.ScreenCore2D;
 import pama1234.gdx.util.entity.Entity;
 import pama1234.gdx.util.launcher.MainAppBase;
 
-public class ShapeTest02 extends ScreenCore2D{
+public class ButtonTest extends ScreenCore2D{
   public static void main(String[] args) {
     test0001();
   }
@@ -22,7 +22,7 @@ public class ShapeTest02 extends ScreenCore2D{
   public static void test0001() {
     MainAppBase mab=new MainAppBase() {
       {
-        var classArray=new Class[] {ShapeTest02.class};
+        var classArray=new Class[] {ButtonTest.class};
         screenClassList=new ArrayList<>(classArray.length);
         for(int i=0;i<classArray.length;i++) {
           screenClassList.add(i,classArray[i]);
@@ -68,7 +68,7 @@ public class ShapeTest02 extends ScreenCore2D{
   public void frameResized() {
 
   }
-  public static TextButton<?>[] genButtons_0004(ShapeTest02 p) {
+  public static TextButton<?>[] genButtons_0004(ButtonTest p) {
     // TODO 重写按钮逻辑
     var out=new TextButton[] {
       new TextButton<>(p,true,()->true,self-> {},self-> {},self-> {},self->self.text="开始游戏",()->p.bu,()->(int)((p.width-p.textWidth("开始游戏"))/2f-p.pu/2),()->(int)(p.height*0.45f)),

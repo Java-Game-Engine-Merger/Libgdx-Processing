@@ -59,7 +59,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
 
   public void color(Color in) {
     styleFast.foreground=in;
-    fontBatch().setColor(styleFast.foreground);
+//    fontBatch().setColor(styleFast.foreground);
   }
 
   public Batch fontBatch() {
@@ -131,8 +131,10 @@ public abstract class BetterBitmapFont extends BitmapFont{
 
   public void text(String in,float x,float y) {
     if(textMode==fastText) {
+      fontBatch().setColor(styleFast.foreground);
       fastText(in,x,y);
     }else if(textMode==fullText) {
+      fontBatch().setColor(getColor());
       drawF(fontBatch.get(),in,x,y);
     }
   }

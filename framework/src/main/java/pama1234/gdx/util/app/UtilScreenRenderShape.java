@@ -185,7 +185,7 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     if(stroke) {
       renderer(shapeDrawer.getBatch());
       shapeDrawer.setColor(strokeColor);
-      shapeDrawer.arc(x,y,radius,start,UtilMath.rad(degrees));
+      shapeDrawer.arc(x,y,radius,UtilMath.rad(start),UtilMath.rad(degrees));
       //      renderer(rStroke);
       //      rStroke.arcNoBorder(x,y,radius,start,degrees,UtilMath.max(1,(int)(6*(float)Math.cbrt(radius)*(degrees/360))));
     }
