@@ -6,19 +6,20 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.tools.hiero.BMFontUtil;
 import com.badlogic.gdx.tools.hiero.HieroSettings;
+import com.badlogic.gdx.tools.hiero.unicodefont.GlyphPage;
 import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont;
 import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont.RenderType;
+import com.badlogic.gdx.tools.hiero.unicodefont.effects.ColorEffect;
 import com.badlogic.gdx.tools.hiero.unicodefont.effects.ConfigurableEffect.Value;
-import com.badlogic.gdx.tools.hiero.unicodefont.effects.DistanceFieldEffect;
 
 public class FontGenerator03 extends InputAdapter implements ApplicationListener{
   public static void main(String[] args) {
@@ -50,49 +51,40 @@ public class FontGenerator03 extends InputAdapter implements ApplicationListener
     hieroSettings.setFontSize(fontSize);
     hieroSettings.setFontName("Maple Mono SC NF");
 
-    HieroSettings settings=hieroSettings;
+    hieroSettings.setFont2Active(false);
+    hieroSettings.setGamma(1.8f);
 
-    //    settings.setFont2File(fontFileText.getText());
-    //    settings.setFont2Active(fontFileRadio.isSelected());
-    settings.setFont2Active(false);
-    //    settings.setBold(boldCheckBox.isSelected());
-    //    settings.setItalic(italicCheckBox.isSelected());
-    //    settings.setMono(monoCheckBox.isSelected());
-    settings.setGamma(1.8f);
+    hieroSettings.setPaddingTop(spreadInt);
+    hieroSettings.setPaddingRight(spreadInt);
+    hieroSettings.setPaddingBottom(spreadInt);
+    hieroSettings.setPaddingLeft(spreadInt);
 
-    settings.setPaddingTop(spreadInt);
-    settings.setPaddingRight(spreadInt);
-    settings.setPaddingBottom(spreadInt);
-    settings.setPaddingLeft(spreadInt);
+    hieroSettings.setPaddingAdvanceX(advance);
+    hieroSettings.setPaddingAdvanceY(advance);
 
-    settings.setPaddingAdvanceX(-advance);
-    settings.setPaddingAdvanceY(-advance);
+    hieroSettings.setGlyphPageWidth(1024);
+    hieroSettings.setGlyphPageHeight(1024);
+    String sampleText="abcABC123!@#$%^&*()_+`-=[]\\{}|;':,./<>?\"";
+    hieroSettings.setGlyphText(sampleText);
+    hieroSettings.setRenderType(RenderType.Java.ordinal());
 
-    settings.setGlyphPageWidth(1024);
-    settings.setGlyphPageHeight(1024);
-    //    settings.setGlyphText(sampleTextPane.getText());
-    hieroSettings.setGlyphText("abcABC123!@#$%^&*()_+`-=[]\\{}|;':,./<>?\"");
-    settings.setRenderType(RenderType.Java.ordinal());
-    //    if(nativeRadio.isSelected()) settings.setRenderType(RenderType.Native.ordinal());
-    //    else if(freeTypeRadio.isSelected()) settings.setRenderType(RenderType.FreeType.ordinal());
-    //    else settings.setRenderType(RenderType.Java.ordinal());
-    //    for(Iterator iter=effectPanels.iterator();iter.hasNext();) {
-    //      EffectPanel panel=(EffectPanel)iter.next();
-    //      settings.getEffects().add(panel.getEffect());
-    //    }
-
-    DistanceFieldEffect distanceFieldEffect=new DistanceFieldEffect();
-    var list=new ArrayList<Value>();
-    list.add(new BasicValue("Color",new Color(255,255,255,255)));
-    list.add(new BasicValue("Scale",32));
-    list.add(new BasicValue("Spread",3.0f));
-    distanceFieldEffect.setValues(list);
-    //    System.out.println(Arrays.toString(distanceFieldEffect.getValues().toArray()));
     List effects=hieroSettings.getEffects();
-    //    effects.clear();
-    effects.add(distanceFieldEffect);
 
-    String fonts[]=GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+    var colorEffect=new ColorEffect();
+    colorEffect.setColor(java.awt.Color.WHITE);
+    effects.add(colorEffect);
+
+    //    DistanceFieldEffect distanceFieldEffect=new DistanceFieldEffect();
+    //    var list=new ArrayList<Value>();
+    //    //    list.add(new BasicValue("Color",new Color(255,255,255,255)));
+    //    list.add(new BasicValue("Scale",32));
+    //    list.add(new BasicValue("Spread",3.0f));
+    //    distanceFieldEffect.setValues(list);
+    //    //    System.out.println(Arrays.toString(distanceFieldEffect.getValues().toArray()));
+    //    //    effects.clear();
+    //    effects.add(distanceFieldEffect);
+
+    //    String fonts[]=GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
     //    for(int i=0;i<fonts.length;i++) {
     //      var fontName=fonts[i];
@@ -102,14 +94,83 @@ public class FontGenerator03 extends InputAdapter implements ApplicationListener
     //    }
 
     Font mapleMonoScNf=new Font("Maple Mono SC NF",Font.PLAIN,fontSize);
+    //    Font mapleMonoScNf=new Font(Font.MONOSPACED,Font.PLAIN,fontSize);
     //    System.out.println(mapleMonoScNf);
 
     unicodeFont=new UnicodeFont(mapleMonoScNf,hieroSettings);
     //    unicodeFont.addGlyphs(32,72);
-    unicodeFont.addGlyphs("abcABC123!@#$%^&*()_+`-=[]\\{}|;':,./<>?\"");
+    unicodeFont.addGlyphs(sampleText);
     unicodeFont.loadGlyphs();
     //    unicodeFont.loadGlyphs(Integer.MAX_VALUE);
     //    unicodeFont.getFontFile();
+
+    var renderingBackgroundColor=new Color(0,0,0,1);
+
+    if(!unicodeFont.getEffects().isEmpty()&&unicodeFont.loadGlyphs(64)) {
+      //      glyphPageComboModel.removeAllElements();
+      int pageCount=unicodeFont.getGlyphPages().size();
+      int glyphCount=0;
+      for(int i=0;i<pageCount;i++) {
+        //        glyphPageComboModel.addElement("Page "+(i+1));
+        glyphCount+=((GlyphPage)unicodeFont.getGlyphPages().get(i)).getGlyphs().size();
+      }
+      //      glyphPagesTotalLabel.setText(String.valueOf(pageCount));
+      //      glyphsTotalLabel.setText(String.valueOf(glyphCount));
+    }
+
+    //    boolean sampleTextRadioSelected=false;
+    //
+    //    if(sampleTextRadioSelected) {
+    //      int offset=unicodeFont.getYOffset(sampleText);
+    //      if(offset>0) offset=0;
+    //      unicodeFont.drawString(10,12,sampleText,WHITE,0,sampleText.length());
+    //    }else {
+    //      // GL11.glColor4f(renderingBackgroundColor.r, renderingBackgroundColor.g, renderingBackgroundColor.b,
+    //      // renderingBackgroundColor.a);
+    //      // fillRect(0, 0, unicodeFont.getGlyphPageWidth() + 2, unicodeFont.getGlyphPageHeight() + 2);
+    //      //      int index=glyphPageCombo.getSelectedIndex();
+    //      List pages=unicodeFont.getGlyphPages();
+    //      //      if(index>=0&&index<pages.size()) {
+    //      Texture texture=((GlyphPage)pages.get(0)).getTexture();
+    //
+    //      var page=((GlyphPage)pages.get(0));
+    //      //      var glyph=page.getGlyphs().get(0);
+    //      //      System.out.println(glyph.getU());
+    //      //      System.out.println(texture.getWidth()+"x"+texture.getHeight());
+    //
+    //      glDisable(GL_TEXTURE_2D);
+    //      glColor4f(renderingBackgroundColor.r,renderingBackgroundColor.g,renderingBackgroundColor.b,
+    //        renderingBackgroundColor.a);
+    //      glBegin(GL_QUADS);
+    //      glVertex3f(0,0,0);
+    //      glVertex3f(0,texture.getHeight(),0);
+    //      glVertex3f(texture.getWidth(),texture.getHeight(),0);
+    //      glVertex3f(texture.getWidth(),0,0);
+    //      glEnd();
+    //      glEnable(GL_TEXTURE_2D);
+    //
+    //      texture.bind();
+    //      glColor4f(1,1,1,1);
+    //      glBegin(GL_QUADS);
+    //      glTexCoord2f(0,0);
+    //      glVertex3f(0,0,0);
+    //
+    //      glTexCoord2f(0,1);
+    //      glVertex3f(0,texture.getHeight(),0);
+    //
+    //      glTexCoord2f(1,1);
+    //      glVertex3f(texture.getWidth(),texture.getHeight(),0);
+    //
+    //      glTexCoord2f(1,0);
+    //      glVertex3f(texture.getWidth(),0,0);
+    //      glEnd();
+    //      //      }
+    //    }
+    //
+    //    glDisable(GL_TEXTURE_2D);
+    //    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    //    glDisableClientState(GL_VERTEX_ARRAY);
+
     String pathAndName=System.getProperty("user.dir")+"/fontOut/test.fnt";
 
     try {
