@@ -92,7 +92,7 @@ public class FontGenerator extends UtilScreen2D{
     ////      page.getPixmap();
     //    }
 
-    String[] out=BitmapFontWriter.writePixmaps(pages,Gdx.files.absolute(dir),name,distanceFieldGenerator);
+    String[] out=BitmapFontWriter.writePixmaps(pages,Gdx.files.absolute(dir),name,null);
     System.out.println("saved: "+Arrays.toString(out));
     if(distanceField) {
       for(int j=0;j<pages.size;j++) {
@@ -102,7 +102,7 @@ public class FontGenerator extends UtilScreen2D{
         BufferedImage bufferedImage=distanceFieldGenerator.generateDistanceField(inImage);
       }
     }
-    BitmapFontWriter.writeFont(data,out,Gdx.files.absolute(dir+name+".fnt"),info,width,height,distanceFieldGenerator);
+    BitmapFontWriter.writeFont(data,out,Gdx.files.absolute(dir+name+".fnt"),info,width,height,null);
   }
 
   @Override
