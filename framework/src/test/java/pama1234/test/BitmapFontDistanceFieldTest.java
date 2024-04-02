@@ -21,7 +21,7 @@ public class BitmapFontDistanceFieldTest extends InputAdapter implements Applica
     new Lwjgl3Application(new BitmapFontDistanceFieldTest());
   }
 
-  private static final String TEXT="Ta";
+  private static final String TEXT="我宣布个事mew！";
   private static final Color COLOR=Color.BLACK;
   private static final float[] SCALES= {0.25f,0.5f,1,2,4,8};
 
@@ -87,7 +87,7 @@ public class BitmapFontDistanceFieldTest extends InputAdapter implements Applica
     spriteBatch.begin();
 
     int x=10;
-    x+=drawFont(distanceFieldFontPama,"Distance field\nShowing distance field of pama1234",false,true,0,x);
+    x+=drawFont(distanceFieldFontPama,"Distance field\nShowing distance field of pama1234",true,true,1/8f,x);
     x+=drawFont(regularFont,"Regular font\nNearest filter",false,false,0,x);
     x+=drawFont(regularFont,"Regular font\nLinear filter",true,false,0,x);
     x+=drawFont(regularFont,"Regular font\nCustom shader",true,true,1.0f,x);

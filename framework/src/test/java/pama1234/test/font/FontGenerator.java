@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitm
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.tools.bmfont.BitmapFontWriter;
 import com.badlogic.gdx.tools.bmfont.BitmapFontWriter.FontInfo;
+import com.badlogic.gdx.tools.distancefield.DistanceFieldGenerator;
 
 import pama1234.gdx.util.app.UtilScreen2D;
 import pama1234.gdx.util.element.RangeChar;
@@ -41,7 +42,7 @@ public class FontGenerator extends UtilScreen2D{
   public int width=1280,height=1280;
   public int charInPage=4096;
   public FreeTypeFontGenerator generator;
-  public boolean distanceField;
+  public boolean distanceField=true;
 
   public int posX;
 
@@ -70,6 +71,11 @@ public class FontGenerator extends UtilScreen2D{
   public void setup() {
     String fontName="MapleMono-SC-NF/MapleMono-SC-NF-Regular.ttf";
     generator=new FreeTypeFontGenerator(Gdx.files.absolute(System.getProperty("user.dir")+"/doc/font/"+fontName));
+    if(distanceField) {
+      DistanceFieldGenerator distanceFieldGenerator=new DistanceFieldGenerator();
+      distanceFieldGenerator.setDownscale(16);
+      distanceFieldGenerator.setSpread(4);
+    }
 
     new Thread(()-> {
       int c=0;
