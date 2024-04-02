@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.tools.hiero.BMFontUtil;
 import com.badlogic.gdx.tools.hiero.HieroSettings;
@@ -45,12 +46,12 @@ public class FontGenerator03 extends UtilScreen2D{
     DistanceFieldEffect distanceFieldEffect=new DistanceFieldEffect();
     var list=new ArrayList<Value>();
     list.add(new BasicValue("Color",Color.WHITE));
-    list.add(new BasicValue("Scale",32));
-    list.add(new BasicValue("Spread",3));
+    list.add(new BasicValue("Scale",32.0f));
+    list.add(new BasicValue("Spread",3.0f));
     distanceFieldEffect.setValues(list);
     hieroSettings.getEffects().add(distanceFieldEffect);
     unicodeFont=new UnicodeFont(Font.getFont("Maple Mono SC NF"),hieroSettings);
-    String pathAndName="MapleMono.fnt";
+    String pathAndName=System.getProperty("user.dir")+"/fontOut/test.fnt";
 
     try {
       new BMFontUtil(unicodeFont).save(new File(pathAndName));
@@ -61,7 +62,7 @@ public class FontGenerator03 extends UtilScreen2D{
 
   @Override
   public void update() {
-
+    Gdx.app.exit();
   }
 
   @Override
