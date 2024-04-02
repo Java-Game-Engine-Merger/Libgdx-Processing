@@ -15,8 +15,8 @@ import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 
-import pama1234.gdx.util.font.MultiChunkFont;
-import pama1234.gdx.util.font.MultiChunkFontData;
+import pama1234.gdx.util.font.chunk.MultiChunkFont;
+import pama1234.gdx.util.font.chunk.MultiChunkFontData;
 import pama1234.math.geometry.RectI;
 import pama1234.util.function.GetFloat;
 

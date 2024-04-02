@@ -1,7 +1,7 @@
 package pama1234.gdx.game.ui.element;
 
-import pama1234.gdx.util.font.MultiChunkFont;
-import pama1234.gdx.util.font.MultiChunkFontData;
+import pama1234.gdx.util.font.chunk.MultiChunkFont;
+import pama1234.gdx.util.font.chunk.MultiChunkFontData;
 import pama1234.gdx.util.font.TextStyleSupplier;
 import pama1234.math.geometry.RectI;
 import pama1234.util.function.GetFloat;

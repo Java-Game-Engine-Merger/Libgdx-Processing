@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StringBuilder;
 
-import pama1234.gdx.util.font.MultiChunkFont;
+import pama1234.gdx.util.font.chunk.MultiChunkFont;
 
 public class DialogBox extends Actor{
   TextureRegion background;

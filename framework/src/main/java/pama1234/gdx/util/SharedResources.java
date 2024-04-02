@@ -5,7 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
-import pama1234.gdx.util.font.MultiChunkFont;
+import pama1234.gdx.util.font.chunk.MultiChunkFont;
 import pama1234.gdx.util.graphics.UtilPolygonSpriteBatch;
 import pama1234.gdx.util.graphics.UtilShapeRenderer;
 import pama1234.util.listener.Disposable;

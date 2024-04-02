@@ -1,4 +1,4 @@
-package pama1234.gdx.util.font;
+package pama1234.gdx.util.font.chunk;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
+import pama1234.gdx.util.font.FastGlyphLayout;
 
 public class MultiChunkFontCache extends BitmapFontCache{
   private final Array<GlyphLayout> pooledLayouts=new Array<>();
@@ -21,7 +22,7 @@ public class MultiChunkFontCache extends BitmapFontCache{
    * 
    * @see #addText(CharSequence, float, float, int, int, float, int, boolean, String)
    */
-  public FastGlyphLayout addFastText(CharSequence str,float x,float y) {
+  public FastGlyphLayout addFastText(CharSequence str, float x, float y) {
     return addFastText(str,x,y,0,str.length(),0,Align.left,false,null);
   }
   /**

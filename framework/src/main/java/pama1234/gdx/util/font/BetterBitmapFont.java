@@ -16,7 +16,9 @@ import pama1234.util.function.Get;
  * 提供两种渲染文本的方式，一种不支持换行符号等，一种支持换行
  */
 public abstract class BetterBitmapFont extends BitmapFont{
-  /** @see BetterBitmapFont#textMode */
+  /**
+   * @see BetterBitmapFont#textMode
+   */
   public static final int fastText=0,fullText=1;
 
   @RedundantCache
@@ -29,37 +31,46 @@ public abstract class BetterBitmapFont extends BitmapFont{
   public int textMode=fastText;
 
   public BetterBitmapFont() {}
+
   public BetterBitmapFont(boolean flip) {
     super(flip);
   }
+
   public BetterBitmapFont(FileHandle fontFile,TextureRegion region) {
     super(fontFile,region);
   }
+
   public BetterBitmapFont(FileHandle fontFile,TextureRegion region,boolean flip) {
     super(fontFile,region,flip);
   }
+
   public BetterBitmapFont(FileHandle fontFile) {
     super(fontFile);
   }
+
   public BetterBitmapFont(FileHandle fontFile,boolean flip) {
     super(fontFile,flip);
   }
+
   public BetterBitmapFont(FileHandle fontFile,FileHandle imageFile,boolean flip) {
     super(fontFile,imageFile,flip);
   }
+
   public BetterBitmapFont(FileHandle fontFile,FileHandle imageFile,boolean flip,boolean integer) {
     super(fontFile,imageFile,flip,integer);
   }
+
   public BetterBitmapFont(BitmapFontData data,TextureRegion region,boolean integer) {
     super(data,region,integer);
   }
+
   public BetterBitmapFont(BitmapFontData data,Array<TextureRegion> pageRegions,boolean integer) {
     super(data,pageRegions,integer);
   }
 
   public void color(Color in) {
     styleFast.foreground=in;
-//    fontBatch().setColor(styleFast.foreground);
+    //    fontBatch().setColor(styleFast.foreground);
   }
 
   public Batch fontBatch() {
@@ -69,6 +80,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
   public float textWidth(CharSequence in) {
     return textWidthNoScale(in)*styleFast.scale;
   }
+
   public abstract float textWidthNoScale(CharSequence in);
 
   public void textScale(float in) {
@@ -78,10 +90,12 @@ public abstract class BetterBitmapFont extends BitmapFont{
   public float size() {
     return styleFast.size;
   }
+
   //TODO
   public void size(int in) {
     size((float)in);
   }
+
   public abstract void size(float in);
 
   /**
@@ -93,11 +107,35 @@ public abstract class BetterBitmapFont extends BitmapFont{
    */
   public abstract void fastText(String in,float x,float y);
 
+  /**
+   * @see BitmapFont#draw(Batch, CharSequence, float, float)
+   * 
+   * @param batch
+   * @param str
+   * @param x
+   * @param y
+   * @return
+   */
   public abstract GlyphLayout drawF(Batch batch,CharSequence str,float x,float y);
+
+  /**
+   * @see BitmapFont#draw(Batch, CharSequence, float, float, float, int, boolean)
+   * @param batch
+   * @param str
+   * @param x
+   * @param y
+   * @param targetWidth
+   * @param halign
+   * @param wrap
+   * @return
+   */
   public abstract GlyphLayout drawF(Batch batch,CharSequence str,float x,float y,float targetWidth,int halign,boolean wrap);
+
   /**
    * used by TextArea and TextField
-   *
+   * 
+   * @see BitmapFont#draw(Batch, CharSequence, float, float, int, int, float, int, boolean)
+   * 
    * @param batch
    * @param str
    * @param x
@@ -110,8 +148,12 @@ public abstract class BetterBitmapFont extends BitmapFont{
    * @return
    */
   public abstract GlyphLayout drawF(Batch batch,CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,boolean wrap);
+
   /**
    * used by TextField
+   * 
+   * @see BitmapFont#draw(Batch, CharSequence, float, float, int, int, float, int, boolean,
+   *      String)
    *
    * @param batch
    * @param str
@@ -135,6 +177,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
       fastText(in,x,y);
     }else if(textMode==fullText) {
       fontBatch().setColor(getColor());
+//      fontBatch().setColor(styleFast.foreground);
       drawF(fontBatch.get(),in,x,y);
     }
   }

@@ -1,4 +1,4 @@
-package pama1234.gdx.util.font;
+package pama1234.gdx.util.font.chunk;
 
 import static space.earlygrey.shapedrawer.ShapeDrawer.createBlankTextureRegion;
 
@@ -12,12 +12,19 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
+import pama1234.gdx.util.font.BetterBitmapFont;
+import pama1234.gdx.util.font.FastGlyphLayout;
 import pama1234.gdx.util.font.FontUtil.UniFontDependent;
 import pama1234.math.vec.Vec2f;
 import pama1234.math.vec.Vec3i;
 
+/**
+ * 按需加载多个存储在资源目录中的字体区块png图片文件
+ *
+ * 默认使用经过转换的unifont
+ */
 @UniFontDependent
-public class MultiChunkFont extends BetterBitmapFont{
+public class MultiChunkFont extends BetterBitmapFont {
   public static final int useCR=0,showCR=1,ignoreCR=2;
 
   public FileHandle[] fontFile;
@@ -303,7 +310,7 @@ public class MultiChunkFont extends BetterBitmapFont{
     return mfontData;
   }
   @Override
-  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y) {
+  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y);
     cacheM.draw(batch);

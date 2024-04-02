@@ -1,4 +1,4 @@
-package pama1234.gdx.util.font;
+package pama1234.gdx.util.font.chunk;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;

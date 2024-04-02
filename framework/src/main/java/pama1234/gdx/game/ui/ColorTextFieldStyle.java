@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import pama1234.gdx.game.DrawableEntity;
 import pama1234.gdx.game.ui.element.TextField.TextFieldStyle;
 import pama1234.gdx.util.app.UtilScreen;
-import pama1234.gdx.util.font.MultiChunkFont;
+import pama1234.gdx.util.font.chunk.MultiChunkFont;
 
 public class ColorTextFieldStyle extends TextFieldStyle{
   public Color cursorColor,selectionColor,backgroundColor;
