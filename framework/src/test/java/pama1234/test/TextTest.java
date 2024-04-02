@@ -53,8 +53,9 @@ public class TextTest extends UtilScreen2D{
 
   @Override
   public void displayWithCam() {
-//    textColor(0);
-//    textMode(BetterBitmapFont.fullText);
+    //    textColor(0);
+    //    depth(true);
+    textMode(BetterBitmapFont.fullText);
     text("public static void main");
     text("TextTest.java使用了未经检查或不安全的操作。",0,20);
   }

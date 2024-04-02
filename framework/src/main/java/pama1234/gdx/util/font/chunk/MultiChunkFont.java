@@ -24,7 +24,7 @@ import pama1234.math.vec.Vec3i;
  * 默认使用经过转换的unifont
  */
 @UniFontDependent
-public class MultiChunkFont extends BetterBitmapFont {
+public class MultiChunkFont extends BetterBitmapFont{
   public static final int useCR=0,showCR=1,ignoreCR=2;
 
   public FileHandle[] fontFile;
@@ -310,7 +310,7 @@ public class MultiChunkFont extends BetterBitmapFont {
     return mfontData;
   }
   @Override
-  public FastGlyphLayout drawF(Batch batch, CharSequence str, float x, float y) {
+  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y);
     cacheM.draw(batch);
