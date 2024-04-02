@@ -9,7 +9,7 @@ dependencies {
   api project(':server-framework')
 
   api("com.github.lyze237:gdx-TinyVG:$gdxTinyVGVersion") {
-    exclude group: 'space.earlygrey', module: 'shapedrawer'
+    exclude group: 'space.earlygrey' , module: 'shapedrawer'
   }
 
   api project(":framework0006:framework0006-shape-drawer")
@@ -20,6 +20,8 @@ dependencies {
 
   testImplementation project(":lwjgl-framework")
   testImplementation "$gdxModule:gdx-platform:$gdxVersion:natives-desktop"
+  testImplementation("$gdxModule:gdx-tools:$gdxVersion")
+
 }
 
 publishing {
