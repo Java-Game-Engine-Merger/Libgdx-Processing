@@ -39,8 +39,9 @@ public class FontGenerator extends UtilScreen2D{
   public String outDir=System.getProperty("user.dir")+"/fontOut/";
   public String nameFont="MapleMonoRegular";
   public int width=1280,height=1280;
-  public int charInPage=512;
+  public int charInPage=4096;
   public FreeTypeFontGenerator generator;
+  public boolean distanceField;
 
   public int posX;
 
@@ -77,9 +78,9 @@ public class FontGenerator extends UtilScreen2D{
       for(int i=0;i<Character.MAX_VALUE;i+=size) {
         posX=i;
         try {
-          saveFont(outDir+"/"+c+"/",nameFont+"-"+c,c,i,i+size);
+          saveFont(outDir+"/charInPage-"+charInPage+"/"+c+"/",nameFont+"-"+c,c,i,i+size);
         }catch(RuntimeException e) {
-          System.out.println(e);
+          System.out.println(i+" "+e);
         }
         c++;
       }

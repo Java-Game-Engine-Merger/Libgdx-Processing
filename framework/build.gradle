@@ -20,7 +20,8 @@ dependencies {
 
   testImplementation project(":lwjgl-framework")
   testImplementation "$gdxModule:gdx-platform:$gdxVersion:natives-desktop"
-  testImplementation("$gdxModule:gdx-tools:$gdxVersion")
+  testImplementation "$gdxModule:gdx-tools:$gdxVersion"
+  testImplementation "$gdxModule:gdx-freetype-platform:$gdxVersion:natives-desktop"
 
 }
 

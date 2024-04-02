@@ -23,7 +23,7 @@ public class BitmapFontDistanceFieldTest extends InputAdapter implements Applica
 
   private static final String TEXT="Ta";
   private static final Color COLOR=Color.BLACK;
-  private static final float[] SCALES= {0.25f,0.5f,1,2,4};
+  private static final float[] SCALES= {0.25f,0.5f,1,2,4,8};
 
   private static class DistanceFieldShader extends ShaderProgram{
     public DistanceFieldShader() {
@@ -46,9 +46,11 @@ public class BitmapFontDistanceFieldTest extends InputAdapter implements Applica
 
   private Texture regularTexture;
   private Texture distanceFieldTexture;
+  private Texture distanceFieldTexturePama;
   private BitmapFont descriptionFont;
   private BitmapFont regularFont;
   private BitmapFont distanceFieldFont;
+  private BitmapFont distanceFieldFontPama;
   private DistanceFieldShader distanceFieldShader;
 
   @Override
@@ -68,6 +70,11 @@ public class BitmapFontDistanceFieldTest extends InputAdapter implements Applica
       distanceFieldTexture),true);
     distanceFieldFont.setColor(COLOR);
 
+    distanceFieldTexturePama=new Texture(Gdx.files.internal("data/pama1234/MapleMono.png"),true);
+    distanceFieldFontPama=new BitmapFont(Gdx.files.internal("data/pama1234/MapleMono.fnt"),new TextureRegion(
+      distanceFieldTexturePama),true);
+    distanceFieldFontPama.setColor(COLOR);
+
     distanceFieldShader=new DistanceFieldShader();
     ShaderProgram.pedantic=false; // Useful when debugging this test
   }
@@ -80,6 +87,7 @@ public class BitmapFontDistanceFieldTest extends InputAdapter implements Applica
     spriteBatch.begin();
 
     int x=10;
+    x+=drawFont(distanceFieldFontPama,"Distance field\nShowing distance field of pama1234",false,true,0,x);
     x+=drawFont(regularFont,"Regular font\nNearest filter",false,false,0,x);
     x+=drawFont(regularFont,"Regular font\nLinear filter",true,false,0,x);
     x+=drawFont(regularFont,"Regular font\nCustom shader",true,true,1.0f,x);
@@ -156,8 +164,8 @@ public class BitmapFontDistanceFieldTest extends InputAdapter implements Applica
   public void resize(int width,int height) {
     //    super.resize(width,height);
     camera.setToOrtho(true,width,height);
-//    camera.zoom=width/16f;
-//    camera.update();
+    //    camera.zoom=width/16f;
+    //    camera.update();
     spriteBatch.setTransformMatrix(camera.view);
     spriteBatch.setProjectionMatrix(camera.projection);
   }
@@ -165,11 +173,15 @@ public class BitmapFontDistanceFieldTest extends InputAdapter implements Applica
   @Override
   public void dispose() {
     spriteBatch.dispose();
+
     regularTexture.dispose();
     distanceFieldTexture.dispose();
+    distanceFieldFontPama.dispose();
+
     descriptionFont.dispose();
     regularFont.dispose();
     distanceFieldFont.dispose();
     distanceFieldShader.dispose();
+    distanceFieldFontPama.dispose();
   }
 }
