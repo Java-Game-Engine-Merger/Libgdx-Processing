@@ -19,14 +19,13 @@ import com.badlogic.gdx.graphics.g2d.PixmapPacker.SkylineStrategy;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitmapFontData;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-import com.badlogic.gdx.tools.bmfont.BitmapFontWriter;
-import com.badlogic.gdx.tools.bmfont.BitmapFontWriter.FontInfo;
 import com.badlogic.gdx.tools.distancefield.DistanceFieldGenerator;
 import com.badlogic.gdx.utils.Array;
 
 import pama1234.gdx.util.app.UtilScreen2D;
 import pama1234.gdx.util.element.RangeChar;
 import pama1234.gdx.util.launcher.MainAppBase;
+import pama1234.test.font.BitmapFontWriter.FontInfo;
 
 public class FontGenerator extends UtilScreen2D{
   public static void main(String[] args) {
@@ -93,7 +92,7 @@ public class FontGenerator extends UtilScreen2D{
     ////      page.getPixmap();
     //    }
 
-    String[] out=BitmapFontWriter.writePixmaps(pages,Gdx.files.absolute(dir),name);
+    String[] out=BitmapFontWriter.writePixmaps(pages,Gdx.files.absolute(dir),name,distanceFieldGenerator);
     System.out.println("saved: "+Arrays.toString(out));
     if(distanceField) {
       for(int j=0;j<pages.size;j++) {
@@ -103,7 +102,7 @@ public class FontGenerator extends UtilScreen2D{
         BufferedImage bufferedImage=distanceFieldGenerator.generateDistanceField(inImage);
       }
     }
-    BitmapFontWriter.writeFont(data,out,Gdx.files.absolute(dir+name+".fnt"),info,width,height);
+    BitmapFontWriter.writeFont(data,out,Gdx.files.absolute(dir+name+".fnt"),info,width,height,distanceFieldGenerator);
   }
 
   @Override
