@@ -95,14 +95,14 @@ public class FontGenerator extends UtilScreen2D{
 
     String[] out=BitmapFontWriter.writePixmaps(pages,Gdx.files.absolute(dir),name);
     System.out.println("saved: "+Arrays.toString(out));
-    if(distanceField) {
-      for(int j=0;j<pages.size;j++) {
-        Page page=pages.get(j);
-        Pixmap pixmap=page.getPixmap();
-        BufferedImage inImage=(BufferedImage)new ImageIcon(pixmap.getPixels().array()).getImage();
-        BufferedImage bufferedImage=distanceFieldGenerator.generateDistanceField(inImage);
-      }
-    }
+//    if(distanceField) {
+//      for(int j=0;j<pages.size;j++) {
+//        Page page=pages.get(j);
+//        Pixmap pixmap=page.getPixmap();
+//        BufferedImage inImage=(BufferedImage)new ImageIcon(pixmap.getPixels().array()).getImage();
+//        BufferedImage bufferedImage=distanceFieldGenerator.generateDistanceField(inImage);
+//      }
+//    }
     BitmapFontWriter.writeFont(data,out,Gdx.files.absolute(dir+name+".fnt"),info,width,height);
   }
 
