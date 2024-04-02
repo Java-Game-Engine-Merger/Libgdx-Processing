@@ -17,10 +17,12 @@ dependencies {
 
   api("com.badlogicgames.gdx:gdx:$gdxVersion")
 
-  api project(":lwjgl-framework")
+//  api project(":lwjgl-framework")
+//  api "$gdxModule:gdx-backend-lwjgl3:$gdxVersion"
   api "$gdxModule:gdx-platform:$gdxVersion:natives-desktop"
   api "$gdxModule:gdx-tools:$gdxVersion"
   api "$gdxModule:gdx-freetype-platform:$gdxVersion:natives-desktop"
+//  api "$gdxModule:gdx-backend-lwjgl3:$gdxVersion:natives-desktop"
 }
 
 tasks.test {
