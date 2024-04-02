@@ -1,10 +1,12 @@
 package pama1234.test.font;
 
-import com.badlogic.gdx.Game;
+import static pama1234.util.gdx.lwjgl.UtilLauncher.getDefaultConfiguration;
+
+import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker.SkylineStrategy;
@@ -14,37 +16,41 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.tools.bmfont.BitmapFontWriter;
 import com.badlogic.gdx.tools.bmfont.BitmapFontWriter.FontInfo;
 
+import pama1234.gdx.util.app.UtilScreen2D;
 import pama1234.gdx.util.element.RangeChar;
+import pama1234.gdx.util.launcher.MainAppBase;
 
-public class FontGenerator extends ScreenAdapter{
-  String dir=System.getProperty("user.dir")+"/fontOut/";
-  String nameFont="unifont";
-  int width=1280,height=1280;
-  @Override
-  public void show() {
-
-    int c=0;
-    int size=4096;
-
-    for(int i=0;i<Character.MAX_VALUE;i+=size) {
-      try {
-        saveFont(dir+"/"+c+"/",nameFont+"-"+c,c,i,i+size);
-      }catch(RuntimeException e) {
-        System.out.println(e);
+public class FontGenerator extends UtilScreen2D{
+  public static void main(String[] args) {
+    Class<?> clas=MethodHandles.lookup().lookupClass();
+    MainAppBase mab=new MainAppBase() {
+      {
+        var classArray=new Class[] {clas};
+        screenClassList=new ArrayList<>(classArray.length);
+        for(int i=0;i<classArray.length;i++) {
+          screenClassList.add(i,classArray[i]);
+        }
       }
-      c++;
-    }
-    Gdx.app.exit();
+
+    };
+    new Lwjgl3Application(mab,getDefaultConfiguration(mab,clas.getSimpleName()));
   }
+
+  public String outDir=System.getProperty("user.dir")+"/fontOut/";
+  public String nameFont="MapleMonoRegular";
+  public int width=1280,height=1280;
+  public int charInPage=512;
+  public FreeTypeFontGenerator generator;
+
+  public int posX;
+
   public void saveFont(String dir,String name,int i,int from,int to) {
     FontInfo info;
-    FreeTypeFontGenerator generator;
     FreeTypeFontParameter param;
     info=new FontInfo(nameFont,16);
     info.charset="utf-8";
-    generator=new FreeTypeFontGenerator(Gdx.files.absolute("D:/eclipse-workspace/processing playground 5/data/font/unifont.ttf"));
     param=new FreeTypeFontParameter();
-    param.size=16;
+    param.size=64;
     param.renderCount=1;
     param.padTop=1;
     param.padRight=1;
@@ -57,28 +63,47 @@ public class FontGenerator extends ScreenAdapter{
     FreeTypeBitmapFontData data=generator.generateData(param);
     String[] out=BitmapFontWriter.writePixmaps(param.packer.getPages(),Gdx.files.absolute(dir),name);
     BitmapFontWriter.writeFont(data,out,Gdx.files.absolute(dir+name+".fnt"),info,width,height);
-    // Hiero;
   }
-  public static void main(String[] args) {
-    new Lwjgl3Application(new Game() {
-      @Override
-      public void create() {
-        setScreen(new FontGenerator());
+
+  @Override
+  public void setup() {
+    String fontName="MapleMono-SC-NF/MapleMono-SC-NF-Regular.ttf";
+    generator=new FreeTypeFontGenerator(Gdx.files.absolute(System.getProperty("user.dir")+"/doc/font/"+fontName));
+
+    new Thread(()-> {
+      int c=0;
+      int size=charInPage;
+
+      for(int i=0;i<Character.MAX_VALUE;i+=size) {
+        posX=i;
+        try {
+          saveFont(outDir+"/"+c+"/",nameFont+"-"+c,c,i,i+size);
+        }catch(RuntimeException e) {
+          System.out.println(e);
+        }
+        c++;
       }
-      @Override
-      public void dispose() {
-        super.dispose();
-        screen.dispose();
-      }
-    },getDefaultConfiguration());
+      Gdx.app.exit();
+    }).start();
   }
-  public static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
-    Lwjgl3ApplicationConfiguration configuration=new Lwjgl3ApplicationConfiguration();
-    configuration.setTitle("FontGenerator");
-    configuration.useVsync(true);
-    configuration.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate);
-    configuration.setWindowedMode(640,480);
-    // configuration.setWindowIcon("icon/icon128.png","icon/icon64.png","icon/icon32.png","icon/icon16.png");
-    return configuration;
+
+  @Override
+  public void update() {
+
+  }
+
+  @Override
+  public void display() {
+    text("generating "+posX);
+  }
+
+  @Override
+  public void displayWithCam() {
+
+  }
+
+  @Override
+  public void frameResized() {
+
   }
 }
