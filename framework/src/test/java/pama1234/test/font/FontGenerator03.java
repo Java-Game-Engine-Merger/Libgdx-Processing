@@ -2,7 +2,6 @@ package pama1234.test.font;
 
 import static pama1234.util.gdx.lwjgl.UtilLauncher.getDefaultConfiguration;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
@@ -15,7 +14,6 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.tools.hiero.BMFontUtil;
 import com.badlogic.gdx.tools.hiero.HieroSettings;
-import com.badlogic.gdx.tools.hiero.unicodefont.GlyphPage;
 import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont;
 import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont.RenderType;
 import com.badlogic.gdx.tools.hiero.unicodefont.effects.ColorEffect;
@@ -37,6 +35,8 @@ public class FontGenerator03 extends InputAdapter implements ApplicationListener
     //    new Lwjgl3Application(mab,getDefaultConfiguration(mab,clas.getSimpleName()));
     new Lwjgl3Application(new FontGenerator03(),getDefaultConfiguration(null,clas.getSimpleName()));
   }
+
+  public String userDir=System.getProperty("user.dir");
 
   public HieroSettings hieroSettings;
   public UnicodeFont unicodeFont;
@@ -93,31 +93,38 @@ public class FontGenerator03 extends InputAdapter implements ApplicationListener
     //      }
     //    }
 
-    Font mapleMonoScNf=new Font("Maple Mono SC NF",Font.PLAIN,fontSize);
+    //    Font mapleMonoScNf=new Font("Maple Mono SC NF",Font.PLAIN,fontSize);
     //    Font mapleMonoScNf=new Font(Font.MONOSPACED,Font.PLAIN,fontSize);
     //    System.out.println(mapleMonoScNf);
 
-    unicodeFont=new UnicodeFont(mapleMonoScNf,hieroSettings);
+    //    unicodeFont=new UnicodeFont(mapleMonoScNf,hieroSettings);
+    unicodeFont=new UnicodeFont(userDir+"/doc/font/MapleMono-SC-NF/MapleMono-SC-NF-Regular.ttf",hieroSettings);
     //    unicodeFont.addGlyphs(32,72);
-    unicodeFont.addGlyphs(sampleText);
+    unicodeFont.addAsciiGlyphs();
+    //    unicodeFont.addGlyphs(0,Character.MAX_VALUE);
     unicodeFont.loadGlyphs();
+    //    List fontEffect=unicodeFont.getEffects();
+    //    fontEffect.clear();
+    //    for(int i=0;i<effects.size();i++) {
+    //      fontEffect.add(effects.get(i));
+    //    }
     //    unicodeFont.loadGlyphs(Integer.MAX_VALUE);
     //    unicodeFont.getFontFile();
 
     var renderingBackgroundColor=new Color(0,0,0,1);
 
-    if(!unicodeFont.getEffects().isEmpty()&&unicodeFont.loadGlyphs(64)) {
-      //      glyphPageComboModel.removeAllElements();
-      int pageCount=unicodeFont.getGlyphPages().size();
-      int glyphCount=0;
-      for(int i=0;i<pageCount;i++) {
-        //        glyphPageComboModel.addElement("Page "+(i+1));
-        glyphCount+=((GlyphPage)unicodeFont.getGlyphPages().get(i)).getGlyphs().size();
-      }
-      //      glyphPagesTotalLabel.setText(String.valueOf(pageCount));
-      //      glyphsTotalLabel.setText(String.valueOf(glyphCount));
-    }
-
+    //    if(!fontEffect.isEmpty()&&unicodeFont.loadGlyphs(64)) {
+    //      //      glyphPageComboModel.removeAllElements();
+    //      int pageCount=unicodeFont.getGlyphPages().size();
+    //      int glyphCount=0;
+    //      for(int i=0;i<pageCount;i++) {
+    //        //        glyphPageComboModel.addElement("Page "+(i+1));
+    //        glyphCount+=((GlyphPage)unicodeFont.getGlyphPages().get(i)).getGlyphs().size();
+    //      }
+    //      //      glyphPagesTotalLabel.setText(String.valueOf(pageCount));
+    //      //      glyphsTotalLabel.setText(String.valueOf(glyphCount));
+    //    }
+    //
     //    boolean sampleTextRadioSelected=false;
     //
     //    if(sampleTextRadioSelected) {
@@ -171,7 +178,7 @@ public class FontGenerator03 extends InputAdapter implements ApplicationListener
     //    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     //    glDisableClientState(GL_VERTEX_ARRAY);
 
-    String pathAndName=System.getProperty("user.dir")+"/fontOut/test.fnt";
+    String pathAndName=userDir+"/fontOut/test.fnt";
 
     try {
       new BMFontUtil(unicodeFont).save(new File(pathAndName));
