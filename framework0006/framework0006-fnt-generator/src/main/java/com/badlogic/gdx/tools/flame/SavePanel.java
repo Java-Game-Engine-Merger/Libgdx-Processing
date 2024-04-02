@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,45 +24,45 @@ import javax.swing.*;
 
 import com.badlogic.gdx.utils.JsonWriter;
 
-public class SavePanel extends EditorPanel<Void> {
+public class SavePanel extends EditorPanel<Void>{
 
-	JComboBox<JsonWriter.OutputType> jsonMode;
-	JCheckBox prettyPrintBox;
+  JComboBox<JsonWriter.OutputType> jsonMode;
+  JCheckBox prettyPrintBox;
 
-	public SavePanel (FlameMain particleEditor3D, String name, String description) {
-		super(particleEditor3D, name, description);
-		setValue(null);
-	}
+  public SavePanel(FlameMain particleEditor3D,String name,String description) {
+    super(particleEditor3D,name,description);
+    setValue(null);
+  }
 
-	@Override
-	protected void initializeComponents () {
-		super.initializeComponents();
+  @Override
+  protected void initializeComponents() {
+    super.initializeComponents();
 
-		jsonMode = new JComboBox<JsonWriter.OutputType>(new DefaultComboBoxModel(JsonWriter.OutputType.values()));
-		jsonMode.setSelectedItem(SavePanel.this.editor.jsonOutputType);
+    jsonMode=new JComboBox<JsonWriter.OutputType>(new DefaultComboBoxModel(JsonWriter.OutputType.values()));
+    jsonMode.setSelectedItem(SavePanel.this.editor.jsonOutputType);
 
-		contentPanel.add(new JLabel("Json output mode:"), new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.EAST,
-			GridBagConstraints.NONE, new Insets(6, 0, 0, 0), 0, 0));
-		contentPanel.add(jsonMode, new GridBagConstraints(1, 1, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE,
-			new Insets(6, 6, 0, 0), 0, 0));
+    contentPanel.add(new JLabel("Json output mode:"),new GridBagConstraints(0,1,1,1,0,0,GridBagConstraints.EAST,
+      GridBagConstraints.NONE,new Insets(6,0,0,0),0,0));
+    contentPanel.add(jsonMode,new GridBagConstraints(1,1,1,1,0,0,GridBagConstraints.WEST,GridBagConstraints.NONE,
+      new Insets(6,6,0,0),0,0));
 
-		contentPanel.add(new JLabel("Pretty print:"), new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.EAST,
-			GridBagConstraints.NONE, new Insets(6, 0, 0, 0), 0, 0));
-		prettyPrintBox = new JCheckBox();
-		prettyPrintBox.setSelected(SavePanel.this.editor.jsonPrettyPrint);
-		contentPanel.add(prettyPrintBox, new GridBagConstraints(1, 2, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.NONE,
-			new Insets(6, 6, 0, 0), 0, 0));
+    contentPanel.add(new JLabel("Pretty print:"),new GridBagConstraints(0,2,1,1,0,0,GridBagConstraints.EAST,
+      GridBagConstraints.NONE,new Insets(6,0,0,0),0,0));
+    prettyPrintBox=new JCheckBox();
+    prettyPrintBox.setSelected(SavePanel.this.editor.jsonPrettyPrint);
+    contentPanel.add(prettyPrintBox,new GridBagConstraints(1,2,1,1,1,0,GridBagConstraints.WEST,GridBagConstraints.NONE,
+      new Insets(6,6,0,0),0,0));
 
-		jsonMode.addActionListener(new ActionListener() {
-			public void actionPerformed (ActionEvent event) {
-				SavePanel.this.editor.jsonOutputType = (JsonWriter.OutputType)jsonMode.getSelectedItem();
-			}
-		});
+    jsonMode.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        SavePanel.this.editor.jsonOutputType=(JsonWriter.OutputType)jsonMode.getSelectedItem();
+      }
+    });
 
-		prettyPrintBox.addActionListener(new ActionListener() {
-			public void actionPerformed (ActionEvent event) {
-				SavePanel.this.editor.jsonPrettyPrint = prettyPrintBox.isSelected();
-			}
-		});
-	}
+    prettyPrintBox.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        SavePanel.this.editor.jsonPrettyPrint=prettyPrintBox.isSelected();
+      }
+    });
+  }
 }

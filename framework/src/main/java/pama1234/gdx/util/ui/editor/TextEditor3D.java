@@ -33,33 +33,33 @@ public class TextEditor3D<T extends ScreenCore3D>extends PointEntity<T,PathPoint
   public TextField hideKeyboardTextField;
   public TextField currentTextField;
   public int hideKeyboard;//TODO fix this by remove
-  public TextEditor3D(T p, Color strokeColor, float x, float y) {
-        this(p,strokeColor,x,y,640,640);
-    }
+  public TextEditor3D(T p,Color strokeColor,float x,float y) {
+    this(p,strokeColor,x,y,640,640);
+  }
   public TextEditor3D(T p,Color strokeColor,float x,float y,float w,float h) {
-        super(p,new PathPoint(x,y));
-        this.strokeColor=strokeColor;
-        size=new Vec2f(w,h);
-        rect=new RectF(()->x(),()->y(),()->size.x,()->size.y);
-        textArea=new TextArea(null,new CodeTextFieldStyle(p),rect,()->1);
-        addAndroidKeyboardUtil(textArea);
-        move=createCross(p,strokeColor);
-        move.offset.set(-4,-4);
-        resize=createCross(p,strokeColor);
-        resize.offset.set(4,4);
-    }
+    super(p,new PathPoint(x,y));
+    this.strokeColor=strokeColor;
+    size=new Vec2f(w,h);
+    rect=new RectF(()->x(),()->y(),()->size.x,()->size.y);
+    textArea=new TextArea(null,new CodeTextFieldStyle(p),rect,()->1);
+    addAndroidKeyboardUtil(textArea);
+    move=createCross(p,strokeColor);
+    move.offset.set(-4,-4);
+    resize=createCross(p,strokeColor);
+    resize.offset.set(4,4);
+  }
   public void addAndroidKeyboardUtil(TextField in) {
     in.addListener(new FocusListener() {
       @Override
       public void keyboardFocusChanged(FocusEvent event,Actor actor,boolean focused) {
-//        p.cam2d.activeDrag=!focused;
+        //        p.cam2d.activeDrag=!focused;
         if(!focused) {
-//          p.hideKeyboard=hideKeyboardTimeCount;
+          //          p.hideKeyboard=hideKeyboardTimeCount;
           hideKeyboard=hideKeyboardTimeCount;
-//          p.hideKeyboardTextField=in;
+          //          p.hideKeyboardTextField=in;
           hideKeyboardTextField=in;
         }else {
-//          p.hideKeyboard=-1;
+          //          p.hideKeyboard=-1;
           hideKeyboard=-1;
           if(currentTextField!=in) {
             if(currentTextField!=null) textFieldExit(currentTextField);

@@ -177,7 +177,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
       fastText(in,x,y);
     }else if(textMode==fullText) {
       fontBatch().setColor(getColor());
-//      fontBatch().setColor(styleFast.foreground);
+      //      fontBatch().setColor(styleFast.foreground);
       drawF(fontBatch.get(),in,x,y);
     }
   }

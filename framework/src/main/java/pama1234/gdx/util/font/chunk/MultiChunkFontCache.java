@@ -22,7 +22,7 @@ public class MultiChunkFontCache extends BitmapFontCache{
    * 
    * @see #addText(CharSequence, float, float, int, int, float, int, boolean, String)
    */
-  public FastGlyphLayout addFastText(CharSequence str, float x, float y) {
+  public FastGlyphLayout addFastText(CharSequence str,float x,float y) {
     return addFastText(str,x,y,0,str.length(),0,Align.left,false,null);
   }
   /**

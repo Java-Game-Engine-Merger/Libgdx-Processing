@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,36 +24,36 @@ import javax.swing.event.ChangeListener;
 
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter.NumericValue;
 
-class NumericPanel extends EditorPanel {
-	private final NumericValue value;
-	JSpinner valueSpinner;
+class NumericPanel extends EditorPanel{
+  private final NumericValue value;
+  JSpinner valueSpinner;
 
-	public NumericPanel (final NumericValue value, String name, String description) {
-		super(value, name, description);
-		this.value = value;
+  public NumericPanel(final NumericValue value,String name,String description) {
+    super(value,name,description);
+    this.value=value;
 
-		initializeComponents();
+    initializeComponents();
 
-		valueSpinner.setValue(value.getValue());
+    valueSpinner.setValue(value.getValue());
 
-		valueSpinner.addChangeListener(new ChangeListener() {
-			public void stateChanged (ChangeEvent event) {
-				value.setValue(((Number)valueSpinner.getValue()).floatValue());
-			}
-		});
-	}
+    valueSpinner.addChangeListener(new ChangeListener() {
+      public void stateChanged(ChangeEvent event) {
+        value.setValue(((Number)valueSpinner.getValue()).floatValue());
+      }
+    });
+  }
 
-	private void initializeComponents () {
-		JPanel contentPanel = getContentPanel();
-		{
-			JLabel label = new JLabel("Value:");
-			contentPanel.add(label, new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.NONE,
-				new Insets(0, 0, 0, 6), 0, 0));
-		}
-		{
-			valueSpinner = new JSpinner(new SpinnerNumberModel(0, -99999, 99999, 0.1f));
-			contentPanel.add(valueSpinner, new GridBagConstraints(1, 1, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.NONE,
-				new Insets(0, 0, 0, 0), 0, 0));
-		}
-	}
+  private void initializeComponents() {
+    JPanel contentPanel=getContentPanel();
+    {
+      JLabel label=new JLabel("Value:");
+      contentPanel.add(label,new GridBagConstraints(0,1,1,1,0,0,GridBagConstraints.EAST,GridBagConstraints.NONE,
+        new Insets(0,0,0,6),0,0));
+    }
+    {
+      valueSpinner=new JSpinner(new SpinnerNumberModel(0,-99999,99999,0.1f));
+      contentPanel.add(valueSpinner,new GridBagConstraints(1,1,1,1,1,0,GridBagConstraints.WEST,GridBagConstraints.NONE,
+        new Insets(0,0,0,0),0,0));
+    }
+  }
 }

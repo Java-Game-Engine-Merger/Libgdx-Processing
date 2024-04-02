@@ -2,7 +2,6 @@ package pama1234.test.font;
 
 import static pama1234.util.gdx.lwjgl.UtilLauncher.getDefaultConfiguration;
 
-import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +10,6 @@ import javax.swing.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker.Page;
@@ -95,14 +93,14 @@ public class FontGenerator extends UtilScreen2D{
 
     String[] out=BitmapFontWriter.writePixmaps(pages,Gdx.files.absolute(dir),name);
     System.out.println("saved: "+Arrays.toString(out));
-//    if(distanceField) {
-//      for(int j=0;j<pages.size;j++) {
-//        Page page=pages.get(j);
-//        Pixmap pixmap=page.getPixmap();
-//        BufferedImage inImage=(BufferedImage)new ImageIcon(pixmap.getPixels().array()).getImage();
-//        BufferedImage bufferedImage=distanceFieldGenerator.generateDistanceField(inImage);
-//      }
-//    }
+    //    if(distanceField) {
+    //      for(int j=0;j<pages.size;j++) {
+    //        Page page=pages.get(j);
+    //        Pixmap pixmap=page.getPixmap();
+    //        BufferedImage inImage=(BufferedImage)new ImageIcon(pixmap.getPixels().array()).getImage();
+    //        BufferedImage bufferedImage=distanceFieldGenerator.generateDistanceField(inImage);
+    //      }
+    //    }
     BitmapFontWriter.writeFont(data,out,Gdx.files.absolute(dir+name+".fnt"),info,width,height);
   }
 

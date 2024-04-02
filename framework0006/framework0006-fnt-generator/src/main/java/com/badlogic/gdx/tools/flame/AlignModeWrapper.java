@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,26 +18,26 @@ package com.badlogic.gdx.tools.flame;
 
 import com.badlogic.gdx.graphics.g3d.particles.ParticleShader.AlignMode;
 
-enum AlignModeWrapper {
-	Screen(AlignMode.Screen, "Screen"), ViewPoint(AlignMode.ViewPoint, "View Point");
+enum AlignModeWrapper{
+  Screen(AlignMode.Screen,"Screen"),ViewPoint(AlignMode.ViewPoint,"View Point");
 
-	public static AlignModeWrapper find (AlignMode alignMode) {
-		for (AlignModeWrapper wrapper : values()) {
-			if (wrapper.mode == alignMode) return wrapper;
-		}
-		return null;
-	}
+  public static AlignModeWrapper find(AlignMode alignMode) {
+    for(AlignModeWrapper wrapper:values()) {
+      if(wrapper.mode==alignMode) return wrapper;
+    }
+    return null;
+  }
 
-	public String desc;
-	public AlignMode mode;
+  public String desc;
+  public AlignMode mode;
 
-	AlignModeWrapper (AlignMode mode, String desc) {
-		this.mode = mode;
-		this.desc = desc;
-	}
+  AlignModeWrapper(AlignMode mode,String desc) {
+    this.mode=mode;
+    this.desc=desc;
+  }
 
-	@Override
-	public String toString () {
-		return desc;
-	}
+  @Override
+  public String toString() {
+    return desc;
+  }
 }
