@@ -2,13 +2,19 @@ package pama1234.test.font;
 
 import static pama1234.util.gdx.lwjgl.UtilLauncher.getDefaultConfiguration;
 
+import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import javax.swing.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
+import com.badlogic.gdx.graphics.g2d.PixmapPacker.Page;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker.SkylineStrategy;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitmapFontData;
@@ -16,6 +22,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.tools.bmfont.BitmapFontWriter;
 import com.badlogic.gdx.tools.bmfont.BitmapFontWriter.FontInfo;
 import com.badlogic.gdx.tools.distancefield.DistanceFieldGenerator;
+import com.badlogic.gdx.utils.Array;
 
 import pama1234.gdx.util.app.UtilScreen2D;
 import pama1234.gdx.util.element.RangeChar;
@@ -40,30 +47,62 @@ public class FontGenerator extends UtilScreen2D{
   public String outDir=System.getProperty("user.dir")+"/fontOut/";
   public String nameFont="MapleMonoRegular";
   public int width=1280,height=1280;
-  public int charInPage=4096;
+  public int charInPage=2048;
   public FreeTypeFontGenerator generator;
   public boolean distanceField=true;
+  public DistanceFieldGenerator distanceFieldGenerator;
+  public int charSize=64;
 
   public int posX;
+  public int spread=3;
 
   public void saveFont(String dir,String name,int i,int from,int to) {
     FontInfo info;
     FreeTypeFontParameter param;
-    info=new FontInfo(nameFont,16);
+    info=new FontInfo(nameFont,charSize);
     info.charset="utf-8";
     param=new FreeTypeFontParameter();
-    param.size=64;
+    param.size=charSize;
     param.renderCount=1;
-    param.padTop=1;
-    param.padRight=1;
-    param.padBottom=1;
-    param.padLeft=1;
-    // param.spaceX=-2;
-    // param.spaceY=-2;
+    if(distanceField) {
+      param.padTop=spread+1;
+      param.padRight=spread+1;
+      param.padBottom=spread+1;
+      param.padLeft=spread+1;
+      param.spaceX=-spread*2;
+      param.spaceY=-spread*2;
+    }else {
+      param.padTop=1;
+      param.padRight=1;
+      param.padBottom=1;
+      param.padLeft=1;
+      //      param.spaceX=-1;
+      //      param.spaceY=-1;
+    }
     param.characters=new StringBuffer(new RangeChar(from,to)).toString();
     param.packer=new PixmapPacker(width,height,Format.Alpha,0,false,new SkylineStrategy());
     FreeTypeBitmapFontData data=generator.generateData(param);
-    String[] out=BitmapFontWriter.writePixmaps(param.packer.getPages(),Gdx.files.absolute(dir),name);
+
+    Array<Page> pages=param.packer.getPages();
+    //    for(int j=0;j<pages.size;j++) {
+    //      Page page=pages.get(j);
+    //      Pixmap pixmap=page.getPixmap();
+    //      BufferedImage inImage=(BufferedImage)new ImageIcon(pixmap.getPixels().array()).getImage();
+    //      BufferedImage bufferedImage=distanceFieldGenerator.generateDistanceField(inImage);
+    ////      pages.set(j,new Page(bufferedImage));
+    ////      page.getPixmap();
+    //    }
+
+    String[] out=BitmapFontWriter.writePixmaps(pages,Gdx.files.absolute(dir),name);
+    System.out.println("saved: "+Arrays.toString(out));
+    if(distanceField) {
+      for(int j=0;j<pages.size;j++) {
+        Page page=pages.get(j);
+        Pixmap pixmap=page.getPixmap();
+        BufferedImage inImage=(BufferedImage)new ImageIcon(pixmap.getPixels().array()).getImage();
+        BufferedImage bufferedImage=distanceFieldGenerator.generateDistanceField(inImage);
+      }
+    }
     BitmapFontWriter.writeFont(data,out,Gdx.files.absolute(dir+name+".fnt"),info,width,height);
   }
 
@@ -72,9 +111,12 @@ public class FontGenerator extends UtilScreen2D{
     String fontName="MapleMono-SC-NF/MapleMono-SC-NF-Regular.ttf";
     generator=new FreeTypeFontGenerator(Gdx.files.absolute(System.getProperty("user.dir")+"/doc/font/"+fontName));
     if(distanceField) {
-      DistanceFieldGenerator distanceFieldGenerator=new DistanceFieldGenerator();
-      distanceFieldGenerator.setDownscale(16);
-      distanceFieldGenerator.setSpread(4);
+      distanceFieldGenerator=new DistanceFieldGenerator();
+      // set between 8 and 32
+      distanceFieldGenerator.setDownscale(32);
+      // set between 2 and 4
+      distanceFieldGenerator.setSpread(spread);
+      //      distanceFieldGenerator.setColor(Color.WHITE);
     }
 
     new Thread(()-> {
