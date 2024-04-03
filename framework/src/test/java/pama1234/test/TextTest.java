@@ -9,14 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 
-import pama1234.gdx.game.ui.ColorTextFieldStyle;
-import pama1234.gdx.game.ui.element.TextField;
-import pama1234.gdx.util.app.UtilScreen;
 import pama1234.gdx.util.app.UtilScreen2D;
 import pama1234.gdx.util.entity.Entity;
-import pama1234.gdx.util.font.BetterBitmapFont;
 import pama1234.gdx.util.launcher.MainAppBase;
-import pama1234.math.geometry.RectF;
 
 public class TextTest extends UtilScreen2D{
   public static void main(String[] args) {
@@ -46,9 +41,11 @@ public class TextTest extends UtilScreen2D{
       @Override
       public void display() {}
     });
-    addCamTextFields(new TextField("file.name()",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->0,()->0-26,()->250-120,()->18),()->1));
+    //    addCamTextFields(new TextField("file.name()",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->0,()->0-26,()->250-120,()->18),()->1));
+    //
+    //    textMode(BetterBitmapFont.fullText);
 
-    textMode(BetterBitmapFont.fullText);
+//    depth(true);
   }
 
   @Override
@@ -65,7 +62,7 @@ public class TextTest extends UtilScreen2D{
     //    depth(true);
 
     text("public static void main");
-    text("TextTest.java使用了未经检查或不安全的操作。",0,20);
+    fullText("TextTest.java使用了未经检查或不安全的操作。",0,20);
     text("TextTest.java\n使用了\n\n未经检查或不安全的操作。",0,40);
   }
 

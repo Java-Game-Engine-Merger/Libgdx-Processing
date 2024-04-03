@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 
 import pama1234.gdx.util.element.FontStyle;
 import pama1234.util.Annotations.RedundantCache;
+import pama1234.util.Annotations.SyntacticSugar;
 import pama1234.util.function.Get;
 
 /**
@@ -72,7 +73,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
     styleFast.foreground=in;
     //    fontBatch().setColor(styleFast.foreground);
   }
-
+  @SyntacticSugar
   public Batch fontBatch() {
     return fontBatch.get();
   }
@@ -92,6 +93,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
   }
 
   //TODO
+  @SyntacticSugar
   public void size(int in) {
     size((float)in);
   }
@@ -119,7 +121,8 @@ public abstract class BetterBitmapFont extends BitmapFont{
    * @param y
    * @return
    */
-  public abstract GlyphLayout drawF(Batch batch,CharSequence str,float x,float y);
+  @Override
+  public abstract GlyphLayout draw(Batch batch,CharSequence str,float x,float y);
 
   /**
    * @see BitmapFont#draw(Batch, CharSequence, float, float, float, int, boolean)
@@ -132,7 +135,8 @@ public abstract class BetterBitmapFont extends BitmapFont{
    * @param wrap
    * @return
    */
-  public abstract GlyphLayout drawF(Batch batch,CharSequence str,float x,float y,float targetWidth,int halign,boolean wrap);
+  @Override
+  public abstract GlyphLayout draw(Batch batch,CharSequence str,float x,float y,float targetWidth,int halign,boolean wrap);
 
   /**
    * used by TextArea and TextField
@@ -150,7 +154,8 @@ public abstract class BetterBitmapFont extends BitmapFont{
    * @param wrap
    * @return
    */
-  public abstract GlyphLayout drawF(Batch batch,CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,boolean wrap);
+  @Override
+  public abstract GlyphLayout draw(Batch batch,CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,boolean wrap);
 
   /**
    * used by TextField
@@ -170,7 +175,8 @@ public abstract class BetterBitmapFont extends BitmapFont{
    * @param truncate
    * @return
    */
-  public abstract GlyphLayout drawF(Batch batch,CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,boolean wrap,String truncate);
+  @Override
+  public abstract GlyphLayout draw(Batch batch,CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,boolean wrap,String truncate);
 
   public abstract void setFullTextColor(Color color);
 
@@ -181,7 +187,8 @@ public abstract class BetterBitmapFont extends BitmapFont{
     }else if(textMode==fullText) {
       fontBatch().setColor(getColor());
       //      loadAll(in);
-      drawF(fontBatch.get(),in,x,y);
+      draw(fontBatch.get(),in,x,y);
+      //      drawF(fontBatch.get(),in,x,y,0,in.length(),0,Align.left,false,null);
     }
   }
 }

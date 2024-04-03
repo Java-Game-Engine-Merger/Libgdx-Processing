@@ -85,16 +85,14 @@ public abstract class UtilScreenRenderText extends UtilScreenColor{
   }
 
   //---------------------------------------------------------------------------
-
+  @Deprecated
   public void fullText(String in,float x,float y) {
+//    setProjectionMatrix(usedCamera.projection);
+//    setTransformMatrix(matrix());
     renderer(imageBatch);
-    font.drawF(imageBatch,in==null?"null":in,x,y);
+    font.draw(imageBatch,in==null?"null":in,x,y);
   }
   @Deprecated
-  public void drawTextCenter(String in,float x,float y) {
-    renderer(imageBatch);
-    font.drawF(imageBatch,in==null?"null":in,x,y);
-  }
   public void setTextScale(float in) {
     font.getData().setScale(in);
   }

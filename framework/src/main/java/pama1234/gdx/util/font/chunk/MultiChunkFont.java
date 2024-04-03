@@ -19,19 +19,19 @@ public class MultiChunkFont extends MultiChunkFontCore{
   }
 
   @Override
-  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y) {
+  public FastGlyphLayout draw(Batch batch, CharSequence str, float x, float y) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y);
     cacheM.draw(batch);
     return layout;
   }
-  public void drawF(Batch batch,FastGlyphLayout layout,float x,float y) {
+  public void draw(Batch batch, FastGlyphLayout layout, float x, float y) {
     cacheM.clear();
     cacheM.addText(layout,x,y);
     cacheM.draw(batch);
   }
   @Override
-  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y,float targetWidth,int halign,boolean wrap) {
+  public FastGlyphLayout draw(Batch batch, CharSequence str, float x, float y, float targetWidth, int halign, boolean wrap) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y,targetWidth,halign,wrap);
     cacheM.draw(batch);
@@ -52,7 +52,7 @@ public class MultiChunkFont extends MultiChunkFontCore{
    * @return
    */
   @Override
-  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,boolean wrap) {
+  public FastGlyphLayout draw(Batch batch, CharSequence str, float x, float y, int start, int end, float targetWidth, int halign, boolean wrap) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y,start,end,targetWidth,halign,wrap);
     cacheM.draw(batch);
@@ -74,7 +74,7 @@ public class MultiChunkFont extends MultiChunkFontCore{
    * @return
    */
   @Override
-  public FastGlyphLayout drawF(Batch batch,CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,boolean wrap,String truncate) {
+  public FastGlyphLayout draw(Batch batch, CharSequence str, float x, float y, int start, int end, float targetWidth, int halign, boolean wrap, String truncate) {
     cacheM.clear();
     FastGlyphLayout layout=cacheM.addFastText(str,x,y,start,end,targetWidth,halign,wrap,truncate);
     cacheM.draw(batch);

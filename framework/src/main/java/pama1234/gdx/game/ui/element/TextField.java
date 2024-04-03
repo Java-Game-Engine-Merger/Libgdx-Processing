@@ -325,14 +325,14 @@ public class TextField extends Widget implements Disableable{
   protected void drawText(Batch batch,MultiChunkFont font,float x,float y) {
     boolean markupEnabled=font.getData().markupEnabled;
     if(focused) font.markupEnabled(false);
-    font.drawF(batch,displayText,
+    font.draw(batch,displayText,
       x+textOffset,
       y-font.getDescent(),
       visibleTextStart,visibleTextEnd,0,Align.left,false);
     font.markupEnabled(markupEnabled);
   }
   protected void drawMessageText(Batch batch,MultiChunkFont font,float x,float y,float maxWidth) {
-    font.drawF(batch,messageText,
+    font.draw(batch,messageText,
       x+textOffset,
       y-font.getDescent(),
       0,messageText.length(),maxWidth,textHAlign,false,"...");

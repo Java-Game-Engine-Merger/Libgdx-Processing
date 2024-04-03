@@ -195,25 +195,25 @@ public class LazyBitmapFont extends BetterBitmapFont{
   }
 
   @Override
-  public GlyphLayout drawF(Batch batch,CharSequence str,float x,float y) {
+  public GlyphLayout draw(Batch batch, CharSequence str, float x, float y) {
     return draw(batch,str,x,y);
   }
   @Override
-  public GlyphLayout drawF(Batch batch,CharSequence str,float x,float y,float targetWidth,int halign,boolean wrap) {
+  public GlyphLayout draw(Batch batch, CharSequence str, float x, float y, float targetWidth, int halign, boolean wrap) {
     return draw(batch,str,x,y,targetWidth,halign,wrap);
   }
   @Override
-  public GlyphLayout drawF(Batch batch,CharSequence str,
-    float x,float y,int start,int end,
-    float targetWidth,int halign,boolean wrap) {
+  public GlyphLayout draw(Batch batch, CharSequence str,
+                          float x, float y, int start, int end,
+                          float targetWidth, int halign, boolean wrap) {
 
     return draw(batch,str,x,y,start,end,targetWidth,halign,wrap);
   }
   @Override
-  public GlyphLayout drawF(Batch batch,CharSequence str,
-    float x,float y,int start,int end,
-    float targetWidth,int halign,boolean wrap,
-    String truncate) {
+  public GlyphLayout draw(Batch batch, CharSequence str,
+                          float x, float y, int start, int end,
+                          float targetWidth, int halign, boolean wrap,
+                          String truncate) {
 
     return draw(batch,str,x,y,start,end,targetWidth,halign,wrap,truncate);
   }

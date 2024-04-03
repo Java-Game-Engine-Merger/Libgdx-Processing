@@ -87,7 +87,7 @@ public class DialogBox extends Actor{
   @Override
   public void draw(Batch batch,float arg1) {
     batch.draw(background,getX(),getY(),getWidth(),getHeight());
-    font.drawF(
+    font.draw(
       batch,
       appear.toString(),
       (int)getX(),

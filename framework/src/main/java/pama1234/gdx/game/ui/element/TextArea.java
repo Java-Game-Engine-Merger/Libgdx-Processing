@@ -196,7 +196,7 @@ public class TextArea extends TextField{
     if(focused) font.markupEnabled(false);
     float offsetY=-font.getDescent();
     for(int i=firstLineShowing*2;i<(firstLineShowing+linesShowing)*2&&i<linesBreak.size;i+=2) {
-      font.drawF(batch,displayText,
+      font.draw(batch,displayText,
         x,
         y+offsetY,
         linesBreak.items[i],linesBreak.items[i+1],0,Align.left,false);
