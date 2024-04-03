@@ -72,7 +72,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
   }
 
   //---------------------------------------------------------------------------
-
+  @Deprecated
   public abstract void setFullTextColor(Color color);
 
   public void color(Color in) {
@@ -105,9 +105,14 @@ public abstract class BetterBitmapFont extends BitmapFont{
     size((float)in);
   }
 
-  public abstract void size(float in);
+  public void size(float in) {
+//    if(styleFast.size==in) return;
+    styleFast.size=in;
+    //    for(int i=0;i<fontFile.length;i++) if(dataM[i]!=null) dataM[i].getData().setScale(styleFast.size/styleFast.defaultSize);
+  }
 
-  public abstract void load(int chunk);
+//  @Deprecated
+//  public abstract void load(int chunk);
   public abstract void loadAll(String s);
   public void markupEnabled(boolean in) {
     getData().markupEnabled=in;
