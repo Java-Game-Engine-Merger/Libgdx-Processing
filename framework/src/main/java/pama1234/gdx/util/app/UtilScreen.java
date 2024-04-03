@@ -117,10 +117,10 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
       @Override
       public void display() {
         //        var t=usedRenderer;
-        rendererEnd();//TODO unintuitive
+        endRenderer();//TODO unintuitive
         usedRenderer=screenStage.getBatch();
         screenStage.draw();
-        rendererEnd();//TODO ugly
+        endRenderer();//TODO ugly
 
         //        setProjectionMatrix(usedCamera.projection);
         //        setTransformMatrix(matrix());
@@ -133,10 +133,10 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
       @Override
       public void display() {
         //        var t=usedRenderer;
-        rendererEnd();
+        endRenderer();
         usedRenderer=camStage.getBatch();
         camStage.draw();
-        rendererEnd();
+        endRenderer();
 
         //        setProjectionMatrix(usedCamera.projection);
         //        setTransformMatrix(matrix());

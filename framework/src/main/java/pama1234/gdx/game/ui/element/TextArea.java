@@ -3,20 +3,16 @@ package pama1234.gdx.game.ui.element;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.IntArray;
-import com.badlogic.gdx.utils.Null;
-import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.Pools;
+import com.badlogic.gdx.utils.*;
 
-import pama1234.gdx.util.font.chunk.MultiChunkFont;
-import pama1234.gdx.util.font.chunk.MultiChunkFontData;
+import pama1234.gdx.util.font.BetterBitmapFont;
 import pama1234.math.geometry.RectI;
 import pama1234.util.function.GetFloat;
 
@@ -159,15 +155,15 @@ public class TextArea extends TextField{
   }
   protected void sizeChanged() {
     lastText=null;
-    MultiChunkFont font=style.font;
+    BetterBitmapFont font=style.font;
     Drawable background=style.background;
     float availableHeight=getHeight()-(background==null?0:background.getBottomHeight()+background.getTopHeight());
     linesShowing=(int)Math.floor(availableHeight/font.getLineHeight());
   }
-  protected float getTextY(MultiChunkFont font,@Null Drawable background) {
+  protected float getTextY(BetterBitmapFont font,@Null Drawable background) {
     return 0;
   }
-  protected void drawSelection(Drawable selection,Batch batch,MultiChunkFont font,float x,float y) {//TODO
+  protected void drawSelection(Drawable selection,Batch batch,BetterBitmapFont font,float x,float y) {//TODO
     int i=firstLineShowing*2;
     float offsetY=0;
     int minIndex=Math.min(cursor,selectionStart);
@@ -191,7 +187,7 @@ public class TextArea extends TextField{
       i+=2;
     }
   }
-  protected void drawText(Batch batch,MultiChunkFont font,float x,float y) {
+  protected void drawText(Batch batch,BetterBitmapFont font,float x,float y) {
     boolean markupEnabled=font.getData().markupEnabled;
     if(focused) font.markupEnabled(false);
     float offsetY=-font.getDescent();
@@ -204,12 +200,12 @@ public class TextArea extends TextField{
     }
     font.markupEnabled(markupEnabled);
   }
-  protected void drawCursor(Drawable cursorPatch,Batch batch,MultiChunkFont font,float x,float y) {
+  protected void drawCursor(Drawable cursorPatch,Batch batch,BetterBitmapFont font,float x,float y) {
     cursorPatch.draw(batch,x+getCursorX(),y+getCursorY(),cursorPatch.getMinWidth(),font.getLineHeight());
   }
   public float getCursorX() {
     float tempTextOffset=0;
-    MultiChunkFontData fontData=style.font.getDataM();
+    BitmapFontData fontData=style.font.getData();
     if(!(cursor>=glyphPositions.size||cursorLine*2>=linesBreak.size)) {
       int lineStart=linesBreak.items[cursorLine*2];
       tempTextOffset=glyphPositions.get(cursor)-glyphPositions.get(lineStart);
@@ -217,14 +213,14 @@ public class TextArea extends TextField{
     return tempTextOffset+fontData.cursorX;
   }
   public float getCursorY() {
-    MultiChunkFont font=style.font;
+    BetterBitmapFont font=style.font;
     return (cursorLine-firstLineShowing)*font.getLineHeight();
   }
   protected void calculateOffsets() {
     super.calculateOffsets();
     if(!this.text.equals(lastText)) {
       this.lastText=text;
-      MultiChunkFont font=style.font;
+      BetterBitmapFont font=style.font;
       float maxWidthLine=this.getWidth()
         -(style.background!=null?style.background.getLeftWidth()+style.background.getRightWidth():0);
       linesBreak.clear();
@@ -301,7 +297,7 @@ public class TextArea extends TextField{
     protected void setCursorPosition(float x,float y) {
       moveOffset=-1;
       Drawable background=style.background;
-      MultiChunkFont font=style.font;
+      BetterBitmapFont font=style.font;
       // float height=getHeight();
       if(background!=null) {
         // height-=background.getTopHeight();

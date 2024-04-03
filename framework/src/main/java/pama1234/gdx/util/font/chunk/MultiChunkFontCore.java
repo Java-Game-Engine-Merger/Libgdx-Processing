@@ -112,7 +112,7 @@ public abstract class MultiChunkFontCore extends BetterBitmapFont{
     multiRegions.set(in,dataM[in].getRegion());
   }
   public BitmapFont createBitmapFont(FileHandle fontFile) {
-    boolean flipped=getDataM().flipped;
+    boolean flipped=getData().flipped;
     BitmapFont out=fontFile==null?new BitmapFont(flipped):new BitmapFont(fontFile,flipped);
     out.getRegion().getTexture().setFilter(TextureFilter.Linear,TextureFilter.Nearest);
     out.getData().setScale(styleFast.size/styleFast.defaultSize);
@@ -310,10 +310,6 @@ public abstract class MultiChunkFontCore extends BetterBitmapFont{
     }
     x+=glyph.xadvance;
     return x;
-  }
-
-  public MultiChunkFontData getDataM() {
-    return mfontData;
   }
 
   @Override

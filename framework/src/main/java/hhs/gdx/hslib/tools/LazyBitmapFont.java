@@ -30,6 +30,7 @@ import pama1234.gdx.util.font.FontUtil.UniFontDependent;
  * @version 2.1.5
  * @see <a href="https://github.com/dingjibang/GDX-LAZY-FONT">...</a>
  */
+@Deprecated
 public class LazyBitmapFont extends BetterBitmapFont{
   public final int fontSize;
   private final FreeTypeFontGenerator generator;
@@ -195,25 +196,25 @@ public class LazyBitmapFont extends BetterBitmapFont{
   }
 
   @Override
-  public GlyphLayout draw(Batch batch, CharSequence str, float x, float y) {
+  public GlyphLayout draw(Batch batch,CharSequence str,float x,float y) {
     return draw(batch,str,x,y);
   }
   @Override
-  public GlyphLayout draw(Batch batch, CharSequence str, float x, float y, float targetWidth, int halign, boolean wrap) {
+  public GlyphLayout draw(Batch batch,CharSequence str,float x,float y,float targetWidth,int halign,boolean wrap) {
     return draw(batch,str,x,y,targetWidth,halign,wrap);
   }
   @Override
-  public GlyphLayout draw(Batch batch, CharSequence str,
-                          float x, float y, int start, int end,
-                          float targetWidth, int halign, boolean wrap) {
+  public GlyphLayout draw(Batch batch,CharSequence str,
+    float x,float y,int start,int end,
+    float targetWidth,int halign,boolean wrap) {
 
     return draw(batch,str,x,y,start,end,targetWidth,halign,wrap);
   }
   @Override
-  public GlyphLayout draw(Batch batch, CharSequence str,
-                          float x, float y, int start, int end,
-                          float targetWidth, int halign, boolean wrap,
-                          String truncate) {
+  public GlyphLayout draw(Batch batch,CharSequence str,
+    float x,float y,int start,int end,
+    float targetWidth,int halign,boolean wrap,
+    String truncate) {
 
     return draw(batch,str,x,y,start,end,targetWidth,halign,wrap,truncate);
   }

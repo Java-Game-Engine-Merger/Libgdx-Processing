@@ -203,7 +203,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
     //    rStroke.begin(ShapeType.Line);
   }
   public void endShape() {
-    rendererEnd();// TODO
+    endRenderer();// TODO
     //    rFill.end();
     //    rStroke.end();
   }
@@ -250,7 +250,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
       }
     }
   }
-  public void rendererEnd() {
+  public void endRenderer() {
     renderer(null);
     //    if(usedRenderer instanceof Batch batch&&batch.isDrawing()) batch.end();
     //    else if(usedRenderer instanceof UtilShapeRenderer r&&r.isDrawing()) r.flush();

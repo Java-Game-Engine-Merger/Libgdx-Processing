@@ -1,24 +1,17 @@
 package pama1234.gdx.game.ui.element;
 
-import pama1234.gdx.util.font.chunk.MultiChunkFont;
-import pama1234.gdx.util.font.chunk.MultiChunkFontData;
-import pama1234.gdx.util.font.TextStyleSupplier;
-import pama1234.math.geometry.RectI;
-import pama1234.util.function.GetFloat;
+import java.lang.StringBuilder;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout.GlyphRun;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
@@ -26,14 +19,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Disableable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Clipboard;
-import com.badlogic.gdx.utils.FloatArray;
-import com.badlogic.gdx.utils.Null;
-import com.badlogic.gdx.utils.Pools;
-import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.Timer.Task;
+
+import pama1234.gdx.util.font.BetterBitmapFont;
+import pama1234.gdx.util.font.TextStyleSupplier;
+import pama1234.math.geometry.RectI;
+import pama1234.util.function.GetFloat;
 
 public class TextField extends Widget implements Disableable{
   protected static final char BACKSPACE=8;
@@ -247,14 +239,15 @@ public class TextField extends Widget implements Disableable{
     if(style.focusedBackground!=null&&hasKeyboardFocus()) return style.focusedBackground;
     return style.background;
   }
+  @Override
   public void draw(Batch batch,float parentAlpha) {//TODO
     if(rectF!=null) {
       setPosition(rectF.x(),rectF.y());
       setSize(rectF.w(),rectF.h());
     }
     if(textSize!=null) {
-      MultiChunkFont font=style.font;
-      MultiChunkFontData td=font.getDataM();
+      BetterBitmapFont font=style.font;
+      BitmapFontData td=font.getData();
       float tx=td.scaleX,
         ty=td.scaleY;
       td.setScale(textSize.get());
@@ -274,7 +267,7 @@ public class TextField extends Widget implements Disableable{
       if(focused) Timer.schedule(blinkTask,blinkTime,blinkTime);
       else keyRepeatTask.cancel();
     }else if(!focused) cursorOn=false;
-    final MultiChunkFont font=style.font;
+    final BetterBitmapFont font=style.font;
     final Color fontColor=(disabled&&style.disabledFontColor!=null)?style.disabledFontColor
       :((focused&&style.focusedFontColor!=null)?style.focusedFontColor:style.fontColor);
     final Drawable selection=style.selection;
@@ -299,7 +292,7 @@ public class TextField extends Widget implements Disableable{
     }
     if(displayText.length()==0) {
       if((!focused||disabled)&&messageText!=null) {
-        MultiChunkFont messageFont=style.messageFont!=null?style.messageFont:font;
+        BetterBitmapFont messageFont=style.messageFont!=null?style.messageFont:font;
         if(style.messageFontColor!=null) {
           messageFont.setColor(style.messageFontColor.r,style.messageFontColor.g,style.messageFontColor.b,
             style.messageFontColor.a*color.a*parentAlpha);
@@ -312,17 +305,17 @@ public class TextField extends Widget implements Disableable{
     }
     if(!disabled&&cursorOn&&cursorPatch!=null) drawCursor(cursorPatch,batch,font,x+bgLeftWidth,y+textY);
   }
-  protected float getTextY(MultiChunkFont font,@Null Drawable background) {
+  protected float getTextY(BetterBitmapFont font,@Null Drawable background) {
     return 0;
   }
-  protected void drawSelection(Drawable selection,Batch batch,MultiChunkFont font,float xIn,float yIn) {//TODO
+  protected void drawSelection(Drawable selection,Batch batch,BetterBitmapFont font,float xIn,float yIn) {//TODO
     selection.draw(batch,
       xIn+textOffset+selectionX,
       yIn,
       selectionWidth,
       font.getLineHeight());
   }
-  protected void drawText(Batch batch,MultiChunkFont font,float x,float y) {
+  protected void drawText(Batch batch,BetterBitmapFont font,float x,float y) {
     boolean markupEnabled=font.getData().markupEnabled;
     if(focused) font.markupEnabled(false);
     font.draw(batch,displayText,
@@ -331,13 +324,13 @@ public class TextField extends Widget implements Disableable{
       visibleTextStart,visibleTextEnd,0,Align.left,false);
     font.markupEnabled(markupEnabled);
   }
-  protected void drawMessageText(Batch batch,MultiChunkFont font,float x,float y,float maxWidth) {
+  protected void drawMessageText(Batch batch,BetterBitmapFont font,float x,float y,float maxWidth) {
     font.draw(batch,messageText,
       x+textOffset,
       y-font.getDescent(),
       0,messageText.length(),maxWidth,textHAlign,false,"...");
   }
-  protected void drawCursor(Drawable cursorPatch,Batch batch,MultiChunkFont font,float x,float y) {
+  protected void drawCursor(Drawable cursorPatch,Batch batch,BetterBitmapFont font,float x,float y) {
     cursorPatch.draw(batch,
       x+textOffset+glyphPositions.get(cursor)-glyphPositions.get(visibleTextStart)+font.getData().cursorX,
       y,
@@ -345,8 +338,8 @@ public class TextField extends Widget implements Disableable{
       font.getLineHeight());
   }
   void updateDisplayText() {
-    MultiChunkFont font=style.font;
-    MultiChunkFontData data=font.getDataM();
+    BetterBitmapFont font=style.font;
+    BitmapFontData data=font.getData();
     boolean markupEnabled=data.markupEnabled;
     font.markupEnabled(false);
     String text=this.text;
@@ -405,7 +398,7 @@ public class TextField extends Widget implements Disableable{
     StringBuilder buffer=new StringBuilder();
     int textLength=text.length();
     if(hasSelection) textLength-=Math.abs(cursor-selectionStart);
-    MultiChunkFontData data=style.font.getDataM();
+    BitmapFontData data=style.font.getData();
     for(int i=0,n=content.length();i<n;i++) {
       if(!withinMaxLength(textLength+buffer.length())) break;
       char c=content.charAt(i);
@@ -912,14 +905,14 @@ public class TextField extends Widget implements Disableable{
     }
   }
   static public class TextFieldStyle{
-    public MultiChunkFont font;
+    public BetterBitmapFont font;
     public Color fontColor;
     public @Null Color focusedFontColor,disabledFontColor;
     public @Null Drawable background,focusedBackground,disabledBackground,cursor,selection;
-    public @Null MultiChunkFont messageFont;
+    public @Null BetterBitmapFont messageFont;
     public @Null Color messageFontColor;
     public TextFieldStyle() {}
-    public TextFieldStyle(MultiChunkFont font,Color fontColor,@Null Drawable cursor,@Null Drawable selection,
+    public TextFieldStyle(BetterBitmapFont font,Color fontColor,@Null Drawable cursor,@Null Drawable selection,
       @Null Drawable background) {
       this.font=font;
       this.fontColor=fontColor;

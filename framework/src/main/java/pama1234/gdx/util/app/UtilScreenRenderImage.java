@@ -42,8 +42,9 @@ public abstract class UtilScreenRenderImage extends UtilScreenRenderText{
       imageBatch=imageBatchDefault;
       //      font.fontBatch=imageBatchDefault;
     }
+    font.fontBatch=()->imageBatch;
 
-    rendererEnd();
+    endRenderer();
   }
 
   //---------------------------------------------------------------------------

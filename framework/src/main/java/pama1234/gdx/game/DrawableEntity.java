@@ -34,7 +34,7 @@ public class DrawableEntity extends Entity<UtilScreen> implements Drawable{
     //    batch.end();//TODO
     var r=p.usedRenderer;
     if(r!=batch) throw new RuntimeException("plz ask pama to fix this");
-    p.rendererEnd();
+    p.endRenderer();
     f.draw(b,x,y,width,height);
     p.renderer(r);
     // f(b,x,y,width,height);
