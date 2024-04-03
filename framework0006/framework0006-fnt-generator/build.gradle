@@ -23,6 +23,8 @@ dependencies {
   api "$gdxModule:gdx-tools:$gdxVersion"
   api "$gdxModule:gdx-freetype-platform:$gdxVersion:natives-desktop"
 //  api "$gdxModule:gdx-backend-lwjgl3:$gdxVersion:natives-desktop"
+
+  api 'com.formdev:flatlaf:3.4.1'
 }
 
 tasks.test {

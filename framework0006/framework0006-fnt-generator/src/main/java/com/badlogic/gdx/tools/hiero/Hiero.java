@@ -32,6 +32,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.*;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import org.lwjgl.opengl.GL11;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -191,6 +192,8 @@ public class Hiero extends JFrame{
       }else if(more&&(param.equals("-o")||param.equals("--output"))) {
         File f=new File(args[++i]);
         saveBm(f);
+      }else if(more&&(param.equals("-c")||param.equals("--chars"))) {
+        sampleTextPane.setText(args[++i]);
       }else {
         System.err.println("Unknown parameter: "+param);
         exit(3);
@@ -1518,6 +1521,8 @@ public class Hiero extends JFrame{
   }
 
   public static void main(final String[] args) throws Exception {
+    FlatLightLaf.setup();
+
     SwingUtilities.invokeLater(new Runnable() {
       public void run() {
         new Hiero(args);
