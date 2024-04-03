@@ -40,7 +40,7 @@ public class HieroSettings{
   private boolean bold,italic,mono;
   private float gamma;
   private int paddingTop,paddingLeft,paddingBottom,paddingRight,paddingAdvanceX,paddingAdvanceY;
-  private int glyphPageWidth=512,glyphPageHeight=512;
+  private int glyphPageWidth=1280,glyphPageHeight=1280;
   private String glyphText="";
   private final List effects=new ArrayList();
   private boolean nativeRendering;

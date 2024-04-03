@@ -16,9 +16,9 @@ pad.advance.x=-6
 pad.advance.y=-6
 
 glyph.native.rendering=false
-glyph.page.width=1280
-glyph.page.height=1280
-glyph.text=
+glyph.page.width=2048
+glyph.page.height=2048
+glyph.text=1
 
 render_type=0
 

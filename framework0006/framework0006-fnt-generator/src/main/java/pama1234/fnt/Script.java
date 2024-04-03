@@ -5,7 +5,7 @@ import com.badlogic.gdx.tools.hiero.Hiero;
 public class Script{
   public static String userDir=System.getProperty("user.dir");
   public static void main(String[] args) {
-    System.setProperty("sun.java2d.uiScale","1");
+//    System.setProperty("sun.java2d.uiScale","1");
 
     int i=Integer.parseInt(args[0]);
     int size=Integer.parseInt(args[1]);

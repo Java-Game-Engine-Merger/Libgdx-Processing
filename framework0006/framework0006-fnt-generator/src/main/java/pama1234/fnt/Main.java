@@ -44,7 +44,8 @@ public class Main{
   }
   public static class Test{
     public static void main(String[] args) {
-      Script.main(new String[] {String.valueOf(0),String.valueOf(4096),"MapleMonoRegular"});
+      Script.main(new String[] {
+        String.valueOf(0),String.valueOf(4096),String.valueOf(0),"MapleMonoRegular"});
     }
   }
 }
