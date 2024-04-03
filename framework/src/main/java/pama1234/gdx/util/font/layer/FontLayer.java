@@ -27,13 +27,6 @@ public class FontLayer{
   /** 所有字体层共用一个 */
   public FontStyle styleFast;
 
-  public boolean load(char c) {
-    //    int pos=c>>>digitShift;
-    //
-    //    loadFont(pos);
-    //    loadOnDemand=isAllLoaded();
-    return getGlyph(c)!=null;
-  }
   public boolean isAllLoaded() {
     for(int i=0;i<length;i++) if(dataM[i]==null) return true;
     return false;

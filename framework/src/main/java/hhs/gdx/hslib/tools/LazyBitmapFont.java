@@ -181,6 +181,11 @@ public class LazyBitmapFont extends BetterBitmapFont{
   }
 
   @Override
+  public Glyph getGlyph(char ch) {
+    return null;
+  }
+
+  @Override
   public void loadAll(String s) {
 
   }

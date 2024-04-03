@@ -111,7 +111,9 @@ public abstract class BetterBitmapFont extends BitmapFont{
     //    for(int i=0;i<fontFile.length;i++) if(dataM[i]!=null) dataM[i].getData().setScale(styleFast.size/styleFast.defaultSize);
   }
 
-//  @Deprecated
+  public abstract Glyph getGlyph(char ch);
+
+  //  @Deprecated
 //  public abstract void load(int chunk);
   public abstract void loadAll(String s);
   public void markupEnabled(boolean in) {

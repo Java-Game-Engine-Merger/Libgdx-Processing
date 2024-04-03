@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
+import pama1234.gdx.util.font.BetterBitmapFont;
 import pama1234.gdx.util.font.chunk.MultiChunkFont;
 import pama1234.gdx.util.graphics.UtilPolygonSpriteBatch;
 import pama1234.gdx.util.graphics.UtilShapeRenderer;
@@ -25,7 +26,7 @@ public class SharedResources implements Disposable{
   //  }
 
   public static SharedResources instance=new SharedResources();
-  public MultiChunkFont font;
+  public BetterBitmapFont font;
   //  public SpriteBatch fontBatch;
   public SpriteBatch imageBatch;
   public TinyVGShapeDrawer tvgDrawer;
@@ -51,11 +52,11 @@ public class SharedResources implements Disposable{
     // spriteBatch.setBlendFunction(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
     return spriteBatch;
   }
-  public static MultiChunkFont genMultiChunkFont() {
+  public static BetterBitmapFont genMultiChunkFont() {
     return genMultiChunkFont(true);
   }
-  public static MultiChunkFont genMultiChunkFont(boolean flip) {
-    return new MultiChunkFont(new FileHandle[] {
+  public static BetterBitmapFont genMultiChunkFont(boolean flip) {
+    MultiChunkFont out=new MultiChunkFont(new FileHandle[] {
       Gdx.files.internal("unifont/0/unifont-0.fnt"),
       Gdx.files.internal("unifont/1/unifont-1.fnt"),
       Gdx.files.internal("unifont/2/unifont-2.fnt"),
@@ -73,6 +74,7 @@ public class SharedResources implements Disposable{
       null,
       Gdx.files.internal("unifont/15/unifont-15.fnt"),
     },flip,true);
+    return out;
   }
   @Override
   public void dispose() {
