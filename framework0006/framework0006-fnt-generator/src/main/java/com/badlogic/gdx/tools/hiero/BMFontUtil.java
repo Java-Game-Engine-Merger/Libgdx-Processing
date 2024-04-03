@@ -51,6 +51,7 @@ public class BMFontUtil{
 
   public void save(File outputBMFontFile) throws IOException {
     File outputDir=outputBMFontFile.getParentFile();
+    outputDir.mkdirs();
     String outputName=outputBMFontFile.getName();
     if(outputName.endsWith(".fnt")) outputName=outputName.substring(0,outputName.length()-4);
 
@@ -59,7 +60,8 @@ public class BMFontUtil{
     getGlyph('\u0000');
     unicodeFont.loadGlyphs();
 
-    PrintStream out=new PrintStream(new FileOutputStream(new File(outputDir,outputName+".fnt")));
+    File file = new File(outputDir, outputName + ".fnt");
+    PrintStream out=new PrintStream(new FileOutputStream(file));
     Font font=unicodeFont.getFont();
     int pageWidth=unicodeFont.getGlyphPageWidth();
     int pageHeight=unicodeFont.getGlyphPageHeight();
