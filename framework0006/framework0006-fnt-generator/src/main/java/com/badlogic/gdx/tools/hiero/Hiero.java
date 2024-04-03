@@ -1,17 +1,15 @@
 /*******************************************************************************
  * Copyright 2011-2015 See AUTHORS file.
  * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
  * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
  ******************************************************************************/
 
 package com.badlogic.gdx.tools.hiero;
@@ -24,6 +22,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.prefs.Preferences;
@@ -31,8 +30,8 @@ import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.*;
+import javax.swing.plaf.FontUIResource;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import org.lwjgl.opengl.GL11;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -49,15 +48,15 @@ import com.badlogic.gdx.tools.hiero.unicodefont.effects.*;
 import com.badlogic.gdx.tools.hiero.unicodefont.effects.ConfigurableEffect.Value;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StringBuilder;
+import com.formdev.flatlaf.FlatLightLaf;
 
 /**
  * A tool to visualize settings for {@link UnicodeFont} and to export BMFont files for use with
  * {@link BitmapFont}.
  * <p>
  * This tool is quite old. It was originally written for Slick, then ported to libgdx. It has
- * had a few different contributors
- * over the years, the FreeType rendering was tacked on and in general the code isn't great. It
- * does its job though!
+ * had a few different contributors over the years, the FreeType rendering was tacked on and in
+ * general the code isn't great. It does its job though!
  * 
  * @author Nathan Sweet
  */
@@ -1521,12 +1520,34 @@ public class Hiero extends JFrame{
   }
 
   public static void main(final String[] args) throws Exception {
-    FlatLightLaf.setup();
 
     SwingUtilities.invokeLater(new Runnable() {
       public void run() {
+
+        FlatLightLaf.setup();
+        Font font=null;
+        try {
+          font=Font.createFont(Font.TRUETYPE_FONT,
+            // TODO project dependent
+            new File(System.getProperty("user.dir")+"/doc/font/MapleMono-SC-NF/MapleMono-SC-NF-Regular.ttf"));
+        }catch(FontFormatException|IOException e) {
+          throw new RuntimeException(e);
+        }
+        font=font.deriveFont(14.0f);
+        FontUIResource fontUIResource=new FontUIResource(font);
+        setUIFont(fontUIResource);
+
         new Hiero(args);
       }
     });
+  }
+
+  public static void setUIFont(FontUIResource f) {
+    Enumeration keys=UIManager.getDefaults().keys();
+    while(keys.hasMoreElements()) {
+      Object key=keys.nextElement();
+      Object value=UIManager.get(key);
+      if(value instanceof FontUIResource) UIManager.put(key,f);
+    }
   }
 }

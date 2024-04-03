@@ -13,7 +13,7 @@ import pama1234.util.Annotations.RedundantCache;
 import pama1234.util.function.Get;
 
 /**
- * 提供两种渲染文本的方式，一种不支持换行符号等，一种支持换行
+ * 提供两种渲染文本的方式
  */
 public abstract class BetterBitmapFont extends BitmapFont{
   /**
