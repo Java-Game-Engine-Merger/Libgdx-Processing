@@ -66,6 +66,15 @@ public abstract class MultiChunkFontCore extends BetterBitmapFont{
     cacheM=newFontCacheM();
   }
 
+  @Override
+  public void loadAll(String in) {
+    for(int i=0;i<in.length();i++) {
+      char tc=in.charAt(i);
+      int pos=tc>>>digitShift;
+      if(loadOnDemand&&dataM[pos]==null) load(pos);
+    }
+  }
+
   public void markupEnabled(boolean in) {
     getData().markupEnabled=in;
     // getDataM().markupEnabled=in;
@@ -80,6 +89,7 @@ public abstract class MultiChunkFontCore extends BetterBitmapFont{
   public MultiChunkFontCache newFontCacheM() {
     return new MultiChunkFontCache(this,usesIntegerPositions());
   }
+  @Override
   public void load(int in) {
     loadFont(in);
     loadOnDemand=isAllLoaded();
@@ -164,6 +174,9 @@ public abstract class MultiChunkFontCore extends BetterBitmapFont{
         drawChar(cacheV,tc,pos,i);
       }
     }
+  }
+  public void load() {
+
   }
   public Glyph getGlyph(char ch) {
     int pos=ch>>>digitShift;

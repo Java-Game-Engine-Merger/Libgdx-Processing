@@ -180,6 +180,16 @@ public class LazyBitmapFont extends BetterBitmapFont{
   }
 
   @Override
+  public void load(int chunk) {
+
+  }
+
+  @Override
+  public void loadAll(String s) {
+
+  }
+
+  @Override
   public void fastText(String in,float x,float y) {
 
   }

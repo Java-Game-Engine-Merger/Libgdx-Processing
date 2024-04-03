@@ -98,6 +98,9 @@ public abstract class BetterBitmapFont extends BitmapFont{
 
   public abstract void size(float in);
 
+  public abstract void load(int chunk);
+  public abstract void loadAll(String s);
+
   /**
    * 全称fastText，比libgdx的text方法更快一些，无法绘制多色或有换行的文字
    *
@@ -177,7 +180,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
       fastText(in,x,y);
     }else if(textMode==fullText) {
       fontBatch().setColor(getColor());
-      //      fontBatch().setColor(styleFast.foreground);
+      //      loadAll(in);
       drawF(fontBatch.get(),in,x,y);
     }
   }
