@@ -286,10 +286,6 @@ public abstract class MultiChunkFontCore extends BetterBitmapFont{
   }
 
   @Override
-  public float textWidth(CharSequence in) {
-    return textWidthNoScale(in)*styleFast.scale;
-  }
-  @Override
   public float textWidthNoScale(CharSequence in) {
     @UniFontDependent
     float out=2;

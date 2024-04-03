@@ -45,7 +45,7 @@ public abstract class UtilScreenRenderText extends UtilScreenColor{
   //---------------------------------------------------------------------------
 
   public float textWidth(String in) {
-    return font.textWidth(in);
+    return font.textWidth(in,true);
   }
   public float textWidthNoScale(String in) {
     return font.textWidthNoScale(in);

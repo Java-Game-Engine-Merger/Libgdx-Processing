@@ -3,12 +3,11 @@ package pama1234.gdx.game.ui;
 import pama1234.gdx.game.DrawableEntity;
 import pama1234.gdx.game.ui.element.TextField.TextFieldStyle;
 import pama1234.gdx.util.app.UtilScreen;
-import pama1234.gdx.util.font.chunk.MultiChunkFont;
 
 public class CodeTextFieldStyle extends TextFieldStyle{
   public UtilScreen p;
   public CodeTextFieldStyle(UtilScreen p) {//TODO
-    super((MultiChunkFont)p.font,UtilScreen.color(0),
+    super(p.font,UtilScreen.color(0),
       new DrawableEntity(p,(batch,x,y,w,h)-> {
         p.beginBlend();
         p.fill(0,191);

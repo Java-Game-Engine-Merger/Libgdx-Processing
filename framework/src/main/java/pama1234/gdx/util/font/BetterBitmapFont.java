@@ -14,7 +14,7 @@ import pama1234.util.Annotations.SyntacticSugar;
 import pama1234.util.function.Get;
 
 /**
- * 提供两种渲染文本的方式
+ * BitmapFont并不是一种很好的接口
  */
 public abstract class BetterBitmapFont extends BitmapFont{
   /**
@@ -30,6 +30,8 @@ public abstract class BetterBitmapFont extends BitmapFont{
   public TextStyleSupplier style;
 
   public int textMode=fastText;
+
+  //---------------------------------------------------------------------------
 
   public BetterBitmapFont() {}
 
@@ -69,6 +71,10 @@ public abstract class BetterBitmapFont extends BitmapFont{
     super(data,pageRegions,integer);
   }
 
+  //---------------------------------------------------------------------------
+
+  public abstract void setFullTextColor(Color color);
+
   public void color(Color in) {
     styleFast.foreground=in;
     //    fontBatch().setColor(styleFast.foreground);
@@ -78,8 +84,9 @@ public abstract class BetterBitmapFont extends BitmapFont{
     return fontBatch.get();
   }
 
-  public float textWidth(CharSequence in) {
-    return textWidthNoScale(in)*styleFast.scale;
+  public float textWidth(CharSequence in,boolean scale) {
+    if(scale) return textWidthNoScale(in);
+    else return textWidthNoScale(in)*styleFast.scale;
   }
 
   public abstract float textWidthNoScale(CharSequence in);
@@ -106,6 +113,18 @@ public abstract class BetterBitmapFont extends BitmapFont{
     getData().markupEnabled=in;
   }
 
+  //---------------------------------------------------------------------------
+
+  public void text(String in,float x,float y) {
+    if(textMode==fastText) {
+      fontBatch().setColor(styleFast.foreground);
+      fastText(in,x,y);
+    }else if(textMode==fullText) {
+      fontBatch().setColor(getColor());
+      draw(fontBatch.get(),in,x,y);
+    }
+  }
+
   /**
    * 全称fastText，比libgdx的text方法更快一些，无法绘制多色或有换行的文字
    *
@@ -114,6 +133,8 @@ public abstract class BetterBitmapFont extends BitmapFont{
    * @param y  坐标
    */
   public abstract void fastText(String in,float x,float y);
+
+  //---------------------------------------------------------------------------
 
   /**
    * @see BitmapFont#draw(Batch, CharSequence, float, float)
@@ -180,18 +201,4 @@ public abstract class BetterBitmapFont extends BitmapFont{
    */
   @Override
   public abstract GlyphLayout draw(Batch batch,CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,boolean wrap,String truncate);
-
-  public abstract void setFullTextColor(Color color);
-
-  public void text(String in,float x,float y) {
-    if(textMode==fastText) {
-      fontBatch().setColor(styleFast.foreground);
-      fastText(in,x,y);
-    }else if(textMode==fullText) {
-      fontBatch().setColor(getColor());
-      //      loadAll(in);
-      draw(fontBatch.get(),in,x,y);
-      //      drawF(fontBatch.get(),in,x,y,0,in.length(),0,Align.left,false,null);
-    }
-  }
 }
