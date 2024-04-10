@@ -32,8 +32,8 @@ public class MultiLayerFont extends BetterBitmapFont{
    * </p>
    * z是这一行目前的字符数量
    */
-  public Vec3i posI;
-  public Vec2f cacheV,inPos;
+  public Vec3i posI=new Vec3i();
+  public Vec2f cacheV=new Vec2f(),inPos=new Vec2f();
   public boolean useLF=true,useTab=true;
   public int stateCR=ignoreCR;
   // TODO
@@ -46,6 +46,8 @@ public class MultiLayerFont extends BetterBitmapFont{
 
   public MultiLayerFont(FontLayer[] fontLayers) {
     this.fontLayers=fontLayers;
+
+    cache=new LayerFontCache(this);
   }
 
   @Override

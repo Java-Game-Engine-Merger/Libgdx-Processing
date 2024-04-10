@@ -16,8 +16,11 @@ public class Graphics{
   public Camera tempCam;
   public Texture texture;
   public Graphics(UtilScreen p,int w,int h) {
+    this(p,w,h,false);
+  }
+  public Graphics(UtilScreen p,int w,int h,boolean hasDepth) {
     this.p=p;
-    buffer=new FrameBuffer(Format.RGBA8888,w,h,false);
+    buffer=new FrameBuffer(Format.RGBA8888,w,h,true);
     texture=buffer.getColorBufferTexture();
     texture.setFilter(TextureFilter.Linear,TextureFilter.Nearest);
     cam=new OrthographicCamera();
@@ -38,6 +41,8 @@ public class Graphics{
     end();
   }
   public void begin() {
+    // TODO potential bug?
+//    p.endRenderer();
     buffer.begin();
     tempCam=p.usedCamera;
     p.setCamera(cam);

@@ -8,7 +8,6 @@ import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import pama1234.gdx.util.font.BetterBitmapFont;
 import pama1234.gdx.util.font.chunk.MultiChunkFont;
 import pama1234.gdx.util.graphics.UtilPolygonSpriteBatch;
-import pama1234.gdx.util.graphics.UtilShapeRenderer;
 import pama1234.util.listener.Disposable;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -30,19 +29,19 @@ public class SharedResources implements Disposable{
   //  public SpriteBatch fontBatch;
   public SpriteBatch imageBatch;
   public TinyVGShapeDrawer tvgDrawer;
-  public UtilShapeRenderer rFill;
-  public UtilShapeRenderer rStroke;
-  public UtilPolygonSpriteBatch pFill;
+  //  public UtilShapeRenderer rFill;
+  //  public UtilShapeRenderer rStroke;
+//  public UtilPolygonSpriteBatch pFill;
 
   public ShapeDrawer shapeDrawer;
 
   {
     imageBatch=createSpriteBatch();
-    font=genMultiChunkFont();
+    font=createFont();
     //    font.fontBatch=()->imageBatch;
-    rFill=new UtilShapeRenderer();
-    rStroke=new UtilShapeRenderer();
-    pFill=new UtilPolygonSpriteBatch();
+    //    rFill=new UtilShapeRenderer();
+    //    rStroke=new UtilShapeRenderer();
+//    pFill=new UtilPolygonSpriteBatch();
 
     tvgDrawer=new TinyVGShapeDrawer(imageBatch);
     shapeDrawer=new ShapeDrawer(imageBatch);
@@ -52,10 +51,10 @@ public class SharedResources implements Disposable{
     // spriteBatch.setBlendFunction(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
     return spriteBatch;
   }
-  public static BetterBitmapFont genMultiChunkFont() {
-    return genMultiChunkFont(true);
+  public static BetterBitmapFont createFont() {
+    return createFont(true);
   }
-  public static BetterBitmapFont genMultiChunkFont(boolean flip) {
+  public static BetterBitmapFont createFont(boolean flip) {
     MultiChunkFont out=new MultiChunkFont(new FileHandle[] {
       Gdx.files.internal("unifont/0/unifont-0.fnt"),
       Gdx.files.internal("unifont/1/unifont-1.fnt"),
@@ -74,6 +73,13 @@ public class SharedResources implements Disposable{
       null,
       Gdx.files.internal("unifont/15/unifont-15.fnt"),
     },flip,true);
+
+    //    var out=new MultiLayerFont(new FontLayer[] {
+    //      new FontLayer(new FileHandle[] {
+    //        Gdx.files.internal("font/mapleMono/0/MapleMonoRegular-0.fnt")
+    //      },
+    //        16)
+    //    });
     return out;
   }
   @Override
@@ -82,8 +88,8 @@ public class SharedResources implements Disposable{
     font.dispose();
     imageBatch.dispose();
     tvgDrawer.dispose();
-    rFill.dispose();
-    rStroke.dispose();
-    pFill.dispose();
+    //    rFill.dispose();
+    //    rStroke.dispose();
+//    pFill.dispose();
   }
 }

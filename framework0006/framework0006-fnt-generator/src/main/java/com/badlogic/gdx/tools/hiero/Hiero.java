@@ -1528,8 +1528,7 @@ public class Hiero extends JFrame{
         Font font=null;
         try {
           font=Font.createFont(Font.TRUETYPE_FONT,
-            // TODO project dependent
-            new File(System.getProperty("user.dir")+"/doc/font/MapleMono-SC-NF/MapleMono-SC-NF-Regular.ttf"));
+            Hiero.class.getResourceAsStream("/MapleMono-SC-NF-Regular.ttf"));
         }catch(FontFormatException|IOException e) {
           throw new RuntimeException(e);
         }

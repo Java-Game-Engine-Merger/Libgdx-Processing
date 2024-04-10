@@ -45,7 +45,7 @@ public class TextTest extends UtilScreen2D{
       @Override
       public void display() {}
     });
-    addCamTextFields(new TextField("file.name()",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->0,()->0-26,()->250-120,()->18),()->1));
+    addCamActors(new TextField("file.name()",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->0,()->0-26,()->250-120,()->18),()->1));
     //
     //    textMode(BetterBitmapFont.fullText);
 
@@ -69,6 +69,7 @@ public class TextTest extends UtilScreen2D{
     //    endRenderer();
     fullText("TextTest.java使用了未经检查或不安全的操作。",0,20);
     text("TextTest.java\n使用了\n\n未经检查或不安全的操作。",0,40);
+    //    System.out.println(textWidth("123"));
   }
 
   @Override

@@ -27,8 +27,6 @@ import pama1234.gdx.game.ui.element.TextButton;
 import pama1234.gdx.util.cam.CameraController;
 import pama1234.gdx.util.element.FontStyle;
 import pama1234.gdx.util.font.BetterBitmapFont;
-import pama1234.gdx.util.graphics.UtilPolygonSpriteBatch;
-import pama1234.gdx.util.graphics.UtilShapeRenderer;
 import pama1234.gdx.util.info.MouseInfo;
 import pama1234.gdx.util.info.TouchInfo;
 import pama1234.gdx.util.input.UtilInputProcesser;
@@ -115,6 +113,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
 
   public FontStyle fontStyle=new FontStyle();
   public Color textColor,fillColor,strokeColor;
+  public Color tintColor;
   public boolean fill=true,stroke=true;
 
   public float defaultStrokeWeight,strokeWeight;
@@ -123,7 +122,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
 
   //  public UtilShapeRenderer rFill,rStroke;
   public ShapeDrawer shapeDrawer,shapeDrawerDefault;
-  public UtilPolygonSpriteBatch pFill;
+  //  public UtilPolygonSpriteBatch pFill;
 
   public static ShapeDrawer shapeDrawer3d;
   public static SpriteBatch3D batch3d;
@@ -228,25 +227,38 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
     if(usedRenderer==renderer) return;
 
     if(usedRenderer!=null) {
-      if(usedRenderer instanceof Batch batch&&batch.isDrawing()) {
+      // TODO ambiguous
+      if(usedRenderer instanceof ShapeDrawer sd) {
+        Batch batch=sd.getBatch();
+        if(batch.isDrawing()) {
+          batch.end();
+        }
+        batch.setColor(Color.WHITE);
+      }else if(usedRenderer instanceof Batch batch&&batch.isDrawing()) {
         //        batch.flush();
         batch.end();
+      }else if(usedRenderer instanceof BetterBitmapFont bf) {
+        Batch batch=bf.fontBatch();
+        if(batch.isDrawing()) {
+          batch.end();
+        }
+        // TODO
+        batch.setColor(Color.WHITE);
       }else if(usedRenderer instanceof ModelBatch mb) {
         mb.end();
-      }else if(usedRenderer instanceof UtilShapeRenderer r) {
-        if(r.isDrawing()) r.flush();
-        //        endBlend();
       }
     }
     usedRenderer=renderer;
 
     if(usedRenderer!=null) {
-      if(usedRenderer instanceof Batch batch) {
+      if(usedRenderer instanceof ShapeDrawer sd) {
+        sd.getBatch().begin();
+      }else if(usedRenderer instanceof Batch batch) {
         batch.begin();
+      }else if(usedRenderer instanceof BetterBitmapFont bf) {
+        bf.fontBatch().begin();
       }else if(usedRenderer instanceof ModelBatch mb) {
         mb.begin(usedCamera);
-      }else if(usedRenderer instanceof UtilShapeRenderer r) {
-        beginBlend();
       }
     }
   }
@@ -273,13 +285,13 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
     //    fontBatch.setProjectionMatrix(projection);
     imageBatch.setProjectionMatrix(projection);
     //    rFill.setProjectionMatrix(projection);
-    pFill.setProjectionMatrix(projection);
+    //    pFill.setProjectionMatrix(projection);
     //    rStroke.setProjectionMatrix(projection);
   }
   public void setTransformMatrix(Matrix4 transform) {
     imageBatch.setTransformMatrix(transform);
     //    rFill.setTransformMatrix(transform);
-    pFill.setTransformMatrix(transform);
+    //    pFill.setTransformMatrix(transform);
     //    rStroke.setTransformMatrix(transform);
   }
   @Override

@@ -10,6 +10,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -18,7 +19,6 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 import hhs.gdx.hslib.tools.LoopThread;
-import pama1234.gdx.game.ui.element.TextField;
 import pama1234.gdx.util.SharedResources;
 import pama1234.gdx.util.cam.CameraController;
 import pama1234.gdx.util.info.MouseInfo;
@@ -40,21 +40,12 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
  */
 public abstract class UtilScreen extends UtilScreenRenderShape{
   public void createRenderUtil() {
-    //    fontBatch=SharedResources.instance.fontBatch;
-    //    font=SharedResources.instance.font;
-    //    font.fontBatch=fontBatch;
-    //    font.styleFast=fontStyle;
     textFont(SharedResources.instance.font);
     textColor=new Color(0,0,0,1);
     font.color(textColor);
     fillColor=new Color(1,1,1,1);
     strokeColor=new Color(0,0,0,1);
-    //    rFill=SharedResources.instance.rFill;
-    //    rStroke=SharedResources.instance.rStroke;
-    //    rFill.setColor(fillColor);
-    //    rStroke.setColor(strokeColor);
-    pFill=SharedResources.instance.pFill;
-    pFill.setColor(fillColor);
+    tintColor=new Color(1,1,1,1);
 
     shapeDrawer=shapeDrawerDefault=SharedResources.instance.shapeDrawer;
   }
@@ -262,34 +253,49 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
 
   //---------------------------------------------------------------------------
 
-  public void addScreenTextFields(TextField... in) {
-    for(TextField e:in) screenStage.addActor(e);
+  public void addScreenActors(Actor... in) {
+    for(var e:in) screenStage.addActor(e);
   }
-  public void addCamTextFields(TextField... in) {
-    for(TextField e:in) camStage.addActor(e);
+  public void addCamActors(Actor... in) {
+    for(var e:in) camStage.addActor(e);
   }
-  public void removeScreenTextFields(TextField... in) {
+  public void removeScreenActors(Actor... in) {
     Group root=screenStage.getRoot();
-    for(TextField e:in) root.removeActor(e);
+    for(var e:in) root.removeActor(e);
   }
-  public void removeCamTextFields(TextField... in) {
+  public void removeCamActors(Actor... in) {
     Group root=camStage.getRoot();
-    for(TextField e:in) root.removeActor(e);
+    for(var e:in) root.removeActor(e);
   }
 
-  public void addScreenTextFields(Array<TextField> in) {
-    for(TextField e:in) screenStage.addActor(e);
+  public void addScreenActors(Array<Actor> in) {
+    for(var e:in) screenStage.addActor(e);
   }
-  public void addCamTextFields(Array<TextField> in) {
-    for(TextField e:in) camStage.addActor(e);
+  public void addCamActors(Array<Actor> in) {
+    for(var e:in) camStage.addActor(e);
   }
-  public void removeScreenTextFields(Array<TextField> in) {
+  public void removeScreenActors(Array<Actor> in) {
     Group root=screenStage.getRoot();
-    for(TextField e:in) root.removeActor(e);
+    for(var e:in) root.removeActor(e);
   }
-  public void removeCamTextFields(Array<TextField> in) {
+  public void removeCamActors(Array<Actor> in) {
     Group root=camStage.getRoot();
-    for(TextField e:in) root.removeActor(e);
+    for(var e:in) root.removeActor(e);
+  }
+
+  public void addScreenActors(Iterable<Actor> in) {
+    for(var e:in) screenStage.addActor(e);
+  }
+  public void addCamActors(Iterable<Actor> in) {
+    for(var e:in) camStage.addActor(e);
+  }
+  public void removeScreenActors(Iterable<Actor> in) {
+    Group root=screenStage.getRoot();
+    for(var e:in) root.removeActor(e);
+  }
+  public void removeCamActors(Iterable<Actor> in) {
+    Group root=camStage.getRoot();
+    for(var e:in) root.removeActor(e);
   }
 
   //---------------------------------------------------------------------------

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.Glyph;
+import com.badlogic.gdx.math.MathUtils;
 
 import pama1234.gdx.util.element.FontStyle;
 import pama1234.gdx.util.font.FontUtil.UniFontDependent;
@@ -15,7 +16,7 @@ public class FontLayer{
   /** 区块大小，一般为2的幂 */
   public int length;
   /** 是否按需加载 */
-  public boolean loadOnDemand;
+  public boolean loadOnDemand=true;
   /** log2(length) */
   public int digitShift;
   /** 每个区块加载时会产生一个BitmapFont */
@@ -25,7 +26,15 @@ public class FontLayer{
   /** 一般为true */
   public boolean flipped=true;
   /** 所有字体层共用一个 */
-  public FontStyle styleFast;
+  public FontStyle styleFast=new FontStyle();
+
+  public FontLayer(FileHandle[] fontFile,int length) {
+    this.fontFile=fontFile;
+
+    dataM=new BitmapFont[length];
+    digitShift=16-MathUtils.ceil(MathUtils.log2(length));
+    //    System.out.println(digitShift);
+  }
 
   public boolean isAllLoaded() {
     for(int i=0;i<length;i++) if(dataM[i]==null) return true;
@@ -60,9 +69,11 @@ public class FontLayer{
   public BitmapFont createBitmapFont(FileHandle fontFile) {
     BitmapFont out=fontFile==null?new BitmapFont(flipped):new BitmapFont(fontFile,flipped);
     out.getRegion().getTexture().setFilter(TextureFilter.Linear,TextureFilter.Nearest);
-    out.getData().setScale(styleFast.size/styleFast.defaultSize);
+    //    out.getRegion().getTexture().setFilter(TextureFilter.Linear,TextureFilter.Linear);
+    //    out.getData().setScale(styleFast.size/styleFast.defaultSize);
     BitmapFontData data=out.getData();
     // int unit=UtilMath.max((int)(size/2),1);
+
     @UniFontDependent
     int unit=(int)(styleFast.defaultSize/2);
     for(int i=0,end=out.getData().glyphs[0].length;i<end;i++) {

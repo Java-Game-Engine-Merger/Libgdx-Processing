@@ -36,11 +36,9 @@ public abstract class UtilScreenRenderImage extends UtilScreenRenderText{
     if(depth) {
       shapeDrawer=shapeDrawer3d;
       imageBatch=batch3d;
-      //      font.fontBatch=batch3d;
     }else {
       shapeDrawer=shapeDrawerDefault;
       imageBatch=imageBatchDefault;
-      //      font.fontBatch=imageBatchDefault;
     }
     font.fontBatch=()->imageBatch;
 

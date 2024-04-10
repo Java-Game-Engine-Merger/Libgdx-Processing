@@ -64,32 +64,21 @@ public abstract class UtilScreenColor extends UtilScreenPose{
 
   public void fill(Color in) {
     fillColor.set(in);
-    //    rFill.setColor(fillColor);
-    pFill.setColor(fillColor);
   }
   public void fill(Color in,int a) {
-    fillColor.set(in);
-    fillColor.a=a/255f;
-    //    rFill.setColor(fillColor);
-    pFill.setColor(fillColor);
+    fillColor.set(in.r,in.g,in.b,a/255f);
   }
   public void fill(int gray) {
     fill(gray,255);
   }
   public void fill(int gray,int a) {
     fillColor.set(gray/255f,gray/255f,gray/255f,a/255f);
-    //    rFill.setColor(fillColor);
-    pFill.setColor(fillColor);
   }
   public void fill(int r,int g,int b) {
     fillColor.set(r/255f,g/255f,b/255f,1);
-    //    rFill.setColor(fillColor);
-    pFill.setColor(fillColor);
   }
   public void fill(int r,int g,int b,int a) {
     fillColor.set(r/255f,g/255f,b/255f,a/255f);
-    //    rFill.setColor(fillColor);
-    pFill.setColor(fillColor);
   }
   public void fillHex(int argb) {
     fill((argb>>16)&0xff,(argb>>8)&0xff,argb&0xff,(argb>>24)&0xff);
@@ -104,55 +93,48 @@ public abstract class UtilScreenColor extends UtilScreenPose{
   //---------------------------------------------------------------------------
 
   public void tint(Color in) {
-    Color tc=imageBatch.getColor();
-    tc.set(in);
-    imageBatch.setColor(tc);
+    tintColor.set(in);
+    imageBatch.setColor(tintColor);
   }
   public void tint(int gray) {
     tint(gray,255);
   }
   public void tint(int gray,int a) {//TODO
-    Color tc=imageBatch.getColor();
-    tc.set(gray/255f,gray/255f,gray/255f,a/255f);
-    imageBatch.setColor(tc);
+    tintColor.set(gray/255f,gray/255f,gray/255f,a/255f);
+    imageBatch.setColor(tintColor);
   }
   public void tint(int r,int g,int b) {
     tint(r,g,b,255);
   }
   public void tint(int r,int g,int b,int a) {
-    Color tc=imageBatch.getColor();
-    tc.set(r/255f,g/255f,b/255f,a/255f);
-    imageBatch.setColor(tc);
+    tintColor.set(r/255f,g/255f,b/255f,a/255f);
+    imageBatch.setColor(tintColor);
   }
   public void noTint() {
-    imageBatch.setColor(imageBatch.getColor().set(1,1,1,1));
+    tintColor.set(1,1,1,1);
+    imageBatch.setColor(tintColor);
   }
 
   //---------------------------------------------------------------------------
 
   public void stroke(Color in) {
     strokeColor.set(in);
-    //    rStroke.setColor(strokeColor);
   }
   public void stroke(Color in,int alpha) {
     strokeColor.set(in);
     strokeColor.a=alpha/255f;
-    //    rStroke.setColor(strokeColor);
   }
   public void stroke(int gray) {
     stroke(gray,255);
   }
   public void stroke(int gray,int a) {
     strokeColor.set(gray/255f,gray/255f,gray/255f,a/255f);
-    //    rStroke.setColor(strokeColor);
   }
   public void stroke(int r,int g,int b) {
     strokeColor.set(r/255f,g/255f,b/255f,1);
-    //    rStroke.setColor(strokeColor);
   }
   public void stroke(int r,int g,int b,int a) {
     strokeColor.set(r/255f,g/255f,b/255f,a/255f);
-    //    rStroke.setColor(strokeColor);
   }
   public void noStroke() {
     stroke=false;
