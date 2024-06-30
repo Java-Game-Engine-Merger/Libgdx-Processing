@@ -72,9 +72,7 @@ public class ButtonTest extends ScreenCore2D{
     // TODO 重写按钮逻辑
     var out=new TextButton[] {
       new TextButton<>(p,true,()->true,self-> {},self-> {},self-> {},self->self.text="开始游戏",()->p.bu,()->(int)((p.width-p.textWidth("开始游戏"))/2f-p.pu/2),()->(int)(p.height*0.45f)),
-      new TextButton<>(p,self->self.text="  设置  ",()->true,true)
-        .allTextButtonEvent(self-> {},self-> {},self-> {})
-        .rectAutoWidth(()->(int)((p.width-p.textWidth("  设置  "))/2f-p.pu/2),()->(int)(p.height*0.45f+p.bu*1.2f),()->p.bu),
+      new TextButton<>(p,true,()->true,self-> {},self-> {},self-> {},self->self.text="  设置  ",()->p.bu,()->(int)((p.width-p.textWidth("  设置  "))/2f-p.pu/2),()->(int)(p.height*0.45f+p.bu*1.2f)),
     };
     return out;
   }

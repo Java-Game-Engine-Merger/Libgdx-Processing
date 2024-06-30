@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.lyze.gdxtinyvg.drawers.TinyVGShapeDrawer;
 import pama1234.gdx.util.font.BetterBitmapFont;
-import pama1234.gdx.util.font.chunk.MultiChunkFont;
+import pama1234.gdx.util.font.layer.FontLayer;
+import pama1234.gdx.util.font.layer.MultiLayerFont;
 import pama1234.gdx.util.graphics.UtilPolygonSpriteBatch;
+import pama1234.gdx.util.graphics.UtilShapeRenderer;
 import pama1234.util.listener.Disposable;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -29,9 +31,9 @@ public class SharedResources implements Disposable{
   //  public SpriteBatch fontBatch;
   public SpriteBatch imageBatch;
   public TinyVGShapeDrawer tvgDrawer;
-  //  public UtilShapeRenderer rFill;
-  //  public UtilShapeRenderer rStroke;
-//  public UtilPolygonSpriteBatch pFill;
+  public UtilShapeRenderer rFill;
+  public UtilShapeRenderer rStroke;
+  public UtilPolygonSpriteBatch pFill;
 
   public ShapeDrawer shapeDrawer;
 
@@ -39,9 +41,9 @@ public class SharedResources implements Disposable{
     imageBatch=createSpriteBatch();
     font=createFont();
     //    font.fontBatch=()->imageBatch;
-    //    rFill=new UtilShapeRenderer();
-    //    rStroke=new UtilShapeRenderer();
-//    pFill=new UtilPolygonSpriteBatch();
+    rFill=new UtilShapeRenderer();
+    rStroke=new UtilShapeRenderer();
+    pFill=new UtilPolygonSpriteBatch();
 
     tvgDrawer=new TinyVGShapeDrawer(imageBatch);
     shapeDrawer=new ShapeDrawer(imageBatch);
@@ -55,31 +57,31 @@ public class SharedResources implements Disposable{
     return createFont(true);
   }
   public static BetterBitmapFont createFont(boolean flip) {
-    MultiChunkFont out=new MultiChunkFont(new FileHandle[] {
-      Gdx.files.internal("unifont/0/unifont-0.fnt"),
-      Gdx.files.internal("unifont/1/unifont-1.fnt"),
-      Gdx.files.internal("unifont/2/unifont-2.fnt"),
-      Gdx.files.internal("unifont/3/unifont-3.fnt"),
-      Gdx.files.internal("unifont/4/unifont-4.fnt"),
-      Gdx.files.internal("unifont/5/unifont-5.fnt"),
-      Gdx.files.internal("unifont/6/unifont-6.fnt"),
-      Gdx.files.internal("unifont/7/unifont-7.fnt"),
-      Gdx.files.internal("unifont/8/unifont-8.fnt"),
-      Gdx.files.internal("unifont/9/unifont-9.fnt"),
-      Gdx.files.internal("unifont/10/unifont-10.fnt"),
-      Gdx.files.internal("unifont/11/unifont-11.fnt"),
-      Gdx.files.internal("unifont/12/unifont-12.fnt"),
-      Gdx.files.internal("unifont/13/unifont-13.fnt"),
-      null,
-      Gdx.files.internal("unifont/15/unifont-15.fnt"),
-    },flip,true);
+    //    MultiChunkFont out=new MultiChunkFont(new FileHandle[] {
+    //      Gdx.files.internal("unifont/0/unifont-0.fnt"),
+    //      Gdx.files.internal("unifont/1/unifont-1.fnt"),
+    //      Gdx.files.internal("unifont/2/unifont-2.fnt"),
+    //      Gdx.files.internal("unifont/3/unifont-3.fnt"),
+    //      Gdx.files.internal("unifont/4/unifont-4.fnt"),
+    //      Gdx.files.internal("unifont/5/unifont-5.fnt"),
+    //      Gdx.files.internal("unifont/6/unifont-6.fnt"),
+    //      Gdx.files.internal("unifont/7/unifont-7.fnt"),
+    //      Gdx.files.internal("unifont/8/unifont-8.fnt"),
+    //      Gdx.files.internal("unifont/9/unifont-9.fnt"),
+    //      Gdx.files.internal("unifont/10/unifont-10.fnt"),
+    //      Gdx.files.internal("unifont/11/unifont-11.fnt"),
+    //      Gdx.files.internal("unifont/12/unifont-12.fnt"),
+    //      Gdx.files.internal("unifont/13/unifont-13.fnt"),
+    //      null,
+    //      Gdx.files.internal("unifont/15/unifont-15.fnt"),
+    //    },flip,true);
 
-    //    var out=new MultiLayerFont(new FontLayer[] {
-    //      new FontLayer(new FileHandle[] {
-    //        Gdx.files.internal("font/mapleMono/0/MapleMonoRegular-0.fnt")
-    //      },
-    //        16)
-    //    });
+    var out=new MultiLayerFont(new FontLayer[] {
+      new FontLayer(new FileHandle[] {
+        Gdx.files.internal("font/mapleMono/0/MapleMonoRegular-0.fnt")
+      },
+        16)
+    });
     return out;
   }
   @Override
@@ -88,8 +90,8 @@ public class SharedResources implements Disposable{
     font.dispose();
     imageBatch.dispose();
     tvgDrawer.dispose();
-    //    rFill.dispose();
-    //    rStroke.dispose();
-//    pFill.dispose();
+    rFill.dispose();
+    rStroke.dispose();
+    pFill.dispose();
   }
 }

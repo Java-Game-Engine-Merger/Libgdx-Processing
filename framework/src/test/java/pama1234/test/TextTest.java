@@ -45,7 +45,7 @@ public class TextTest extends UtilScreen2D{
       @Override
       public void display() {}
     });
-    addCamActors(new TextField("file.name()",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->0,()->0-26,()->250-120,()->18),()->1));
+    addCamTextFields(new TextField("file.name()",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->0,()->0-26,()->250-120,()->18),()->1));
     //
     //    textMode(BetterBitmapFont.fullText);
 

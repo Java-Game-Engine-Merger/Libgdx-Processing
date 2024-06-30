@@ -77,7 +77,6 @@ public abstract class BetterBitmapFont extends BitmapFont{
 
   public void color(Color in) {
     styleFast.foreground=in;
-    setColor(in);
     //    fontBatch().setColor(styleFast.foreground);
   }
   @SyntacticSugar
@@ -107,7 +106,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
   }
 
   public void size(float in) {
-    //    if(styleFast.size==in) return;
+//    if(styleFast.size==in) return;
     styleFast.size=in;
     //    for(int i=0;i<fontFile.length;i++) if(dataM[i]!=null) dataM[i].getData().setScale(styleFast.size/styleFast.defaultSize);
   }
@@ -115,7 +114,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
   public abstract Glyph getGlyph(char ch);
 
   //  @Deprecated
-  //  public abstract void load(int chunk);
+//  public abstract void load(int chunk);
   public abstract void loadAll(String s);
   public void markupEnabled(boolean in) {
     getData().markupEnabled=in;

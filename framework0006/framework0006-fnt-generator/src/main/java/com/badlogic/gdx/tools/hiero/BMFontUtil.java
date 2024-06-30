@@ -60,7 +60,7 @@ public class BMFontUtil{
     getGlyph('\u0000');
     unicodeFont.loadGlyphs();
 
-    File file=new File(outputDir,outputName+".fnt");
+    File file = new File(outputDir, outputName + ".fnt");
     PrintStream out=new PrintStream(new FileOutputStream(file));
     Font font=unicodeFont.getFont();
     int pageWidth=unicodeFont.getGlyphPageWidth();

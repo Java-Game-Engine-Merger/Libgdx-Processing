@@ -49,7 +49,7 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
   //---------------------------------------------------------------------------
 
   public void circle(float x,float y,float size) {
-    renderer(shapeDrawer);
+    renderer(shapeDrawer.getBatch());
     if(fill) {
       shapeDrawer.setColor(fillColor);
       shapeDrawer.filledCircle(x,y,size);
@@ -63,7 +63,7 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     return UtilMath.max((int)(MathUtils.PI*s),6);
   }
   public void circleWithSeg(float x,float y,float size,int seg) {
-    renderer(shapeDrawer);
+    renderer(shapeDrawer.getBatch());
     if(fill) {
       shapeDrawer.setColor(fillColor);
       shapeDrawer.filledCircleWithSeg(x,y,size,seg);
@@ -118,7 +118,7 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
   //---------------------------------------------------------------------------
 
   public void rect(float x,float y,float w,float h) {
-    renderer(shapeDrawer);
+    renderer(shapeDrawer.getBatch());
     if(fill) {
       shapeDrawer.setColor(fillColor);
       shapeDrawer.filledRectangle(x,y,w,h);
@@ -147,7 +147,7 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     rect(rect.x(),rect.y(),rect.w(),rect.h());
   }
   public void triangle(float x1,float y1,float x2,float y2,float x3,float y3) {
-    renderer(shapeDrawer);
+    renderer(shapeDrawer.getBatch());
     if(fill) {
       shapeDrawer.setColor(fillColor);
       shapeDrawer.filledTriangle(x1,y1,x2,y2,x3,y3);
@@ -158,7 +158,7 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     }
   }
   public void polygon(PolygonRegion polygon,float x,float y) {
-    renderer(shapeDrawer);
+    renderer(shapeDrawer.getBatch());
     if(fill) {
       shapeDrawer.setColor(fillColor);
       shapeDrawer.filledPolygon(polygon.getVertices());
@@ -170,7 +170,15 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
   }
   @Deprecated
   public void polygon(float[] array,int size) {
-    renderer(shapeDrawer);
+    //    if(fill) {
+    //      renderer(pFill);
+    //          pFill.polygon(array,0,size*2);
+    //    }
+    //    if(stroke) {
+    //      renderer(rStroke);
+    //      rStroke.polygon(array,0,size*2);
+    //    }
+    renderer(shapeDrawer.getBatch());
     if(fill) {
       shapeDrawer.setColor(fillColor);
       shapeDrawer.filledPolygon(array,0,size*2);
@@ -183,8 +191,16 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     }
   }
   public void quad(float x1,float y1,float x2,float y2,float x3,float y3,float x4,float y4) {
+    //    if(fill) {
+    //      renderer(rFill);
+    //      rFill.polygonVarargs(x1,y1,x2,y2,x3,y3,x4,y4);
+    //    }
+    //    if(stroke) {
+    //      renderer(rStroke);
+    //      rStroke.polygonVarargs(x1,y1,x2,y2,x3,y3,x4,y4);
+    //    }
     if(!(fill||stroke)) return;
-    renderer(shapeDrawer);
+    renderer(shapeDrawer.getBatch());
     float[] vertices= {x1,y1,x2,y2,x3,y3,x4,y4};
     if(fill) {
       shapeDrawer.setColor(fillColor);
@@ -204,21 +220,23 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
   }
   public void arc(float x,float y,float radius,float start,float degrees) {
     if(stroke) {
-      renderer(shapeDrawer);
+      renderer(shapeDrawer.getBatch());
       shapeDrawer.setColor(strokeColor);
       shapeDrawer.arc(x,y,radius,UtilMath.rad(start),UtilMath.rad(degrees),JoinType.POINTY);
+      //      renderer(rStroke);
+      //      rStroke.arcNoBorder(x,y,radius,start,degrees,UtilMath.max(1,(int)(6*(float)Math.cbrt(radius)*(degrees/360))));
     }
   }
   public void dot(float x,float y,int color) {
 
-    renderer(shapeDrawer);
+    renderer(shapeDrawer.getBatch());
     shapeDrawer.setColor(fillColor);
     shapeDrawer.filledRectangle(x-0.5f,y-0.5f,1,1);
 
   }
   public void line(float x1,float y1,float x2,float y2) {
     if(stroke) {
-      renderer(shapeDrawer);
+      renderer(shapeDrawer.getBatch());
       shapeDrawer.setColor(strokeColor);
       shapeDrawer.line(x1,y1,x2,y2);
       if(capType==CapType.ROUND) {
@@ -286,13 +304,13 @@ public abstract class UtilScreenRenderShape extends UtilScreenRenderImage{
     fillRect(x+w-weight,y,weight,h);
   }
   public void fillRect(float x,float y,float w,float h) {
-    renderer(shapeDrawer);
+    renderer(shapeDrawer.getBatch());
     shapeDrawer.setColor(fillColor);
     shapeDrawer.filledRectangle(x,y,w,h);
 
   }
   public void fillCircle(float x,float y,float size) {
-    renderer(shapeDrawer);
+    renderer(shapeDrawer.getBatch());
     shapeDrawer.setColor(fillColor);
     shapeDrawer.filledCircle(x,y,size);
 
