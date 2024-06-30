@@ -17,76 +17,46 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
  * UtilScreen的共享绘制工具
  */
 public class SharedResources implements Disposable{
-  //  public static TextureRegion createBlankTextureRegion() {
-  //    Pixmap tPixmap=new Pixmap(1,1,Format.RGBA8888);
-  //    tPixmap.setColor(0xffffffff);
-  //    tPixmap.fill();
-  //    TextureRegion tr=new TextureRegion(new Texture(tPixmap),0,0,1,1);
-  //    tPixmap.dispose();
-  //    return tr;
-  //  }
 
   public static SharedResources instance=new SharedResources();
   public BetterBitmapFont font;
-  //  public SpriteBatch fontBatch;
   public SpriteBatch imageBatch;
   public TinyVGShapeDrawer tvgDrawer;
   public UtilShapeRenderer rFill;
   public UtilShapeRenderer rStroke;
   public UtilPolygonSpriteBatch pFill;
-
   public ShapeDrawer shapeDrawer;
 
   {
     imageBatch=createSpriteBatch();
     font=createFont();
-    //    font.fontBatch=()->imageBatch;
     rFill=new UtilShapeRenderer();
     rStroke=new UtilShapeRenderer();
     pFill=new UtilPolygonSpriteBatch();
-
     tvgDrawer=new TinyVGShapeDrawer(imageBatch);
     shapeDrawer=new ShapeDrawer(imageBatch);
   }
+
   public static SpriteBatch createSpriteBatch() {
-    SpriteBatch spriteBatch=new SpriteBatch(1000,ShaderUtil.createDefaultShader());
-    // spriteBatch.setBlendFunction(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
-    return spriteBatch;
+    return new SpriteBatch(1000,ShaderUtil.createDefaultShader());
   }
+
   public static BetterBitmapFont createFont() {
     return createFont(true);
   }
-  public static BetterBitmapFont createFont(boolean flip) {
-    //    MultiChunkFont out=new MultiChunkFont(new FileHandle[] {
-    //      Gdx.files.internal("unifont/0/unifont-0.fnt"),
-    //      Gdx.files.internal("unifont/1/unifont-1.fnt"),
-    //      Gdx.files.internal("unifont/2/unifont-2.fnt"),
-    //      Gdx.files.internal("unifont/3/unifont-3.fnt"),
-    //      Gdx.files.internal("unifont/4/unifont-4.fnt"),
-    //      Gdx.files.internal("unifont/5/unifont-5.fnt"),
-    //      Gdx.files.internal("unifont/6/unifont-6.fnt"),
-    //      Gdx.files.internal("unifont/7/unifont-7.fnt"),
-    //      Gdx.files.internal("unifont/8/unifont-8.fnt"),
-    //      Gdx.files.internal("unifont/9/unifont-9.fnt"),
-    //      Gdx.files.internal("unifont/10/unifont-10.fnt"),
-    //      Gdx.files.internal("unifont/11/unifont-11.fnt"),
-    //      Gdx.files.internal("unifont/12/unifont-12.fnt"),
-    //      Gdx.files.internal("unifont/13/unifont-13.fnt"),
-    //      null,
-    //      Gdx.files.internal("unifont/15/unifont-15.fnt"),
-    //    },flip,true);
 
-    var out=new MultiLayerFont(new FontLayer[] {
-      new FontLayer(new FileHandle[] {
-        Gdx.files.internal("font/mapleMono/0/MapleMonoRegular-0.fnt")
-      },
-        16)
+  public static BetterBitmapFont createFont(boolean flip) {
+    FileHandle[] fileHandles=new FileHandle[16];
+    for(int i=0;i<16;i++) {
+      fileHandles[i]=Gdx.files.internal("font/mapleMono/"+i+"/MapleMonoRegular-"+i+".fnt");
+    }
+    return new MultiLayerFont(new FontLayer[] {
+      new FontLayer(fileHandles,16)
     });
-    return out;
   }
+
   @Override
   public void dispose() {
-    //    fontBatch.dispose();
     font.dispose();
     imageBatch.dispose();
     tvgDrawer.dispose();

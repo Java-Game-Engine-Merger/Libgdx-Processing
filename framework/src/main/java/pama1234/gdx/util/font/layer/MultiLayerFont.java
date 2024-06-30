@@ -19,6 +19,7 @@ import pama1234.math.vec.Vec3i;
  * 将这个字体类想象为一个立方形，横轴是一个字体的多个区块，纵轴是多个不同字符范围的字体，Z轴是一个字体区块的多个Texture（png文件），每次调用时都会按照优先级从上往下寻找最合适的字体（找不到的话有unifont兜底）
  */
 public class MultiLayerFont extends BetterBitmapFont{
+  public static boolean debug;
   public static final int useCR=0,showCR=1,ignoreCR=2;
 
   public FontLayer[] fontLayers;
@@ -129,7 +130,7 @@ public class MultiLayerFont extends BetterBitmapFont{
     Array<TextureRegion> regions=getRegions();//TODO
     Glyph glyph=getGlyph(tc);
     if(glyph==null) {
-      System.err.println("char=<"+tc+"> char(int)="+(int)tc+"is not in used font");
+      if(debug) System.err.println("char=<"+tc+"> char(int)="+(int)tc+"is not in used font");
       return;
     }
     Texture texture=regions.get(glyph.page).getTexture();
