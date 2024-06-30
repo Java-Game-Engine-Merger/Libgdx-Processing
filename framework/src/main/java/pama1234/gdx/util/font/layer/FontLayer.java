@@ -45,9 +45,13 @@ public class FontLayer{
   }
 
   public Glyph getGlyph(char ch) {
-    int pos=ch>>>digitShift;
+    int pos=getPosOfChar(ch);
     loadChunk(pos);
     return dataM[pos].getData().getGlyph(ch);
+  }
+
+  public int getPosOfChar(char ch) {
+    return ch>>>digitShift;
   }
 
   public void loadFont(int columns) {
@@ -58,12 +62,12 @@ public class FontLayer{
       if(tgs==null) {
         continue;
       }
-      for(int j=0;j<tgs.length;j++) {
-        Glyph tg=tgs[j];
-        if(tg!=null) {
-          tg.page=columns;
-        }
-      }
+//      for(int j=0;j<tgs.length;j++) {
+//        Glyph tg=tgs[j];
+//        if(tg!=null) {
+//          tg.page=columns;
+//        }
+//      }
     }
   }
 

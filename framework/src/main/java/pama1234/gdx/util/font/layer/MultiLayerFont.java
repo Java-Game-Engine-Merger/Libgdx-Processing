@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 import pama1234.gdx.util.font.BetterBitmapFont;
+import pama1234.gdx.util.font.DistanceFieldShader;
 import pama1234.gdx.util.font.FastGlyphLayout;
 import pama1234.gdx.util.font.FontUtil.UniFontDependent;
 import pama1234.math.vec.Vec2f;
@@ -49,6 +50,8 @@ public class MultiLayerFont extends BetterBitmapFont{
     this.fontLayers=fontLayers;
 
     cache=new LayerFontCache(this);
+
+    fontBatch().setShader(new DistanceFieldShader());
   }
 
   @Override
@@ -127,12 +130,16 @@ public class MultiLayerFont extends BetterBitmapFont{
       v.x+=tabSize*styleFast.scale;
       return;
     }
-    Array<TextureRegion> regions=getRegions();//TODO
+    FontLayer fontLayer=fontLayers[0];//TODO
+    int posOfChar=fontLayer.getPosOfChar(tc);
+    Array<TextureRegion> regions=fontLayer.dataM[posOfChar].getRegions();
     Glyph glyph=getGlyph(tc);
     if(glyph==null) {
       if(debug) System.err.println("char=<"+tc+"> char(int)="+(int)tc+"is not in used font");
       return;
     }
+//    System.out.println("char=<"+tc+"> char(int)="+(int)tc+" posOfChar="+posOfChar);
+
     Texture texture=regions.get(glyph.page).getTexture();
     if(style!=null) {
       fontBatch().setColor(style.background(posI.z,posI.y,i));
