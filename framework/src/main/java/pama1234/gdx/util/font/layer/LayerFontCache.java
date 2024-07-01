@@ -13,9 +13,6 @@ import pama1234.gdx.util.font.FastGlyphLayout;
 
 public class LayerFontCache extends BitmapFontCache{
 
-  @Deprecated
-  private static final int NEED_REFACTOR=0;
-
   /** 每页的顶点数据。 */
   private float[][][] pageVertices;
   private float currentTint;
@@ -150,13 +147,13 @@ public class LayerFontCache extends BitmapFontCache{
       GlyphRun run=layout.runs.get(i);
       Object[] glyphs=run.glyphs.items;
       float[] xAdvances=run.xAdvances.items;
-      float gx=x+run.x,gy=y+run.y;
+      float gx=x+run.x*font.lineSizeScale,gy=y+run.y*font.lineSizeScale;
       for(int ii=0,nn=run.glyphs.size;ii<nn;ii++) {
         if(glyphIndex++==nextColorGlyphIndex) {
           lastColorFloatBits=NumberUtils.intToFloatColor(colors.get(++colorsIndex));
           nextColorGlyphIndex=++colorsIndex<colors.size?colors.get(colorsIndex):-1;
         }
-        gx+=xAdvances[ii];
+        gx+=xAdvances[ii]*font.lineSizeScale;
         addGlyph((Glyph)glyphs[ii],gx,gy,lastColorFloatBits);
       }
     }
@@ -186,12 +183,16 @@ public class LayerFontCache extends BitmapFontCache{
   }
 
   private void requireGlyphs(GlyphLayout layout) {
-    if(pageVertices.length==1) {
-      // Simple if we just have one page.
-      requirePageGlyphs(0,layout.glyphCount);
-    }else {
-      //      int[] tempGlyphCount=this.tempGlyphCount[NEED_REFACTOR];
-      //      Arrays.fill(tempGlyphCount,0);
+//    if(pageVertices.length==1) {
+//      // Simple if we just have one page.
+//      requirePageGlyphs(0,0,layout.glyphCount);
+//    }else {
+      //            int[] tempGlyphCount=this.tempGlyphCount[NEED_REFACTOR];
+      for(int i=0;i<tempGlyphCount.length;i++) {
+        if(tempGlyphCount[i]==null) continue;
+
+        Arrays.fill(tempGlyphCount[i],0);
+      }
 
       // Determine # of glyphs in each page.
       for(int i=0,n=layout.runs.size;i<n;i++) {
@@ -201,7 +202,10 @@ public class LayerFontCache extends BitmapFontCache{
           Glyph glyphItem=(Glyph)glyphItems[ii];
           int posOfChar=font.fontLayers[0].getPosOfChar(glyphItem.id);
           int[] tempGlyphCount_1=this.tempGlyphCount[posOfChar];
-          Arrays.fill(tempGlyphCount_1,0);
+          if(tempGlyphCount_1==null) {
+            loadChunk(posOfChar);
+            tempGlyphCount_1=this.tempGlyphCount[posOfChar];
+          }
           tempGlyphCount_1[glyphItem.page]++;
         }
       }
@@ -209,31 +213,31 @@ public class LayerFontCache extends BitmapFontCache{
       for(int j=0;j<fonts.length;j++) {
         if(tempGlyphCount[j]==null) continue;
         // Require that many for each page.
-        for(int i=0,n=tempGlyphCount[j].length;i<n;i++) requirePageGlyphs(i,tempGlyphCount[j][i]);
+        for(int i=0,n=tempGlyphCount[j].length;i<n;i++) requirePageGlyphs(j,i,tempGlyphCount[j][i]);
       }
-    }
+//    }
   }
 
-  private void requirePageGlyphs(int page,int glyphCount) {
-    if(pageGlyphIndices[NEED_REFACTOR]!=null) {
-      if(glyphCount>pageGlyphIndices[NEED_REFACTOR][page].items.length) pageGlyphIndices[NEED_REFACTOR][page].ensureCapacity(glyphCount-pageGlyphIndices[NEED_REFACTOR][page].size);
+  private void requirePageGlyphs(int chunk,int page,int glyphCount) {
+    if(pageGlyphIndices[chunk]!=null) {
+      if(glyphCount>pageGlyphIndices[chunk][page].items.length) pageGlyphIndices[chunk][page].ensureCapacity(glyphCount-pageGlyphIndices[chunk][page].size);
     }
 
-    int vertexCount=idx[NEED_REFACTOR][page]+glyphCount*20;
-    float[] vertices=pageVertices[NEED_REFACTOR][page];
+    int vertexCount=idx[chunk][page]+glyphCount*20;
+    float[] vertices=pageVertices[chunk][page];
     if(vertices==null) {
-      pageVertices[NEED_REFACTOR][page]=new float[vertexCount];
+      pageVertices[chunk][page]=new float[vertexCount];
     }else if(vertices.length<vertexCount) {
       float[] newVertices=new float[vertexCount];
-      System.arraycopy(vertices,0,newVertices,0,idx[NEED_REFACTOR][page]);
-      pageVertices[NEED_REFACTOR][page]=newVertices;
+      System.arraycopy(vertices,0,newVertices,0,idx[chunk][page]);
+      pageVertices[chunk][page]=newVertices;
     }
   }
 
   private void addGlyph(Glyph glyph,float x,float y,float color) {
     int posOfChar=font.fontLayers[0].getPosOfChar(glyph.id);
 
-    final float scaleX=font.data.scaleX,scaleY=font.data.scaleY;
+    final float scaleX=font.data.scaleX*font.lineSizeScale,scaleY=font.data.scaleY*font.lineSizeScale;
     x+=glyph.xoffset*scaleX;
     y+=glyph.yoffset*scaleY;
     float width=glyph.width*scaleX,height=glyph.height*scaleY;
