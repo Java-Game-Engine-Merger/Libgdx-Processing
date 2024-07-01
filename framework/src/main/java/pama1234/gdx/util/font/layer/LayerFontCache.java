@@ -99,13 +99,28 @@ public class LayerFontCache extends BitmapFontCache{
   /** Removes all glyphs in the cache. */
   public void clear() {
     super.clear();
+
+    Pools.freeAll(pooledLayouts,true);
     pooledLayouts.clear();
+    for(int i=0,n=idx.length;i<n;i++) {
+      if(pageGlyphIndices!=null) pageGlyphIndices[i].clear();
+      idx[i]=0;
+    }
   }
 
   @Override
   public void draw(Batch spriteBatch) {
 
     MultiLayerFont font=(MultiLayerFont)getFont();
+
+    Batch batch=spriteBatch;
+    batch.flush();
+    var shader=batch.getShader();
+
+    font.distanceFieldShader.bind();
+    font.distanceFieldShader.setSmoothing(font.smoothing);
+    batch.setShader(font.distanceFieldShader);
+
     FontLayer fontLayer=font.fontLayers[0];
 
     for(int j=0,n=pageVertices.length;j<n;j++) {
@@ -115,16 +130,30 @@ public class LayerFontCache extends BitmapFontCache{
         spriteBatch.draw(regions.get(j).getTexture(),vertices,0,idx[j]);
       }
     }
+
+    batch.flush();
+    shader.bind();
+    batch.setShader(shader);
   }
 
   @Override
   public void draw(Batch spriteBatch,int start,int end) {
+
+    MultiLayerFont font=(MultiLayerFont)getFont();
+
+    Batch batch=spriteBatch;
+    batch.flush();
+    var shader=batch.getShader();
+
+    font.distanceFieldShader.bind();
+    font.distanceFieldShader.setSmoothing(font.smoothing);
+    batch.setShader(font.distanceFieldShader);
+
     if(pageVertices.length==1) { // 1 page.
       spriteBatch.draw(getFont().getRegion().getTexture(),pageVertices[0],start*20,(end-start)*20);
       return;
     }
 
-    MultiLayerFont font=(MultiLayerFont)getFont();
     FontLayer fontLayer=font.fontLayers[0];
 
     // Determine vertex offset and count to render for each page. Some pages might not need to be rendered at all.
@@ -153,6 +182,10 @@ public class LayerFontCache extends BitmapFontCache{
       // Render the page vertex data with the offset and count.
       spriteBatch.draw(regions.get(i).getTexture(),pageVertices[i],offset*20,count*20);
     }
+
+    batch.flush();
+    shader.bind();
+    batch.setShader(shader);
   }
 
   /**
@@ -169,6 +202,8 @@ public class LayerFontCache extends BitmapFontCache{
     int runCount=layout.runs.size;
     if(runCount==0) return;
 
+    MultiLayerFont font=(MultiLayerFont)getFont();
+
     // Check if the number of font pages has changed.
     if(pageVertices.length<getFont().getRegions().size) setPageCount(getFont().getRegions().size);
 
@@ -182,13 +217,13 @@ public class LayerFontCache extends BitmapFontCache{
       GlyphRun run=layout.runs.get(i);
       Object[] glyphs=run.glyphs.items;
       float[] xAdvances=run.xAdvances.items;
-      float gx=x+run.x,gy=y+run.y;
+      float gx=x+run.x*font.lineSizeScale,gy=y+run.y*font.lineSizeScale;
       for(int ii=0,nn=run.glyphs.size;ii<nn;ii++) {
         if(glyphIndex++==nextColorGlyphIndex) {
           lastColorFloatBits=NumberUtils.intToFloatColor(colors.get(++colorsIndex));
           nextColorGlyphIndex=++colorsIndex<colors.size?colors.get(colorsIndex):-1;
         }
-        gx+=xAdvances[ii];
+        gx+=xAdvances[ii]*font.lineSizeScale;
         addGlyph((Glyph)glyphs[ii],gx,gy,lastColorFloatBits);
       }
     }
@@ -252,7 +287,9 @@ public class LayerFontCache extends BitmapFontCache{
   }
 
   private void addGlyph(Glyph glyph,float x,float y,float color) {
-    final float scaleX=getFont().getData().scaleX,scaleY=getFont().getData().scaleY;
+    MultiLayerFont font=(MultiLayerFont)getFont();
+
+    final float scaleX=getFont().getData().scaleX*font.lineSizeScale,scaleY=getFont().getData().scaleY*font.lineSizeScale;
     x+=glyph.xoffset*scaleX;
     y+=glyph.yoffset*scaleY;
     float width=glyph.width*scaleX,height=glyph.height*scaleY;

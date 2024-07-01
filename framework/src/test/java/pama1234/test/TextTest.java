@@ -42,6 +42,7 @@ public class TextTest extends UtilScreen2D{
   @Override
   public void setup() {
     noStroke();
+    backgroundColor(0);
     centerCamAddAll(new Entity<>(this) {
       @Override
       public void display() {}
