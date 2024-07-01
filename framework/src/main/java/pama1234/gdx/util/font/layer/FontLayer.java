@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 
 import pama1234.gdx.util.element.FontStyle;
 import pama1234.gdx.util.font.FontUtil.UniFontDependent;
+import pama1234.util.Annotations.SyntacticSugar;
 
 public class FontLayer{
   /** 字体文件数组 */
@@ -85,6 +86,11 @@ public class FontLayer{
    * @return 字符在字体数组中的位置
    */
   public int getPosOfChar(char ch) {
+    return ch>>>digitShift;
+  }
+
+  @SyntacticSugar
+  public int getPosOfChar(int ch) {
     return ch>>>digitShift;
   }
 

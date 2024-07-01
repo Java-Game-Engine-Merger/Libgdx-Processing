@@ -133,8 +133,12 @@ public class LayerFontCache extends BitmapFontCache{
     int runCount=layout.runs.size;
     if(runCount==0) return;
 
-    // Check if the number of font pages has changed.
-    if(pageVertices.length<font.getRegions().size) setPageCount(font.getRegions().size);
+    BitmapFont[] fonts=font.fontLayers[0].dataM;
+    for(int i=0;i<fonts.length;i++) {
+      if(fonts[i]==null) continue;
+      // Check if the number of font pages has changed.
+      if(pageVertices.length<font.getRegions().size) setPageCount(i,fonts[i].getRegions().size);
+    }
 
     getLayouts().add(layout);
     requireGlyphs(layout);
@@ -160,25 +164,25 @@ public class LayerFontCache extends BitmapFontCache{
     currentTint=Color.WHITE_FLOAT_BITS; // Cached glyphs have changed, reset the current tint.
   }
 
-  private void setPageCount(int pageCount) {
+  private void setPageCount(int pos,int pageCount) {
     float[][] newPageVertices=new float[pageCount][];
-    System.arraycopy(pageVertices[NEED_REFACTOR],0,newPageVertices,0,pageVertices[NEED_REFACTOR].length);
-    pageVertices[NEED_REFACTOR]=newPageVertices;
+    System.arraycopy(pageVertices[pos],0,newPageVertices,0,pageVertices[pos].length);
+    pageVertices[pos]=newPageVertices;
 
     int[] newIdx=new int[pageCount];
-    System.arraycopy(idx[NEED_REFACTOR],0,newIdx,0,idx[NEED_REFACTOR].length);
-    idx[NEED_REFACTOR]=newIdx;
+    System.arraycopy(idx[pos],0,newIdx,0,idx[pos].length);
+    idx[pos]=newIdx;
 
     IntArray[] newPageGlyphIndices=new IntArray[pageCount];
     int pageGlyphIndicesLength=0;
-    if(pageGlyphIndices[NEED_REFACTOR]!=null) {
-      pageGlyphIndicesLength=pageGlyphIndices[NEED_REFACTOR].length;
-      System.arraycopy(pageGlyphIndices[NEED_REFACTOR],0,newPageGlyphIndices,0,pageGlyphIndices[NEED_REFACTOR].length);
+    if(pageGlyphIndices[pos]!=null) {
+      pageGlyphIndicesLength=pageGlyphIndices[pos].length;
+      System.arraycopy(pageGlyphIndices[pos],0,newPageGlyphIndices,0,pageGlyphIndices[pos].length);
     }
     for(int i=pageGlyphIndicesLength;i<pageCount;i++) newPageGlyphIndices[i]=new IntArray();
-    pageGlyphIndices[NEED_REFACTOR]=newPageGlyphIndices;
+    pageGlyphIndices[pos]=newPageGlyphIndices;
 
-    tempGlyphCount[NEED_REFACTOR]=new int[pageCount];
+    tempGlyphCount[pos]=new int[pageCount];
   }
 
   private void requireGlyphs(GlyphLayout layout) {
@@ -186,16 +190,27 @@ public class LayerFontCache extends BitmapFontCache{
       // Simple if we just have one page.
       requirePageGlyphs(0,layout.glyphCount);
     }else {
-      int[] tempGlyphCount=this.tempGlyphCount[NEED_REFACTOR];
-      Arrays.fill(tempGlyphCount,0);
+      //      int[] tempGlyphCount=this.tempGlyphCount[NEED_REFACTOR];
+      //      Arrays.fill(tempGlyphCount,0);
+
       // Determine # of glyphs in each page.
       for(int i=0,n=layout.runs.size;i<n;i++) {
         Array<Glyph> glyphs=layout.runs.get(i).glyphs;
         Object[] glyphItems=glyphs.items;
-        for(int ii=0,nn=glyphs.size;ii<nn;ii++) tempGlyphCount[((Glyph)glyphItems[ii]).page]++;
+        for(int ii=0,nn=glyphs.size;ii<nn;ii++) {
+          Glyph glyphItem=(Glyph)glyphItems[ii];
+          int posOfChar=font.fontLayers[0].getPosOfChar(glyphItem.id);
+          int[] tempGlyphCount_1=this.tempGlyphCount[posOfChar];
+          Arrays.fill(tempGlyphCount_1,0);
+          tempGlyphCount_1[glyphItem.page]++;
+        }
       }
-      // Require that many for each page.
-      for(int i=0,n=tempGlyphCount.length;i<n;i++) requirePageGlyphs(i,tempGlyphCount[i]);
+      BitmapFont[] fonts=font.fontLayers[0].dataM;
+      for(int j=0;j<fonts.length;j++) {
+        if(tempGlyphCount[j]==null) continue;
+        // Require that many for each page.
+        for(int i=0,n=tempGlyphCount[j].length;i<n;i++) requirePageGlyphs(i,tempGlyphCount[j][i]);
+      }
     }
   }
 
@@ -216,6 +231,8 @@ public class LayerFontCache extends BitmapFontCache{
   }
 
   private void addGlyph(Glyph glyph,float x,float y,float color) {
+    int posOfChar=font.fontLayers[0].getPosOfChar(glyph.id);
+
     final float scaleX=font.data.scaleX,scaleY=font.data.scaleY;
     x+=glyph.xoffset*scaleX;
     y+=glyph.yoffset*scaleY;
@@ -231,12 +248,12 @@ public class LayerFontCache extends BitmapFontCache{
     final float x2=x+width,y2=y+height;
 
     final int page=glyph.page;
-    int idx=this.idx[NEED_REFACTOR][page];
-    this.idx[NEED_REFACTOR][page]+=20;
+    int idx=this.idx[posOfChar][page];
+    this.idx[posOfChar][page]+=20;
 
-    if(pageGlyphIndices[NEED_REFACTOR]!=null) pageGlyphIndices[NEED_REFACTOR][page].add(glyphCount++);
+    if(pageGlyphIndices[posOfChar]!=null) pageGlyphIndices[posOfChar][page].add(glyphCount++);
 
-    final float[] vertices=pageVertices[NEED_REFACTOR][page];
+    final float[] vertices=pageVertices[posOfChar][page];
     vertices[idx++]=x;
     vertices[idx++]=y;
     vertices[idx++]=color;
