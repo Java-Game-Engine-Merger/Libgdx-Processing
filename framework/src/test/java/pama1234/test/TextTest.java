@@ -13,7 +13,6 @@ import pama1234.gdx.game.ui.element.TextField;
 import pama1234.gdx.util.app.UtilScreen;
 import pama1234.gdx.util.app.UtilScreen2D;
 import pama1234.gdx.util.entity.Entity;
-import pama1234.gdx.util.font.layer.MultiLayerFont;
 import pama1234.gdx.util.launcher.MainAppBase;
 import pama1234.math.geometry.RectF;
 
@@ -56,10 +55,12 @@ public class TextTest extends UtilScreen2D{
 
   @Override
   public void displayWithCam() {
+    rect(0,0,250,250);
+
     text("public static void main");
     text("TextTest.java\n使用了\n\n未经检查或不安全的操作。",0,40);
 
-    text(String.valueOf(MultiLayerFont.temp_test_smooth_var),200,200);
+    //    text(String.valueOf(MultiLayerFont.temp_test_smooth_var),200,200);
   }
 
   @Override

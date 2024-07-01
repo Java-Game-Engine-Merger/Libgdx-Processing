@@ -100,18 +100,38 @@ public class MultiLayerFont extends BetterBitmapFont{
     }
   }
 
-  public static String temp_test_smooth_var;
-
   @Override
-  public void fastText(String in,float x,float y) {
+  public void text(String in,float x,float y) {
     // 调整平滑参数的计算方式
     float scale=getData().scaleX*camScale.get();
     float smoothing=smoothConst/scale;
 
-    temp_test_smooth_var="getData().scaleX: "+getData().scaleX+", camScale.get(): "+camScale.get()+", Scale: "+scale+", Smoothing: "+smoothing;
+    //    temp_test_smooth_var="getData().scaleX: "+getData().scaleX+", camScale.get(): "+camScale.get()+", Scale: "+scale+", Smoothing: "+smoothing;
 
+    Batch batch=fontBatch();
+    batch.flush();
+    var shader=batch.getShader();
+    // 保存当前颜色和混合模式
+    //    Color originalColor = batch.getColor().cpy();
+    //    int srcFunc = batch.getBlendSrcFunc();
+    //    int dstFunc = batch.getBlendDstFunc();
+
+    distanceFieldShader.bind();
     distanceFieldShader.setSmoothing(smoothing);
-    fontBatch().setShader(distanceFieldShader);
+    batch.setShader(distanceFieldShader);
+
+    super.text(in,x,y);
+
+    shader.bind();
+    batch.setShader(shader);
+    //    batch.setColor(originalColor);
+    //    batch.setBlendFunction(srcFunc,dstFunc);
+  }
+
+  //  public static String temp_test_smooth_var;
+
+  @Override
+  public void fastText(String in,float x,float y) {
 
     posI.set(0,0,0);
     cacheV.set(x,y);
