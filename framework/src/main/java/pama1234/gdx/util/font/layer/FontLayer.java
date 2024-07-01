@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.Glyph;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 
 import pama1234.gdx.util.element.FontStyle;
 import pama1234.gdx.util.font.FontUtil.UniFontDependent;
@@ -19,6 +21,8 @@ public class FontLayer{
   public boolean distanceField;
   public boolean flipped=true;
   public FontStyle styleFast=new FontStyle();
+
+  public boolean smoothFont=true;
 
   public FontLayer(FileHandle[] fontFile,int length) {
     this.fontFile=fontFile;
@@ -62,18 +66,21 @@ public class FontLayer{
       if(tgs==null) {
         continue;
       }
-//      for(int j=0;j<tgs.length;j++) {
-//        Glyph tg=tgs[j];
-//        if(tg!=null) {
-//          tg.page=columns;
-//        }
-//      }
+      //      for(int j=0;j<tgs.length;j++) {
+      //        Glyph tg=tgs[j];
+      //        if(tg!=null) {
+      //          tg.page=columns;
+      //        }
+      //      }
     }
   }
 
   public BitmapFont createBitmapFont(FileHandle fontFile) {
     BitmapFont out=fontFile==null?new BitmapFont(flipped):new BitmapFont(fontFile,flipped);
-    out.getRegion().getTexture().setFilter(TextureFilter.Linear,TextureFilter.Nearest);
+    Array<TextureRegion> regions=out.getRegions(); // Apply texture filter to all regions
+    for(TextureRegion region:regions) {
+      region.getTexture().setFilter(TextureFilter.Linear,smoothFont?TextureFilter.Linear:TextureFilter.Nearest);
+    }
     BitmapFontData data=out.getData();
 
     @UniFontDependent

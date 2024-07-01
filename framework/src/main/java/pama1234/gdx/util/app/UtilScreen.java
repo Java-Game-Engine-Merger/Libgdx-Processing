@@ -21,6 +21,7 @@ import hhs.gdx.hslib.tools.LoopThread;
 import pama1234.gdx.game.ui.element.TextField;
 import pama1234.gdx.util.SharedResources;
 import pama1234.gdx.util.cam.CameraController;
+import pama1234.gdx.util.font.layer.MultiLayerFont;
 import pama1234.gdx.util.info.MouseInfo;
 import pama1234.gdx.util.info.TouchInfo;
 import pama1234.gdx.util.input.UtilInputProcesser;
@@ -45,6 +46,7 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
     //    font.fontBatch=fontBatch;
     //    font.styleFast=fontStyle;
     textFont(SharedResources.instance.font);
+    ((MultiLayerFont)font).camScale=()->cam.scale()*(u/30);
     textColor=new Color(0,0,0,1);
     font.color(textColor);
     fillColor=new Color(1,1,1,1);

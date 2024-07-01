@@ -6,7 +6,9 @@ import com.badlogic.gdx.math.MathUtils;
 
 public class DistanceFieldShader extends ShaderProgram{
   public DistanceFieldShader() {
-    super(Gdx.files.internal("font/distancefield.vert"),Gdx.files.internal("font/distancefield.frag"));
+    super(
+      Gdx.files.internal("font/distancefield.vert"),
+      Gdx.files.internal("font/distancefield.frag"));
     if(!isCompiled()) {
       throw new RuntimeException("Shader compilation failed:\n"+getLog());
     }

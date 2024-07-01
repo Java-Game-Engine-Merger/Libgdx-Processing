@@ -52,7 +52,7 @@ public class SharedResources implements Disposable{
     }
     return new MultiLayerFont(new FontLayer[] {
       new FontLayer(fileHandles,16)
-    });
+    },null);
   }
 
   @Override

@@ -15,11 +15,13 @@ import pama1234.gdx.util.font.FastGlyphLayout;
 import pama1234.gdx.util.font.FontUtil.UniFontDependent;
 import pama1234.math.vec.Vec2f;
 import pama1234.math.vec.Vec3i;
+import pama1234.util.function.GetFloat;
 
 /**
  * 将这个字体类想象为一个立方形，横轴是一个字体的多个区块，纵轴是多个不同字符范围的字体，Z轴是一个字体区块的多个Texture（png文件），每次调用时都会按照优先级从上往下寻找最合适的字体（找不到的话有unifont兜底）
  */
 public class MultiLayerFont extends BetterBitmapFont{
+  public static float smoothConst=0.25f;
   public static boolean debug;
   public static final int useCR=0,showCR=1,ignoreCR=2;
 
@@ -46,12 +48,17 @@ public class MultiLayerFont extends BetterBitmapFont{
 
   public LayerFontCache cache;
 
-  public MultiLayerFont(FontLayer[] fontLayers) {
+  public DistanceFieldShader distanceFieldShader;
+  public GetFloat camScale;
+
+  public MultiLayerFont(FontLayer[] fontLayers,GetFloat camScale) {
     this.fontLayers=fontLayers;
 
     cache=new LayerFontCache(this);
 
-    fontBatch().setShader(new DistanceFieldShader());
+    distanceFieldShader=new DistanceFieldShader();
+
+    this.camScale=camScale;
   }
 
   @Override
@@ -97,8 +104,19 @@ public class MultiLayerFont extends BetterBitmapFont{
     }
   }
 
+  public static String temp_test_smooth_var;
+
   @Override
   public void fastText(String in,float x,float y) {
+    // 调整平滑参数的计算方式
+    float scale=getData().scaleX*camScale.get();
+    float smoothing=smoothConst/scale;
+
+    temp_test_smooth_var="getData().scaleX: "+getData().scaleX+", camScale.get(): "+camScale.get()+", Scale: "+scale+", Smoothing: "+smoothing;
+
+    distanceFieldShader.setSmoothing(smoothing);
+
+    fontBatch().setShader(distanceFieldShader);
 
     posI.set(0,0,0);
     cacheV.set(x,y);
@@ -138,27 +156,28 @@ public class MultiLayerFont extends BetterBitmapFont{
       if(debug) System.err.println("char=<"+tc+"> char(int)="+(int)tc+"is not in used font");
       return;
     }
-//    System.out.println("char=<"+tc+"> char(int)="+(int)tc+" posOfChar="+posOfChar);
+    //    System.out.println("char=<"+tc+"> char(int)="+(int)tc+" posOfChar="+posOfChar);
 
     Texture texture=regions.get(glyph.page).getTexture();
+    Batch batch=fontBatch();
     if(style!=null) {
-      fontBatch().setColor(style.background(posI.z,posI.y,i));
-      fontBatch().draw(backgroundAlt,
+      batch.setColor(style.background(posI.z,posI.y,i));
+      batch.draw(backgroundAlt,
         v.x+backgroundXOffset*styleFast.scale,
         v.y,
         glyph.xadvance*styleFast.scale,
         lineSize*styleFast.scale);
-      fontBatch().setColor(style.foreground(posI.z,posI.y,i));
+      batch.setColor(style.foreground(posI.z,posI.y,i));
       drawChar(v,glyph,texture);
     }else {
       if(styleFast.background!=null) {
-        fontBatch().setColor(styleFast.background);
-        fontBatch().draw(backgroundAlt,
+        batch.setColor(styleFast.background);
+        batch.draw(backgroundAlt,
           v.x+backgroundXOffset*styleFast.scale,
           v.y,
           glyph.xadvance*styleFast.scale,
           lineSize*styleFast.scale);
-        fontBatch().setColor(styleFast.foreground);
+        batch.setColor(styleFast.foreground);
       }
       drawChar(v,glyph,texture);
     }
@@ -174,6 +193,7 @@ public class MultiLayerFont extends BetterBitmapFont{
     v.y+=lineSize;
   }
   private void drawChar(Vec2f v,Glyph glyph,Texture texture) {
+    //    texture.setFilter(texture.getMinFilter(),TextureFilter.Linear);
     fontBatch().draw(texture,
       v.x+glyph.xoffset*styleFast.scale,
       v.y+glyph.yoffset*styleFast.scale,
