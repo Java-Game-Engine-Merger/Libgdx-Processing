@@ -3,11 +3,9 @@ package pama1234.gdx.util.font.layer;
 import java.util.Arrays;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.Glyph;
-import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout.GlyphRun;
 import com.badlogic.gdx.utils.*;
 
@@ -28,6 +26,7 @@ public class LayerFontCache extends BitmapFontCache{
   /** Used internally to ensure a correct capacity for multi-page font vertex data. */
   private int[] tempGlyphCount;
   private int glyphCount;
+  private CharSequence s;
 
   private final Array<GlyphLayout> pooledLayouts=new Array<>();
   public LayerFontCache(BitmapFont font) {
@@ -90,6 +89,7 @@ public class LayerFontCache extends BitmapFontCache{
    */
   public FastGlyphLayout addFastText(CharSequence str,float x,float y,int start,int end,float targetWidth,int halign,
     boolean wrap,String truncate) {
+    s=str;
     FastGlyphLayout layout=Pools.obtain(FastGlyphLayout.class);
     pooledLayouts.add(layout);
     layout.setText(getFont(),str,start,end,getColor(),targetWidth,halign,wrap,truncate);
@@ -100,6 +100,20 @@ public class LayerFontCache extends BitmapFontCache{
   public void clear() {
     super.clear();
     pooledLayouts.clear();
+  }
+
+  public void draw(Batch spriteBatch) {
+
+    MultiLayerFont font=(MultiLayerFont)getFont();
+
+    FontLayer fontLayer=font.fontLayers[0];
+    for(int j=0,n=pageVertices.length;j<n;j++) {
+      if(idx[j]>0) { // ignore if this texture has no glyphs
+        float[] vertices=pageVertices[j];
+        Array<TextureRegion> regions=fontLayer.dataM[fontLayer.getPosOfChar(s.charAt(j))].getRegions();
+        spriteBatch.draw(regions.get(j).getTexture(),vertices,0,idx[j]);
+      }
+    }
   }
 
   /**
