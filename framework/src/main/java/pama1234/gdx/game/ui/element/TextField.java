@@ -364,10 +364,10 @@ public class TextField extends Widget implements Disableable{
     if(layout.runs.size>0) {
       GlyphRun run=layout.runs.first();
       FloatArray xAdvances=run.xAdvances;
-      fontOffset=xAdvances.first();
+      fontOffset=xAdvances.first()/font.lineSizeScale;
       for(int i=1,n=xAdvances.size;i<n;i++) {
         glyphPositions.add(x);
-        x+=xAdvances.get(i);
+        x+=xAdvances.get(i)/font.lineSizeScale;
       }
     }else fontOffset=0;
     glyphPositions.add(x);

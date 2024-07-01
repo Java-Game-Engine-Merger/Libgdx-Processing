@@ -134,8 +134,9 @@ public class FontLayer{
         continue;
       }
       int tl=g.xadvance/unit;
-      g.xoffset+=(unit*tl-g.xadvance)/2;
-      g.xadvance=unit*tl;
+      int charWidth=unit*tl;
+      g.xoffset+=(charWidth-g.xadvance)/2;
+      g.xadvance=charWidth;
       g.kerning=null;
       g.fixedWidth=true;
     }

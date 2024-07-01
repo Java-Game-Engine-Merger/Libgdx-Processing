@@ -41,8 +41,8 @@ public class MultiLayerFont extends BetterBitmapFont{
   // TODO lineSize在不同字体中是不一样的
   @UniFontDependent
   public float lineSize=lineSizeConst,charWidth=8,backgroundXOffset=1;
-  public float lineSizeScale=0.5f;
   public float tabSize=16;
+  public float baselineShift=6;
   public TextureRegion backgroundAlt=createBlankTextureRegion();
 
   public LayerFontData data;

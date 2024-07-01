@@ -112,7 +112,7 @@ public class LayerFontCache extends BitmapFontCache{
     FastGlyphLayout layout=Pools.obtain(FastGlyphLayout.class);
     pooledLayouts.add(layout);
     layout.setText(getFont(),str,start,end,getColor(),targetWidth,halign,wrap,truncate);
-    addText(layout,x,y);
+    addText(layout,x,y-font.baselineShift);
     return layout;
   }
 
