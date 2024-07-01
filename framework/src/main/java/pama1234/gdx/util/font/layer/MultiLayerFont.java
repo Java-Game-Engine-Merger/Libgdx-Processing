@@ -22,6 +22,7 @@ import pama1234.util.function.GetFloat;
  * 每次调用时都会按照优先级从上往下寻找最合适的字体（找不到的话有unifont兜底）。
  */
 public class MultiLayerFont extends BetterBitmapFont{
+  public static float lineSizeConst=20;
   public static float smoothConst=0.25f;
   public static boolean debug;
   public static final int useCR=0,showCR=1,ignoreCR=2;
@@ -39,7 +40,8 @@ public class MultiLayerFont extends BetterBitmapFont{
 
   // TODO lineSize在不同字体中是不一样的
   @UniFontDependent
-  public float lineSize=40,charWidth=8,backgroundXOffset=1;
+  public float lineSize=lineSizeConst,charWidth=8,backgroundXOffset=1;
+  public float lineSizeScale=0.5f;
   public float tabSize=16;
   public TextureRegion backgroundAlt=createBlankTextureRegion();
 
@@ -49,6 +51,9 @@ public class MultiLayerFont extends BetterBitmapFont{
 
   public MultiLayerFont(FontLayer[] fontLayers) {
     this.fontLayers=fontLayers;
+    for(FontLayer fontLayer:fontLayers) {
+      fontLayer.lineSizeScale=lineSizeScale;
+    }
     this.cache=new LayerFontCache(this);
     this.distanceFieldShader=new DistanceFieldShader();
   }
@@ -70,7 +75,7 @@ public class MultiLayerFont extends BetterBitmapFont{
       System.err.println("MultiLayerFont.addCharWidth char=<"+tc+"> char(int)="+(int)tc);
       return x;
     }
-    x+=glyph.xadvance;
+    x+=glyph.xadvance*lineSizeScale;
     return x;
   }
 
@@ -120,6 +125,7 @@ public class MultiLayerFont extends BetterBitmapFont{
   }
 
   public void drawChar(Vec2f v,char tc,int i) {
+    float scaleLineSize=styleFast.scale*lineSizeScale;
     if(tc=='\r') {
       switch(stateCR) {
         case useCR:
@@ -136,7 +142,7 @@ public class MultiLayerFont extends BetterBitmapFont{
     if(tc=='\t'&&useTab) {
       posI.x+=tabSize/charWidth;
       posI.z+=1;
-      v.x+=tabSize*styleFast.scale;
+      v.x+=tabSize*scaleLineSize;
       return;
     }
     FontLayer fontLayer=fontLayers[0]; // TODO: 需要改进
@@ -153,27 +159,27 @@ public class MultiLayerFont extends BetterBitmapFont{
     if(style!=null) {
       batch.setColor(style.background(posI.z,posI.y,i));
       batch.draw(backgroundAlt,
-        v.x+backgroundXOffset*styleFast.scale,
+        v.x+backgroundXOffset*scaleLineSize,
         v.y,
-        glyph.xadvance*styleFast.scale,
-        lineSize*styleFast.scale);
+        glyph.xadvance*scaleLineSize,
+        lineSize*scaleLineSize);
       batch.setColor(style.foreground(posI.z,posI.y,i));
       drawChar(v,glyph,texture);
     }else {
       if(styleFast.background!=null) {
         batch.setColor(styleFast.background);
         batch.draw(backgroundAlt,
-          v.x+backgroundXOffset*styleFast.scale,
+          v.x+backgroundXOffset*scaleLineSize,
           v.y,
-          glyph.xadvance*styleFast.scale,
-          lineSize*styleFast.scale);
+          glyph.xadvance*scaleLineSize,
+          lineSize*scaleLineSize);
         batch.setColor(styleFast.foreground);
       }
       drawChar(v,glyph,texture);
     }
     posI.x+=glyph.xadvance/charWidth;
     posI.z+=1;
-    v.x+=glyph.xadvance*styleFast.scale;
+    v.x+=glyph.xadvance*styleFast.scale*lineSizeScale;
   }
 
   private void drawCharNewLine(Vec2f v) {
@@ -185,11 +191,12 @@ public class MultiLayerFont extends BetterBitmapFont{
   }
 
   private void drawChar(Vec2f v,Glyph glyph,Texture texture) {
+    float scaleLineSize=styleFast.scale*lineSizeScale;
     fontBatch().draw(texture,
-      v.x+glyph.xoffset*styleFast.scale,
-      v.y+glyph.yoffset*styleFast.scale,
-      glyph.width*styleFast.scale,
-      glyph.height*styleFast.scale,
+      v.x+glyph.xoffset*scaleLineSize,
+      v.y+glyph.yoffset*scaleLineSize,
+      glyph.width*scaleLineSize,
+      glyph.height*scaleLineSize,
       glyph.u,glyph.v,
       glyph.u2,glyph.v2);
   }

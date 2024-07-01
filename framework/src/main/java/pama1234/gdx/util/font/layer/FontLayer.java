@@ -33,6 +33,8 @@ public class FontLayer{
   /** 是否使用平滑字体 */
   public boolean smoothFont=true;
 
+  public float lineSizeScale;
+
   /**
    * 构造函数，初始化字体文件和 BitmapFont 数组
    *
@@ -94,12 +96,14 @@ public class FontLayer{
   public void loadFont(int columns) {
     BitmapFont tf=createBitmapFont(fontFile[columns]);
     dataM[columns]=tf;
-    for(int i=0;i<tf.getData().glyphs.length;i++) {
-      Glyph[] tgs=tf.getData().glyphs[i];
+    BitmapFontData fontData=tf.getData();
+    for(int i=0;i<fontData.glyphs.length;i++) {
+      Glyph[] tgs=fontData.glyphs[i];
       if(tgs==null) {
         continue;
       }
     }
+    fontData.setScale(lineSizeScale);
   }
 
   /**
