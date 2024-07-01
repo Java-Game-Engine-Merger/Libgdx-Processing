@@ -59,8 +59,5 @@ public class LayerFontData extends BitmapFontData{
    */
   public Glyph getGlyph(char ch) {
     return p.getGlyph(ch);
-    //    Glyph[] page=glyphs[ch/PAGE_SIZE];
-    //    if(page!=null) return page[ch&PAGE_SIZE-1];
-    //    return null;
   }
 }

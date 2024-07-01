@@ -102,17 +102,56 @@ public class LayerFontCache extends BitmapFontCache{
     pooledLayouts.clear();
   }
 
+  @Override
   public void draw(Batch spriteBatch) {
 
     MultiLayerFont font=(MultiLayerFont)getFont();
-
     FontLayer fontLayer=font.fontLayers[0];
+
     for(int j=0,n=pageVertices.length;j<n;j++) {
       if(idx[j]>0) { // ignore if this texture has no glyphs
         float[] vertices=pageVertices[j];
         Array<TextureRegion> regions=fontLayer.dataM[fontLayer.getPosOfChar(s.charAt(j))].getRegions();
         spriteBatch.draw(regions.get(j).getTexture(),vertices,0,idx[j]);
       }
+    }
+  }
+
+  @Override
+  public void draw(Batch spriteBatch,int start,int end) {
+    if(pageVertices.length==1) { // 1 page.
+      spriteBatch.draw(getFont().getRegion().getTexture(),pageVertices[0],start*20,(end-start)*20);
+      return;
+    }
+
+    MultiLayerFont font=(MultiLayerFont)getFont();
+    FontLayer fontLayer=font.fontLayers[0];
+
+    // Determine vertex offset and count to render for each page. Some pages might not need to be rendered at all.
+    for(int i=0,pageCount=pageVertices.length;i<pageCount;i++) {
+      int offset=-1,count=0;
+
+      // For each set of glyph indices, determine where to begin within the start/end bounds.
+      IntArray glyphIndices=pageGlyphIndices[i];
+      for(int ii=0,n=glyphIndices.size;ii<n;ii++) {
+        int glyphIndex=glyphIndices.get(ii);
+
+        // Break early if the glyph is out of bounds.
+        if(glyphIndex>=end) break;
+
+        // Determine if this glyph is within bounds. Use the first match of that for the offset.
+        if(offset==-1&&glyphIndex>=start) offset=ii;
+
+        // Determine the vertex count by counting glyphs within bounds.
+        if(glyphIndex>=start) count++;
+      }
+
+      // Page doesn't need to be rendered.
+      if(offset==-1||count==0) continue;
+
+      Array<TextureRegion> regions=fontLayer.dataM[fontLayer.getPosOfChar(s.charAt(i))].getRegions();
+      // Render the page vertex data with the offset and count.
+      spriteBatch.draw(regions.get(i).getTexture(),pageVertices[i],offset*20,count*20);
     }
   }
 
