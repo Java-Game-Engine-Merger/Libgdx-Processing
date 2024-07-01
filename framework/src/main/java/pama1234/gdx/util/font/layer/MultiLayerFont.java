@@ -18,7 +18,8 @@ import pama1234.math.vec.Vec3i;
 import pama1234.util.function.GetFloat;
 
 /**
- * 将这个字体类想象为一个立方形，横轴是一个字体的多个区块，纵轴是多个不同字符范围的字体，Z轴是一个字体区块的多个Texture（png文件），每次调用时都会按照优先级从上往下寻找最合适的字体（找不到的话有unifont兜底）
+ * MultiLayerFont 类表示一个多层字体系统。 横轴表示一个字体的多个区块，纵轴表示多个不同字符范围的字体，Z轴表示一个字体区块的多个Texture（png文件）。
+ * 每次调用时都会按照优先级从上往下寻找最合适的字体（找不到的话有unifont兜底）。
  */
 public class MultiLayerFont extends BetterBitmapFont{
   public static float smoothConst=0.25f;
@@ -26,46 +27,35 @@ public class MultiLayerFont extends BetterBitmapFont{
   public static final int useCR=0,showCR=1,ignoreCR=2;
 
   public FontLayer[] fontLayers;
-  // TODO
   public boolean loadOnDemand;
 
   /**
-   * x是以字符宽度的角度记录的
-   * </p>
-   * y是行数
-   * </p>
-   * z是这一行目前的字符数量
+   * posI 的 x 表示字符宽度，y 表示行数，z 表示这一行目前的字符数量。
    */
   public Vec3i posI=new Vec3i();
   public Vec2f cacheV=new Vec2f(),inPos=new Vec2f();
   public boolean useLF=true,useTab=true;
   public int stateCR=ignoreCR;
-  // TODO
+
+  // TODO lineSize在不同字体中是不一样的
   @UniFontDependent
-  public float lineSize=20,charWidth=8,backgroundXOffset=1;
+  public float lineSize=40,charWidth=8,backgroundXOffset=1;
   public float tabSize=16;
   public TextureRegion backgroundAlt=createBlankTextureRegion();
 
   public LayerFontCache cache;
-
   public DistanceFieldShader distanceFieldShader;
   public GetFloat camScale;
 
-  public MultiLayerFont(FontLayer[] fontLayers,GetFloat camScale) {
+  public MultiLayerFont(FontLayer[] fontLayers) {
     this.fontLayers=fontLayers;
-
-    cache=new LayerFontCache(this);
-
-    distanceFieldShader=new DistanceFieldShader();
-
-    this.camScale=camScale;
+    this.cache=new LayerFontCache(this);
+    this.distanceFieldShader=new DistanceFieldShader();
   }
 
   @Override
   public float textWidthNoScale(CharSequence in) {
     float out=0;
-    //    @UniFontDependent
-    //    float out=2;
     for(int i=0;i<in.length();i++) {
       char tc=in.charAt(i);
       load(tc);
@@ -73,6 +63,7 @@ public class MultiLayerFont extends BetterBitmapFont{
     }
     return out;
   }
+
   public float addCharWidth(float x,char tc) {
     var glyph=getGlyph(tc);
     if(glyph==null) {
@@ -82,14 +73,14 @@ public class MultiLayerFont extends BetterBitmapFont{
     x+=glyph.xadvance;
     return x;
   }
+
   @Override
   public Glyph getGlyph(char ch) {
     return load(ch);
   }
 
   public Glyph load(char c) {
-    for(int i=0;i<fontLayers.length;i++) {
-      var font=fontLayers[i];
+    for(FontLayer font:fontLayers) {
       var g=font.getGlyph(c);
       if(g!=null) return g;
     }
@@ -115,7 +106,6 @@ public class MultiLayerFont extends BetterBitmapFont{
     temp_test_smooth_var="getData().scaleX: "+getData().scaleX+", camScale.get(): "+camScale.get()+", Scale: "+scale+", Smoothing: "+smoothing;
 
     distanceFieldShader.setSmoothing(smoothing);
-
     fontBatch().setShader(distanceFieldShader);
 
     posI.set(0,0,0);
@@ -128,6 +118,7 @@ public class MultiLayerFont extends BetterBitmapFont{
       drawChar(cacheV,tc,i);
     }
   }
+
   public void drawChar(Vec2f v,char tc,int i) {
     if(tc=='\r') {
       switch(stateCR) {
@@ -142,21 +133,20 @@ public class MultiLayerFont extends BetterBitmapFont{
       drawCharNewLine(v);
       return;
     }
-    if(tc=='	'&&useTab) {
+    if(tc=='\t'&&useTab) {
       posI.x+=tabSize/charWidth;
       posI.z+=1;
       v.x+=tabSize*styleFast.scale;
       return;
     }
-    FontLayer fontLayer=fontLayers[0];//TODO
+    FontLayer fontLayer=fontLayers[0]; // TODO: 需要改进
     int posOfChar=fontLayer.getPosOfChar(tc);
     Array<TextureRegion> regions=fontLayer.dataM[posOfChar].getRegions();
     Glyph glyph=getGlyph(tc);
     if(glyph==null) {
-      if(debug) System.err.println("char=<"+tc+"> char(int)="+(int)tc+"is not in used font");
+      if(debug) System.err.println("char=<"+tc+"> char(int)="+(int)tc+" is not in used font");
       return;
     }
-    //    System.out.println("char=<"+tc+"> char(int)="+(int)tc+" posOfChar="+posOfChar);
 
     Texture texture=regions.get(glyph.page).getTexture();
     Batch batch=fontBatch();
@@ -185,6 +175,7 @@ public class MultiLayerFont extends BetterBitmapFont{
     posI.z+=1;
     v.x+=glyph.xadvance*styleFast.scale;
   }
+
   private void drawCharNewLine(Vec2f v) {
     posI.x=0;
     posI.z=0;
@@ -192,8 +183,8 @@ public class MultiLayerFont extends BetterBitmapFont{
     v.x=inPos.x;
     v.y+=lineSize;
   }
+
   private void drawChar(Vec2f v,Glyph glyph,Texture texture) {
-    //    texture.setFilter(texture.getMinFilter(),TextureFilter.Linear);
     fontBatch().draw(texture,
       v.x+glyph.xoffset*styleFast.scale,
       v.y+glyph.yoffset*styleFast.scale,

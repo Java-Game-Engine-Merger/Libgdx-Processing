@@ -50,9 +50,10 @@ public class SharedResources implements Disposable{
     for(int i=0;i<16;i++) {
       fileHandles[i]=Gdx.files.internal("font/mapleMono/"+i+"/MapleMonoRegular-"+i+".fnt");
     }
-    return new MultiLayerFont(new FontLayer[] {
+    MultiLayerFont multiLayerFont=new MultiLayerFont(new FontLayer[] {
       new FontLayer(fileHandles,16)
-    },null);
+    });
+    return multiLayerFont;
   }
 
   @Override

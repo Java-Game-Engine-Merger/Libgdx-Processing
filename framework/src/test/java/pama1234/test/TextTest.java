@@ -57,7 +57,7 @@ public class TextTest extends UtilScreen2D{
   @Override
   public void displayWithCam() {
     text("public static void main");
-    text("TextTest.java\n使用了\n\n未经检查或不安全的操作。",0,120);
+    text("TextTest.java\n使用了\n\n未经检查或不安全的操作。",0,40);
 
     text(String.valueOf(MultiLayerFont.temp_test_smooth_var),200,200);
   }
