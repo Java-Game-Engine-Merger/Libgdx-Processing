@@ -37,6 +37,8 @@ public class TextTest extends UtilScreen2D{
     new Lwjgl3Application(mab,getDefaultConfiguration(mab,clas.getSimpleName()));
   }
 
+  TextField temp;
+
   @Override
   public void setup() {
     noStroke();
@@ -44,7 +46,7 @@ public class TextTest extends UtilScreen2D{
       @Override
       public void display() {}
     });
-    addCamTextFields(new TextField("file.name()",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->0,()->0-26,()->250-120,()->18),()->1));
+    addCamTextFields(temp=new TextField("file.name()",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->0,()->0-26,()->250-120,()->18),()->1));
   }
 
   @Override
@@ -55,12 +57,17 @@ public class TextTest extends UtilScreen2D{
 
   @Override
   public void displayWithCam() {
+    fill(127,127);
     rect(0,0,250,250);
 
     text("public static void main");
     text("TextTest.java\n使用了\n\n未经检查或不安全的操作。",0,40);
 
     //    text(String.valueOf(MultiLayerFont.temp_test_smooth_var),200,200);
+
+//    temp.getStyle().font=font;
+//    println(temp.getStyle().font);
+//    println(textFont());
   }
 
   @Override

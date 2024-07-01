@@ -45,6 +45,7 @@ public class MultiLayerFont extends BetterBitmapFont{
   public float tabSize=16;
   public TextureRegion backgroundAlt=createBlankTextureRegion();
 
+  public LayerFontData data;
   public LayerFontCache cache;
   public DistanceFieldShader distanceFieldShader;
   public GetFloat camScale;
@@ -56,6 +57,13 @@ public class MultiLayerFont extends BetterBitmapFont{
     }
     this.cache=new LayerFontCache(this);
     this.distanceFieldShader=new DistanceFieldShader();
+    data=new LayerFontData(this);
+    data.name="Maple Mono Multi Layer";
+  }
+
+  @Override
+  public BitmapFontData getData() {
+    return data;
   }
 
   @Override
@@ -109,10 +117,11 @@ public class MultiLayerFont extends BetterBitmapFont{
     //    temp_test_smooth_var="getData().scaleX: "+getData().scaleX+", camScale.get(): "+camScale.get()+", Scale: "+scale+", Smoothing: "+smoothing;
 
     Batch batch=fontBatch();
+
     batch.flush();
     var shader=batch.getShader();
     // 保存当前颜色和混合模式
-    //    Color originalColor = batch.getColor().cpy();
+    //    Color originalColor=batch.getColor().cpy();
     //    int srcFunc = batch.getBlendSrcFunc();
     //    int dstFunc = batch.getBlendDstFunc();
 
@@ -122,6 +131,7 @@ public class MultiLayerFont extends BetterBitmapFont{
 
     super.text(in,x,y);
 
+    batch.flush();
     shader.bind();
     batch.setShader(shader);
     //    batch.setColor(originalColor);

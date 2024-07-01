@@ -904,7 +904,7 @@ public class TextField extends Widget implements Disableable{
       return true;
     }
   }
-  static public class TextFieldStyle{
+  public static class TextFieldStyle{
     public BetterBitmapFont font;
     public Color fontColor;
     public @Null Color focusedFontColor,disabledFontColor;
