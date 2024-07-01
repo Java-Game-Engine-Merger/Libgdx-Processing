@@ -3,13 +3,10 @@ package pama1234.gdx.util.font.layer;
 import java.util.Arrays;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.Glyph;
-import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout.GlyphRun;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.*;
 
 import pama1234.gdx.util.font.FastGlyphLayout;
@@ -287,53 +284,85 @@ public class LayerFontCache extends BitmapFontCache{
 
   @Override
   public void draw(Batch spriteBatch) {
-    Array<TextureRegion> regions=font.getRegions();
-    for(int i=0;i<pageVertices.length;i++) {
-      if(pageVertices[i]!=null) for(int j=0,n=pageVertices[i].length;j<n;j++) {
-        if(idx[i][j]>0) { // ignore if this texture has no glyphs
-          float[] vertices=pageVertices[i][j];
-          spriteBatch.draw(regions.get(j).getTexture(),vertices,0,idx[i][j]);
+
+    Batch batch=spriteBatch;
+    batch.flush();
+    var shader=batch.getShader();
+
+    font.distanceFieldShader.bind();
+    font.distanceFieldShader.setSmoothing(font.smoothing);
+    batch.setShader(font.distanceFieldShader);
+
+    {
+      for(int i=0;i<pageVertices.length;i++) {
+        FontLayer fontLayer=font.fontLayers[0];
+        BitmapFont fontChunk=fontLayer.dataM[i];
+        if(fontChunk==null) continue;
+
+        Array<TextureRegion> regions=fontChunk.getRegions();
+        if(pageVertices[i]!=null) for(int j=0,n=pageVertices[i].length;j<n;j++) {
+          if(idx[i][j]>0) { // ignore if this texture has no glyphs
+            float[] vertices=pageVertices[i][j];
+            spriteBatch.draw(regions.get(j).getTexture(),vertices,0,idx[i][j]);
+          }
         }
       }
     }
+    batch.flush();
+    shader.bind();
+    batch.setShader(shader);
   }
 
   @Override
   public void draw(Batch spriteBatch,int start,int end) {
-    for(int j=0;j<pageVertices.length;j++) {
-      if(pageVertices==null) continue;
 
-      if(pageVertices[j].length==1) { // 1 page.
-        spriteBatch.draw(font.getRegion().getTexture(),pageVertices[j][0],start*20,(end-start)*20);
-        return;
-      }
+    Batch batch=spriteBatch;
+    batch.flush();
+    var shader=batch.getShader();
 
-      // Determine vertex offset and count to render for each page. Some pages might not need to be rendered at all.
-      Array<TextureRegion> regions=font.getRegions();
-      for(int i=0,pageCount=pageVertices[j].length;i<pageCount;i++) {
-        int offset=-1,count=0;
+    font.distanceFieldShader.bind();
+    font.distanceFieldShader.setSmoothing(font.smoothing);
+    batch.setShader(font.distanceFieldShader);
 
-        // For each set of glyph indices, determine where to begin within the start/end bounds.
-        IntArray glyphIndices=pageGlyphIndices[j][i];
-        for(int ii=0,n=glyphIndices.size;ii<n;ii++) {
-          int glyphIndex=glyphIndices.get(ii);
+    {
+      for(int j=0;j<pageVertices.length;j++) {
+        if(pageVertices==null) continue;
 
-          // Break early if the glyph is out of bounds.
-          if(glyphIndex>=end) break;
-
-          // Determine if this glyph is within bounds. Use the first match of that for the offset.
-          if(offset==-1&&glyphIndex>=start) offset=ii;
-
-          // Determine the vertex count by counting glyphs within bounds.
-          if(glyphIndex>=start) count++;
+        if(pageVertices[j].length==1) { // 1 page.
+          spriteBatch.draw(font.getRegion().getTexture(),pageVertices[j][0],start*20,(end-start)*20);
+          return;
         }
 
-        // Page doesn't need to be rendered.
-        if(offset==-1||count==0) continue;
+        // Determine vertex offset and count to render for each page. Some pages might not need to be rendered at all.
+        Array<TextureRegion> regions=font.getRegions();
+        for(int i=0,pageCount=pageVertices[j].length;i<pageCount;i++) {
+          int offset=-1,count=0;
 
-        // Render the page vertex data with the offset and count.
-        spriteBatch.draw(regions.get(i).getTexture(),pageVertices[j][i],offset*20,count*20);
+          // For each set of glyph indices, determine where to begin within the start/end bounds.
+          IntArray glyphIndices=pageGlyphIndices[j][i];
+          for(int ii=0,n=glyphIndices.size;ii<n;ii++) {
+            int glyphIndex=glyphIndices.get(ii);
+
+            // Break early if the glyph is out of bounds.
+            if(glyphIndex>=end) break;
+
+            // Determine if this glyph is within bounds. Use the first match of that for the offset.
+            if(offset==-1&&glyphIndex>=start) offset=ii;
+
+            // Determine the vertex count by counting glyphs within bounds.
+            if(glyphIndex>=start) count++;
+          }
+
+          // Page doesn't need to be rendered.
+          if(offset==-1||count==0) continue;
+
+          // Render the page vertex data with the offset and count.
+          spriteBatch.draw(regions.get(i).getTexture(),pageVertices[j][i],offset*20,count*20);
+        }
       }
     }
+    batch.flush();
+    shader.bind();
+    batch.setShader(shader);
   }
 }
