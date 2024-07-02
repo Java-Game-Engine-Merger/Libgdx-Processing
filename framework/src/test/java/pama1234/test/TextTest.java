@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 
 import pama1234.gdx.game.ui.ColorTextFieldStyle;
+import pama1234.gdx.game.ui.element.TextArea;
 import pama1234.gdx.game.ui.element.TextField;
 import pama1234.gdx.util.app.UtilScreen;
 import pama1234.gdx.util.app.UtilScreen2D;
@@ -50,6 +51,7 @@ public class TextTest extends UtilScreen2D{
       public void display() {}
     });
     addCamTextFields(temp=new TextField("file.name()",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->0,()->0-26,()->250-120,()->18),()->1));
+    addCamTextFields(temp=new TextArea("file.name()",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->300,()->0,()->250,()->250),()->1));
     temp.setColor(color(0));
   }
 
@@ -58,7 +60,7 @@ public class TextTest extends UtilScreen2D{
 
   @Override
   public void display() {
-//    text("public static void main");
+    //    text("public static void main");
     text("TextTest.java\n使用了\n\n未经检查或不安全的操作。",0,40);
   }
 
@@ -72,9 +74,9 @@ public class TextTest extends UtilScreen2D{
 
     //    text(String.valueOf(MultiLayerFont.temp_test_smooth_var),200,200);
 
-//    temp.getStyle().font=font;
-//    println(temp.getStyle().font);
-//    println(textFont());
+    //    temp.getStyle().font=font;
+    //    println(temp.getStyle().font);
+    //    println(textFont());
   }
 
   @Override

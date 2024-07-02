@@ -19,6 +19,9 @@ import com.badlogic.gdx.utils.FlushablePool;
 import pama1234.gdx.util.cam.CameraController;
 import pama1234.gdx.util.cam.CameraController3D;
 
+/**
+ * 3D 工具屏幕类，继承自 UtilScreen。 提供了 3D 渲染和相机控制的基础功能。
+ */
 public abstract class UtilScreen3D extends UtilScreen{
   public CameraController3D cam3d;
   public CameraGroupStrategy cameraGroupStrategy;
@@ -26,9 +29,11 @@ public abstract class UtilScreen3D extends UtilScreen{
   public Ray rayCache=new Ray();
   public Plane planeCache=new Plane();
   public Vector3 intersectionCache=new Vector3();
+
   {
     is3d=true;
   }
+
   @Override
   public void show() {
     preInit();
@@ -36,24 +41,12 @@ public abstract class UtilScreen3D extends UtilScreen{
     postInit();
     setup();
   }
-  // @Override
-  // public void doUpdate() {
-  //   mouse.update(this);
-  //   // if(grabCursor) {
-  //   //   Vector3 tv=screenToWorld(width/2f,height/2f);
-  //   //   mouse.set(tv.x,tv.y);
-  //   // }
-  //   for(TouchInfo i:touches) i.update(this);
-  //   inputProcessor.update();
-  //   center.update();
-  //   serverCenter.update();
-  //   update();
-  // }
+
   @Override
   public void createRenderUtil() {
     super.createRenderUtil();
     cameraGroupStrategy=new CameraGroupStrategy(cam.camera);
-    decalBatch=new DecalBatch(cameraGroupStrategy);//TODO
+    decalBatch=new DecalBatch(cameraGroupStrategy);
     modelBatch=new ModelBatch();
 
     modelPool=new FlushablePool<Model>() {
@@ -65,56 +58,66 @@ public abstract class UtilScreen3D extends UtilScreen{
       @Override
       public Model obtain() {
         Model obtain=super.obtain();
-        // TODO
+        // TODO: 添加模型初始化逻辑
         return obtain;
       }
     };
     modelBuilder=new ModelBuilder();
-    //    flexBatch=new FlexBatch<>();
   }
+
   @Override
   public CameraController createCamera() {
-    return cam3d=new CameraController3D(this,0,0,0,1,0,Gdx.app.getType()==ApplicationType.Desktop?640:160);
+    return cam3d=new CameraController3D(this,0,0,0,1,0,
+      Gdx.app.getType()==ApplicationType.Desktop?640:160);
   }
+
   @Override
   public void withCam() {
     setCamera(cam.camera);
     textScale(1);
-    // strokeWeight(defaultStrokeWeight=u/16*cam2d.scale.pos);
-    //    strokeWeight(defaultStrokeWeight=u/16);
     strokeWeight(defaultStrokeWeight=1);
   }
-  //TODO fix 3d screen vec unproject to world vec
+
+  /**
+   * 将屏幕坐标转换为世界坐标。
+   * 
+   * @param x 屏幕坐标 x
+   * @param y 屏幕坐标 y
+   * @return 转换后的世界坐标
+   */
   @Override
   public Vector3 screenToWorld(float x,float y) {
     Vector3 out=screenToWorld(x,y,0);
     if(out==null) {
-      // TODO fix this
-      // vectorCache.set(Float.NaN,Float.NaN,Float.NaN);
-      // var pos=cam3d.point.pos;
-      // vectorCache.set(pos.x,pos.y,pos.z);
-      // vectorCache.set(0,0,0);
       return vectorCache;
     }
     return out;
   }
-  // @Null
+
+  /**
+   * 将屏幕坐标转换为世界坐标，指定 z 平面。
+   * 
+   * @param x      屏幕坐标 x
+   * @param y      屏幕坐标 y
+   * @param zPlain 指定的 z 平面
+   * @return 转换后的世界坐标
+   */
   public Vector3 screenToWorld(float x,float y,float zPlain) {
     vectorCache.set(x,y,0);
     cam.camera.unproject(vectorCache);
     var pos=cam3d.point.pos;
     rayCache.set(pos.x,pos.y,pos.z,vectorCache.x-pos.x,vectorCache.y-pos.y,vectorCache.z-pos.z);
-    // rayCache.set(cam.camera.getPickRay(x,y));
-    // 减少计算开销
-    // planeCache.set(0,0,zPlain,0,0,zPlain+1);
     planeCache.set(0,0,zPlain+1,zPlain*(zPlain+1));
     if(Intersector.intersectRayPlane(rayCache,planeCache,intersectionCache)) {
-      return intersectionCache;// 射线与平面相交，intersection变量保存了交点的坐标
-    }else return null;// 射线与平面不相交
+      return intersectionCache;
+    }else {
+      return null;
+    }
   }
 
-  //---------------------------------------------------------------------------
-
+  /**
+   * 启用深度测试。
+   */
   public void enableDepth() {
     Gdx.gl.glDepthMask(true);
     Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
@@ -122,57 +125,38 @@ public abstract class UtilScreen3D extends UtilScreen{
     Gdx.gl.glClearDepthf(1f);
     Gdx.gl.glDepthFunc(GL20.GL_LESS);
   }
+
+  /**
+   * 添加一个 Decal 到批处理中。
+   * 
+   * @param in 要添加的 Decal
+   */
   public void decal(Decal in) {
     decalBatch.add(in);
   }
+
+  /**
+   * 添加一个 Decal 到批处理中并立即刷新。
+   * 
+   * @param in 要添加的 Decal
+   */
   public void decalFlush(Decal in) {
     decal(in);
     flushDecal();
   }
+
+  /**
+   * 刷新 Decal 批处理。
+   */
   @Deprecated
   public void flushDecal() {
-    //    endShape();
-    // Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
-    // Gdx.gl20.glDepthMask(false);
-    // Gdx.gl.glEnable(GL20.GL_BLEND);
-    // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
     decalBatch.flush();
-    //    beginShape();
   }
-
-  //---------------------------------------------------------------------------
-
-  //  public void model(ModelInstance in) {
-  //    //    endBlend();
-  //    renderer(modelBatch);
-  //    //    modelBatch.begin(usedCamera);
-  //    modelBatch.render(in);
-  //    //    modelBatch.end();
-  //  }
-  //  public void modelFlush(ModelInstance in) {
-  //    model(in);
-  //    flushModel();
-  //  }
-  //  public void flushModel() {
-  //    endShape();
-  //    // Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
-  //    // Gdx.gl20.glDepthMask(false);
-  //    // Gdx.gl.glEnable(GL20.GL_BLEND);
-  //    // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
-  //    modelBatch.flush();
-  //    beginShape();
-  //  }
-  //
-  //---------------------------------------------------------------------------
 
   @Override
   public void setProjectionMatrix(Matrix4 projection) {
     super.setProjectionMatrix(projection);
-    //    decalBatch.setProjectionMatrix(combined);
-    //    modelBatch.setProjectionMatrix(combined);
   }
-
-  //---------------------------------------------------------------------------
 
   @Override
   public void dispose() {

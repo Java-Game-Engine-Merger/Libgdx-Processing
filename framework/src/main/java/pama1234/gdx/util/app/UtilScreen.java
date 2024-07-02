@@ -40,28 +40,20 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
  * @see UtilScreen3D
  */
 public abstract class UtilScreen extends UtilScreenRenderShape{
+
   public void createRenderUtil() {
-    //    fontBatch=SharedResources.instance.fontBatch;
-    //    font=SharedResources.instance.font;
-    //    font.fontBatch=fontBatch;
-    //    font.styleFast=fontStyle;
     textFont(SharedResources.instance.font);
     MultiLayerFont font1=(MultiLayerFont)font;
     font1.camScale=()->cam.scale()*(u/30);
-//    font1.pus=()->pus;
     textColor=new Color(0,0,0,1);
     font.color(textColor);
     fillColor=new Color(1,1,1,1);
     strokeColor=new Color(0,0,0,1);
-    //    rFill=SharedResources.instance.rFill;
-    //    rStroke=SharedResources.instance.rStroke;
-    //    rFill.setColor(fillColor);
-    //    rStroke.setColor(strokeColor);
     pFill=SharedResources.instance.pFill;
     pFill.setColor(fillColor);
-
     shapeDrawer=shapeDrawerDefault=SharedResources.instance.shapeDrawer;
   }
+
   public void createInputUtil() {
     vectorCache=new Vector3();
     mouse=new MouseInfo(this);
@@ -72,42 +64,42 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
 
   //---------------------------------------------------------------------------
 
+  /**
+   * 初始化前的准备工作
+   */
   public void preInit() {
     screenCam=new OrthographicCamera();
     imageBatch=imageBatchDefault=SharedResources.instance.imageBatch;
     tvgDrawer=SharedResources.instance.tvgDrawer;
 
     Gdx.input.setInputProcessor(inputProcessor=new UtilInputProcesser(this));
-    // TODO
     serverCenter=new ServerEntityCenter<>(null);
     centerSys=new Center<>();
-    //    center=new EntityCenter<>(this);
     center=createEntityCenter();
     center.list.add(cam=createCamera());
     centerSys.list.add(cam);
-    // TOOD update顺序，centerScreen应当先于centerCam
-    //    center.list.add(centerScreen=new EntityCenter<>(this));
-    //    center.list.add(centerCam=new EntityCenter<>(this));
     center.list.add(centerScreen=createEntityCenter());
     center.list.add(centerCam=createEntityCenter());
-
     center.list.add(centerNeo=new EntityNeoCenter<>(this));
 
     screenStage=new Stage(screenViewport=new ScalingViewport(Scaling.fit,width,height,screenCam),imageBatch);
     camStage=new Stage(camViewport=new ScalingViewport(Scaling.fit,width,height,cam.camera),imageBatch);
     inputProcessor.sub.add.add(screenStage);
     inputProcessor.sub.add.add(camStage);
+
     center.list.add(new EntityListener() {
       @Override
       public void update() {
         screenStage.act();
         camStage.act();
       }
+
       @Override
       public void mousePressed(MouseInfo info) {
         screenStage.setKeyboardFocus(null);
         camStage.setKeyboardFocus(null);
       }
+
       @Override
       public void frameResized(int w,int h) {
         bu=pus*24;
@@ -117,44 +109,35 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
         camViewport.update(width,height);
       }
     });
+
     centerScreen.list.add(new EntityListener() {
       @Override
       public void display() {
-        //        var t=usedRenderer;
-        endRenderer();//TODO unintuitive
+        endRenderer();
         usedRenderer=screenStage.getBatch();
         screenStage.draw();
-        endRenderer();//TODO ugly
-
-        //        setProjectionMatrix(usedCamera.projection);
-        //        setTransformMatrix(matrix());
-
-        //        setCamera(screenCam);
-        //        usedRenderer=t;
+        endRenderer();
       }
     });
+
     centerCam.list.add(new EntityListener() {
       @Override
       public void display() {
-        //        var t=usedRenderer;
         endRenderer();
         usedRenderer=camStage.getBatch();
         camStage.draw();
         endRenderer();
-
-        //        setProjectionMatrix(usedCamera.projection);
-        //        setTransformMatrix(matrix());
-
-        //        setCamera(usedCamera);
-        //        usedRenderer=t;
       }
     });
 
-    auto=new AutoEntityManager<UtilScreen>(this);
-
+    auto=new AutoEntityManager<>(this);
     batch3d=new SpriteBatch3D(cam.camera);
     shapeDrawer3d=new ShapeDrawer(batch3d);
   }
+
+  /**
+   * 初始化后的工作
+   */
   public void postInit() {
     createRenderUtil();
     createInputUtil();
@@ -162,22 +145,21 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
     center.refresh();
     innerResize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
     if(threadedUpdate) {
-      // Gdx.app.postRunnable(new LoopThread("DoUpdateLoopThread",60) {
-      //   @Override
-      //   public void loop() {
-      //     doUpdate();
-      //   }
-      // });
       updateThread=new LoopThread("DoUpdateLoopThread",60) {
         @Override
         public void loop() {
           doUpdate();
-          // System.out.println(frameRate);
         }
       };
       updateThread.start();
     }
   }
+
+  /**
+   * 创建相机控制器
+   * 
+   * @return 相机控制器
+   */
   public abstract CameraController createCamera();
 
   //---------------------------------------------------------------------------

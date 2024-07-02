@@ -114,7 +114,7 @@ public class MultiLayerFont extends BetterBitmapFont{
   @Override
   public void text(String in,float x,float y) {
     // 调整平滑参数的计算方式
-    float scale=getData().scaleX*camScale.get();
+    float scale=getData().scaleX*camScale.get()*styleFast.scale;
     smoothing=smoothConst/scale;
 
     Batch batch=fontBatch();
