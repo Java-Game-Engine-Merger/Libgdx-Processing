@@ -191,10 +191,4 @@ public abstract class UtilScreenRenderText extends UtilScreenColor{
   public void textMode(int in) {
     font.textMode=in;
   }
-
-  @Deprecated
-  public void fullText(String in,float x,float y) {
-    renderer(imageBatch);
-    font.draw(imageBatch,in==null?"null":in,x,y);
-  }
 }
