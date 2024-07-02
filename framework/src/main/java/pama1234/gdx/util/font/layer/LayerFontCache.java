@@ -122,6 +122,7 @@ public class LayerFontCache extends BitmapFontCache{
    * @param layout The cache keeps the layout until cleared or new text is set. The layout should
    *               not be modified before then.
    */
+  @Override
   public void addText(GlyphLayout layout,float x,float y) {
     addToCache(layout,x,y+font.data.ascent);
   }
@@ -183,39 +184,39 @@ public class LayerFontCache extends BitmapFontCache{
   }
 
   private void requireGlyphs(GlyphLayout layout) {
-//    if(pageVertices.length==1) {
-//      // Simple if we just have one page.
-//      requirePageGlyphs(0,0,layout.glyphCount);
-//    }else {
-      //            int[] tempGlyphCount=this.tempGlyphCount[NEED_REFACTOR];
-      for(int i=0;i<tempGlyphCount.length;i++) {
-        if(tempGlyphCount[i]==null) continue;
+    //    if(pageVertices.length==1) {
+    //      // Simple if we just have one page.
+    //      requirePageGlyphs(0,0,layout.glyphCount);
+    //    }else {
+    //            int[] tempGlyphCount=this.tempGlyphCount[NEED_REFACTOR];
+    for(int i=0;i<tempGlyphCount.length;i++) {
+      if(tempGlyphCount[i]==null) continue;
 
-        Arrays.fill(tempGlyphCount[i],0);
-      }
+      Arrays.fill(tempGlyphCount[i],0);
+    }
 
-      // Determine # of glyphs in each page.
-      for(int i=0,n=layout.runs.size;i<n;i++) {
-        Array<Glyph> glyphs=layout.runs.get(i).glyphs;
-        Object[] glyphItems=glyphs.items;
-        for(int ii=0,nn=glyphs.size;ii<nn;ii++) {
-          Glyph glyphItem=(Glyph)glyphItems[ii];
-          int posOfChar=font.fontLayers[0].getPosOfChar(glyphItem.id);
-          int[] tempGlyphCount_1=this.tempGlyphCount[posOfChar];
-          if(tempGlyphCount_1==null) {
-            loadChunk(posOfChar);
-            tempGlyphCount_1=this.tempGlyphCount[posOfChar];
-          }
-          tempGlyphCount_1[glyphItem.page]++;
+    // Determine # of glyphs in each page.
+    for(int i=0,n=layout.runs.size;i<n;i++) {
+      Array<Glyph> glyphs=layout.runs.get(i).glyphs;
+      Object[] glyphItems=glyphs.items;
+      for(int ii=0,nn=glyphs.size;ii<nn;ii++) {
+        Glyph glyphItem=(Glyph)glyphItems[ii];
+        int posOfChar=font.fontLayers[0].getPosOfChar(glyphItem.id);
+        int[] tempGlyphCount_1=this.tempGlyphCount[posOfChar];
+        if(tempGlyphCount_1==null) {
+          loadChunk(posOfChar);
+          tempGlyphCount_1=this.tempGlyphCount[posOfChar];
         }
+        tempGlyphCount_1[glyphItem.page]++;
       }
-      BitmapFont[] fonts=font.fontLayers[0].dataM;
-      for(int j=0;j<fonts.length;j++) {
-        if(tempGlyphCount[j]==null) continue;
-        // Require that many for each page.
-        for(int i=0,n=tempGlyphCount[j].length;i<n;i++) requirePageGlyphs(j,i,tempGlyphCount[j][i]);
-      }
-//    }
+    }
+    BitmapFont[] fonts=font.fontLayers[0].dataM;
+    for(int j=0;j<fonts.length;j++) {
+      if(tempGlyphCount[j]==null) continue;
+      // Require that many for each page.
+      for(int i=0,n=tempGlyphCount[j].length;i<n;i++) requirePageGlyphs(j,i,tempGlyphCount[j][i]);
+    }
+    //    }
   }
 
   private void requirePageGlyphs(int chunk,int page,int glyphCount) {

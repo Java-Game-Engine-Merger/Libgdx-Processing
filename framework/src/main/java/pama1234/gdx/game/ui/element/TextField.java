@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.Timer.Task;
 
 import pama1234.gdx.util.font.BetterBitmapFont;
+import pama1234.gdx.util.font.FastGlyphLayout;
 import pama1234.gdx.util.font.TextStyleSupplier;
 import pama1234.math.geometry.RectI;
 import pama1234.util.function.GetFloat;
@@ -46,7 +47,7 @@ public class TextField extends Widget implements Disableable{
   protected int cursor,selectionStart;
   protected boolean hasSelection;
   protected boolean writeEnters;
-  protected final GlyphLayout layout=new GlyphLayout();
+  protected final FastGlyphLayout layout=new FastGlyphLayout();
   protected final FloatArray glyphPositions=new FloatArray();
   TextFieldStyle style;
   private String messageText;
@@ -364,10 +365,10 @@ public class TextField extends Widget implements Disableable{
     if(layout.runs.size>0) {
       GlyphRun run=layout.runs.first();
       FloatArray xAdvances=run.xAdvances;
-      fontOffset=xAdvances.first()/font.lineSizeScale;
+      fontOffset=xAdvances.first()*font.lineSizeScale;
       for(int i=1,n=xAdvances.size;i<n;i++) {
         glyphPositions.add(x);
-        x+=xAdvances.get(i)/font.lineSizeScale;
+        x+=xAdvances.get(i)*font.lineSizeScale;
       }
     }else fontOffset=0;
     glyphPositions.add(x);
