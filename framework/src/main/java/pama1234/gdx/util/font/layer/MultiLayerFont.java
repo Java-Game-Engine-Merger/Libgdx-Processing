@@ -49,6 +49,7 @@ public class MultiLayerFont extends BetterBitmapFont{
   public LayerFontCache cache;
   public DistanceFieldShader distanceFieldShader;
   public GetFloat camScale;
+//  public GetFloat pus;
 
   public float smoothing;
 
@@ -209,7 +210,7 @@ public class MultiLayerFont extends BetterBitmapFont{
     posI.z=0;
     posI.y+=1;
     v.x=inPos.x;
-    v.y+=lineSize;
+    v.y+=lineSize*styleFast.scale;
   }
 
   private void drawChar(Vec2f v,Glyph glyph,Texture texture) {

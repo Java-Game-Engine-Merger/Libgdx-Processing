@@ -46,7 +46,9 @@ public abstract class UtilScreen extends UtilScreenRenderShape{
     //    font.fontBatch=fontBatch;
     //    font.styleFast=fontStyle;
     textFont(SharedResources.instance.font);
-    ((MultiLayerFont)font).camScale=()->cam.scale()*(u/30);
+    MultiLayerFont font1=(MultiLayerFont)font;
+    font1.camScale=()->cam.scale()*(u/30);
+//    font1.pus=()->pus;
     textColor=new Color(0,0,0,1);
     font.color(textColor);
     fillColor=new Color(1,1,1,1);

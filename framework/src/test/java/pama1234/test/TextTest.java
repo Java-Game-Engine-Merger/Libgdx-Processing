@@ -13,6 +13,7 @@ import pama1234.gdx.game.ui.element.TextField;
 import pama1234.gdx.util.app.UtilScreen;
 import pama1234.gdx.util.app.UtilScreen2D;
 import pama1234.gdx.util.entity.Entity;
+import pama1234.gdx.util.font.BetterBitmapFont;
 import pama1234.gdx.util.launcher.MainAppBase;
 import pama1234.math.geometry.RectF;
 
@@ -41,8 +42,9 @@ public class TextTest extends UtilScreen2D{
 
   @Override
   public void setup() {
+//    textMode(BetterBitmapFont.fullText);
     noStroke();
-    backgroundColor(0);
+//    backgroundColor(0);
     centerCamAddAll(new Entity<>(this) {
       @Override
       public void display() {}
@@ -55,7 +57,10 @@ public class TextTest extends UtilScreen2D{
   public void update() {}
 
   @Override
-  public void display() {}
+  public void display() {
+//    text("public static void main");
+    text("TextTest.java\n使用了\n\n未经检查或不安全的操作。",0,40);
+  }
 
   @Override
   public void displayWithCam() {
