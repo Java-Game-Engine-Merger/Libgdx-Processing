@@ -256,6 +256,18 @@ public class MultiLayerFont extends BetterBitmapFont{
   }
 
   @Override
+  public void setColor(Color color) {
+    super.setColor(color);
+    cache.getColor().set(color);
+  }
+
+  @Override
+  public void setColor(float r,float g,float b,float a) {
+    super.setColor(r,g,b,a);
+    cache.getColor().set(r,g,b,a);
+  }
+
+  @Override
   public void setFullTextColor(Color color) {
     setColor(color);
   }
