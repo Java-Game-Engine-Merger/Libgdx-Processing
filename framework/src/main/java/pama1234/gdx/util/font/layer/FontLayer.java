@@ -125,10 +125,10 @@ public class FontLayer{
     for(TextureRegion region:regions) {
       region.getTexture().setFilter(TextureFilter.Linear,smoothFont?TextureFilter.Linear:TextureFilter.Nearest);
     }
-//    out.setUseIntegerPositions(false);
+    //    out.setUseIntegerPositions(false);
     BitmapFontData data=out.getData();
-//    data.setScale(lineSizeScale);
-//    data.lineHeight=40;
+    //    data.setScale(lineSizeScale);
+    //    data.lineHeight=40;
 
     @UniFontDependent
     int unit=(int)(styleFast.defaultSize/2);
