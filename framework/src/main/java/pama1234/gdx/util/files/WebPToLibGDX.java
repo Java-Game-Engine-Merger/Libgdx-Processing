@@ -9,9 +9,9 @@ import javax.imageio.spi.IIORegistry;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.twelvemonkeys.imageio.plugins.webp.WebPImageReaderSpi;
+
 import pama1234.Tools;
 
 public class WebPToLibGDX{
@@ -39,24 +39,37 @@ public class WebPToLibGDX{
   }
 
   private static Pixmap convertBufferedImageToPixmap(BufferedImage bufferedImage) {
-    int width=bufferedImage.getWidth();
-    int height=bufferedImage.getHeight();
-    Pixmap pixmap=new Pixmap(width,height,Format.RGBA8888);
+    // 将BufferedImage转换为自定义的Pixmap
+    return new BufferedImagePixmap(bufferedImage);
+  }
 
-    // 使用并行流来处理像素转换
-    IntStream.range(0,height).parallel().forEach(y-> {
-      for(int x=0;x<width;x++) {
-        int argb=bufferedImage.getRGB(x,y);
-        int a=(argb>>24)&0xFF;
-        int r=(argb>>16)&0xFF;
-        int g=(argb>>8)&0xFF;
-        int b=argb&0xFF;
-        int rgba=(r<<24)|(g<<16)|(b<<8)|a;
-        pixmap.drawPixel(x,y,rgba);
-      }
-    });
+  // 自定义的Pixmap类，包装BufferedImage
+  private static class BufferedImagePixmap extends Pixmap{
+    private final BufferedImage bufferedImage;
 
-    return pixmap;
+    public BufferedImagePixmap(BufferedImage bufferedImage) {
+      super(bufferedImage.getWidth(),bufferedImage.getHeight(),Format.RGBA8888);
+      this.bufferedImage=bufferedImage;
+      loadPixels();
+    }
+
+    private void loadPixels() {
+      int width=bufferedImage.getWidth();
+      int height=bufferedImage.getHeight();
+
+      // 使用并行流来处理像素转换
+      IntStream.range(0,height).parallel().forEach(y-> {
+        for(int x=0;x<width;x++) {
+          int argb=bufferedImage.getRGB(x,y);
+          int a=(argb>>24)&0xFF;
+          int r=(argb>>16)&0xFF;
+          int g=(argb>>8)&0xFF;
+          int b=argb&0xFF;
+          int rgba=(r<<24)|(g<<16)|(b<<8)|a;
+          drawPixel(x,y,rgba);
+        }
+      });
+    }
   }
 
   public static void main(String[] args) {
