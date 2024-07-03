@@ -1,5 +1,7 @@
 package pama1234.gdx.util.font.layer;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 
 import pama1234.gdx.util.element.FontStyle;
 import pama1234.gdx.util.font.FontUtil.UniFontDependent;
+import pama1234.gdx.util.font.WebpBitmapFontUtil;
 import pama1234.util.Annotations.SyntacticSugar;
 
 public class FontLayer{
@@ -34,8 +37,8 @@ public class FontLayer{
   /** 是否使用平滑字体 */
   public boolean smoothFont=true;
 
-//  @UniFontDependent
-//  public float lineSizeScale=0.5f;
+  //  @UniFontDependent
+  //  public float lineSizeScale=0.5f;
 
   /**
    * 构造函数，初始化字体文件和 BitmapFont 数组
@@ -120,7 +123,7 @@ public class FontLayer{
    * @return 创建的 BitmapFont 对象
    */
   public BitmapFont createBitmapFont(FileHandle fontFile) {
-    BitmapFont out=fontFile==null?new BitmapFont(flipped):new BitmapFont(fontFile,flipped);
+    BitmapFont out=fontFile==null?new BitmapFont(flipped):createFontInner(fontFile);
     Array<TextureRegion> regions=out.getRegions(); // Apply texture filter to all regions
     for(TextureRegion region:regions) {
       region.getTexture().setFilter(TextureFilter.Linear,smoothFont?TextureFilter.Linear:TextureFilter.Nearest);
@@ -160,5 +163,9 @@ public class FontLayer{
       }
     }
     return out;
+  }
+
+  public @NotNull BitmapFont createFontInner(FileHandle fontFile) {
+    return WebpBitmapFontUtil.create(fontFile,flipped);
   }
 }
