@@ -2,6 +2,7 @@ package pama1234.gdx.util.files;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.stream.IntStream;
 
 import javax.imageio.ImageIO;
@@ -56,6 +57,7 @@ public class WebPToLibGDX{
     private void loadPixels() {
       int width=bufferedImage.getWidth();
       int height=bufferedImage.getHeight();
+      ByteBuffer buffer=getPixels();
 
       // 使用并行流来处理像素转换
       IntStream.range(0,height).parallel().forEach(y-> {
@@ -65,8 +67,11 @@ public class WebPToLibGDX{
           int r=(argb>>16)&0xFF;
           int g=(argb>>8)&0xFF;
           int b=argb&0xFF;
-          int rgba=(r<<24)|(g<<16)|(b<<8)|a;
-          drawPixel(x,y,rgba);
+          int index=(x+y*width)*4;
+          buffer.put(index,(byte)r);
+          buffer.put(index+1,(byte)g);
+          buffer.put(index+2,(byte)b);
+          buffer.put(index+3,(byte)a);
         }
       });
     }
