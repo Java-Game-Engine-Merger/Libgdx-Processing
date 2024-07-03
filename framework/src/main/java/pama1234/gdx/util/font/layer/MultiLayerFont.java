@@ -23,7 +23,7 @@ import pama1234.util.function.GetFloat;
  */
 public class MultiLayerFont extends BetterBitmapFont{
   @UniFontDependent
-  public static float lineSizeConst=40;
+  public static float lineSizeConst=20;
   public static float smoothConst=0.25f;
   public static boolean debug;
   public static final int useCR=0,showCR=1,ignoreCR=2;

@@ -110,7 +110,7 @@ public class TextField extends Widget implements Disableable{
   public TextField(String string,TextFieldStyle style,RectI rectF,GetFloat textSize) {//TODO
     this(string,style);
     this.rectF=rectF;
-    this.textSize=()->textSize.get()*style.font.lineSizeScale_02;
+    this.textSize=textSize;
   }
 
   // TODO 调用ExecuteFunction
