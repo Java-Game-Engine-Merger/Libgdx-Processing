@@ -3,7 +3,6 @@ package pama1234.gdx.util.font.layer;
 import static space.earlygrey.shapedrawer.ShapeDrawer.createBlankTextureRegion;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -61,11 +60,12 @@ public class MultiLayerFont extends BetterBitmapFont{
 
   public Batch batchCache;
   public ShaderProgram shaderCache;
-  public Color batchColor=new Color();
-  public int batchBlendSrcFunc=GL20.GL_SRC_ALPHA;
-  public int batchBlendDstFunc=GL20.GL_ONE_MINUS_SRC_ALPHA;
-  public int batchBlendSrcFuncAlpha=GL20.GL_SRC_ALPHA;
-  public int batchBlendDstFuncAlpha=GL20.GL_ONE_MINUS_SRC_ALPHA;
+  //  public Color batchColor=new Color();
+  //  public int batchBlendSrcFunc=GL20.GL_SRC_ALPHA;
+  //  public int batchBlendDstFunc=GL20.GL_ONE_MINUS_SRC_ALPHA;
+  //  public int batchBlendSrcFuncAlpha=GL20.GL_SRC_ALPHA;
+  //  public int batchBlendDstFuncAlpha=GL20.GL_ONE_MINUS_SRC_ALPHA;
+  //  public boolean batchBlendingEnabled;
 
   public MultiLayerFont(FontLayer[] fontLayers) {
     this.fontLayers=fontLayers;
@@ -85,13 +85,19 @@ public class MultiLayerFont extends BetterBitmapFont{
     //        data.lineHeight=lineSizeConst;
     fontRendererWrapper=new RendererWrapper(null,()-> {
       if(!fontUsed) {
+
+        //        System.out.println("from MultiLayerFont.MultiLayerFont");
+
         batchCache=fontBatch();
-        batchBlendSrcFunc=batchCache.getBlendSrcFunc();
-        batchBlendDstFunc=batchCache.getBlendDstFunc();
-        batchBlendSrcFuncAlpha=batchCache.getBlendSrcFuncAlpha();
-        batchBlendDstFuncAlpha=batchCache.getBlendDstFuncAlpha();
+
+        //        batchColor.set(batchCache.getColor());
+        //        batchBlendSrcFunc=batchCache.getBlendSrcFunc();
+        //        batchBlendDstFunc=batchCache.getBlendDstFunc();
+        //        batchBlendSrcFuncAlpha=batchCache.getBlendSrcFuncAlpha();
+        //        batchBlendDstFuncAlpha=batchCache.getBlendDstFuncAlpha();
+        //        batchBlendingEnabled=batchCache.isBlendingEnabled();
+
         batchCache.flush();
-        batchColor.set(batchCache.getColor());
 
         shaderCache=batchCache.getShader();
 
@@ -103,15 +109,22 @@ public class MultiLayerFont extends BetterBitmapFont{
       }
     },()-> {
       if(fontUsed) {
-        batchCache.flush();
-        shaderCache.bind();
-        batchCache.setShader(shaderCache);
-        batchCache.setColor(batchColor);
-        batchCache.setBlendFunctionSeparate(
-          batchBlendSrcFunc,batchBlendDstFunc,
-          batchBlendSrcFuncAlpha,batchBlendDstFuncAlpha);
-        batchCache=null;
 
+        //        System.out.println("to MultiLayerFont.MultiLayerFont");
+
+        batchCache.flush();
+
+        shaderCache.bind();
+
+        //        batchCache.setShader(shaderCache);
+        //        batchCache.setColor(batchColor);
+        //        batchCache.setBlendFunctionSeparate(
+        //          batchBlendSrcFunc,batchBlendDstFunc,
+        //          batchBlendSrcFuncAlpha,batchBlendDstFuncAlpha);
+        //        if(batchBlendingEnabled) batchCache.enableBlending();
+        //        else batchCache.disableBlending();
+
+        batchCache=null;
         fontUsed=false;
       }
     });
@@ -170,14 +183,20 @@ public class MultiLayerFont extends BetterBitmapFont{
 
   @Override
   public void text(String in,float x,float y) {
-    // 调整平滑参数的计算方式
+    updateSmoothing();
+    super.text(in,x,y);
+  }
+
+  /** 调整平滑参数的计算方式 */
+  public void updateSmoothing() {
     float scale=getData().scaleX*camScale.get()*styleFast.scale;
     smoothing=smoothConst/scale;
-    super.text(in,x,y);
   }
 
   @Override
   public void fastText(String in,float x,float y) {
+
+    fontRendererWrapper.from();
 
     posI.set(0,0,0);
     cacheV.set(x,y);
@@ -188,6 +207,8 @@ public class MultiLayerFont extends BetterBitmapFont{
       load(tc);
       drawChar(cacheV,tc,i);
     }
+
+    fontRendererWrapper.to();
   }
 
   public void drawChar(Vec2f v,char tc,int i) {

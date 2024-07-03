@@ -244,9 +244,9 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
    * @param renderer 渲染器对象
    */
   public void renderer(Object renderer,RendererWrapper wrapperIn) {
-    boolean flag=wrapperIn!=null;
-    if(flag&&rendererWrapper==wrapperIn) return;
-    if(!flag&&usedRenderer==renderer) return;
+    boolean flag=wrapperIn==null;
+    if(!flag&&rendererWrapper==wrapperIn) return;
+    if(flag&&usedRenderer==renderer) return;
 
     if(usedRenderer!=null) {
       if(usedRenderer instanceof Batch batch&&batch.isDrawing()) {
