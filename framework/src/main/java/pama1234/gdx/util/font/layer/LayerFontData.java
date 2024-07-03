@@ -7,14 +7,45 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
 
 public class LayerFontData extends BitmapFontData{
-  static private final int LOG2_PAGE_SIZE=9;
-  static private final int PAGE_SIZE=1<<LOG2_PAGE_SIZE;
-  static private final int PAGES=0x10000/PAGE_SIZE;
+  private static final int LOG2_PAGE_SIZE=9;
+  private static final int PAGE_SIZE=1<<LOG2_PAGE_SIZE;
+  private static final int PAGES=0x10000/PAGE_SIZE;
+
+  //  public float scaleX_01,scaleY_01;
 
   public MultiLayerFont p;
+
   public LayerFontData(MultiLayerFont multiLayerFont) {
     p=multiLayerFont;
   }
+
+  //  @Override
+  //  public void setScale(float scaleX,float scaleY) {
+  //    this.scaleX=scaleX;
+  //    this.scaleY=scaleY;
+  //    
+  //    setScale01(scaleX*p.lineSizeScale_02,scaleY*p.lineSizeScale_02);
+  //  }
+  //
+  //  public void setScale01(float scaleX,float scaleY) {
+  //    if(scaleX_01==0) throw new IllegalArgumentException("scaleX cannot be 0.");
+  //    if(scaleY_01==0) throw new IllegalArgumentException("scaleY cannot be 0.");
+  //    float x=scaleX_01/this.scaleX_01;
+  //    float y=scaleY_01/this.scaleY_01;
+  //    lineHeight*=y;
+  //    spaceXadvance*=x;
+  //    xHeight*=y;
+  //    capHeight*=y;
+  //    ascent*=y;
+  //    descent*=y;
+  //    down*=y;
+  //    padLeft*=x;
+  //    padRight*=x;
+  //    padTop*=y;
+  //    padBottom*=y;
+  //    this.scaleX_01=scaleX;
+  //    this.scaleY_01=scaleY;
+  //  }
 
   @Override
   public void getGlyphs(GlyphRun run,CharSequence str,int start,int end,Glyph lastGlyph) {

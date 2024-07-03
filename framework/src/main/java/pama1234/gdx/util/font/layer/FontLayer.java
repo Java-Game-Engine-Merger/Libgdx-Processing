@@ -34,7 +34,8 @@ public class FontLayer{
   /** 是否使用平滑字体 */
   public boolean smoothFont=true;
 
-  public float lineSizeScale;
+//  @UniFontDependent
+//  public float lineSizeScale=0.5f;
 
   /**
    * 构造函数，初始化字体文件和 BitmapFont 数组
@@ -109,7 +110,7 @@ public class FontLayer{
         continue;
       }
     }
-    fontData.setScale(lineSizeScale);
+    //    fontData.setScale(lineSizeScale);
   }
 
   /**
@@ -124,21 +125,39 @@ public class FontLayer{
     for(TextureRegion region:regions) {
       region.getTexture().setFilter(TextureFilter.Linear,smoothFont?TextureFilter.Linear:TextureFilter.Nearest);
     }
+//    out.setUseIntegerPositions(false);
     BitmapFontData data=out.getData();
+//    data.setScale(lineSizeScale);
+//    data.lineHeight=40;
 
     @UniFontDependent
     int unit=(int)(styleFast.defaultSize/2);
-    for(int i=0,end=out.getData().glyphs[0].length;i<end;i++) {
-      Glyph g=data.glyphs[0][i];
-      if(g==null) {
-        continue;
+    for(int j=0;j<data.glyphs.length;j++) {
+
+      Glyph[] glyphs=data.glyphs[j];
+      if(glyphs==null) continue;
+
+      for(int i=0,end=glyphs.length;i<end;i++) {
+        Glyph g=glyphs[i];
+        if(g==null) {
+          continue;
+        }
+        int tl=g.xadvance/unit;
+        int charWidth=unit*tl;
+        g.xoffset+=(charWidth-g.xadvance)/2;
+        g.xadvance=charWidth;
+
+        //        g.xadvance*=lineSizeScale;
+        //        g.width*=lineSizeScale;
+        //        g.height*=lineSizeScale;
+        //        g.xoffset*=lineSizeScale;
+        //        g.yoffset*=lineSizeScale;
+        //        g.srcX*=lineSizeScale;
+        //        g.srcY*=lineSizeScale;
+
+        g.kerning=null;
+        g.fixedWidth=true;
       }
-      int tl=g.xadvance/unit;
-      int charWidth=unit*tl;
-      g.xoffset+=(charWidth-g.xadvance)/2;
-      g.xadvance=charWidth;
-      g.kerning=null;
-      g.fixedWidth=true;
     }
     return out;
   }

@@ -110,7 +110,7 @@ public abstract class UtilScreenRenderText extends UtilScreenColor{
    * @param in 缩放比例
    */
   public void textScale(float in) {
-    font.textScale(in);
+    font.textScale(in*font.lineSizeScale_02);
   }
 
   /**

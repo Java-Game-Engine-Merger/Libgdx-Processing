@@ -110,7 +110,7 @@ public class TextField extends Widget implements Disableable{
   public TextField(String string,TextFieldStyle style,RectI rectF,GetFloat textSize) {//TODO
     this(string,style);
     this.rectF=rectF;
-    this.textSize=textSize;
+    this.textSize=()->textSize.get()*style.font.lineSizeScale_02;
   }
 
   // TODO 调用ExecuteFunction
@@ -332,6 +332,7 @@ public class TextField extends Widget implements Disableable{
       0,messageText.length(),maxWidth,textHAlign,false,"...");
   }
   protected void drawCursor(Drawable cursorPatch,Batch batch,BetterBitmapFont font,float x,float y) {
+//    System.out.println("TextField.drawCursor "+font.getLineHeight());
     cursorPatch.draw(batch,
       x+textOffset+glyphPositions.get(cursor)-glyphPositions.get(visibleTextStart)+font.getData().cursorX,
       y,

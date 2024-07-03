@@ -22,7 +22,8 @@ import pama1234.util.function.GetFloat;
  * 每次调用时都会按照优先级从上往下寻找最合适的字体（找不到的话有unifont兜底）。
  */
 public class MultiLayerFont extends BetterBitmapFont{
-  public static float lineSizeConst=20;
+  @UniFontDependent
+  public static float lineSizeConst=40;
   public static float smoothConst=0.25f;
   public static boolean debug;
   public static final int useCR=0,showCR=1,ignoreCR=2;
@@ -42,30 +43,41 @@ public class MultiLayerFont extends BetterBitmapFont{
   @UniFontDependent
   public float lineSize=lineSizeConst,charWidth=8,backgroundXOffset=1;
   public float tabSize=16;
-  public float baselineShift=6;
+  public float baselineShift=5;
   public TextureRegion backgroundAlt=createBlankTextureRegion();
 
   public LayerFontData data;
   public LayerFontCache cache;
   public DistanceFieldShader distanceFieldShader;
   public GetFloat camScale;
-//  public GetFloat pus;
+  //  public GetFloat pus;
 
   public float smoothing;
 
   public MultiLayerFont(FontLayer[] fontLayers) {
     this.fontLayers=fontLayers;
     for(FontLayer fontLayer:fontLayers) {
-      fontLayer.lineSizeScale=lineSizeScale;
+      //      fontLayer.lineSizeScale=lineSizeScale_02;
     }
     this.cache=new LayerFontCache(this);
     this.distanceFieldShader=new DistanceFieldShader();
     data=new LayerFontData(this);
     data.name="Maple Mono Multi Layer";
+    setUseIntegerPositions(false);
+    cache.setUseIntegerPositions(false);
+    //    superGetData().lineHeight=lineSizeConst*0.9f;
+    //    superGetData().setScale(lineSizeScale_02);
+    //    data.setScale(lineSizeScale_02);
+    //    getData().setScale(0.5f);
+    //        data.lineHeight=lineSizeConst;
+  }
+
+  public BitmapFontData superGetData() {
+    return super.getData();
   }
 
   @Override
-  public BitmapFontData getData() {
+  public LayerFontData getData() {
     return data;
   }
 
@@ -148,7 +160,9 @@ public class MultiLayerFont extends BetterBitmapFont{
   }
 
   public void drawChar(Vec2f v,char tc,int i) {
+
     float scaleLineSize=styleFast.scale*lineSizeScale;
+
     if(tc=='\r') {
       switch(stateCR) {
         case useCR:
@@ -168,7 +182,9 @@ public class MultiLayerFont extends BetterBitmapFont{
       v.x+=tabSize*scaleLineSize;
       return;
     }
+
     FontLayer fontLayer=fontLayers[0]; // TODO: 需要改进
+
     int posOfChar=fontLayer.getPosOfChar(tc);
     Array<TextureRegion> regions=fontLayer.dataM[posOfChar].getRegions();
     Glyph glyph=getGlyph(tc);
