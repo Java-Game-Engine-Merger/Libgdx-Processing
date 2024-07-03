@@ -84,4 +84,8 @@ public class Tools extends ColorTools{
     Date resultdate=new Date(ms);
     return sdf.format(resultdate);
   }
+
+  public static void printPeriod() {
+    System.out.println("time used="+period()+"ms");
+  }
 }
