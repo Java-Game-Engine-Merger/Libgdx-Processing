@@ -12,9 +12,10 @@ dependencies {
     exclude group: 'space.earlygrey' , module: 'shapedrawer'
   }
 
-  api project(":framework0006:framework0006-shape-drawer")
-  api project(":framework0006:framework0006-webp")
   api 'com.twelvemonkeys.imageio:imageio-webp:3.11.0'
+
+  api project(":framework0006:framework0006-shape-drawer")
+//  api project(":framework0006:framework0006-webp")
 //  api project(":framework0006:framework0006-flex-batch")
 
   api "$gdxCustomModule:gdx-freetype:$gdxCustomVersion"

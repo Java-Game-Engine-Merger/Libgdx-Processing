@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-import pama1234.WebPToLibGDX;
+import pama1234.gdx.util.files.WebPToLibGDX;
 
 public class WebpBitmapFontUtil{
 

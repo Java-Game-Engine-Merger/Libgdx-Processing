@@ -30,5 +30,5 @@ include 'framework0001:framework0001-metaphysics'
 include 'framework0006:framework0006-shape-drawer'
 //include 'framework0006:framework0006-flex-batch'
 include 'framework0006:framework0006-fnt-generator'
-include 'framework0006:framework0006-webp'
+//include 'framework0006:framework0006-webp'
 
