@@ -50,7 +50,7 @@ public class WebPToLibGDX{
     for(int y=0;y<height;y++) {
       for(int x=0;x<width;x++) {
         int argb=bufferedImage.getRGB(x,y);
-        int rgba=((argb&0xFF000000)>>>24)|((argb&0x00FF0000)>>16)|((argb&0x0000FF00))|((argb&0x000000FF)<<16);
+        int rgba=((argb&0xFF000000)>>>24)|((argb&0x00FF0000)<<16)|((argb&0x0000FF00)<<16)|((argb&0x000000FF)<<16);
         pixmap.drawPixel(x,y,rgba);
       }
     }
