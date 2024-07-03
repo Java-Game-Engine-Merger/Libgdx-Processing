@@ -23,7 +23,7 @@ public abstract class UtilScreenRenderText extends UtilScreenColor{
    * @param y  y坐标
    */
   public void text(String in,float x,float y) {
-    renderer(font.fontBatch());
+    renderer(font.fontBatch(),font.fontRendererWrapper);
     font.text(in==null?"null":in,x,y);
   }
 

@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Array;
 
 import pama1234.gdx.util.font.BetterBitmapFont;
 import pama1234.gdx.util.font.DistanceFieldShader;
 import pama1234.gdx.util.font.FastGlyphLayout;
 import pama1234.gdx.util.font.FontUtil.UniFontDependent;
+import pama1234.gdx.util.graphics.RendererWrapper;
 import pama1234.math.vec.Vec2f;
 import pama1234.math.vec.Vec3i;
 import pama1234.util.function.GetFloat;
@@ -54,6 +56,9 @@ public class MultiLayerFont extends BetterBitmapFont{
 
   public float smoothing;
 
+  public Batch batchCache;
+  public ShaderProgram shaderCache;
+
   public MultiLayerFont(FontLayer[] fontLayers) {
     this.fontLayers=fontLayers;
     for(FontLayer fontLayer:fontLayers) {
@@ -70,6 +75,21 @@ public class MultiLayerFont extends BetterBitmapFont{
     //    data.setScale(lineSizeScale_02);
     //    getData().setScale(0.5f);
     //        data.lineHeight=lineSizeConst;
+    fontRendererWrapper=new RendererWrapper(null,()->{
+      batchCache=fontBatch();
+
+      batchCache.flush();
+      shaderCache=batchCache.getShader();
+
+      distanceFieldShader.bind();
+      distanceFieldShader.setSmoothing(smoothing);
+      batchCache.setShader(distanceFieldShader);
+    },()->{
+      batchCache.flush();
+      shaderCache.bind();
+      batchCache.setShader(shaderCache);
+      batchCache=null;
+    });
   }
 
   public BitmapFontData superGetData() {
@@ -128,21 +148,7 @@ public class MultiLayerFont extends BetterBitmapFont{
     // 调整平滑参数的计算方式
     float scale=getData().scaleX*camScale.get()*styleFast.scale;
     smoothing=smoothConst/scale;
-
-    Batch batch=fontBatch();
-
-    batch.flush();
-    var shader=batch.getShader();
-
-    distanceFieldShader.bind();
-    distanceFieldShader.setSmoothing(smoothing);
-    batch.setShader(distanceFieldShader);
-
     super.text(in,x,y);
-
-    batch.flush();
-    shader.bind();
-    batch.setShader(shader);
   }
 
   @Override

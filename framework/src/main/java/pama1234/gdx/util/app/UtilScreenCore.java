@@ -27,6 +27,7 @@ import pama1234.gdx.game.ui.element.TextButton;
 import pama1234.gdx.util.cam.CameraController;
 import pama1234.gdx.util.element.FontStyle;
 import pama1234.gdx.util.font.BetterBitmapFont;
+import pama1234.gdx.util.graphics.RendererWrapper;
 import pama1234.gdx.util.graphics.UtilPolygonSpriteBatch;
 import pama1234.gdx.util.graphics.UtilShapeRenderer;
 import pama1234.gdx.util.info.MouseInfo;
@@ -41,6 +42,7 @@ import pama1234.gdx.util.wrapper.AutoEntityManager;
 import pama1234.gdx.util.wrapper.DisplayEntity.DisplayWithCam;
 import pama1234.gdx.util.wrapper.EntityCenterAbstract;
 import pama1234.gdx.util.wrapper.EntityNeoCenter;
+import pama1234.util.Annotations.SyntacticSugar;
 import pama1234.util.UtilServer;
 import pama1234.util.listener.LifecycleListener;
 import pama1234.util.listener.ServerEntityListener;
@@ -108,6 +110,7 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   //TODO currentRendererType not used
   public int currentRendererType;
   public Object usedRenderer;
+  public RendererWrapper rendererWrapper;
 
   //---------------------------------------------------------------------------
 
@@ -240,8 +243,10 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
    * 
    * @param renderer 渲染器对象
    */
-  public void renderer(Object renderer) {
-    if(usedRenderer==renderer) return;
+  public void renderer(Object renderer,RendererWrapper wrapperIn) {
+    boolean flag=wrapperIn!=null;
+    if(flag&&rendererWrapper==wrapperIn) return;
+    if(!flag&&usedRenderer==renderer) return;
 
     if(usedRenderer!=null) {
       if(usedRenderer instanceof Batch batch&&batch.isDrawing()) {
@@ -251,10 +256,13 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
       }else if(usedRenderer instanceof UtilShapeRenderer r) {
         if(r.isDrawing()) r.flush();
       }
+      if(rendererWrapper!=null) rendererWrapper.to();
     }
     usedRenderer=renderer;
+    rendererWrapper=wrapperIn;
 
     if(usedRenderer!=null) {
+      if(rendererWrapper!=null) rendererWrapper.from();
       if(usedRenderer instanceof Batch batch) {
         batch.begin();
       }else if(usedRenderer instanceof ModelBatch mb) {
@@ -263,6 +271,11 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
         beginBlend();
       }
     }
+  }
+
+  @SyntacticSugar
+  public void renderer(Object renderer) {
+    renderer(renderer,null);
   }
 
   /**

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 import pama1234.gdx.util.element.FontStyle;
+import pama1234.gdx.util.graphics.RendererWrapper;
 import pama1234.util.Annotations.RedundantCache;
 import pama1234.util.Annotations.SyntacticSugar;
 import pama1234.util.function.Get;
@@ -32,9 +33,10 @@ public abstract class BetterBitmapFont extends BitmapFont{
   public int textMode=fastText;
   @Deprecated
   public float lineSizeScale=0.5f;
-  @Deprecated
+//  @Deprecated
 //  public float lineSizeScale_02=0.5f;
 //  public boolean screenView;
+  public RendererWrapper fontRendererWrapper;
 
   //---------------------------------------------------------------------------
 
