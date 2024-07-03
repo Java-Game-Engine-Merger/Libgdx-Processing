@@ -11,6 +11,11 @@ import pama1234.util.function.GetBoolean;
 import pama1234.util.function.GetFloat;
 import pama1234.util.function.GetInt;
 
+/**
+ * 文本按钮类，继承自 {@link Button}。
+ * 
+ * @param <T> 泛型参数，必须是 {@link UtilScreen} 的子类。
+ */
 public class TextButton<T extends UtilScreen>extends Button<T>{
   public static Color fillColor=UtilScreen.color(127,191);
   public static Color pressedFillColor=UtilScreen.color(94,203,234,200);
@@ -20,11 +25,12 @@ public class TextButton<T extends UtilScreen>extends Button<T>{
   @Setter
   public String text;
   @Setter
-  public boolean textOffset=true;//TODO
+  public boolean textOffset=true; // 文字是否偏移
   public RectI rect;
-  // public TextButtonEvent<T> updateText;
   public EventExecuter updateText;
+
   /**
+   * 构造函数
    * 
    * @param p          父实例
    * @param textOffset 文字是否进行<code>p.pu/2</code>的偏移 {@link pama1234.gdx.util.app.UtilScreenCore#pu
@@ -64,6 +70,15 @@ public class TextButton<T extends UtilScreen>extends Button<T>{
   public TextButton(T p) {
     super(p);
   }
+
+  /**
+   * 构造函数
+   * 
+   * @param p          父实例
+   * @param updateText 文字更新的方法
+   * @param active     是否启用此按钮
+   * @param textOffset 文字是否偏移
+   */
   public TextButton(T p,TextButtonEvent<T> updateText,GetBoolean active,boolean textOffset) {
     super(p);
     textOffset(textOffset)
@@ -71,127 +86,137 @@ public class TextButton<T extends UtilScreen>extends Button<T>{
       .textSupplier(updateText)
       .updateText();
   }
+
+  /**
+   * 构造函数
+   * 
+   * @param p          父实例
+   * @param updateText 文字更新的方法
+   */
   public TextButton(T p,TextButtonEvent<T> updateText) {
     this(p,updateText,()->true,true);
   }
-  // @Override
+
+  /**
+   * 更新文字
+   * 
+   * @return 当前对象
+   */
   public TextButton<T> updateText() {
-    // updateText.execute(this);
     updateText.execute();
     return this;
   }
+
   @Override
   public void display() {
     if(!active.get()) return;
     final float tx=rect.x(),ty=rect.y(),tw=rect.w(),th=rect.h();
-    // TODO
-    // p.noStroke();
+
     if(touch!=null) {
-      // if(inButton(p.mouse.x,p.mouse.y)) p.fill(0,90,130,200); else 
       p.fill(getPressedFillColor());
       p.textColor(getPressedTextColor());
     }else {
       p.fill(getFillColor());
       p.textColor(getTextColor());
     }
-    p.beginBlend();//TODO
+
+    p.beginBlend();
     p.rect(tx,ty,tw,th);
     p.text(text,tx+(textOffset?p.pu/2:0),ty+(th-p.pu)/2f-p.pus);
     p.endBlend();
   }
+
   @Override
   public boolean inButton(float xIn,float yIn) {
     return Tools.inBox(xIn,yIn,rect.x(),rect.y(),rect.w(),rect.h());
   }
+
+  /**
+   * 创建默认宽度供应器
+   * 
+   * @param p 父实例
+   * @return 获取宽度的方法
+   */
   public GetFloat createDefaultWidthSupplier(T p) {
     return ()->p.textWidthNoScale(text)*p.pus+(textOffset?p.pu:0);
   }
 
-  //---------------------------------------------------------------------------
-
   @FunctionalInterface
   public interface TextButtonEvent<T extends UtilScreen>extends ButtonEventBase<TextButton<T>>{
-    public void execute(TextButton<T> button);
+    void execute(TextButton<T> button);
   }
-
-  //---------------------------------------------------------------------------
 
   @Override
   public TextButton<T> activeCondition(GetBoolean active) {
     super.activeCondition(active);
     return this;
   }
+
   public TextButton<T> allTextButtonEvent(TextButtonEvent<T> press,TextButtonEvent<T> clickStart,TextButtonEvent<T> clickEnd) {
     pressE=()->press.execute(this);
     clickStartE=()->clickStart.execute(this);
     clickEndE=()->clickEnd.execute(this);
     return this;
   }
+
   public TextButton<T> allButtonEvent(TextButtonEvent<T> press,TextButtonEvent<T> clickStart,TextButtonEvent<T> clickEnd) {
     return allTextButtonEvent(press,clickStart,clickEnd);
   }
+
   public TextButton<T> textSupplier(TextButtonEvent<T> updateText) {
     this.updateText=()->updateText.execute(this);
     updateText();
     return this;
   }
-  // public TextButton<T> text(String text) {
-  //   this.text=text;
-  //   return this;
-  // }
-  // public TextButton<T> textOffset(boolean textOffset) {
-  //   this.textOffset=textOffset;
-  //   return this;
-  // }
+
   public TextButton<T> mouseLimit(boolean mouseLimit) {
     this.mouseLimit=mouseLimit;
     return this;
   }
+
   public TextButton<T> rectF(GetFloat x,GetFloat y,GetFloat w,GetFloat h) {
     this.rect=new RectF(x,y,w,h);
     return this;
   }
+
   public TextButton<T> rectAutoWidth(GetFloat x,GetFloat y,GetFloat h) {
     this.rect=new RectF(x,y,createDefaultWidthSupplier(p),h);
     return this;
   }
+
   public TextButton<T> rectAutoWidth(float x,float y,float h) {
     this.rect=new ButtonRect(x,y,createDefaultWidthSupplier(p),h);
     return this;
   }
+
   public TextButton<T> rectAutoHeight(GetFloat x,GetFloat y,GetFloat w) {
     this.rect=new RectF(x,y,w,p::getButtonUnitLength);
     return this;
   }
-  // public TextButton<T> rectAutoWidth(float x,float y,GetFloat h) {
-  //   this.rect=new RectF(()->x,()->y,createDefaultWidthSupplier(p),h);
-  //   return this;
-  // }
+
   public TextButton<T> rectAuto(GetFloat x,GetFloat y) {
     this.rect=new RectF(x,y,createDefaultWidthSupplier(p),p::getButtonUnitLength);
     return this;
   }
-  // public TextButton<T> rectAuto(float x,float y) {
-  //   this.rect=new RectF(()->x,()->y,createDefaultWidthSupplier(p),p::getButtonUnitLength);
-  //   return this;
-  // }
+
   public Color getFillColor() {
     return fillColor;
   }
+
   public Color getPressedFillColor() {
     return pressedFillColor;
   }
+
   public Color getTextColor() {
     return textColor;
   }
+
   public Color getPressedTextColor() {
     return pressedTextColor;
   }
 
-  //---------------------------------------------------------------------------
-
   /**
-   * ButtonAutoWidthRect，适合用于带有单行文字的按钮
+   * 按钮矩形类，适合用于带有单行文字的按钮
    */
   public static class ButtonRect implements RectI{
     public float x,y,h;
@@ -203,25 +228,30 @@ public class TextButton<T extends UtilScreen>extends Button<T>{
       this.w=wIn;
       this.h=hIn;
     }
+
     @Override
     public float x() {
       return x;
     }
+
     @Override
     public float y() {
       return y;
     }
+
     @Override
     public float w() {
       return w.get();
     }
+
     @Override
     public float h() {
       return h;
     }
   }
+
   /**
-   * use {@link ButtonRect}
+   * 已弃用，请使用 {@link ButtonRect}
    */
   @Deprecated
   public static class ButtonAutoWidthRect extends ButtonRect{

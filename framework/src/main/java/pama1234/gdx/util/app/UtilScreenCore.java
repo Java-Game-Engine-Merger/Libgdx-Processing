@@ -51,7 +51,7 @@ import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 /**
- * UtilScreen太大了，因此抽离了一部分内容到此类，抽离的规则未确定
+ * UtilScreen 太大了，因此抽离了一部分内容到此类，抽离的规则未确定
  * 
  * @see UtilScreen
  */
@@ -64,7 +64,6 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   /** 当屏幕刷新率不为60或其他情况时，使用新的线程来进行游戏的刷新，而游戏的渲染使用主线程 */
   public boolean threadedUpdate;
   public LoopThread updateThread;
-  // public float frameDelta;
 
   //---------------------------------------------------------------------------
 
@@ -81,7 +80,6 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public boolean depth;
   public FlushablePool<Model> modelPool;
   public ModelBuilder modelBuilder;
-  //  public FlexBatch<Element3D> flexBatch;
 
   public DecalBatch decalBatch;
   public ModelBatch modelBatch;
@@ -121,7 +119,6 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   public JoinType joinType=JoinType.POINTY;
   public CapType capType=CapType.ROUND;
 
-  //  public UtilShapeRenderer rFill,rStroke;
   public ShapeDrawer shapeDrawer,shapeDrawerDefault;
   public UtilPolygonSpriteBatch pFill;
 
@@ -130,24 +127,23 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
 
   public boolean background=true;
   public Color backgroundColor;
-  /**
-   * 仅会执行存放在list中的所有实体的update方法和监听事件，不会执行display方法
-   * 
-   * @webref UtilScreen:center
-   * @webBrief EntityCenter containing EntityListeners
-   */
-  //  public EntityCenter<UtilScreen,EntityListener> center;
-  //  /** 执行update和display方法，以相机视角为坐标变幻标准 */
-  //  public EntityCenter<UtilScreen,EntityListener> centerCam;
-  //  /** 执行update和display方法，以屏幕为坐标变幻标准 */
-  //  public EntityCenter<UtilScreen,EntityListener> centerScreen;
+
   /** {@link UtilScreenCore#centerScreen} 加上 {@link DisplayWithCam} */
   public EntityNeoCenter<UtilScreen,EntityNeoListener> centerNeo;
   /** 类似center但是存放的是ServerEntityListener */
   public ServerEntityCenter<UtilServer,ServerEntityListener> serverCenter;
 
-  //  public EntityCenterConcurrent<UtilScreen,EntityListener> centerSync,centerCamSync,centerScreenSync;
-  public EntityCenterAbstract<UtilScreen,EntityListener,?> center,centerCam,centerScreen;
+  /**
+   * 仅会执行存放在list中的所有实体的update方法和监听事件，不会执行display方法
+   *
+   * @webref UtilScreen:center
+   * @webBrief EntityCenter containing EntityListeners
+   */
+  public EntityCenterAbstract<UtilScreen,EntityListener,?> center;
+  /** 执行update和display方法，以相机视角为坐标变幻标准 */
+  public EntityCenterAbstract<UtilScreen,EntityListener,?> centerCam;
+  /** 执行update和display方法，以屏幕为坐标变幻标准 */
+  public EntityCenterAbstract<UtilScreen,EntityListener,?> centerScreen;
 
   /** 自动注册和删除实体 */
   public AutoEntityManager<UtilScreen> auto;
@@ -172,7 +168,6 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
 
   //---------------------------------------------------------------------------
 
-  // public boolean isAndroid=true;
   public boolean isAndroid=Gdx.app.getType()==ApplicationType.Android;
 
   //---------------------------------------------------------------------------
@@ -195,47 +190,66 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
 
   //---------------------------------------------------------------------------
 
+  /**
+   * 检查指定的键是否被按下
+   * 
+   * @param in 键码
+   * @return 如果键被按下则返回 true，否则返回 false
+   */
   public boolean isKeyPressed(int in) {
     return keyPressedArray.contains(in);
   }
+
+  /**
+   * 开始绘制形状
+   */
   public void beginShape() {
-    //    rFill.begin(ShapeType.Filled);
-    //    rStroke.begin(ShapeType.Line);
+    // rFill.begin(ShapeType.Filled);
+    // rStroke.begin(ShapeType.Line);
   }
+
+  /**
+   * 结束绘制形状
+   */
   public void endShape() {
-    endRenderer();// TODO
-    //    rFill.end();
-    //    rStroke.end();
+    endRenderer(); // TODO
+    // rFill.end();
+    // rStroke.end();
   }
 
   //---------------------------------------------------------------------------
 
+  /**
+   * 开始混合模式
+   */
   public void beginBlend() {
     Gdx.gl.glEnable(GL20.GL_BLEND);
-    // Gdx.gl.glBlendFunc(GL20.GL_ONE,GL20.GL_ONE);
-    // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
+    // Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE);
+    // Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
   }
+
+  /**
+   * 结束混合模式
+   */
   public void endBlend() {
     Gdx.gl.glDisable(GL20.GL_BLEND);
   }
 
   /**
-   * switch to renderer
-   *
-   * @param renderer
+   * 切换到指定的渲染器
+   * 
+   * @param renderer 渲染器对象
    */
   public void renderer(Object renderer) {
     if(usedRenderer==renderer) return;
 
     if(usedRenderer!=null) {
       if(usedRenderer instanceof Batch batch&&batch.isDrawing()) {
-        //        batch.flush();
         batch.end();
       }else if(usedRenderer instanceof ModelBatch mb) {
         mb.end();
       }else if(usedRenderer instanceof UtilShapeRenderer r) {
         if(r.isDrawing()) r.flush();
-        //        endBlend();
       }
     }
     usedRenderer=renderer;
@@ -250,51 +264,94 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
       }
     }
   }
+
+  /**
+   * 结束当前渲染器
+   */
   public void endRenderer() {
     renderer(null);
-    //    if(usedRenderer instanceof Batch batch&&batch.isDrawing()) batch.end();
-    //    else if(usedRenderer instanceof UtilShapeRenderer r&&r.isDrawing()) r.flush();
-  }
-  public void setCamera(Camera in) {
-    if(usedCamera!=in) usedCamera=in;
-    else return;
-    // TODO combined or projection
-    setProjectionMatrix(in.combined);
-    //    setProjectionMatrix(in.projection);
-    //    setTransformMatrix(in.combined);
   }
 
   /**
-   * 请勿使用这个方法来传递变换参数（位移，旋转，缩放）
+   * 设置相机
    * 
-   * @param projection
+   * @param in 相机对象
+   */
+  public void setCamera(Camera in) {
+    if(usedCamera!=in) usedCamera=in;
+    else return;
+    setProjectionMatrix(in.combined);
+  }
+
+  /**
+   * 设置投影矩阵
+   * 
+   * @param projection 投影矩阵
    */
   public void setProjectionMatrix(Matrix4 projection) {
-    //    fontBatch.setProjectionMatrix(projection);
     imageBatch.setProjectionMatrix(projection);
-    //    rFill.setProjectionMatrix(projection);
     pFill.setProjectionMatrix(projection);
-    //    rStroke.setProjectionMatrix(projection);
   }
+
+  /**
+   * 设置变换矩阵
+   * 
+   * @param transform 变换矩阵
+   */
   public void setTransformMatrix(Matrix4 transform) {
     imageBatch.setTransformMatrix(transform);
-    //    rFill.setTransformMatrix(transform);
     pFill.setTransformMatrix(transform);
-    //    rStroke.setTransformMatrix(transform);
   }
+
   @Override
   public void init() {}
+
+  /**
+   * 初始化设置
+   */
   public abstract void setup();
+
+  /**
+   * 更新逻辑
+   */
   public abstract void update();
+
+  /**
+   * 渲染显示
+   */
   public abstract void display();
+
+  /**
+   * 使用相机渲染显示
+   */
   public abstract void displayWithCam();
+
+  /**
+   * 处理窗口大小调整
+   */
   public abstract void frameResized();
+
+  /**
+   * 将屏幕坐标转换为世界坐标
+   * 
+   * @param x 屏幕X坐标
+   * @param y 屏幕Y坐标
+   * @return 世界坐标
+   */
   public abstract Vector3 screenToWorld(float x,float y);
+
   @Override
   public void resize(int w,int h) {
     innerResize(w,h);
     frameResized();
   }
+
+  /**
+   * 内部处理窗口大小调整
+   * 
+   * @param w 宽度
+   * @param h 高度
+   */
   public void innerResize(int w,int h) {
     width=w;
     height=h;
@@ -307,22 +364,24 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
 
     center.frameResized(w,h);
   }
+
   @Override
   public void pause() {
     center.pause();
   }
+
   @Override
   public void resume() {
     center.resume();
     serverCenter.resume();
   }
+
   @Override
   public void hide() {}
+
   @Override
   public void dispose() {
     stop=true;
-    // fontBatch.dispose();
-    // font.dispose();
     center.dispose();
     serverCenter.dispose();
     if(threadedUpdate) updateThread.stop=true;
@@ -331,15 +390,21 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
   //---------------------------------------------------------------------------
 
   /**
-   * 移动至FileUtil
+   * 加载纹理
    * 
-   * @param in
-   * @return
+   * @param in 纹理文件路径
+   * @return 纹理对象
    */
   @Deprecated
   public Texture loadTexture(String in) {
     return new Texture(Gdx.files.internal(in));
   }
+
+  /**
+   * 线程休眠
+   * 
+   * @param i 休眠时间（毫秒）
+   */
   public void sleep(long i) {
     try {
       Thread.sleep(i);
@@ -347,27 +412,74 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
       e.printStackTrace();
     }
   }
+
+  /**
+   * 生成随机数
+   * 
+   * @param max 最大值
+   * @return 随机数
+   */
   public float random(float max) {
     return rng.nextFloat()*max;
   }
+
+  /**
+   * 生成随机数
+   * 
+   * @param min 最小值
+   * @param max 最大值
+   * @return 随机数
+   */
   public float random(float min,float max) {
     max-=min;
     return rng.nextFloat()*max+min;
   }
+
+  /**
+   * 打印字符串
+   * 
+   * @param in 字符串
+   */
   public void println(String in) {
     Gdx.app.log("print S",in);
   }
+
+  /**
+   * 打印整数
+   * 
+   * @param in 整数
+   */
   public void println(int in) {
     Gdx.app.log("print I",Integer.toString(in));
   }
+
+  /**
+   * 打印浮点数
+   * 
+   * @param in 浮点数
+   */
   public void println(float in) {
     Gdx.app.log("print F",Float.toString(in));
   }
+
+  /**
+   * 打印多个对象
+   * 
+   * @param ins 对象数组
+   */
   public void println(Object... ins) {
     StringBuilder sb=new StringBuilder();
     for(Object i:ins) sb.append(i).append(" ");
     Gdx.app.log("print[A",sb.toString());
   }
+
+  /**
+   * 调试输出
+   * 
+   * @param <T> 输出类型
+   * @param out 输出对象
+   * @return 输出对象
+   */
   public <T> T debug(T out) {
     System.out.println(out);
     return out;
@@ -375,18 +487,34 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
 
   //---------------------------------------------------------------------------
 
+  /**
+   * 获取按钮单位长度
+   * 
+   * @return 按钮单位长度
+   */
   public int getButtonUnitLength() {
     return bu;
   }
 
   //---------------------------------------------------------------------------
 
+  /**
+   * 切换鼠标抓取状态
+   */
   public void changeGrab() {
     Gdx.input.setCursorCatched(grabCursor=!grabCursor);
   }
+
+  /**
+   * 启用鼠标抓取
+   */
   public void doGrab() {
     Gdx.input.setCursorCatched(grabCursor=true);
   }
+
+  /**
+   * 禁用鼠标抓取
+   */
   public void noGrab() {
     Gdx.input.setCursorCatched(grabCursor=false);
   }
@@ -426,15 +554,20 @@ public abstract class UtilScreenCore implements Screen,InputListener,LifecycleLi
 
   //---------------------------------------------------------------------------
 
+  /**
+   * 外部调用焦点获取
+   */
   public void focusGainedOuter() {
     focus=true;
-    // centerSys.focusGained();
     for(var e:centerSys.list) e.focusGained();
     focusGained();
   }
+
+  /**
+   * 外部调用焦点失去
+   */
   public void focusLostOuter() {
     focus=false;
-    // centerSys.focusLost();
     for(var e:centerSys.list) e.focusLost();
     focusLost();
   }

@@ -30,6 +30,7 @@ public abstract class BetterBitmapFont extends BitmapFont{
   public TextStyleSupplier style;
 
   public int textMode=fastText;
+  @Deprecated
   public float lineSizeScale=0.5f;
 //  public boolean screenView;
 

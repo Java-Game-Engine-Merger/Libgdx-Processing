@@ -51,7 +51,7 @@ public class TextTest extends UtilScreen2D{
       public void display() {}
     });
     addCamTextFields(temp=new TextField("file.name()",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->0,()->0-26,()->250-120,()->18),()->1));
-    addCamTextFields(temp=new TextArea("file.name()",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->300,()->0,()->250,()->250),()->1));
+    addCamTextFields(temp=new TextArea("file.name()\npublic static void main",new ColorTextFieldStyle(this,null,null,UtilScreen.color(216)),new RectF(()->300,()->0,()->250,()->250),()->1));
     temp.setColor(color(0));
   }
 
@@ -69,7 +69,8 @@ public class TextTest extends UtilScreen2D{
     fill(127,127);
     rect(0,0,250,250);
 
-    text("public static void main");
+    text("file.name()");
+    text("public static void main",0,20);
     text("TextTest.java\n使用了\n\n未经检查或不安全的操作。",0,40);
 
     //    text(String.valueOf(MultiLayerFont.temp_test_smooth_var),200,200);
