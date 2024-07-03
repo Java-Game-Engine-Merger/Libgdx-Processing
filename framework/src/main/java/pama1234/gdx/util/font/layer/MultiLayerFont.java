@@ -3,6 +3,7 @@ package pama1234.gdx.util.font.layer;
 import static space.earlygrey.shapedrawer.ShapeDrawer.createBlankTextureRegion;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -56,8 +57,15 @@ public class MultiLayerFont extends BetterBitmapFont{
 
   public float smoothing;
 
+  public boolean fontUsed;
+
   public Batch batchCache;
   public ShaderProgram shaderCache;
+  public Color batchColor=new Color();
+  public int batchBlendSrcFunc=GL20.GL_SRC_ALPHA;
+  public int batchBlendDstFunc=GL20.GL_ONE_MINUS_SRC_ALPHA;
+  public int batchBlendSrcFuncAlpha=GL20.GL_SRC_ALPHA;
+  public int batchBlendDstFuncAlpha=GL20.GL_ONE_MINUS_SRC_ALPHA;
 
   public MultiLayerFont(FontLayer[] fontLayers) {
     this.fontLayers=fontLayers;
@@ -75,20 +83,37 @@ public class MultiLayerFont extends BetterBitmapFont{
     //    data.setScale(lineSizeScale_02);
     //    getData().setScale(0.5f);
     //        data.lineHeight=lineSizeConst;
-    fontRendererWrapper=new RendererWrapper(null,()->{
-      batchCache=fontBatch();
+    fontRendererWrapper=new RendererWrapper(null,()-> {
+      if(!fontUsed) {
+        batchCache=fontBatch();
+        batchBlendSrcFunc=batchCache.getBlendSrcFunc();
+        batchBlendDstFunc=batchCache.getBlendDstFunc();
+        batchBlendSrcFuncAlpha=batchCache.getBlendSrcFuncAlpha();
+        batchBlendDstFuncAlpha=batchCache.getBlendDstFuncAlpha();
+        batchCache.flush();
+        batchColor.set(batchCache.getColor());
 
-      batchCache.flush();
-      shaderCache=batchCache.getShader();
+        shaderCache=batchCache.getShader();
 
-      distanceFieldShader.bind();
-      distanceFieldShader.setSmoothing(smoothing);
-      batchCache.setShader(distanceFieldShader);
-    },()->{
-      batchCache.flush();
-      shaderCache.bind();
-      batchCache.setShader(shaderCache);
-      batchCache=null;
+        distanceFieldShader.bind();
+        distanceFieldShader.setSmoothing(smoothing);
+        batchCache.setShader(distanceFieldShader);
+
+        fontUsed=true;
+      }
+    },()-> {
+      if(fontUsed) {
+        batchCache.flush();
+        shaderCache.bind();
+        batchCache.setShader(shaderCache);
+        batchCache.setColor(batchColor);
+        batchCache.setBlendFunctionSeparate(
+          batchBlendSrcFunc,batchBlendDstFunc,
+          batchBlendSrcFuncAlpha,batchBlendDstFuncAlpha);
+        batchCache=null;
+
+        fontUsed=false;
+      }
     });
   }
 

@@ -307,13 +307,7 @@ public class LayerFontCache extends BitmapFontCache{
   @Override
   public void draw(Batch spriteBatch) {
 
-    Batch batch=spriteBatch;
-    batch.flush();
-    var shader=batch.getShader();
-
-    font.distanceFieldShader.bind();
-    font.distanceFieldShader.setSmoothing(font.smoothing);
-    batch.setShader(font.distanceFieldShader);
+    font.fontRendererWrapper.from();
 
     {
       for(int i=0;i<pageVertices.length;i++) {
@@ -330,21 +324,13 @@ public class LayerFontCache extends BitmapFontCache{
         }
       }
     }
-    batch.flush();
-    shader.bind();
-    batch.setShader(shader);
+    font.fontRendererWrapper.to();
   }
 
   @Override
   public void draw(Batch spriteBatch,int start,int end) {
 
-    Batch batch=spriteBatch;
-    batch.flush();
-    var shader=batch.getShader();
-
-    font.distanceFieldShader.bind();
-    font.distanceFieldShader.setSmoothing(font.smoothing);
-    batch.setShader(font.distanceFieldShader);
+    font.fontRendererWrapper.from();
 
     {
       for(int j=0;j<pageVertices.length;j++) {
@@ -383,8 +369,6 @@ public class LayerFontCache extends BitmapFontCache{
         }
       }
     }
-    batch.flush();
-    shader.bind();
-    batch.setShader(shader);
+    font.fontRendererWrapper.to();
   }
 }
