@@ -8,4 +8,5 @@ public final class Pama{
   public static OpenXR xr;
   public static DexUtil dex;
   public static MobileUtil mobile;
+  public static ImageLoadUtil img;
 }

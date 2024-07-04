@@ -115,9 +115,9 @@ public class MultiLayerFont extends BetterBitmapFont{
         batchCache.flush();
 
         shaderCache.bind();
-        //        batchCache.setColor(Color.WHITE);
         batchCache.setShader(shaderCache);
 
+        //        batchCache.setColor(Color.WHITE);
         //        batchCache.setColor(batchColor);
         //        batchCache.setBlendFunctionSeparate(
         //          batchBlendSrcFunc,batchBlendDstFunc,

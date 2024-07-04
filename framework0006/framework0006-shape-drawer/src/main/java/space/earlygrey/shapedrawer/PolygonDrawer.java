@@ -3,14 +3,38 @@ package space.earlygrey.shapedrawer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * PolygonDrawer 类用于绘制多边形。
+ */
 class PolygonDrawer extends DrawerTemplate<BatchManager>{
 
+  // 中心点和半径向量
   static final Vector2 centre=new Vector2(),radius=new Vector2();
 
+  /**
+   * 构造函数
+   *
+   * @param batchManager 批处理管理器
+   * @param drawer       抽象形状绘制器
+   */
   PolygonDrawer(BatchManager batchManager,AbstractShapeDrawer drawer) {
     super(batchManager,drawer);
   }
 
+  /**
+   * 绘制多边形
+   *
+   * @param centreX    中心点X坐标
+   * @param centreY    中心点Y坐标
+   * @param sides      边数
+   * @param radiusX    X轴半径
+   * @param radiusY    Y轴半径
+   * @param rotation   旋转角度
+   * @param lineWidth  线宽
+   * @param joinType   连接类型
+   * @param startAngle 起始角度
+   * @param radians    弧度
+   */
   void polygon(float centreX,float centreY,int sides,float radiusX,float radiusY,float rotation,float lineWidth,JoinType joinType,float startAngle,float radians) {
     if(radians==0) return;
     radians=Math.min(radians,ShapeUtils.PI2);
@@ -29,6 +53,17 @@ class PolygonDrawer extends DrawerTemplate<BatchManager>{
     if(!wasCaching) batchManager.endCaching();
   }
 
+  /**
+   * 绘制没有连接的多边形
+   *
+   * @param centre     中心点
+   * @param sides      边数
+   * @param lineWidth  线宽
+   * @param rotation   旋转角度
+   * @param radius     半径向量
+   * @param startAngle 起始角度
+   * @param radians    弧度
+   */
   void drawPolygonNoJoin(Vector2 centre,int sides,float lineWidth,float rotation,Vector2 radius,float startAngle,float radians) {
     float angleInterval=MathUtils.PI2/sides;
     float endAngle=startAngle+radians;
@@ -58,8 +93,19 @@ class PolygonDrawer extends DrawerTemplate<BatchManager>{
     }
   }
 
+  /**
+   * 绘制带连接的多边形
+   *
+   * @param centre        中心点
+   * @param sides         边数
+   * @param halfLineWidth 半线宽
+   * @param rotation      旋转角度
+   * @param radius        半径向量
+   * @param startAngle    起始角度
+   * @param radians       弧度
+   * @param smooth        是否平滑连接
+   */
   void drawPolygonWithJoin(Vector2 centre,int sides,float halfLineWidth,float rotation,Vector2 radius,float startAngle,float radians,boolean smooth) {
-
     float c=batchManager.floatBits;
 
     boolean full=ShapeUtils.epsilonEquals(radians,ShapeUtils.PI2);
@@ -90,7 +136,6 @@ class PolygonDrawer extends DrawerTemplate<BatchManager>{
       C.set(dir).scl(radius);
     }
     for(int i=start;i<=end;i++) {
-
       batchManager.ensureSpaceForQuad();
 
       if(!full&&i==start) {
@@ -128,10 +173,9 @@ class PolygonDrawer extends DrawerTemplate<BatchManager>{
       vert4(E.x*cosRot-E.y*sinRot+centre.x,E.x*sinRot+E.y*cosRot+centre.y);
 
       color(c,c,c,c);
-      batchManager.pushQuad(); //push current AB
+      batchManager.pushQuad(); // 推送当前 AB
 
       if(smooth&&(full||i<end)) drawSmoothJoinFill(A,B,C,D,E,centre,cosRot,sinRot,halfLineWidth);
     }
   }
-
 }

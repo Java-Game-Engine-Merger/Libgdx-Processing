@@ -1,4 +1,4 @@
-package pama1234.gdx.util.files;
+package pama1234.util.gdx.lwjgl;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,23 +13,25 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.twelvemonkeys.imageio.plugins.webp.WebPImageReaderSpi;
 
-import pama1234.Tools;
+import pama1234.gdx.ImageLoadUtil;
 
-public class WebPToLibGDX{
+public class ImageLoadUtilLwjgl implements ImageLoadUtil{
   static {
     // 注册 WebP 插件
     IIORegistry.getDefaultInstance().registerServiceProvider(new WebPImageReaderSpi());
   }
 
-  public static Texture loadWebPAsTexture(FileHandle fileHandle) throws IOException {
-    Tools.time();
+  public static Texture loadWebPAsTextureStatic(FileHandle fileHandle) throws IOException {
+    //    Tools.time();
     // 使用ImageIO读取WebP文件
     BufferedImage bufferedImage=readWebPImage(fileHandle);
+
+    //    Tools.printPeriod();
 
     // 将BufferedImage转换为Pixmap
     Pixmap pixmap=convertBufferedImageToPixmap(bufferedImage);
 
-    Tools.printPeriod();
+    //    Tools.printPeriod();
 
     // 创建LibGDX的Texture
     return new Texture(pixmap);
@@ -77,12 +79,8 @@ public class WebPToLibGDX{
     }
   }
 
-  public static void main(String[] args) {
-    try {
-      Texture texture=loadWebPAsTexture(new FileHandle("path/to/your/webp/file"));
-      // 使用texture
-    }catch(IOException e) {
-      e.printStackTrace();
-    }
+  @Override
+  public Texture loadWebPAsTexture(FileHandle fileHandle) throws IOException {
+    return loadWebPAsTextureStatic(fileHandle);
   }
 }

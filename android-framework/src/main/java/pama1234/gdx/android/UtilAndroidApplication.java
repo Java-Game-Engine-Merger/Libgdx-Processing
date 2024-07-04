@@ -13,6 +13,7 @@ public class UtilAndroidApplication extends AndroidApplication{
     super.onCreate(savedInstanceState);
     {
       Pama.mobile=new AndroidMobileUtil(this);
+      Pama.img=new AndroidImageLoadUtil();
     }
   }
   public static AndroidApplicationConfiguration getDefaultConfiguration() {

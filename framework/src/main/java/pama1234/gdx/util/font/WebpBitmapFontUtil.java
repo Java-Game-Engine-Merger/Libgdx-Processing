@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-import pama1234.gdx.util.files.WebPToLibGDX;
+import pama1234.gdx.Pama;
 
 public class WebpBitmapFontUtil{
 
@@ -24,7 +24,7 @@ public class WebpBitmapFontUtil{
       else file=Gdx.files.getFileHandle(data.imagePaths[i],data.fontFile.type());
       Texture texture=null;
       try {
-        texture=WebPToLibGDX.loadWebPAsTexture(file);
+        texture=Pama.img.loadWebPAsTexture(file);
       }catch(IOException e) {
         throw new RuntimeException(e);
       }
